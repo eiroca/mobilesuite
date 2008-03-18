@@ -1,0 +1,10 @@
+MIDlet-1: SecureSMS,/icon.png,SecureSMS
+MIDlet-Jar-URL: SecureSMS.jar
+MIDlet-Icon: /icon.png
+MicroEdition-Configuration: CLDC-1.0
+MIDlet-Push-1: sms://:9087, SecureSMS, *
+MIDlet-Version: 1.0.0
+MIDlet-Name: SecureSMS
+MIDlet-Vendor: eIrOcA
+MIDlet-Permissions: javax.microedition.io.Connector.sms,javax.microedition.io.PushRegistry,javax.wireless.messaging.sms.receive,javax.wireless.messaging.sms.send
+MicroEdition-Profile: MIDP-2.0
