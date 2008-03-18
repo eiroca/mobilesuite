@@ -1,0 +1,57 @@
+SecureMessenger
+OK
+Save
+Send
+Reply
+Delete
+Add
+Cancel
+Exit
+Inbox
+Send New
+Sent Items
+Address Book
+Message
+Address
+New Address
+New Message
+Text:
+To:
+From:
+Number:
+Name:
+Password:
+Message sent
+Message has not been sent
+Message deleted
+Message has not been deleted
+You've got message!
+Address saved
+Address has not been saved
+Address deleted
+Address has not been deleted
+Error
+Info
+Message store error
+Address store error
+Cannot start the SerureMessenger
+Back
+About
+Change PIN
+Insert new PIN.
+PIN:
+Wrong PIN (at least 4 digits)
+Insert PIN
+Invalid PIN. Try again.
+Clean Up
+Clear Inbox
+Clear Message Sent
+Clear Address Book
+Delete data
+Are you sure?
+Yes
+No
++39
+Invalid
+Message marked as invalid. Please change the password key of the sender.
+Address book is empty
