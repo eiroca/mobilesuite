@@ -1,0 +1,44 @@
+OK
+Indietro
+Esci
+Si
+No
+GAME OVER
+Punteggio: 
+Record: 
+Nessun record
+Nuovo record
+Il tuo punteggio: 
+Il tuo nome
+Continua
+Nuova partita
+I reecord
+Impostazioni
+Impostazioni gioco
+Aiuto
+Info su...
+Volume
+Vibrazione
+Illuminazione
+Reversi
+Modalità gioco
+umano vs computer
+umano vs umano
+Livello computer
+molto facile
+facile
+medio
+difficile
+Ressi
+Blu
+Buona fortuna
+Sto pensando
+Mossa invalida
+Il computer vince
+Hai vinto tu!
+ vince
+Pareggio
+Umano
+Computer
+ passo
+L
