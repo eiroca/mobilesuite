@@ -1,0 +1,14 @@
+RSS-COLBKG: FFFFCC
+RSS-COLTIT: FF0000
+RSS-COLBOR: FFFFFF
+MIDlet-1: NewsReader,/icon.png,NewsReader
+MIDlet-Jar-URL: NewsReader.jar
+RSS-USEHTML: 1
+MicroEdition-Configuration: CLDC-1.0
+MIDlet-Version: 1.0.0
+RSS-FEEDLISTURL: http://www.eiroca.net/apps/newsreader/feeds.xml
+MIDlet-Vendor: eIrOcA
+MIDlet-Name: NewsReader
+MicroEdition-Profile: MIDP-2.0
+MIDlet-Permissions: javax.microedition.io.Connector,javax.microedition.io.HttpConnection
+RSS-COLTXT: 000000

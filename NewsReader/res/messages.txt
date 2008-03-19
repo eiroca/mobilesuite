@@ -1,0 +1,111 @@
+# NomeApplicazione
+RSS Reader
+# Commandi di deault
+OK
+Back
+Exit
+Yes
+No
+# Menu Principale
+Read feeds
+Add feed
+Memory
+Clean up
+About
+# Menu Add Feed
+Add feeds from list
+Add new URL feed
+# Form Add Feed URL
+Add Feed
+Title:
+URL:
+http://
+Add
+# Form Browse Feed List
+Some feeds
+Add
+Feed file error
+# Add Feed error messages
+Added feed(s)
+$1 feed(s) were added
+No feeds added
+A feed with that title already exists
+No feeds added
+No feeds were added
+# Menu Clean up
+All feeds & items
+All items
+Items >1 day old
+Items >2 days old
+Items >1 week old
+# Delete confirmations
+Confirm
+Are you sure you want to delete all feeds and items?
+Are you sure you want to delete all items?
+Are you sure you want to delete these items?
+Deleted
+# Feeds List
+RSS feeds
+Read ($1/$2)
+Update
+Info
+Delete items
+Delete
+No feeds present
+Open
+Stop
+# News List
+Read
+Go!
+# Delete messages
+Deleted $1 feed(s) and $2 item(s)
+Deleted $1 item(s)
+# Database Info messages
+Database
+  $1 feeds
+  $1 items
+  Used: $1KB
+  Availiable: $1KB
+# Memory Info messages
+Memory
+  Used: $1 KB
+  Availiable: $1 KB
+# Load Feed List
+Loading Feeds List
+Init
+Connecting
+Parsing
+Done
+Loaded
+# Update Feed Items
+Update Feed Items
+Init
+Setting up
+Connecting
+Connected
+Reading feed
+Reading items
+Saving feed
+Done
+$1 has not changed since last update.
+Updated $1 with $2 new items ($3 ignored)
+Downloaded $1KB
+$1 is an illegal URL
+No news
+Interrupted
+Error while connecting to $1
+# Feed Info
+Description: $1
+Last update: $1
+Min update: $1 mins
+Items: $1
+Last build: $1
+Last size: $1KB
+URL: $1
+# Feed Item Info
+(No items found)
+Published: $1
+Downloaded: $1 $2 ($3)
+# Page scrolling
+newer <<
+older >>
