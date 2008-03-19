@@ -1,0 +1,83 @@
+<feeds>
+ <feed>
+  <title>Slashdot</title>
+  <URL>http://rss.slashdot.org/Slashdot/slashdot</URL>
+  <type>W</type>
+  <color background="FFFFCC" border="FF0000" title="0000FF" text="000000" />
+ </feed>
+ <feed>
+  <title>Slashdot - Developers</title>
+  <URL>http://rss.slashdot.org/Slashdot/slashdotDevelopers</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>Wired</title>
+  <URL>http://www.wired.com/news/feeds/rss2/0,2610,,00.xml</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>The Register</title>
+  <URL>http://www.theregister.co.uk/tonys/slashdot.rdf</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>Yahoo-Top Stories</title>
+  <URL>http://rss.news.yahoo.com/rss/topstories</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>Yahoo-Most Viewed</title>
+  <URL>http://rss.news.yahoo.com/rss/mostviewed</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>BBC World - Front page</title>
+  <URL>http://news.bbc.co.uk/rss/newsonline_world_edition/front_page/rss091.xml</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>BBC World - Entertainment</title>
+  <URL>http://news.bbc.co.uk/rss/newsonline_world_edition/entertainment/rss091.xml</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>BBC UK - Music</title>
+  <URL>http://news.bbc.co.uk/rss/newsonline_uk_edition/entertainment/music/rss091.xml</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>Washington Post - Top news</title>
+  <URL>http://www.washingtonpost.com/wp-srv/topnews/rssheadlines.xml</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>NY Times - Technology</title>
+  <URL>http://partners.userland.com/nytRss/technology.xml</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>NY Times - Homepage</title>
+  <URL>http://partners.userland.com/nytRss/nytHomepage.xml</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>Creative Commons Weblog</title>
+  <URL>http://creativecommons.org/weblog/rss</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>RollingStone - Music News</title>
+  <URL>http://www.rollingstone.com/rssxml/music_news.xml</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>RollingStone - Album Reviews</title>
+  <URL>http://www.rollingstone.com/rssxml/album_reviews.xml</URL>
+  <type>W</type>
+ </feed>
+ <feed>
+  <title>RollingStone - Movie Reviews</title>
+  <URL>http://deploy.rollingstone.com/rssxml/movie_reviews.xml</URL>
+  <type>W</type>
+ </feed>
+</feeds>
