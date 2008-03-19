@@ -1,0 +1,6 @@
+Find all the bombs in the mine field.
+Move cursor with arrow or (1), (2), (3), (4), (6), (7), (8), (9).
+Fire or (5) to try a cell
+(*) try the cell and all the adiacents
+(#) to mark a bomb
+0 to return to the main menu
