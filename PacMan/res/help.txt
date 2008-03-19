@@ -1,0 +1,4 @@
+Guide the PacMan through the labyrinth with the Joystick.
+The goal of the Game is to eat all Pills in the labyrinth, without get catched by a ghost.
+If you have eat a Magic-Pill you can eat the ghosts for a period of time.
+Good luck!
