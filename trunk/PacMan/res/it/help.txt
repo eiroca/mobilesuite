@@ -1,0 +1,2 @@
+Giuda PacMan nel labirinto con il joystick o i tasti freccia alla ricerca di tutte le pillole energetiche presenti. Fai attenzione a non essere braccato dai fantasi a meno di non avere mangiato la super pillola (allora mangiali pure!).
+Buona fortuna!
