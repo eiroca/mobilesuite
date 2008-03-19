@@ -1,0 +1,7 @@
+Key mappping:
+1: Rotate left
+3: Rotate right
+4: Move left
+6: Move right
+5: Down faster
+7: Drop
