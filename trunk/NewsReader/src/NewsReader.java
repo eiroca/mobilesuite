@@ -1018,7 +1018,6 @@ public class NewsReader extends Application implements Comparator {
   public Displayable getNewsDataTEXT() {
     Form itemform;
     itemform = new Form(currentItem.title);
-    BaseApp.setup(itemform, BaseApp.cBACK, null);
     if (!currentItem.description.equals(NewsReader.STR_EMPTY)) {
       itemform.append(currentItem.description + NewsReader.STR_NEWLINE);
     }
@@ -1041,6 +1040,7 @@ public class NewsReader extends Application implements Comparator {
     else {
       itemform.removeCommand(NewsReader.cGO);
     }
+    BaseApp.setup(itemform, BaseApp.cBACK, null);
     // Print the parsed date
     parsecal.setTime(new Date(currentItem.parseTime));
     o[0] = formatDate(parsecal, new StringBuffer()).toString();
