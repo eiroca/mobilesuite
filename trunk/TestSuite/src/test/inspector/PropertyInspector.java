@@ -20,9 +20,9 @@ package test.inspector;
 
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.Pair;
-import test.AbstractInspector;
+import test.AbstractProcessor;
 
-public class PropertyInspector extends AbstractInspector {
+public class PropertyInspector extends AbstractProcessor {
 
   public static final String CATEGORY = "Properties";
   public static final String PROP_DATA = "/data_prop.txt";
@@ -38,7 +38,7 @@ public class PropertyInspector extends AbstractInspector {
     addResult(p.name, BaseApp.readProperty(p.value.toString(), null));
   }
 
-  public void run() {
+  public void execute() {
     if (test != null) {
       for (int i = 0; i < test.length; i++) {
         testProp(test[i]);

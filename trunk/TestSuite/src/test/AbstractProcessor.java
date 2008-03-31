@@ -18,12 +18,12 @@
  */
 package test;
 
-abstract public class AbstractInspector {
+abstract public class AbstractProcessor {
 
   String cat;
   Suite suite;
 
-  public AbstractInspector(final String cat) {
+  public AbstractProcessor(final String cat) {
     this.cat = cat;
   }
 
@@ -41,6 +41,6 @@ abstract public class AbstractInspector {
     }
   }
 
-  abstract public void run();
+  abstract public void execute();
 
 }

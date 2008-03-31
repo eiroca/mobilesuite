@@ -22,6 +22,9 @@ import java.util.Vector;
 import javax.microedition.lcdui.Form;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.Pair;
+import test.benchmark.MathSuite;
+import test.benchmark.PrecisionSuite;
+import test.benchmark.SuiteAbstract;
 import test.inspector.APIsInspector;
 import test.inspector.CanvasInspector;
 import test.inspector.Graphic3DInspector;
@@ -35,28 +38,40 @@ public class Suite {
 
   public static final String MAPPING = "/mapping.txt";
 
+  private boolean finished = false;
   private final Vector tests = new Vector();
   private Pair[] mapping = null;
-  private final AbstractInspector[] t;
+  private final AbstractProcessor[] inspectors;
+  private final SuiteAbstract[] benchmarks;
 
   public Suite() {
-    t = new AbstractInspector[8];
-    t[0] = new PropertyInspector();
-    t[1] = new APIsInspector();
-    t[2] = new CanvasInspector();
-    t[3] = new SystemInspector();
-    t[4] = new MultimediaInspector();
-    t[5] = new PrivacyPropertyInspector();
-    t[6] = new LocalDeviceInspector();
-    t[7] = new Graphic3DInspector();
-    for (int i = 0; i < t.length; i++) {
-      t[i].setSuite(this);
+    inspectors = new AbstractProcessor[8];
+    benchmarks = new SuiteAbstract[2];
+    inspectors[0] = new PropertyInspector();
+    inspectors[1] = new APIsInspector();
+    inspectors[2] = new CanvasInspector();
+    inspectors[3] = new SystemInspector();
+    inspectors[4] = new MultimediaInspector();
+    inspectors[5] = new PrivacyPropertyInspector();
+    inspectors[6] = new LocalDeviceInspector();
+    inspectors[7] = new Graphic3DInspector();
+    benchmarks[0] = new PrecisionSuite();
+    benchmarks[1] = new MathSuite();
+    for (int i = 0; i < inspectors.length; i++) {
+      inspectors[i].setSuite(this);
+    }
+    for (int i = 0; i < benchmarks.length; i++) {
+      benchmarks[i].setSuite(this);
     }
   }
 
   public void run() {
-    for (int i = 0; i < t.length; i++) {
-      t[i].run();
+    finished = false;
+    for (int i = 0; i < benchmarks.length; i++) {
+      benchmarks[i].execute();
+    }
+    for (int i = 0; i < inspectors.length; i++) {
+      inspectors[i].execute();
     }
   }
 
@@ -75,6 +90,22 @@ public class Suite {
       }
     }
     return res;
+  }
+
+  public void benchmark(final Form list, final String category) {
+    if (!finished) {
+      finished = true;
+      for (int i = 0; i < benchmarks.length; i++) {
+        if (!benchmarks[i].finished) {
+          finished = false;
+          break;
+        }
+      }
+    }
+    export(list, category);
+    if (!finished) {
+      list.append("... still working ...\n");
+    }
   }
 
   public void export(final Form list, final String category) {

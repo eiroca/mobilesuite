@@ -21,9 +21,9 @@ package test.inspector;
 import javax.bluetooth.LocalDevice;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.Pair;
-import test.AbstractInspector;
+import test.AbstractProcessor;
 
-public class LocalDeviceInspector extends AbstractInspector {
+public class LocalDeviceInspector extends AbstractProcessor {
 
   public static final String CATEGORY = "LocalDevice";
   public static final String PROP_DATA = "/data_bluetooth.txt";
@@ -46,7 +46,7 @@ public class LocalDeviceInspector extends AbstractInspector {
     addResult(p.name, val);
   }
 
-  public void run() {
+  public void execute() {
     if (BaseApp.isClass("javax.bluetooth.LocalDevice")) {
       if (test != null) {
         for (int i = 0; i < test.length; i++) {

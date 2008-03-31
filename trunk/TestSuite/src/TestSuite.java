@@ -33,12 +33,12 @@ import javax.microedition.lcdui.List;
 import keys.KeyStateCanvas;
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
-import specs.Tester;
 import test.Suite;
+import test.benchmark.MathSuite;
+import test.benchmark.PrecisionSuite;
 import test.inspector.APIsInspector;
 import test.inspector.CanvasInspector;
 import test.inspector.Graphic3DInspector;
-import test.inspector.LocalDeviceInspector;
 import test.inspector.MultimediaInspector;
 import test.inspector.PrivacyPropertyInspector;
 import test.inspector.PropertyInspector;
@@ -57,11 +57,11 @@ public final class TestSuite extends Application {
   static final int COUNT = 15;
 
   private final String[] INSPECTOR_CAT = new String[] {
-      PropertyInspector.CATEGORY, APIsInspector.CATEGORY, CanvasInspector.CATEGORY, SystemInspector.CATEGORY, MultimediaInspector.CATEGORY, LocalDeviceInspector.CATEGORY, Graphic3DInspector.CATEGORY,
+      PropertyInspector.CATEGORY, APIsInspector.CATEGORY, CanvasInspector.CATEGORY, SystemInspector.CATEGORY, MultimediaInspector.CATEGORY, Graphic3DInspector.CATEGORY,
       PrivacyPropertyInspector.CATEGORY
   };
   private final String[] BENCHMARK_CAT = new String[] {
-    Tester.CAT_BENCHMARK
+      PrecisionSuite.CATEGORY, MathSuite.CATEGORY
   };
 
   private final Command cPREV;
@@ -75,7 +75,6 @@ public final class TestSuite extends Application {
 
   /** The full path name to the level of class hierarchy being shown. */
   private String cbPackagePath;
-  private final Tester tester;
   private final Suite suite;
   private final String[] classes;
 
@@ -87,7 +86,6 @@ public final class TestSuite extends Application {
     BaseApp.cEXIT = BaseApp.newCommand(TestSuite.MSG_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
     cPREV = new Command(BaseApp.messages[TestSuite.MSG_PREV], Command.SCREEN, 1);
     classes = BaseApp.readStrings("/classes.txt");
-    tester = new Tester();
     suite = new Suite();
   }
 
@@ -149,7 +147,7 @@ public final class TestSuite extends Application {
         fSpec.deleteAll();
         final int i = fMenuBenchmark.getSelectedIndex();
         fSpec.setTitle("Benchmark: " + BENCHMARK_CAT[i]);
-        tester.export(fSpec, BENCHMARK_CAT[i]);
+        suite.benchmark(fSpec, BENCHMARK_CAT[i]);
         BaseApp.show(null, fSpec, true);
       }
     }
@@ -163,7 +161,6 @@ public final class TestSuite extends Application {
    */
   protected void init() {
     super.init();
-    tester.start();
     suite.run();
     ClassBrowserHelper.imPlus = BaseApp.createImage("/Plus.png");
     ClassBrowserHelper.imDash = BaseApp.createImage("/Dash.png");

@@ -19,9 +19,9 @@
 package test.inspector;
 
 import java.util.TimeZone;
-import test.AbstractInspector;
+import test.AbstractProcessor;
 
-public class SystemInspector extends AbstractInspector {
+public class SystemInspector extends AbstractProcessor {
 
   public static final String CATEGORY = "System";
 
@@ -29,7 +29,7 @@ public class SystemInspector extends AbstractInspector {
     super(SystemInspector.CATEGORY);
   }
 
-  public void run() {
+  public void execute() {
     // System
     // get the timezone id
     final TimeZone tz = TimeZone.getDefault();

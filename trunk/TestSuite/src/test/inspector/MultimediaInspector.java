@@ -19,9 +19,9 @@
 package test.inspector;
 
 import javax.microedition.media.Manager;
-import test.AbstractInspector;
+import test.AbstractProcessor;
 
-public class MultimediaInspector extends AbstractInspector {
+public class MultimediaInspector extends AbstractProcessor {
 
   public static final String CATEGORY = "Multimedia";
 
@@ -29,7 +29,7 @@ public class MultimediaInspector extends AbstractInspector {
     super(MultimediaInspector.CATEGORY);
   }
 
-  public void run() {
+  public void execute() {
     final String[] supportedProtocols = Manager.getSupportedProtocols(null);
     if (supportedProtocols != null) {
       for (int i = 0; i < supportedProtocols.length; i++) {
