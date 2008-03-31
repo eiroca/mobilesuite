@@ -47,7 +47,7 @@ public class BuildPackageTree {
    * classNamesList field.
    * @param fileNames list of file-names of jar/zip files of classes
    */
-  BuildPackageTree(final String fileNames[]) {
+  public BuildPackageTree(final String fileNames[]) {
     ZipFile classesJar;
     ZipEntry possibleClass;
     Enumeration<? extends ZipEntry> e;
@@ -78,11 +78,6 @@ public class BuildPackageTree {
    * @return the Java source prefix
    */
   private void emitPrefix(final StringBuffer sb) {
-    sb.append("package classbrowser;\n");
-    sb.append("\n");
-    sb.append("public class PackageTree {");
-    sb.append("\n");
-    sb.append("  public static String Name[] = {\n");
   }
 
   /**
@@ -90,8 +85,6 @@ public class BuildPackageTree {
    * @return the Java source suffix
    */
   private void emitSuffix(final StringBuffer sb) {
-    sb.append("  };\n");
-    sb.append("}\n");
   }
 
   /**
@@ -112,11 +105,8 @@ public class BuildPackageTree {
         abbrev = getAbbreviation(prevName, className);
         if (abbrev != null) {
           // skip duplicates
-          sb.append("    \"").append(abbrev).append('"');
-          if (it.hasNext()) {
-            sb.append(',');
-          }
-          sb.append("\n");
+          sb.append(abbrev);
+          sb.append('\n');
           prevName = className;
         }
       }
