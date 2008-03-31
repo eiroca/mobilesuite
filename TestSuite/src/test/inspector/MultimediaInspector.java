@@ -19,7 +19,6 @@
 package test.inspector;
 
 import javax.microedition.media.Manager;
-
 import test.AbstractInspector;
 
 public class MultimediaInspector extends AbstractInspector {
@@ -27,7 +26,7 @@ public class MultimediaInspector extends AbstractInspector {
   public static final String CATEGORY = "Multimedia";
 
   public MultimediaInspector() {
-    super(CATEGORY);
+    super(MultimediaInspector.CATEGORY);
   }
 
   public void run() {

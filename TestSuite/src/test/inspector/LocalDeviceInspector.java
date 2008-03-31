@@ -19,10 +19,9 @@
 package test.inspector;
 
 import javax.bluetooth.LocalDevice;
-
-import test.AbstractInspector;
-import net.eiroca.j2me.app.Application;
+import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.Pair;
+import test.AbstractInspector;
 
 public class LocalDeviceInspector extends AbstractInspector {
 
@@ -32,23 +31,23 @@ public class LocalDeviceInspector extends AbstractInspector {
   Pair[] test;
 
   public LocalDeviceInspector() {
-    super(CATEGORY);
-    test = Application.readPairs(PROP_DATA, '=');
+    super(LocalDeviceInspector.CATEGORY);
+    test = BaseApp.readPairs(LocalDeviceInspector.PROP_DATA, '=');
   }
 
-  final private void testProp(Pair p) {
+  final private void testProp(final Pair p) {
     String val;
     try {
       val = LocalDevice.getProperty(p.value.toString());
     }
-    catch (Exception e) {
+    catch (final Exception e) {
       val = null;
     }
     addResult(p.name, val);
   }
 
   public void run() {
-    if (Application.isClass("javax.bluetooth.LocalDevice")) {
+    if (BaseApp.isClass("javax.bluetooth.LocalDevice")) {
       if (test != null) {
         for (int i = 0; i < test.length; i++) {
           testProp(test[i]);

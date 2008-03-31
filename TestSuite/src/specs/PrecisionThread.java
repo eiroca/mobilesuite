@@ -28,6 +28,7 @@ public class PrecisionThread extends Thread {
 
   public long iBefore;
   public long iAfter;
+  public boolean finished = false;
 
   public void run() {
 
@@ -39,6 +40,7 @@ public class PrecisionThread extends Thread {
       // ignore
     }
     iAfter = System.currentTimeMillis();
+    finished = true;
   }
 
 }

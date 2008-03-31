@@ -18,9 +18,9 @@
  */
 package test.inspector;
 
-import test.AbstractInspector;
-import net.eiroca.j2me.app.Application;
+import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.Pair;
+import test.AbstractInspector;
 
 public class APIsInspector extends AbstractInspector {
 
@@ -30,12 +30,12 @@ public class APIsInspector extends AbstractInspector {
   Pair[] test;
 
   public APIsInspector() {
-    super(CATEGORY);
-    test = Application.readPairs(PROP_DATA, '=');
+    super(APIsInspector.CATEGORY);
+    test = BaseApp.readPairs(APIsInspector.PROP_DATA, '=');
   }
 
-  final private void testClass(Pair p) {
-    addResult(p.name, Application.isClass(p.value.toString()) ? Boolean.TRUE : Boolean.FALSE);
+  final private void testClass(final Pair p) {
+    addResult(p.name, BaseApp.isClass(p.value.toString()) ? Boolean.TRUE : Boolean.FALSE);
   }
 
   public void run() {

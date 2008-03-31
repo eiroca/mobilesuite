@@ -18,23 +18,22 @@
  */
 package test;
 
-
 abstract public class AbstractInspector {
 
   String cat;
   Suite suite;
 
-  public AbstractInspector(String cat) {
+  public AbstractInspector(final String cat) {
     this.cat = cat;
   }
 
-  public void setSuite(Suite suite) {
+  public void setSuite(final Suite suite) {
     this.suite = suite;
   }
 
-  public void addResult(String key, Object val) {
+  public void addResult(final String key, final Object val) {
     if (suite != null) {
-      TestResult test = new TestResult();
+      final TestResult test = new TestResult();
       test.category = cat;
       test.key = key;
       test.val = val;

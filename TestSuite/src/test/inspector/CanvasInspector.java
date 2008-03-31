@@ -22,8 +22,7 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Font;
-
-import net.eiroca.j2me.app.Application;
+import net.eiroca.j2me.app.BaseApp;
 import specs.TestCanvas;
 import test.AbstractInspector;
 
@@ -35,45 +34,45 @@ public class CanvasInspector extends AbstractInspector {
   private Canvas canvasFull;
 
   public CanvasInspector() {
-    super(CATEGORY);
+    super(CanvasInspector.CATEGORY);
   }
 
-  final private void testKey(String desc, int key) {
+  final private void testKey(final String desc, final int key) {
     addResult(desc, canvas.getKeyName(canvas.getKeyCode(key)));
   }
 
-  final private void testInt(String desc, int x) {
+  final private void testInt(final String desc, final int x) {
     addResult(desc, new Integer(x));
   }
 
-  final private void testBool(String desc, boolean val) {
+  final private void testBool(final String desc, final boolean val) {
     addResult(desc, (val ? Boolean.TRUE : Boolean.FALSE));
   }
 
-  final private void testFont(String desc, Font f) {
+  final private void testFont(final String desc, final Font f) {
     addResult(desc, new Integer(f.getHeight()));
   }
 
   public void run() {
     canvas = new TestCanvas(false);
     canvasFull = new TestCanvas(true);
-    Displayable cur = Application.getDisplay();
-    Application.setDisplay(canvas);
+    final Displayable cur = BaseApp.getDisplay();
+    BaseApp.setDisplay(canvas);
     try {
       Thread.sleep(10);
     }
-    catch (InterruptedException e) {
+    catch (final InterruptedException e) {
       // ignore
     }
-    Application.setDisplay(canvasFull);
+    BaseApp.setDisplay(canvasFull);
     try {
       Thread.sleep(10);
     }
-    catch (InterruptedException e) {
+    catch (final InterruptedException e) {
       // ignore
     }
-    Application.setDisplay(cur);
-    Display d = Application.display;
+    BaseApp.setDisplay(cur);
+    final Display d = BaseApp.display;
     testInt("Screen (normal) width", canvas.getWidth());
     testInt("Screen (normal) height", canvas.getHeight());
     testInt("Screen (full) width", canvasFull.getWidth());

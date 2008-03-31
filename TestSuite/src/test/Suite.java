@@ -19,9 +19,9 @@
 package test;
 
 import java.util.Vector;
-
 import javax.microedition.lcdui.Form;
-
+import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Pair;
 import test.inspector.APIsInspector;
 import test.inspector.CanvasInspector;
 import test.inspector.Graphic3DInspector;
@@ -31,16 +31,13 @@ import test.inspector.PrivacyPropertyInspector;
 import test.inspector.PropertyInspector;
 import test.inspector.SystemInspector;
 
-import net.eiroca.j2me.app.Application;
-import net.eiroca.j2me.app.Pair;
-
 public class Suite {
 
   public static final String MAPPING = "/mapping.txt";
 
-  private Vector tests = new Vector();
+  private final Vector tests = new Vector();
   private Pair[] mapping = null;
-  private AbstractInspector[] t;
+  private final AbstractInspector[] t;
 
   public Suite() {
     t = new AbstractInspector[8];
@@ -63,11 +60,11 @@ public class Suite {
     }
   }
 
-  public void addResult(TestResult test) {
+  public void addResult(final TestResult test) {
     tests.addElement(test);
   }
 
-  public String getDesc(String key) {
+  public String getDesc(final String key) {
     String res = key;
     if (mapping != null) {
       for (int i = 0; i < mapping.length; i++) {
@@ -82,7 +79,7 @@ public class Suite {
 
   public void export(final Form list, final String category) {
     if (mapping == null) {
-      mapping = Application.readPairs(MAPPING, '=');
+      mapping = BaseApp.readPairs(Suite.MAPPING, '=');
     }
     for (int i = 0; i < tests.size(); i++) {
       final TestResult inf = (TestResult) tests.elementAt(i);
