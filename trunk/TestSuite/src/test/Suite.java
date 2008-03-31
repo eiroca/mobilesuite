@@ -47,9 +47,9 @@ public class Suite {
   public Suite() {
     inspectors = new AbstractProcessor[8];
     benchmarks = new SuiteAbstract[2];
-    inspectors[0] = new PropertyInspector();
-    inspectors[1] = new APIsInspector();
-    inspectors[2] = new CanvasInspector();
+    inspectors[0] = new CanvasInspector();
+    inspectors[1] = new PropertyInspector();
+    inspectors[2] = new APIsInspector();
     inspectors[3] = new SystemInspector();
     inspectors[4] = new MultimediaInspector();
     inspectors[5] = new PrivacyPropertyInspector();

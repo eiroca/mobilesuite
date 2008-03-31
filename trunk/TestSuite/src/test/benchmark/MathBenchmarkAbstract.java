@@ -6,7 +6,7 @@ abstract public class MathBenchmarkAbstract extends BenchmarkAbstract {
 
   public int result;
 
-  protected final static int NUMBER_OF_OPS = 10000000;
+  protected final static int NUMBER_OF_OPS = 5000000;
 
   protected final int arrayA[];
   protected final int arrayB[];
