@@ -1,0 +1,14 @@
+P.04.01=com.sonyericsson.imei
+P.04.02=com.sonyericsson.sim.subscribernumber
+P.04.03=com.sonyericsson.jackknifeopen
+P.04.04=com.sonyericsson.flipopen
+P.04.05=com.sonyericsson.java.platform
+P.04.06=com.sonyericsson.net.mcc
+P.04.07=com.sonyericsson.net.mnc
+P.04.08=com.sonyericsson.net.cmcc
+P.04.09=com.sonyericsson.net.cmnc
+P.04.10=com.sonyericsson.net.isonhomeplmn
+P.04.11=com.sonyericsson.net.rat
+P.04.12=com.sonyericsson.net.cellid
+P.04.13=com.sonyericsson.net.lac
+P.04.14=com.sonyericsson.net.status

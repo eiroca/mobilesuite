@@ -1,0 +1,10 @@
+B.02=bluetooth.api.version
+B.03=bluetooth.master.switch
+B.04=bluetooth.sd.attr.retrievable.max
+B.05=bluetooth.connected.devices.max
+B.06=bluetooth.l2cap.receiveMTU.max
+B.07=bluetooth.sd.trans.max
+B.08=bluetooth.connected.inquiry.scan
+B.09=bluetooth.connected.page.scan
+B.10=bluetooth.connected.inquiry
+B.11=bluetooth.connected.page
