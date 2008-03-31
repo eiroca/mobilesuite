@@ -23,10 +23,9 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Font;
 import net.eiroca.j2me.app.BaseApp;
-import specs.TestCanvas;
-import test.AbstractInspector;
+import test.AbstractProcessor;
 
-public class CanvasInspector extends AbstractInspector {
+public class CanvasInspector extends AbstractProcessor {
 
   public static final String CATEGORY = "Canvas";
 
@@ -53,7 +52,7 @@ public class CanvasInspector extends AbstractInspector {
     addResult(desc, new Integer(f.getHeight()));
   }
 
-  public void run() {
+  public void execute() {
     canvas = new TestCanvas(false);
     canvasFull = new TestCanvas(true);
     final Displayable cur = BaseApp.getDisplay();

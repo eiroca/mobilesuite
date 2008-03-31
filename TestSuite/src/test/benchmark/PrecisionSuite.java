@@ -16,34 +16,17 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package test.inspector;
+package test.benchmark;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
-import javax.microedition.m3g.Graphics3D;
-import net.eiroca.j2me.app.BaseApp;
-import test.AbstractProcessor;
 
-public class Graphic3DInspector extends AbstractProcessor {
+public class PrecisionSuite extends SuiteAbstract {
 
-  public static final String CATEGORY = "Graphic3D";
+  public static final String CATEGORY = "Precision";
 
-  public Graphic3DInspector() {
-    super(Graphic3DInspector.CATEGORY);
-  }
-
-  public void execute() {
-    if (BaseApp.isClass("javax.microedition.m3g.Graphics3D")) {
-      final Hashtable props = Graphics3D.getProperties();
-      Object key;
-      Object val;
-      for (final Enumeration e = props.keys(); e.hasMoreElements();) {
-        key = e.nextElement();
-        val = props.get(key);
-        addResult("Graphics3D." + key, val);
-      }
-
-    }
+  public PrecisionSuite() {
+    super(CATEGORY);
+    benchmark = new BenchmarkAbstract[1];
+    benchmark[0] = new Precision(this);
   }
 
 }
