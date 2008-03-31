@@ -34,7 +34,8 @@ public class TestCanvas extends Canvas {
   }
 
   protected void paint(final Graphics g) {
-    // do nothing
+    g.setColor(0);
+    g.fillRect(0, 0, getWidth(), getHeight());
   }
 
 }

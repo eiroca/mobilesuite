@@ -36,10 +36,12 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
     long elapsed;
     // Array DIV
     before = System.currentTimeMillis();
-    int result = 0;
-    for (int i = 0; i < NUMBER_OF_OPS / 100; i++) {
+    for (int i = 0; i < NUMBER_OF_OPS / 200; i++) {
       for (int j = 0; j < 100; j++) {
-        result = arrayA[j] / arrayB[j];
+        result += arrayA[j] / arrayB[j];
+      }
+      for (int j = 0; j < 100; j++) {
+        result -= arrayA[j] / arrayB[j];
       }
     }
     if (result > 0) {
@@ -61,7 +63,7 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
     while (localB == 0);
     before = System.currentTimeMillis();
     for (int i = 0; i < NUMBER_OF_OPS; i++) {
-      result = localA / localB;
+      result += localA / localB;
     }
     after = System.currentTimeMillis();
     if (result > 0) {
@@ -72,7 +74,7 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
     // Instance DIV
     before = System.currentTimeMillis();
     for (int i = 0; i < NUMBER_OF_OPS; i++) {
-      result = instanceA / instanceB;
+      result += instanceA / instanceB;
     }
     after = System.currentTimeMillis();
     if (result > 0) {
@@ -83,7 +85,7 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
     // Static DIV
     before = System.currentTimeMillis();
     for (int i = 0; i < NUMBER_OF_OPS; i++) {
-      result = staticA / staticB;
+      result += staticA / staticB;
     }
     after = System.currentTimeMillis();
     if (result > 0) {

@@ -36,7 +36,6 @@ public class BenchmarkADD extends MathBenchmarkAbstract {
     long elapsed;
     // Array SUM
     before = System.currentTimeMillis();
-    int result = 0;
     for (int i = 0; i < NUMBER_OF_OPS / 100; i++) {
       for (int j = 0; j < 100; j++) {
         result = arrayA[j] + arrayB[j];
