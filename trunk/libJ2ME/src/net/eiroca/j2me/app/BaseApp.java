@@ -1619,4 +1619,25 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     return (sValue == null ? def : sValue);
   }
 
+  /**
+   * Checks to see if a given class/interface exists in this Java
+   * implementation.
+   *
+   * @param className the full name of the class
+   * @return true if the class/interface exists
+   */
+  public static boolean isClass(final String className) {
+    boolean found = false;
+    try {
+      if (className != null) {
+        Class.forName(className);
+        found = true;
+      }
+    }
+    catch (final ClassNotFoundException cnfe) {
+      //
+    }
+    return found;
+  }
+
 }
