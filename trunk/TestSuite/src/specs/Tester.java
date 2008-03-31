@@ -26,9 +26,7 @@ package specs;
 
 import java.util.Random;
 import java.util.Vector;
-
 import javax.microedition.lcdui.Form;
-
 import net.eiroca.j2me.util.Info;
 
 public class Tester extends Thread {

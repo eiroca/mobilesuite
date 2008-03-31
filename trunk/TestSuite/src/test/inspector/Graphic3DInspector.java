@@ -20,10 +20,8 @@ package test.inspector;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
-
 import javax.microedition.m3g.Graphics3D;
-
-import net.eiroca.j2me.app.Application;
+import net.eiroca.j2me.app.BaseApp;
 import test.AbstractInspector;
 
 public class Graphic3DInspector extends AbstractInspector {
@@ -31,15 +29,15 @@ public class Graphic3DInspector extends AbstractInspector {
   public static final String CATEGORY = "Graphic3D";
 
   public Graphic3DInspector() {
-    super(CATEGORY);
+    super(Graphic3DInspector.CATEGORY);
   }
 
   public void run() {
-    if (Application.isClass("javax.microedition.m3g.Graphics3D")) {
-      Hashtable props = Graphics3D.getProperties();
+    if (BaseApp.isClass("javax.microedition.m3g.Graphics3D")) {
+      final Hashtable props = Graphics3D.getProperties();
       Object key;
       Object val;
-      for (Enumeration e = props.keys(); e.hasMoreElements();) {
+      for (final Enumeration e = props.keys(); e.hasMoreElements();) {
         key = e.nextElement();
         val = props.get(key);
         addResult("Graphics3D." + key, val);

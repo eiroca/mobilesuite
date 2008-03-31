@@ -19,7 +19,6 @@
 package test.inspector;
 
 import java.util.TimeZone;
-
 import test.AbstractInspector;
 
 public class SystemInspector extends AbstractInspector {
@@ -27,7 +26,7 @@ public class SystemInspector extends AbstractInspector {
   public static final String CATEGORY = "System";
 
   public SystemInspector() {
-    super(CATEGORY);
+    super(SystemInspector.CATEGORY);
   }
 
   public void run() {

@@ -18,9 +18,9 @@
  */
 package test.inspector;
 
-import test.AbstractInspector;
-import net.eiroca.j2me.app.Application;
+import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.Pair;
+import test.AbstractInspector;
 
 public class PropertyInspector extends AbstractInspector {
 
@@ -30,12 +30,12 @@ public class PropertyInspector extends AbstractInspector {
   Pair[] test;
 
   public PropertyInspector() {
-    super(CATEGORY);
-    test = Application.readPairs(PROP_DATA, '=');
+    super(PropertyInspector.CATEGORY);
+    test = BaseApp.readPairs(PropertyInspector.PROP_DATA, '=');
   }
 
-  final private void testProp(Pair p) {
-    addResult(p.name, Application.readProperty(p.value.toString(), null));
+  final private void testProp(final Pair p) {
+    addResult(p.name, BaseApp.readProperty(p.value.toString(), null));
   }
 
   public void run() {

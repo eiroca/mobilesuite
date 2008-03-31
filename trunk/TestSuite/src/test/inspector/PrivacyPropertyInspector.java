@@ -18,9 +18,9 @@
  */
 package test.inspector;
 
-import test.AbstractInspector;
-import net.eiroca.j2me.app.Application;
+import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.Pair;
+import test.AbstractInspector;
 
 public class PrivacyPropertyInspector extends AbstractInspector {
 
@@ -30,12 +30,12 @@ public class PrivacyPropertyInspector extends AbstractInspector {
   Pair[] test;
 
   public PrivacyPropertyInspector() {
-    super(CATEGORY);
-    test = Application.readPairs(PROP_DATA, '=');
+    super(PrivacyPropertyInspector.CATEGORY);
+    test = BaseApp.readPairs(PrivacyPropertyInspector.PROP_DATA, '=');
   }
 
-  final private void testProp(Pair p) {
-    Object val = Application.readProperty(p.value.toString(), null);
+  final private void testProp(final Pair p) {
+    final Object val = BaseApp.readProperty(p.value.toString(), null);
     addResult(p.name, (val != null ? Boolean.TRUE : null));
   }
 
