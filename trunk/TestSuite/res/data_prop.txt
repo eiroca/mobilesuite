@@ -1,0 +1,17 @@
+P.01.01=microedition.configuration
+P.01.02=microedition.profiles
+P.01.03=microedition.locale
+P.01.04=microedition.platform
+P.01.05=microedition.encoding
+P.01.06=microedition.commports
+P.01.07=microedition.media.version
+P.01.08=microedition.jtwi.version
+P.02.01=supports.video.capture
+P.02.02=video.encodings
+P.02.03=video.snapshot.encodings
+P.02.04=supports.audio.capture
+P.02.05=audio.encoding
+P.02.06=supports.recording
+P.02.07=supports.mixing
+P.02.08=streamable.contents
+
