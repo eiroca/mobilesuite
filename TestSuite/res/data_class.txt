@@ -1,9 +1,9 @@
 A.001=javax.microedition.media.Manager
-A.002=javax.wireless.messaging.Message
+A.002=javax.wireless.messaging.MessageConnection
 A.003=javax.wireless.messaging.MessagePart
 A.004=javax.bluetooth.LocalDevice
 A.005=javax.obex.HeaderSet
-A.006=javax.microedition.m3g.Node
+A.006=javax.microedition.m3g.Graphics3D
 A.007=javax.microedition.io.HttpsConnection
 A.008=javax.microedition.media.TimeBase
 A.009=javax.xml.parsers.SAXParser

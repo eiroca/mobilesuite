@@ -24,7 +24,10 @@ import javax.microedition.lcdui.Form;
 
 import test.inspector.APIsInspector;
 import test.inspector.CanvasInspector;
+import test.inspector.Graphic3DInspector;
+import test.inspector.LocalDeviceInspector;
 import test.inspector.MultimediaInspector;
+import test.inspector.PrivacyPropertyInspector;
 import test.inspector.PropertyInspector;
 import test.inspector.SystemInspector;
 
@@ -40,12 +43,15 @@ public class Suite {
   private AbstractInspector[] t;
 
   public Suite() {
-    t = new AbstractInspector[5];
+    t = new AbstractInspector[8];
     t[0] = new PropertyInspector();
     t[1] = new APIsInspector();
     t[2] = new CanvasInspector();
     t[3] = new SystemInspector();
     t[4] = new MultimediaInspector();
+    t[5] = new PrivacyPropertyInspector();
+    t[6] = new LocalDeviceInspector();
+    t[7] = new Graphic3DInspector();
     for (int i = 0; i < t.length; i++) {
       t[i].setSuite(this);
     }

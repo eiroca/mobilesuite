@@ -37,7 +37,10 @@ import specs.Tester;
 import test.Suite;
 import test.inspector.APIsInspector;
 import test.inspector.CanvasInspector;
+import test.inspector.Graphic3DInspector;
+import test.inspector.LocalDeviceInspector;
 import test.inspector.MultimediaInspector;
+import test.inspector.PrivacyPropertyInspector;
 import test.inspector.PropertyInspector;
 import test.inspector.SystemInspector;
 import classbrowser.ClassBrowserHelper;
@@ -53,7 +56,8 @@ public final class TestSuite extends Application {
 
   static final int COUNT = 15;
 
-  private final String[] INSPECTOR_CAT = new String[] { PropertyInspector.CATEGORY, APIsInspector.CATEGORY, CanvasInspector.CATEGORY, SystemInspector.CATEGORY, MultimediaInspector.CATEGORY };
+  private final String[] INSPECTOR_CAT = new String[] { PropertyInspector.CATEGORY, APIsInspector.CATEGORY, CanvasInspector.CATEGORY, SystemInspector.CATEGORY, MultimediaInspector.CATEGORY,
+      LocalDeviceInspector.CATEGORY, Graphic3DInspector.CATEGORY, PrivacyPropertyInspector.CATEGORY };
   private final String[] BENCHMARK_CAT = new String[] { Tester.CAT_BENCHMARK };
 
   private final Command cPREV;
