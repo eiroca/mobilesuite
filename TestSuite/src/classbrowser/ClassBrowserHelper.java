@@ -41,7 +41,7 @@ public class ClassBrowserHelper {
    * Reset the classes List so that it displays the new package. The new package
    * path is read from sPackagePath.
    */
-  public static void generateList(final List classesList, final String sPackagePath) {
+  public static void generateList(final List classesList, final String sPackagePath, final String[] classes) {
     int iNumElements;
     int iClassIdx;
     int iDepth;
@@ -60,8 +60,8 @@ public class ClassBrowserHelper {
     fSearching = true; // still looking for first relevant entry
     iDepth = 0; // index into rgElements array
     sLastElement = ""; // last element added to the list
-    for (iClassIdx = 0; iClassIdx < PackageTree.Name.length;) {
-      ClassBrowserHelper.expandName(PackageTree.Name[iClassIdx], rgPackageIdx, rgPackageElement);
+    for (iClassIdx = 0; iClassIdx < classes.length;) {
+      ClassBrowserHelper.expandName(classes[iClassIdx], rgPackageIdx, rgPackageElement);
       if (rgElements.length == 0) {
         sLastElement = ClassBrowserHelper.submitCandidate(classesList, rgPackageElement, iDepth, sLastElement);
       }

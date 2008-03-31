@@ -27,13 +27,12 @@ package specs;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.Vector;
-
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
+import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Form;
 import javax.microedition.media.Manager;
-
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.util.Info;
 
@@ -52,7 +51,6 @@ public class Tester extends Thread {
   private PrecisionThread tSleeper;
   private Canvas canvas;
   private Canvas canvasFull;
-  private Display d;
   private static boolean finished = false;
 
   private final static int NUMBER_OF_OPS = 10000000;
@@ -65,7 +63,6 @@ public class Tester extends Thread {
 
   private int instanceA;
   private int instanceB;
-  public int result;
 
   private final Random random = new Random();
 
@@ -101,20 +98,57 @@ public class Tester extends Thread {
     }
   }
 
-  public void run() {
-    tSleeper = new PrecisionThread();
-    tSleeper.start();
-    canvas = new TestCanvas(false);
-    canvasFull = new TestCanvas(true);
-    try {
-      tSleeper.join(); // Retrieve the minimum resolution timers can measure
-    }
-    catch (final InterruptedException ie) {
-      // ignore
-    }
-    iResolution = tSleeper.iAfter - tSleeper.iBefore;
-    final TimeZone tz = TimeZone.getDefault(); // ottiene l'id della TIMEZONE
-    d = Application.display;
+  private static final String YES = "yes";
+  private static final String NO = "no";
+
+  final private void testBool(String cat, String desc, boolean val) {
+    addStr(cat, desc, (val ? YES : NO));
+  }
+
+  final private void testClas(String cat, String desc, String clas) {
+    addStr(cat, desc, (isClass(clas) ? YES : NO));
+  }
+
+  final private void testProp(String cat, String desc, String prop) {
+    addStr(cat, desc, readProperty(prop, "?"));
+  }
+
+  final private void testKey(String cat, String desc, int key) {
+    addStr(cat, desc, canvas.getKeyName(canvas.getKeyCode(key)));
+  }
+
+  final private void testFont(String cat, String desc, Font f) {
+    addStr(cat, desc, Integer.toString(f.getHeight()));
+  }
+
+  final private void testInt(String cat, String desc, int x) {
+    addStr(cat, desc, Integer.toString(x));
+  }
+
+  private void screenInfo() {
+    // Screen Info
+    Display d = Application.display;
+    testInt(Tester.CAT_SCREEN, "Screen (normal) width", canvas.getWidth());
+    testInt(Tester.CAT_SCREEN, "Screen (normal) height", canvas.getHeight());
+    testInt(Tester.CAT_SCREEN, "Screen (full) width", canvasFull.getWidth());
+    testInt(Tester.CAT_SCREEN, "Screen (full) height", canvasFull.getHeight());
+    testInt(Tester.CAT_SCREEN, "Color Depth", d.numColors());
+    testBool(Tester.CAT_SCREEN, "Is grayscale", d.isColor());
+    testInt(Tester.CAT_SCREEN, "Alpha Levels", d.numAlphaLevels());
+    testBool(Tester.CAT_SCREEN, "Screen buffered", canvas.isDoubleBuffered());
+    testFont(Tester.CAT_SCREEN, "Font Default Height", Font.getDefaultFont());
+    testFont(Tester.CAT_SCREEN, "Font Small Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL));
+    testFont(Tester.CAT_SCREEN, "Font Small Bold Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL));
+    testFont(Tester.CAT_SCREEN, "Font Medium Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_MEDIUM));
+    testFont(Tester.CAT_SCREEN, "Font Medium Bold Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_MEDIUM));
+    testFont(Tester.CAT_SCREEN, "Font Large Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_LARGE));
+    testFont(Tester.CAT_SCREEN, "Font Large Bold Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_LARGE));
+  }
+
+  private void systemInfo() {
+    // System
+    // get the timezone id
+    final TimeZone tz = TimeZone.getDefault();
     final String[] timeZoneIDs = java.util.TimeZone.getAvailableIDs();
     final StringBuffer timeZonesBuffer = new StringBuffer();
     for (int i = 0; i < timeZoneIDs.length; i++) {
@@ -123,111 +157,136 @@ public class Tester extends Thread {
       }
       timeZonesBuffer.append(timeZoneIDs[i]);
     }
-    final Font font1 = Font.getDefaultFont();
-    final Font font2 = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL);
-    final Font font3 = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_MEDIUM);
-    final Font font4 = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_LARGE);
-    final Font font5 = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL);
-    final Font font6 = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_MEDIUM);
-    final Font font7 = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_LARGE);
     Runtime.getRuntime().gc();
-    // Screen Info
-    add(Tester.CAT_SCREEN, "Screen (normal)", canvas.getWidth() + "x" + canvas.getHeight());
-    add(Tester.CAT_SCREEN, "Screen (full)", canvasFull.getWidth() + "x" + canvasFull.getHeight());
-    add(Tester.CAT_SCREEN, "Colors", d.numColors() + (d.isColor() ? "" : "grays"));
-    add(Tester.CAT_SCREEN, "Alpha Levels", Integer.toString(d.numAlphaLevels()));
-    add(Tester.CAT_SCREEN, "Screen buffered", (canvas.isDoubleBuffered() ? "yes" : "no"));
-    add(Tester.CAT_SCREEN, "Has pointer events", (canvas.hasPointerEvents() ? "yes" : "no"));
-    add(Tester.CAT_SCREEN, "Has motion events", (canvas.hasPointerMotionEvents() ? "yes" : "no"));
-    add(Tester.CAT_SCREEN, "Has key-held events", (canvas.hasRepeatEvents() ? "yes" : "no"));
-    add(Tester.CAT_SCREEN, "Default-Font-Height", Integer.toString(font1.getHeight()));
-    add(Tester.CAT_SCREEN, "Small-Font-Height", Integer.toString(font2.getHeight()));
-    add(Tester.CAT_SCREEN, "Medium-Font-Height", Integer.toString(font3.getHeight()));
-    add(Tester.CAT_SCREEN, "Large-Font-Height", Integer.toString(font4.getHeight()));
-    add(Tester.CAT_SCREEN, "Small-Font-Height (bold)", Integer.toString(font5.getHeight()));
-    add(Tester.CAT_SCREEN, "Medium-Font-Height (bold)", Integer.toString(font6.getHeight()));
-    add(Tester.CAT_SCREEN, "Large-Font-Height (bold)", Integer.toString(font7.getHeight()));
+    addStr(Tester.CAT_SYSTEM, "Total mem", Long.toString(Runtime.getRuntime().totalMemory()));
+    addStr(Tester.CAT_SYSTEM, "Free mem", Long.toString(Runtime.getRuntime().freeMemory()));
+    testProp(Tester.CAT_SYSTEM, "Configuration", "microedition.configuration");
+    testProp(Tester.CAT_SYSTEM, "Profiles", "microedition.profiles");
+    testProp(Tester.CAT_SYSTEM, "Locale", "microedition.locale");
+    testProp(Tester.CAT_SYSTEM, "Platform", "microedition.platform");
+    testProp(Tester.CAT_SYSTEM, "Char encoding", "microedition.encoding");
+    testProp(Tester.CAT_SYSTEM, "Comm Ports", "microedition.commports");
+    addStr(Tester.CAT_SYSTEM, "Default Time Zone", tz.getID());
+    addStr(Tester.CAT_SYSTEM, "Available Time Zone", timeZonesBuffer.toString());
+  }
 
-    // Memory
-    add(Tester.CAT_SYSTEM, "JTWI (JSR-185)", (System.getProperty("microedition.jtwi.version") == null ? "no" : "yes (ver. " + System.getProperty("microedition.jtwi.version") + ")"));
-    add(Tester.CAT_SYSTEM, "Total mem", Long.toString(Runtime.getRuntime().totalMemory()));
-    add(Tester.CAT_SYSTEM, "Free mem", Long.toString(Runtime.getRuntime().freeMemory()));
-    add(Tester.CAT_SYSTEM, "Configuration", readProperty("microedition.configuration"));
-    add(Tester.CAT_SYSTEM, "Profiles", readProperty("microedition.profiles"));
-    add(Tester.CAT_SYSTEM, "Locale", readProperty("microedition.locale"));
-    add(Tester.CAT_SYSTEM, "Platform", readProperty("microedition.platform"));
-    add(Tester.CAT_SYSTEM, "Char encoding", readProperty("microedition.encoding"));
-    add(Tester.CAT_SYSTEM, "Comm Ports", readProperty("microedition.commports"));
-    add(Tester.CAT_SYSTEM, "Default Time Zone", tz.getID());
-    add(Tester.CAT_SYSTEM, "Available Time Zone", timeZonesBuffer.toString());
+  private void APIInfo() {
     // API
-    add(Tester.CAT_API, "JSR-135 MMAPI - multimedia", (isClass("javax.microedition.media.Manager") ? "yes, " + readProperty("microedition.media.version") : "no"));
-    final boolean wmapi2 = isClass("javax.wireless.messaging.MessagePart");
-    if (wmapi2) {
-      add(Tester.CAT_API, "JSR-205 WMAPI - messaging", "yes, 2.0");
+    final String mmVer = readProperty("microedition.media.version", "");
+    String jwVer = System.getProperty("microedition.jtwi.version");
+    if (jwVer == null) {
+      jwVer = "";
     }
-    else {
-      add(Tester.CAT_API, "JSR-120 WMAPI - messaging", (isClass("javax.wireless.messaging.Message") ? "yes, 1.1" : "no"));
-    }
-    add(Tester.CAT_API, "JSR-082 bluetooth", (isClass("javax.bluetooth.LocalDevice") ? "yes" : "no"));
-    add(Tester.CAT_API, "JSR-082 bluetooth-obex", (isClass("javax.obex.HeaderSet") ? "yes" : "no"));
-    add(Tester.CAT_API, "JSR-184 M3G - 3D graphics", (isClass("javax.microedition.m3g.Node") ? "yes" : "no"));
-    add(Tester.CAT_API, "JSR-118 MIDP2", (isClass("javax.microedition.io.HttpsConnection") ? "yes" : "no"));
-    add(Tester.CAT_API, "JSR-135 video", (isClass("javax.microedition.media.TimeBase") ? "yes" : "no"));
-    add(Tester.CAT_API, "JSR-172 web services", (isClass("javax.xml.parsers.SAXParser") ? "yes" : "no"));
-    add(Tester.CAT_API, "JSR-177 security services", (isClass("java.security.Signature") ? "yes" : "no"));
-    add(Tester.CAT_API, "JSR-179 location", (isClass("javax.microedition.location.Location") ? "yes" : "no"));
-    add(Tester.CAT_API, "JSR-180 SIP", (isClass("javax.microedition.sip.SipConnection") ? "yes" : "no"));
-    add(Tester.CAT_API, "API - PIM", (isClass("javax.microedition.pim.PIM") ? "yes" : "no"));
-    add(Tester.CAT_API, "API - FileSystem", (isClass("javax.microedition.io.file.FileSystemRegistry") ? "yes" : "no"));
-    add(Tester.CAT_API, "Nokia - UI", (isClass("com.nokia.mid.ui.DeviceControl") ? "yes" : "no"));
-    add(Tester.CAT_API, "Nokia - sound", (isClass("com.nokia.mid.sound.Sound") ? "yes" : "no"));
-    add(Tester.CAT_API, "Nokia - graphics", (isClass("com.nokia.mid.ui.FullCanvas") ? "yes" : "no"));
-    add(Tester.CAT_API, "Siemens - UI", (isClass("com.siemens.mp.MIDlet") ? "yes" : "no"));
-    add(Tester.CAT_API, "Siemens - graphics", (isClass("com.siemens.mp.color_game.GameCanvas") ? "yes" : "no"));
+    testClas(Tester.CAT_API, "JSR-135 MMAPI " + mmVer + " - multimedia", "javax.microedition.media.Manager");
+    testClas(Tester.CAT_API, "JSR-120 WMAPI 1.1 - messaging", "javax.wireless.messaging.Message");
+    testClas(Tester.CAT_API, "JSR-205 WMAPI 2.0 - messaging", "javax.wireless.messaging.MessagePart");
+    testClas(Tester.CAT_API, "JSR-082 bluetooth", "javax.bluetooth.LocalDevice");
+    testClas(Tester.CAT_API, "JSR-082 bluetooth-obex", "javax.obex.HeaderSet");
+    testClas(Tester.CAT_API, "JSR-184 M3G - 3D graphics", "javax.microedition.m3g.Node");
+    testClas(Tester.CAT_API, "JSR-118 MIDP2", "javax.microedition.io.HttpsConnection");
+    testClas(Tester.CAT_API, "JSR-135 video", "javax.microedition.media.TimeBase");
+    testClas(Tester.CAT_API, "JSR-172 web services", "javax.xml.parsers.SAXParser");
+    testClas(Tester.CAT_API, "JSR-177 security services", "java.security.Signature");
+    testClas(Tester.CAT_API, "JSR-179 location", "javax.microedition.location.Location");
+    testClas(Tester.CAT_API, "JSR-180 SIP", "javax.microedition.sip.SipConnection");
+    testBool(Tester.CAT_API, "JSR-185 JTWI " + jwVer, (jwVer.length() > 0));
+    testClas(Tester.CAT_API, "API - PIM", "javax.microedition.pim.PIM");
+    testClas(Tester.CAT_API, "API - FileSystem", "javax.microedition.io.file.FileSystemRegistry");
+    testClas(Tester.CAT_API, "Nokia - UI", "com.nokia.mid.ui.DeviceControl");
+    testClas(Tester.CAT_API, "Nokia - sound", "com.nokia.mid.sound.Sound");
+    testClas(Tester.CAT_API, "Nokia - graphics", "com.nokia.mid.ui.FullCanvas");
+    testClas(Tester.CAT_API, "Siemens - UI", "com.siemens.mp.MIDlet");
+    testClas(Tester.CAT_API, "Siemens - graphics", "com.siemens.mp.color_game.GameCanvas");
+  }
+
+  private void keyInfo() {
     // KEY
-    add(Tester.CAT_KEYS, "GAME_A", canvas.getKeyName(canvas.getKeyCode(Canvas.GAME_A)));
-    add(Tester.CAT_KEYS, "GAME_B", canvas.getKeyName(canvas.getKeyCode(Canvas.GAME_B)));
-    add(Tester.CAT_KEYS, "GAME_C", canvas.getKeyName(canvas.getKeyCode(Canvas.GAME_C)));
-    add(Tester.CAT_KEYS, "GAME_D", canvas.getKeyName(canvas.getKeyCode(Canvas.GAME_D)));
-    add(Tester.CAT_KEYS, "UP", canvas.getKeyName(canvas.getKeyCode(Canvas.UP)));
-    add(Tester.CAT_KEYS, "DOWN", canvas.getKeyName(canvas.getKeyCode(Canvas.DOWN)));
-    add(Tester.CAT_KEYS, "FIRE", canvas.getKeyName(canvas.getKeyCode(Canvas.FIRE)));
-    add(Tester.CAT_KEYS, "LEFT", canvas.getKeyName(canvas.getKeyCode(Canvas.LEFT)));
-    add(Tester.CAT_KEYS, "RIGTH", canvas.getKeyName(canvas.getKeyCode(Canvas.RIGHT)));
-    // other
-    add(Tester.CAT_MMEDIA, "MMAPI - multimedia", (isClass("javax.microedition.media.Manager") ? "yes, " + readProperty("microedition.media.version") : "no"));
-    add(Tester.CAT_MMEDIA, "Video capture", readProperty("supports.video.capture"));
-    add(Tester.CAT_MMEDIA, "Video encodings", readProperty("video.encodings"));
-    add(Tester.CAT_MMEDIA, "Video snapshot encodings", readProperty("video.snapshot.encodings"));
-    add(Tester.CAT_MMEDIA, "Audio capture", readProperty("supports.audio.capture"));
-    add(Tester.CAT_MMEDIA, "Audio encoding", readProperty("audio.encoding"));
-    add(Tester.CAT_MMEDIA, "Supports recording", readProperty("supports.recording"));
-    add(Tester.CAT_MMEDIA, "Supports mixing", readProperty("supports.mixing"));
-    add(Tester.CAT_MMEDIA, "Streamable contents", readProperty("streamable.contents"));
+    testBool(Tester.CAT_KEYS, "Has pointer events", canvas.hasPointerEvents());
+    testBool(Tester.CAT_KEYS, "Has motion events", canvas.hasPointerMotionEvents());
+    testBool(Tester.CAT_KEYS, "Has key-held events", canvas.hasRepeatEvents());
+    testKey(Tester.CAT_KEYS, "Key GAME_A", Canvas.GAME_A);
+    testKey(Tester.CAT_KEYS, "Key GAME_B", Canvas.GAME_B);
+    testKey(Tester.CAT_KEYS, "Key GAME_C", Canvas.GAME_C);
+    testKey(Tester.CAT_KEYS, "Key GAME_D", Canvas.GAME_D);
+    testKey(Tester.CAT_KEYS, "Key UP", Canvas.UP);
+    testKey(Tester.CAT_KEYS, "Key DOWN", Canvas.DOWN);
+    testKey(Tester.CAT_KEYS, "Key FIRE", Canvas.FIRE);
+    testKey(Tester.CAT_KEYS, "Key LEFT", Canvas.LEFT);
+    testKey(Tester.CAT_KEYS, "Key RIGTH", Canvas.RIGHT);
+  }
+
+  private void multimediaInfo() {
+    // MultiMedia
+    testProp(Tester.CAT_MMEDIA, "Video capture", "supports.video.capture");
+    testProp(Tester.CAT_MMEDIA, "Video encodings", "video.encodings");
+    testProp(Tester.CAT_MMEDIA, "Video snapshot encodings", "video.snapshot.encodings");
+    testProp(Tester.CAT_MMEDIA, "Audio capture", "supports.audio.capture");
+    testProp(Tester.CAT_MMEDIA, "Audio encoding", "audio.encoding");
+    testProp(Tester.CAT_MMEDIA, "Supports recording", "supports.recording");
+    testProp(Tester.CAT_MMEDIA, "Supports mixing", "supports.mixing");
+    testProp(Tester.CAT_MMEDIA, "Streamable contents", "streamable.contents");
     final String[] supportedProtocols = getSupportedProtocols(null);
     if (supportedProtocols != null) {
       for (int i = 0; i < supportedProtocols.length; i++) {
         final String protocol = supportedProtocols[i];
         final String[] supportedContentTypes = getSupportedContentTypes(protocol);
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuffer buffer = new StringBuffer(32);
         for (int j = 0; j < supportedContentTypes.length; j++) {
           if (j > 0) {
             buffer.append(", ");
           }
           buffer.append(supportedContentTypes[j]);
         }
-        add(Tester.CAT_MMEDIA, "Protocol " + protocol, buffer.toString());
+        addStr(Tester.CAT_MMEDIA, "Protocol " + protocol, buffer.toString());
       }
     }
-    add(Tester.CAT_BENCHMARK, "Timer res. est.", iResolution + "ms");
-    performAdditionBenchmark();
-    performDivisionBenchmark();
-    performMultiplicationBenchmark();
+  }
+
+  public int result;
+
+  public void run() {
+    tSleeper = new PrecisionThread();
+    tSleeper.start();
+    Displayable cur = Application.getDisplay();
+    canvas = new TestCanvas(false);
+    canvasFull = new TestCanvas(true);
+    Application.setDisplay(canvas);
+    try {
+      Thread.sleep(10);
+    }
+    catch (InterruptedException e) {
+      // ignore
+    }
+    Application.setDisplay(canvasFull);
+    try {
+      Thread.sleep(10);
+    }
+    catch (InterruptedException e) {
+      // ignore
+    }
+    Application.setDisplay(cur);
+    try {
+      tSleeper.join(); // Retrieve the minimum resolution timers can measure
+    }
+    catch (final InterruptedException ie) {
+      // ignore
+    }
+    iResolution = tSleeper.iAfter - tSleeper.iBefore;
+    screenInfo();
+    systemInfo();
+    APIInfo();
+    keyInfo();
+    multimediaInfo();
+    // Benchmark
+    addStr(Tester.CAT_BENCHMARK, "Timer res. est.", iResolution + "ms");
+    result = 0;
+    result += performAdditionBenchmark();
+    result += performDivisionBenchmark();
+    result += performMultiplicationBenchmark();
     Tester.finished = true;
   }
 
-  public void add(final String category, final String name, final String value) {
+  public void addStr(final String category, final String name, final String value) {
     Tester.tests.addElement(new Info(category, name, value));
   }
 
@@ -256,12 +315,14 @@ public class Tester extends Thread {
    * @param sName the name of the system property, eg. for System.getProperty
    * @return the contents of the property, never null
    */
-  private String readProperty(final String sName) {
-    final String sValue = System.getProperty(sName);
-    if (sValue == null) {
-      return "unknown";
+  private String readProperty(final String sName, final String def) {
+    String sValue = null;
+    try {
+      sValue = System.getProperty(sName);
     }
-    return sValue;
+    catch (Exception e) {
+    }
+    return (sValue == null ? def : sValue);
   }
 
   public String[] getSupportedProtocols(final String contentType) {
@@ -284,9 +345,11 @@ public class Tester extends Thread {
     }
   }
 
-  private void performAdditionBenchmark() {
+  private int performAdditionBenchmark() {
     long before;
     long after;
+    int res = 0;
+    // Array SUM
     before = System.currentTimeMillis();
     int result = 0;
     for (int i = 0; i < Tester.NUMBER_OF_OPS / 100; i++) {
@@ -295,7 +358,11 @@ public class Tester extends Thread {
       }
     }
     after = System.currentTimeMillis();
+    if (result > 0) {
+      res = 1;
+    }
     final long elapsedArray = after - before;
+    // Local SUM
     final int localA = random.nextInt();
     final int localB = random.nextInt();
     before = System.currentTimeMillis();
@@ -303,31 +370,43 @@ public class Tester extends Thread {
       result = localA + localB;
     }
     after = System.currentTimeMillis();
+    if (result > 0) {
+      res = 1;
+    }
     final long elapsedLocal = after - before;
-
+    // Instance SUM
     before = System.currentTimeMillis();
     for (int i = 0; i < Tester.NUMBER_OF_OPS; i++) {
       result = instanceA + instanceB;
     }
     after = System.currentTimeMillis();
+    if (result > 0) {
+      res = 1;
+    }
     final long elapsedInstance = after - before;
+    // Static SUM
     before = System.currentTimeMillis();
     for (int i = 0; i < Tester.NUMBER_OF_OPS; i++) {
       result = Tester.staticA + Tester.staticB;
     }
     after = System.currentTimeMillis();
+    if (result > 0) {
+      res = 1;
+    }
     final long elapsedStatic = after - before;
-    this.result = result;
-    add(Tester.CAT_BENCHMARK, "add of array values", elapsedArray + " ms");
-    add(Tester.CAT_BENCHMARK, "add of locals", elapsedLocal + " ms");
-    add(Tester.CAT_BENCHMARK, "add of instance variables ", elapsedInstance + " ms");
-    add(Tester.CAT_BENCHMARK, "add of static variables ", elapsedStatic + " ms");
+    addStr(Tester.CAT_BENCHMARK, "add of array values", elapsedArray + " ms");
+    addStr(Tester.CAT_BENCHMARK, "add of locals", elapsedLocal + " ms");
+    addStr(Tester.CAT_BENCHMARK, "add of instance variables ", elapsedInstance + " ms");
+    addStr(Tester.CAT_BENCHMARK, "add of static variables ", elapsedStatic + " ms");
+    return res;
   }
 
-  private void performMultiplicationBenchmark() {
+  private int performMultiplicationBenchmark() {
     long before;
     long after;
     int result = 0;
+    int res = 0;
+    // Array MUL
     before = System.currentTimeMillis();
     for (int i = 0; i < Tester.NUMBER_OF_OPS / 100; i++) {
       for (int j = 0; j < 100; j++) {
@@ -335,8 +414,11 @@ public class Tester extends Thread {
       }
     }
     after = System.currentTimeMillis();
+    if (result > 0) {
+      res = 1;
+    }
     final long elapsedArray = after - before;
-
+    // Local MUL
     final int localA = random.nextInt();
     final int localB = random.nextInt();
     before = System.currentTimeMillis();
@@ -344,31 +426,42 @@ public class Tester extends Thread {
       result = localA * localB;
     }
     after = System.currentTimeMillis();
+    if (result > 0) {
+      res = 1;
+    }
     final long elapsedLocal = after - before;
-
+    // Instance MUL
     before = System.currentTimeMillis();
     for (int i = 0; i < Tester.NUMBER_OF_OPS; i++) {
       result = instanceA * instanceB;
     }
     after = System.currentTimeMillis();
+    if (result > 0) {
+      res = 1;
+    }
     final long elapsedInstance = after - before;
-
+    // Static MUL
     before = System.currentTimeMillis();
     for (int i = 0; i < Tester.NUMBER_OF_OPS; i++) {
       result = Tester.staticA * Tester.staticB;
     }
     after = System.currentTimeMillis();
+    if (result > 0) {
+      res = 1;
+    }
     final long elapsedStatic = after - before;
-    this.result = result;
-    add(Tester.CAT_BENCHMARK, "mul of array values", elapsedArray + " ms");
-    add(Tester.CAT_BENCHMARK, "mul of locals", elapsedLocal + " ms");
-    add(Tester.CAT_BENCHMARK, "mul of instance variables ", elapsedInstance + " ms");
-    add(Tester.CAT_BENCHMARK, "mul of static variables ", elapsedStatic + " ms");
+    addStr(Tester.CAT_BENCHMARK, "mul of array values", elapsedArray + " ms");
+    addStr(Tester.CAT_BENCHMARK, "mul of locals", elapsedLocal + " ms");
+    addStr(Tester.CAT_BENCHMARK, "mul of instance variables ", elapsedInstance + " ms");
+    addStr(Tester.CAT_BENCHMARK, "mul of static variables ", elapsedStatic + " ms");
+    return res;
   }
 
-  private void performDivisionBenchmark() {
+  private int performDivisionBenchmark() {
     long before;
     long after;
+    int res = 0;
+    // Array DIV
     before = System.currentTimeMillis();
     int result = 0;
     for (int i = 0; i < Tester.NUMBER_OF_OPS / 100; i++) {
@@ -376,9 +469,14 @@ public class Tester extends Thread {
         result = arrayA[j] / arrayB[j];
       }
     }
+    if (result > 0) {
+      res = 1;
+    }
     after = System.currentTimeMillis();
     final long elapsedArray = after - before;
-    int localA, localB;
+    // Local DIV
+    int localA;
+    int localB;
     do {
       localA = random.nextInt();
     }
@@ -392,25 +490,35 @@ public class Tester extends Thread {
       result = localA / localB;
     }
     after = System.currentTimeMillis();
+    if (result > 0) {
+      res = 1;
+    }
     final long elapsedLocal = after - before;
-
+    // Instance DIV
     before = System.currentTimeMillis();
     for (int i = 0; i < Tester.NUMBER_OF_OPS; i++) {
       result = instanceA / instanceB;
     }
     after = System.currentTimeMillis();
+    if (result > 0) {
+      res = 1;
+    }
     final long elapsedInstance = after - before;
+    // Static DIV
     before = System.currentTimeMillis();
     for (int i = 0; i < Tester.NUMBER_OF_OPS; i++) {
       result = Tester.staticA / Tester.staticB;
     }
     after = System.currentTimeMillis();
+    if (result > 0) {
+      res = 1;
+    }
     final long elapsedStatic = after - before;
-    this.result = result;
-    add(Tester.CAT_BENCHMARK, "div of array values", elapsedArray + " ms");
-    add(Tester.CAT_BENCHMARK, "div of locals", elapsedLocal + " ms");
-    add(Tester.CAT_BENCHMARK, "div of instance variables ", elapsedInstance + " ms");
-    add(Tester.CAT_BENCHMARK, "div of static variables ", elapsedStatic + " ms");
+    addStr(Tester.CAT_BENCHMARK, "div of array values", elapsedArray + " ms");
+    addStr(Tester.CAT_BENCHMARK, "div of locals", elapsedLocal + " ms");
+    addStr(Tester.CAT_BENCHMARK, "div of instance variables ", elapsedInstance + " ms");
+    addStr(Tester.CAT_BENCHMARK, "div of static variables ", elapsedStatic + " ms");
+    return res;
   }
 
 }

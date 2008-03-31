@@ -61,6 +61,7 @@ public final class TestSuite extends Application {
   /** The full path name to the level of class hierarchy being shown. */
   private String cbPackagePath;
   private final Tester tester;
+  private final String[] classes;
 
   public TestSuite() {
     super();
@@ -69,6 +70,7 @@ public final class TestSuite extends Application {
     BaseApp.cBACK = newCommand(TestSuite.MSG_BACK, Command.BACK, 20, BaseApp.AC_BACK);
     BaseApp.cEXIT = newCommand(TestSuite.MSG_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
     cPREV = new Command(BaseApp.messages[TestSuite.MSG_PREV], Command.SCREEN, 1);
+    classes = readStrings("/classes.txt");
     tester = new Tester();
     tester.start();
   }
@@ -165,7 +167,7 @@ public final class TestSuite extends Application {
   }
 
   public void loadClasses() {
-    ClassBrowserHelper.generateList(fClassBrowser, cbPackagePath);
+    ClassBrowserHelper.generateList(fClassBrowser, cbPackagePath, classes);
     fClassBrowser.setCommandListener(this);
     if ((cbPackagePath == null) || (cbPackagePath.length() == 0)) {
       fClassBrowser.setTitle("Top Level");
