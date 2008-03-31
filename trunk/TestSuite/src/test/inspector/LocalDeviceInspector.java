@@ -20,7 +20,6 @@ package test.inspector;
 
 import javax.bluetooth.LocalDevice;
 import net.eiroca.j2me.app.BaseApp;
-import net.eiroca.j2me.app.Pair;
 import test.AbstractProcessor;
 
 public class LocalDeviceInspector extends AbstractProcessor {
@@ -28,22 +27,22 @@ public class LocalDeviceInspector extends AbstractProcessor {
   public static final String CATEGORY = "LocalDevice";
   public static final String PROP_DATA = "/data_bluetooth.txt";
 
-  Pair[] test;
+  String[] test;
 
   public LocalDeviceInspector() {
     super(LocalDeviceInspector.CATEGORY);
-    test = BaseApp.readPairs(LocalDeviceInspector.PROP_DATA, '=');
+    test = BaseApp.readStrings(LocalDeviceInspector.PROP_DATA);
   }
 
-  final private void testProp(final Pair p) {
+  final private void testProp(final String prop) {
     String val;
     try {
-      val = LocalDevice.getProperty(p.value.toString());
+      val = LocalDevice.getProperty(prop);
     }
     catch (final Exception e) {
       val = null;
     }
-    addResult(p.name, val);
+    addResult(prop, val);
   }
 
   public void execute() {

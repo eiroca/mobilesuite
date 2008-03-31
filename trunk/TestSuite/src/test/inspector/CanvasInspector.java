@@ -53,9 +53,8 @@ public class CanvasInspector extends AbstractProcessor {
   }
 
   public void execute() {
-    canvas = new TestCanvas(false);
-    canvasFull = new TestCanvas(true);
     final Displayable cur = BaseApp.getDisplay();
+    canvas = new TestCanvas(false);
     BaseApp.setDisplay(canvas);
     try {
       Thread.sleep(10);
@@ -63,6 +62,7 @@ public class CanvasInspector extends AbstractProcessor {
     catch (final InterruptedException e) {
       // ignore
     }
+    canvasFull = new TestCanvas(true);
     BaseApp.setDisplay(canvasFull);
     try {
       Thread.sleep(10);

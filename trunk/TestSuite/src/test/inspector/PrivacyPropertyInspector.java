@@ -19,7 +19,6 @@
 package test.inspector;
 
 import net.eiroca.j2me.app.BaseApp;
-import net.eiroca.j2me.app.Pair;
 import test.AbstractProcessor;
 
 public class PrivacyPropertyInspector extends AbstractProcessor {
@@ -27,16 +26,16 @@ public class PrivacyPropertyInspector extends AbstractProcessor {
   public static final String CATEGORY = "Privacy Properties";
   public static final String PROP_DATA = "/data_ppp.txt";
 
-  Pair[] test;
+  String[] test;
 
   public PrivacyPropertyInspector() {
     super(PrivacyPropertyInspector.CATEGORY);
-    test = BaseApp.readPairs(PrivacyPropertyInspector.PROP_DATA, '=');
+    test = BaseApp.readStrings(PrivacyPropertyInspector.PROP_DATA);
   }
 
-  final private void testProp(final Pair p) {
-    final Object val = BaseApp.readProperty(p.value.toString(), null);
-    addResult(p.name, (val != null ? Boolean.TRUE : null));
+  final private void testProp(final String prop) {
+    final Object val = BaseApp.readProperty(prop, null);
+    addResult(prop, (val != null ? Boolean.TRUE : null));
   }
 
   public void execute() {

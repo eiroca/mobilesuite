@@ -19,7 +19,6 @@
 package test.inspector;
 
 import net.eiroca.j2me.app.BaseApp;
-import net.eiroca.j2me.app.Pair;
 import test.AbstractProcessor;
 
 public class APIsInspector extends AbstractProcessor {
@@ -27,15 +26,15 @@ public class APIsInspector extends AbstractProcessor {
   public static final String CATEGORY = "APIs";
   public static final String PROP_DATA = "/data_class.txt";
 
-  Pair[] test;
+  String[] test;
 
   public APIsInspector() {
     super(APIsInspector.CATEGORY);
-    test = BaseApp.readPairs(APIsInspector.PROP_DATA, '=');
+    test = BaseApp.readStrings(APIsInspector.PROP_DATA);
   }
 
-  final private void testClass(final Pair p) {
-    addResult(p.name, BaseApp.isClass(p.value.toString()) ? Boolean.TRUE : Boolean.FALSE);
+  final private void testClass(final String clazz) {
+    addResult(clazz, BaseApp.isClass(clazz) ? Boolean.TRUE : Boolean.FALSE);
   }
 
   public void execute() {
