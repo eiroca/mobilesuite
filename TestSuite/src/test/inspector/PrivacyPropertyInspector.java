@@ -24,7 +24,7 @@ import test.AbstractProcessor;
 public class PrivacyPropertyInspector extends AbstractProcessor {
 
   public static final String CATEGORY = "Privacy Properties";
-  public static final String PROP_DATA = "/data_ppp.txt";
+  public static final String PROP_DATA = "data_ppp.txt";
 
   String[] test;
 

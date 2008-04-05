@@ -25,7 +25,7 @@ import test.AbstractProcessor;
 public class LocalDeviceInspector extends AbstractProcessor {
 
   public static final String CATEGORY = "LocalDevice";
-  public static final String PROP_DATA = "/data_bluetooth.txt";
+  public static final String PROP_DATA = "data_bluetooth.txt";
 
   String[] test;
 

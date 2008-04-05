@@ -64,7 +64,7 @@ public final class TestSuite extends Application {
       PrecisionSuite.CATEGORY, MathSuite.CATEGORY
   };
 
-  private final Command cPREV;
+  private Command cPREV;
   private List fMenu;
   private List fMenuInspector;
   private List fMenuBenchmark;
@@ -75,18 +75,11 @@ public final class TestSuite extends Application {
 
   /** The full path name to the level of class hierarchy being shown. */
   private String cbPackagePath;
-  private final Suite suite;
-  private final String[] classes;
+  private Suite suite;
+  private String[] classes;
 
   public TestSuite() {
     super();
-    BaseApp.messages = BaseApp.readStrings("messages.txt");
-    BaseApp.cOK = BaseApp.newCommand(TestSuite.MSG_OK, Command.OK, 30);
-    BaseApp.cBACK = BaseApp.newCommand(TestSuite.MSG_BACK, Command.BACK, 20, BaseApp.AC_BACK);
-    BaseApp.cEXIT = BaseApp.newCommand(TestSuite.MSG_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
-    cPREV = new Command(BaseApp.messages[TestSuite.MSG_PREV], Command.SCREEN, 1);
-    classes = BaseApp.readStrings("/classes.txt");
-    suite = new Suite();
   }
 
   public boolean handleAction(final int action, final Displayable d, final Command cmd) {
@@ -137,7 +130,9 @@ public final class TestSuite extends Application {
         fSpec.deleteAll();
         final int i = fMenuInspector.getSelectedIndex();
         fSpec.setTitle("Inspector: " + INSPECTOR_CAT[i]);
-        suite.export(fSpec, INSPECTOR_CAT[i]);
+        if (suite != null) {
+          suite.export(fSpec, INSPECTOR_CAT[i]);
+        }
         BaseApp.show(null, fSpec, true);
       }
     }
@@ -147,7 +142,9 @@ public final class TestSuite extends Application {
         fSpec.deleteAll();
         final int i = fMenuBenchmark.getSelectedIndex();
         fSpec.setTitle("Benchmark: " + BENCHMARK_CAT[i]);
-        suite.benchmark(fSpec, BENCHMARK_CAT[i]);
+        if (suite != null) {
+          suite.benchmark(fSpec, BENCHMARK_CAT[i]);
+        }
         BaseApp.show(null, fSpec, true);
       }
     }
@@ -161,37 +158,49 @@ public final class TestSuite extends Application {
    */
   protected void init() {
     super.init();
-    suite.run();
-    ClassBrowserHelper.imPlus = BaseApp.createImage("/Plus.png");
-    ClassBrowserHelper.imDash = BaseApp.createImage("/Dash.png");
-    final Image[] icons = new Image[5];
-    icons[0] = BaseApp.createImage("/Specs.png");
-    icons[1] = BaseApp.createImage("/Specs.png");
-    icons[2] = BaseApp.createImage("/ClassBrowser.png");
-    icons[3] = BaseApp.createImage("/Keys.png");
-    icons[4] = BaseApp.createImage("/icon.png");
-    fMenu = new List("Main Menu", Choice.IMPLICIT, new String[] {
-        "Inspectors", "Benchmark", "Class browser", "Keys", "About"
-    }, icons);
-    fMenuInspector = new List("Inspectors", Choice.IMPLICIT, INSPECTOR_CAT, null);
-    fMenuBenchmark = new List("Benchmark", Choice.IMPLICIT, BENCHMARK_CAT, null);
-    fKeyState = new KeyStateCanvas();
-    fClassBrowser = new List("", Choice.IMPLICIT);
-    fAbout = BaseApp.getTextForm(TestSuite.MSG_ABOUT, "about.txt");
-    BaseApp.setup(fMenu, BaseApp.cEXIT, null);
-    BaseApp.setup(fMenuInspector, BaseApp.cBACK, null);
-    BaseApp.setup(fMenuBenchmark, BaseApp.cBACK, null);
-    BaseApp.setup(fKeyState, BaseApp.cBACK, null);
-    BaseApp.setup(fClassBrowser, cPREV, BaseApp.cBACK);
-    BaseApp.registerListItem(fMenu, 0, fMenuInspector);
-    BaseApp.registerListItem(fMenu, 1, fMenuBenchmark);
-    BaseApp.registerListItem(fMenu, 2, fClassBrowser);
-    BaseApp.registerListItem(fMenu, 3, fKeyState);
-    BaseApp.registerListItem(fMenu, 4, fAbout);
-    cbPackagePath = "";
-    loadClasses();
-    fSpec = new Form("");
-    BaseApp.setup(fSpec, BaseApp.cBACK, null);
+    try {
+      BaseApp.messages = BaseApp.readStrings("messages.txt");
+      classes = BaseApp.readStrings("classes.txt");
+      ClassBrowserHelper.imPlus = BaseApp.createImage("Plus.png");
+      ClassBrowserHelper.imDash = BaseApp.createImage("Dash.png");
+      final Image[] icons = new Image[5];
+      icons[0] = BaseApp.createImage("Specs.png");
+      icons[1] = BaseApp.createImage("Specs.png");
+      icons[2] = BaseApp.createImage("ClassBrowser.png");
+      icons[3] = BaseApp.createImage("Keys.png");
+      icons[4] = BaseApp.createImage("icon.png");
+      suite = new Suite();
+      suite.run();
+      cbPackagePath = "";
+      loadClasses();
+      fMenu = new List("Main Menu", Choice.IMPLICIT, new String[] {
+          "Inspectors", "Benchmark", "Class browser", "Keys", "About"
+      }, icons);
+      BaseApp.cOK = BaseApp.newCommand(TestSuite.MSG_OK, Command.OK, 30);
+      BaseApp.cBACK = BaseApp.newCommand(TestSuite.MSG_BACK, Command.BACK, 20, BaseApp.AC_BACK);
+      BaseApp.cEXIT = BaseApp.newCommand(TestSuite.MSG_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
+      cPREV = BaseApp.newCommand(TestSuite.MSG_PREV, Command.SCREEN, 1);
+      fMenuInspector = new List("Inspectors", Choice.IMPLICIT, INSPECTOR_CAT, null);
+      fMenuBenchmark = new List("Benchmark", Choice.IMPLICIT, BENCHMARK_CAT, null);
+      fClassBrowser = new List("", Choice.IMPLICIT);
+      fSpec = new Form("");
+      fKeyState = new KeyStateCanvas();
+      fAbout = BaseApp.getTextForm(TestSuite.MSG_ABOUT, "about.txt");
+      BaseApp.registerListItem(fMenu, 0, fMenuInspector);
+      BaseApp.registerListItem(fMenu, 1, fMenuBenchmark);
+      BaseApp.registerListItem(fMenu, 2, fClassBrowser);
+      BaseApp.registerListItem(fMenu, 3, fKeyState);
+      BaseApp.registerListItem(fMenu, 4, fAbout);
+      BaseApp.setup(fMenu, BaseApp.cEXIT, null);
+      BaseApp.setup(fMenuInspector, BaseApp.cBACK, null);
+      BaseApp.setup(fMenuBenchmark, BaseApp.cBACK, null);
+      BaseApp.setup(fKeyState, BaseApp.cBACK, null);
+      BaseApp.setup(fClassBrowser, cPREV, BaseApp.cBACK);
+      BaseApp.setup(fSpec, BaseApp.cBACK, null);
+    }
+    catch (Exception e) {
+      fMenu.setTitle(e.getMessage());
+    }
     BaseApp.show(null, fMenu, true);
   }
 
