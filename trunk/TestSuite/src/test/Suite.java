@@ -58,10 +58,14 @@ public class Suite {
     benchmarks[0] = new PrecisionSuite();
     benchmarks[1] = new MathSuite();
     for (int i = 0; i < inspectors.length; i++) {
-      inspectors[i].setSuite(this);
+      if (inspectors[i] != null) {
+        inspectors[i].setSuite(this);
+      }
     }
     for (int i = 0; i < benchmarks.length; i++) {
-      benchmarks[i].setSuite(this);
+      if (benchmarks[i] != null) {
+        benchmarks[i].setSuite(this);
+      }
     }
   }
 
