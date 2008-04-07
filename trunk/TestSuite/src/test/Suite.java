@@ -72,10 +72,14 @@ public class Suite {
   public void run() {
     finished = false;
     for (int i = 0; i < benchmarks.length; i++) {
-      benchmarks[i].execute();
+      if (benchmarks[i] != null) {
+        benchmarks[i].execute();
+      }
     }
     for (int i = 0; i < inspectors.length; i++) {
-      inspectors[i].execute();
+      if (inspectors[i] != null) {
+        inspectors[i].execute();
+      }
     }
   }
 

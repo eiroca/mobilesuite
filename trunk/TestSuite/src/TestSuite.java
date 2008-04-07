@@ -171,8 +171,6 @@ public final class TestSuite extends Application {
       icons[4] = BaseApp.createImage("icon.png");
       suite = new Suite();
       suite.run();
-      cbPackagePath = "";
-      loadClasses();
       fMenu = new List("Main Menu", Choice.IMPLICIT, new String[] {
           "Inspectors", "Benchmark", "Class browser", "Keys", "About"
       }, icons);
@@ -197,6 +195,8 @@ public final class TestSuite extends Application {
       BaseApp.setup(fKeyState, BaseApp.cBACK, null);
       BaseApp.setup(fClassBrowser, cPREV, BaseApp.cBACK);
       BaseApp.setup(fSpec, BaseApp.cBACK, null);
+      cbPackagePath = "";
+      loadClasses();
     }
     catch (Exception e) {
       fMenu.setTitle(e.getMessage());
