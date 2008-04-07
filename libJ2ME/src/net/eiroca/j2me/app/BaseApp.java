@@ -278,14 +278,14 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     }
     else {
       switch (c) {
-      case '+':
-        return 62;
-      case '/':
-        return 63;
-      case '=':
-        return 0;
-      default:
-        throw new RuntimeException("unexpected code: " + c);
+        case '+':
+          return 62;
+        case '/':
+          return 63;
+        case '=':
+          return 0;
+        default:
+          throw new RuntimeException("unexpected code: " + c);
       }
     }
   }
@@ -329,21 +329,25 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   /**
    * Removes non-numeric characters from the phone number.
    *
-   * @param address The address string to process
+   * @param telNum The address string to process
    * @return The processed address string.
    */
-  public static String normalizeAddressString(final String address) {
+  public static String normalizeTelNum(final String telNum) {
     // Note: no NullPointer checks.
-    final int addressLength = address.length();
-    final StringBuffer resultStringBuffer = new StringBuffer(addressLength);
+    if (telNum == null) { return null; }
+    final int telNumLen = telNum.length();
+    final StringBuffer res = new StringBuffer(telNumLen);
     char ch;
-    for (int i = 0; i < addressLength; i++) {
-      ch = address.charAt(i);
+    for (int i = 0; i < telNumLen; i++) {
+      ch = telNum.charAt(i);
       if (Character.isDigit(ch)) {
-        resultStringBuffer.append(ch);
+        res.append(ch);
+      }
+      else if (ch == '+') {
+        res.append(ch);
       }
     }
-    return resultStringBuffer.toString();
+    return res.toString();
   }
 
   /**
@@ -614,20 +618,20 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
         i++;
         ch = msg.charAt(i);
         switch (ch) {
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-          sb.append(o[ch - '1']);
-          break;
-        default:
-          sb.append(ch);
-          break;
+          case '1':
+          case '2':
+          case '3':
+          case '4':
+          case '5':
+          case '6':
+          case '7':
+          case '8':
+          case '9':
+            sb.append(o[ch - '1']);
+            break;
+          default:
+            sb.append(ch);
+            break;
         }
       }
       else {
@@ -651,36 +655,36 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     for (int i = 0; i < s.length(); i++) {
       ch = s.charAt(i);
       switch (ch) {
-      case ' ':
-        res.append("%20");
-        break;
-      case '-':
-        res.append("%2D");
-        break;
-      case '/':
-        res.append("%2F");
-        break;
-      case ':':
-        res.append("%3A");
-        break;
-      case '=':
-        res.append("%3D");
-        break;
-      case '?':
-        res.append("%3F");
-        break;
-      case '#':
-        res.append("%23");
-        break;
-      case '\r':
-        res.append("%0D");
-        break;
-      case '\n':
-        res.append("%0A");
-        break;
-      default:
-        res.append(ch);
-        break;
+        case ' ':
+          res.append("%20");
+          break;
+        case '-':
+          res.append("%2D");
+          break;
+        case '/':
+          res.append("%2F");
+          break;
+        case ':':
+          res.append("%3A");
+          break;
+        case '=':
+          res.append("%3D");
+          break;
+        case '?':
+          res.append("%3F");
+          break;
+        case '#':
+          res.append("%23");
+          break;
+        case '\r':
+          res.append("%0D");
+          break;
+        case '\n':
+          res.append("%0A");
+          break;
+        default:
+          res.append(ch);
+          break;
       }
     }
     return res.toString();
@@ -1454,14 +1458,14 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
         boolean processed = handleAction(action, d, cmd);
         if (!processed) {
           switch (action) {
-          case AC_BACK: {
-            BaseApp.back(null);
-            break;
-          }
-          case AC_EXIT: {
-            BaseApp.midlet.notifyDestroyed();
-            break;
-          }
+            case AC_BACK: {
+              BaseApp.back(null);
+              break;
+            }
+            case AC_EXIT: {
+              BaseApp.midlet.notifyDestroyed();
+              break;
+            }
           }
         }
       }
