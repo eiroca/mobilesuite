@@ -25,6 +25,7 @@ import javax.wireless.messaging.BinaryMessage;
 import javax.wireless.messaging.Message;
 import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.MessageListener;
+import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.sm.util.Store;
 import net.eiroca.j2me.sm.util.StoreException;
 import net.eiroca.j2me.sm.util.StoreObserver;
@@ -132,7 +133,7 @@ public class MessageHandler implements MessageListener, StoreObserver {
       }
       // WMA address is in format "sms://<number>:<port>", so parse it here to remove prefix and port number
       final String wmaAddress = wmaMessage.getAddress();
-      final String number = wmaAddress.substring(6, wmaAddress.indexOf(":", 6));
+      final String number = BaseApp.normalizeTelNum(wmaAddress.substring(6, wmaAddress.indexOf(":", 6)));
       Address address = addressBookStore.getByNumber(number, false);
       if (address == null) {
         address = new Address("Unkwnon", number, "");
