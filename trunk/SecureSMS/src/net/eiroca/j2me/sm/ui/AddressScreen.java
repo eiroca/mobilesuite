@@ -69,7 +69,7 @@ public class AddressScreen extends Form {
    * Updates the fields of the Address
    */
   public final void toAddress(final Address address, final String prefix) {
-    String numTel = number.getString();
+    String numTel = BaseApp.normalizeTelNum(number.getString());
     if (numTel != null) {
       if (numTel.startsWith("00")) {
         numTel = "+" + numTel.substring(2);
@@ -79,8 +79,8 @@ public class AddressScreen extends Form {
       }
     }
     number.setString(numTel);
-    address.name=name.getString();
-    address.number=numTel;
-    address.key=password.getString();
+    address.name = name.getString();
+    address.number = numTel;
+    address.key = password.getString();
   }
 }
