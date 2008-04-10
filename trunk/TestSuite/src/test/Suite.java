@@ -18,6 +18,8 @@
  */
 package test;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Vector;
 import javax.microedition.lcdui.Form;
 import net.eiroca.j2me.app.BaseApp;
@@ -37,6 +39,7 @@ import test.inspector.SystemInspector;
 public class Suite {
 
   public static final String MAPPING = "/mapping.txt";
+  public static final String VERSION = "1.0.0";
 
   private boolean finished = false;
   private final Vector tests = new Vector();
@@ -89,6 +92,9 @@ public class Suite {
 
   public String getDesc(final String key) {
     String res = key;
+    if (mapping == null) {
+      mapping = BaseApp.readPairs(Suite.MAPPING, '=');
+    }
     if (mapping != null) {
       for (int i = 0; i < mapping.length; i++) {
         if (key.equals(mapping[i].name)) {
@@ -117,17 +123,30 @@ public class Suite {
   }
 
   public void export(final Form list, final String category) {
-    if (mapping == null) {
-      mapping = BaseApp.readPairs(Suite.MAPPING, '=');
-    }
+    StringBuffer sb;
     for (int i = 0; i < tests.size(); i++) {
       final TestResult inf = (TestResult) tests.elementAt(i);
       if (inf.category.equals(category)) {
         if (inf.val != null) {
-          list.append(getDesc(inf.key) + '=' + inf.val + '\n');
+          sb = new StringBuffer(40);
+          sb.append(getDesc(inf.key)).append('=').append(inf.val).append('\n');
+          list.append(sb.toString());
         }
       }
     }
   }
 
+  public void export(OutputStream os, String version) throws IOException {
+    StringBuffer sb;
+    sb = new StringBuffer("Suite version=");
+    sb.append(version).append('\n');
+    os.write(sb.toString().getBytes());
+    for (int i = 0; i < tests.size(); i++) {
+      final TestResult inf = (TestResult) tests.elementAt(i);
+      sb = new StringBuffer(40);
+      Object v = (inf.val == null ? "" : inf.val);
+      sb.append(getDesc(inf.key)).append('=').append(v).append('\n');
+      os.write(sb.toString().getBytes());
+    }
+  }
 }

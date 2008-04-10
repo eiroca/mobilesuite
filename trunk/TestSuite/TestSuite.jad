@@ -1,8 +1,9 @@
-MIDlet-Version: 1.0.1
-MIDlet-Icon: /icon.png
-MIDlet-Vendor: eIrOcA
-MIDlet-Jar-URL: TestSuite.jar
-MicroEdition-Configuration: CLDC-1.0
-MicroEdition-Profile: MIDP-2.0
+POSTURL: http://www.eiroca.net/services/testsuite/store.php
 MIDlet-1: TestSuite,/icon.png,TestSuite
+MIDlet-Jar-URL: TestSuite.jar
+MIDlet-Icon: /icon.png
+MicroEdition-Configuration: CLDC-1.0
+MIDlet-Version: 1.0.2
 MIDlet-Name: TestSuite
+MIDlet-Vendor: eIrOcA
+MicroEdition-Profile: MIDP-2.0
