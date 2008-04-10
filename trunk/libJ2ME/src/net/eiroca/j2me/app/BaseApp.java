@@ -1623,6 +1623,16 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     return (sValue == null ? def : sValue);
   }
 
+  public String readAppProperty(final String sName, final String def) {
+    String sValue = null;
+    try {
+      sValue = getAppProperty(sName);
+    }
+    catch (Exception e) {
+    }
+    return (sValue == null ? def : sValue);
+  }
+
   /**
    * Checks to see if a given class/interface exists in this Java
    * implementation.
