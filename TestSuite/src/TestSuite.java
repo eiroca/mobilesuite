@@ -33,6 +33,7 @@ import javax.microedition.lcdui.List;
 import keys.KeyStateCanvas;
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
+import test.DataSender;
 import test.Suite;
 import test.benchmark.MathSuite;
 import test.benchmark.PrecisionSuite;
@@ -69,6 +70,7 @@ public final class TestSuite extends Application {
   private List fMenuInspector;
   private List fMenuBenchmark;
   private Form fSpec;
+  private Form fPostData;
   private Canvas fKeyState;
   private List fClassBrowser;
   private Displayable fAbout;
@@ -77,6 +79,9 @@ public final class TestSuite extends Application {
   private String cbPackagePath;
   private Suite suite;
   private String[] classes;
+
+  private String url;
+  private String ver;
 
   public TestSuite() {
     super();
@@ -124,7 +129,7 @@ public final class TestSuite extends Application {
         loadClasses();
       }
     }
-    if (d == fMenuInspector) {
+    else if (d == fMenuInspector) {
       if (c == List.SELECT_COMMAND) {
         processed = true;
         fSpec.deleteAll();
@@ -148,6 +153,14 @@ public final class TestSuite extends Application {
         BaseApp.show(null, fSpec, true);
       }
     }
+    else if (d == fPostData) {
+      if (c == BaseApp.cOK) {
+        processed = true;
+        DataSender ds = new DataSender(suite, url, ver);
+        ds.start();
+        BaseApp.back(null);
+      }
+    }
     if (!processed) {
       super.commandAction(c, d);
     }
@@ -159,20 +172,23 @@ public final class TestSuite extends Application {
   protected void init() {
     super.init();
     try {
+      url = readAppProperty("POSTURL", "http://test.eiroca.net/services/testsuite/store.php");
+      ver = readAppProperty("MIDlet-Version", "1.0.0");
       BaseApp.messages = BaseApp.readStrings("messages.txt");
       classes = BaseApp.readStrings("classes.txt");
       ClassBrowserHelper.imPlus = BaseApp.createImage("Plus.png");
       ClassBrowserHelper.imDash = BaseApp.createImage("Dash.png");
-      final Image[] icons = new Image[5];
+      final Image[] icons = new Image[6];
       icons[0] = BaseApp.createImage("Specs.png");
-      icons[1] = BaseApp.createImage("Specs.png");
+      icons[1] = icons[0];
       icons[2] = BaseApp.createImage("ClassBrowser.png");
       icons[3] = BaseApp.createImage("Keys.png");
-      icons[4] = BaseApp.createImage("icon.png");
+      icons[4] = ClassBrowserHelper.imPlus;
+      icons[5] = BaseApp.createImage("icon.png");
       suite = new Suite();
       suite.run();
       fMenu = new List("Main Menu", Choice.IMPLICIT, new String[] {
-          "Inspectors", "Benchmark", "Class browser", "Keys", "About"
+          "Inspectors", "Benchmark", "Class browser", "Keys", "Post data", "About"
       }, icons);
       BaseApp.cOK = BaseApp.newCommand(TestSuite.MSG_OK, Command.OK, 30);
       BaseApp.cBACK = BaseApp.newCommand(TestSuite.MSG_BACK, Command.BACK, 20, BaseApp.AC_BACK);
@@ -183,12 +199,14 @@ public final class TestSuite extends Application {
       fClassBrowser = new List("", Choice.IMPLICIT);
       fSpec = new Form("");
       fKeyState = new KeyStateCanvas();
+      fPostData = getPostDataForm();
       fAbout = BaseApp.getTextForm(TestSuite.MSG_ABOUT, "about.txt");
       BaseApp.registerListItem(fMenu, 0, fMenuInspector);
       BaseApp.registerListItem(fMenu, 1, fMenuBenchmark);
       BaseApp.registerListItem(fMenu, 2, fClassBrowser);
       BaseApp.registerListItem(fMenu, 3, fKeyState);
-      BaseApp.registerListItem(fMenu, 4, fAbout);
+      BaseApp.registerListItem(fMenu, 4, fPostData);
+      BaseApp.registerListItem(fMenu, 5, fAbout);
       BaseApp.setup(fMenu, BaseApp.cEXIT, null);
       BaseApp.setup(fMenuInspector, BaseApp.cBACK, null);
       BaseApp.setup(fMenuBenchmark, BaseApp.cBACK, null);
@@ -202,6 +220,13 @@ public final class TestSuite extends Application {
       fMenu.setTitle(e.getMessage());
     }
     BaseApp.show(null, fMenu, true);
+  }
+
+  private Form getPostDataForm() {
+    Form f = new Form("Post Data");
+    f.append("Post data to server " + url);
+    BaseApp.setup(f, BaseApp.cBACK, BaseApp.cOK);
+    return f;
   }
 
   public void loadClasses() {
