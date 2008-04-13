@@ -26,10 +26,11 @@ import test.AbstractProcessor;
 
 public class Graphic3DInspector extends AbstractProcessor {
 
+  public static final String PREFIX = "graphic3D.";
   public static final String CATEGORY = "Graphic3D";
 
   public Graphic3DInspector() {
-    super(Graphic3DInspector.CATEGORY);
+    super(Graphic3DInspector.CATEGORY, Graphic3DInspector.PREFIX);
   }
 
   public void execute() {

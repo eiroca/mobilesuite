@@ -23,10 +23,11 @@ import test.AbstractProcessor;
 
 public class MultimediaInspector extends AbstractProcessor {
 
+  public static final String PREFIX = "multimedia.";
   public static final String CATEGORY = "Multimedia";
 
   public MultimediaInspector() {
-    super(MultimediaInspector.CATEGORY);
+    super(MultimediaInspector.CATEGORY, MultimediaInspector.PREFIX);
   }
 
   public void execute() {
@@ -36,7 +37,7 @@ public class MultimediaInspector extends AbstractProcessor {
         final String protocol = supportedProtocols[i];
         final String[] supportedContentTypes = Manager.getSupportedContentTypes(protocol);
         for (int j = 0; j < supportedContentTypes.length; j++) {
-          addResult("MediaManager." + protocol + "." + j, supportedContentTypes[j]);
+          addResult(protocol + "." + j, supportedContentTypes[j]);
         }
       }
     }

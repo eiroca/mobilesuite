@@ -33,6 +33,8 @@ import javax.microedition.lcdui.List;
 import keys.KeyStateCanvas;
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.observable.Observable;
+import net.eiroca.j2me.observable.Observer;
 import test.DataSender;
 import test.Suite;
 import test.benchmark.MathSuite;
@@ -46,7 +48,7 @@ import test.inspector.PropertyInspector;
 import test.inspector.SystemInspector;
 import classbrowser.ClassBrowserHelper;
 
-public final class TestSuite extends Application {
+public final class TestSuite extends Application implements Observer {
 
   public static final int MSG_APPLICATION = 0;
   public static final int MSG_OK = 1;
@@ -82,6 +84,7 @@ public final class TestSuite extends Application {
 
   private String url;
   private String ver;
+  private String[] menuDesc;
 
   public TestSuite() {
     super();
@@ -156,8 +159,9 @@ public final class TestSuite extends Application {
     else if (d == fPostData) {
       if (c == BaseApp.cOK) {
         processed = true;
-        DataSender ds = new DataSender(suite, url, ver);
-        ds.start();
+        final DataSender ds = new DataSender(suite, ver);
+        ds.addObserver(this);
+        ds.submit(url);
         BaseApp.back(null);
       }
     }
@@ -172,7 +176,7 @@ public final class TestSuite extends Application {
   protected void init() {
     super.init();
     try {
-      url = readAppProperty("POSTURL", "http://test.eiroca.net/services/testsuite/store.php");
+      url = readAppProperty("POSTURL", "http://www.eiroca.net/services/testsuite/store.php");
       ver = readAppProperty("MIDlet-Version", "1.0.0");
       BaseApp.messages = BaseApp.readStrings("messages.txt");
       classes = BaseApp.readStrings("classes.txt");
@@ -183,13 +187,14 @@ public final class TestSuite extends Application {
       icons[1] = icons[0];
       icons[2] = BaseApp.createImage("ClassBrowser.png");
       icons[3] = BaseApp.createImage("Keys.png");
-      icons[4] = ClassBrowserHelper.imPlus;
+      icons[4] = ClassBrowserHelper.imDash;
       icons[5] = BaseApp.createImage("icon.png");
       suite = new Suite();
       suite.run();
-      fMenu = new List("Main Menu", Choice.IMPLICIT, new String[] {
+      menuDesc = new String[] {
           "Inspectors", "Benchmark", "Class browser", "Keys", "Post data", "About"
-      }, icons);
+      };
+      fMenu = new List("Main Menu", Choice.IMPLICIT, menuDesc, icons);
       BaseApp.cOK = BaseApp.newCommand(TestSuite.MSG_OK, Command.OK, 30);
       BaseApp.cBACK = BaseApp.newCommand(TestSuite.MSG_BACK, Command.BACK, 20, BaseApp.AC_BACK);
       BaseApp.cEXIT = BaseApp.newCommand(TestSuite.MSG_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
@@ -216,14 +221,14 @@ public final class TestSuite extends Application {
       cbPackagePath = "";
       loadClasses();
     }
-    catch (Exception e) {
+    catch (final Exception e) {
       fMenu.setTitle(e.getMessage());
     }
     BaseApp.show(null, fMenu, true);
   }
 
   private Form getPostDataForm() {
-    Form f = new Form("Post Data");
+    final Form f = new Form("Post Data");
     f.append("Post data to server " + url);
     BaseApp.setup(f, BaseApp.cBACK, BaseApp.cOK);
     return f;
@@ -239,6 +244,13 @@ public final class TestSuite extends Application {
     else {
       fClassBrowser.setTitle(cbPackagePath);
       fClassBrowser.addCommand(cPREV);
+    }
+  }
+
+  public void notify(final Observable observable) {
+    if (observable instanceof DataSender) {
+      final DataSender ds = (DataSender) observable;
+      fMenu.set(4, menuDesc[4] + " (" + ds.getStatus() + ")", ClassBrowserHelper.imPlus);
     }
   }
 

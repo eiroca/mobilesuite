@@ -18,13 +18,13 @@
  */
 package test.benchmark;
 
-
 public class PrecisionSuite extends SuiteAbstract {
 
+  public static final String PREFIX = "benchmark.precision.";
   public static final String CATEGORY = "Precision";
 
   public PrecisionSuite() {
-    super(CATEGORY);
+    super(PrecisionSuite.CATEGORY, PrecisionSuite.PREFIX);
     benchmark = new BenchmarkAbstract[1];
     benchmark[0] = new Precision(this);
   }

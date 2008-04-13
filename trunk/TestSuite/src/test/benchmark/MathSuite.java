@@ -20,10 +20,12 @@ package test.benchmark;
 
 public class MathSuite extends SuiteAbstract {
 
+  public static final String PREFIX = "benchmark.math.";
+
   public static final String CATEGORY = "Math";
 
   public MathSuite() {
-    super(MathSuite.CATEGORY);
+    super(MathSuite.CATEGORY, MathSuite.PREFIX);
     benchmark = new BenchmarkAbstract[3];
     benchmark[0] = new BenchmarkADD(this);
     benchmark[1] = new BenchmarkMUL(this);
