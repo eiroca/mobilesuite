@@ -23,14 +23,14 @@ import test.AbstractProcessor;
 
 public class SystemInspector extends AbstractProcessor {
 
+  public static final String PREFIX = "system.";
   public static final String CATEGORY = "System";
 
   public SystemInspector() {
-    super(SystemInspector.CATEGORY);
+    super(SystemInspector.CATEGORY, SystemInspector.PREFIX);
   }
 
   public void execute() {
-    // System
     // get the timezone id
     final TimeZone tz = TimeZone.getDefault();
     final String[] timeZoneIDs = java.util.TimeZone.getAvailableIDs();
@@ -42,10 +42,10 @@ public class SystemInspector extends AbstractProcessor {
       timeZonesBuffer.append(timeZoneIDs[i]);
     }
     Runtime.getRuntime().gc();
-    addResult("Total mem", Long.toString(Runtime.getRuntime().totalMemory()));
-    addResult("Free mem", Long.toString(Runtime.getRuntime().freeMemory()));
-    addResult("Default Time Zone", tz.getID());
-    addResult("Available Time Zone", timeZonesBuffer.toString());
+    addResult("mem.total", Long.toString(Runtime.getRuntime().totalMemory()));
+    addResult("mem.free", Long.toString(Runtime.getRuntime().freeMemory()));
+    addResult("timezone", tz.getID());
+    addResult("timezone.available", timeZonesBuffer.toString());
   }
 
 }

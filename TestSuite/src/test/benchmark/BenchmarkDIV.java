@@ -26,7 +26,9 @@ package test.benchmark;
 
 public class BenchmarkDIV extends MathBenchmarkAbstract {
 
-  public BenchmarkDIV(SuiteAbstract suite) {
+  public static final String RESID = "div.";
+
+  public BenchmarkDIV(final SuiteAbstract suite) {
     super(suite);
   }
 
@@ -36,7 +38,7 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
     long elapsed;
     // Array DIV
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS / 200; i++) {
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS / 200; i++) {
       for (int j = 0; j < 100; j++) {
         result += arrayA[j] / arrayB[j];
       }
@@ -49,7 +51,7 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
     }
     after = System.currentTimeMillis();
     elapsed = after - before;
-    this.suite.addResult("math.div.array", elapsed + " ms");
+    suite.addResult(BenchmarkDIV.RESID + "array", Long.toString(elapsed));
     // Local DIV
     int localA;
     int localB;
@@ -62,7 +64,7 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
     }
     while (localB == 0);
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS; i++) {
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS; i++) {
       result += localA / localB;
     }
     after = System.currentTimeMillis();
@@ -70,10 +72,10 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
       result = 1;
     }
     elapsed = after - before;
-    this.suite.addResult("math.div.locals", elapsed + " ms");
+    suite.addResult(BenchmarkDIV.RESID + "locals", Long.toString(elapsed));
     // Instance DIV
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS; i++) {
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS; i++) {
       result += instanceA / instanceB;
     }
     after = System.currentTimeMillis();
@@ -81,18 +83,18 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
       result = 1;
     }
     elapsed = after - before;
-    this.suite.addResult("math.div.instance", elapsed + " ms");
+    suite.addResult(BenchmarkDIV.RESID + "instance", Long.toString(elapsed));
     // Static DIV
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS; i++) {
-      result += staticA / staticB;
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS; i++) {
+      result += MathBenchmarkAbstract.staticA / MathBenchmarkAbstract.staticB;
     }
     after = System.currentTimeMillis();
     if (result > 0) {
       result = 1;
     }
     elapsed = after - before;
-    this.suite.addResult("math.div.static", elapsed + " ms");
+    suite.addResult(BenchmarkDIV.RESID + "static", Long.toString(elapsed));
   }
 
 }

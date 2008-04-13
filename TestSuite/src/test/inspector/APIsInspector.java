@@ -24,12 +24,13 @@ import test.AbstractProcessor;
 public class APIsInspector extends AbstractProcessor {
 
   public static final String CATEGORY = "APIs";
+  public static final String PREFIX = "api.";
   public static final String PROP_DATA = "data_class.txt";
 
   String[] test;
 
   public APIsInspector() {
-    super(APIsInspector.CATEGORY);
+    super(APIsInspector.CATEGORY, APIsInspector.PREFIX);
     test = BaseApp.readStrings(APIsInspector.PROP_DATA);
   }
 

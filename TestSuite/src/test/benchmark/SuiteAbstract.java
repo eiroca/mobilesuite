@@ -7,8 +7,8 @@ public class SuiteAbstract extends AbstractProcessor implements Runnable {
   protected BenchmarkAbstract[] benchmark;
   public boolean finished = false;
 
-  public SuiteAbstract(String cat) {
-    super(cat);
+  public SuiteAbstract(final String cat, final String prefix) {
+    super(cat, prefix);
   }
 
   public void execute() {

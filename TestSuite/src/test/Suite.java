@@ -18,12 +18,12 @@
  */
 package test;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Vector;
 import javax.microedition.lcdui.Form;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.Pair;
+import net.eiroca.j2me.util.HTTPAttach;
+import net.eiroca.j2me.util.HTTPClient;
 import test.benchmark.MathSuite;
 import test.benchmark.PrecisionSuite;
 import test.benchmark.SuiteAbstract;
@@ -36,7 +36,7 @@ import test.inspector.PrivacyPropertyInspector;
 import test.inspector.PropertyInspector;
 import test.inspector.SystemInspector;
 
-public class Suite {
+public class Suite implements HTTPAttach {
 
   public static final String MAPPING = "/mapping.txt";
   public static final String VERSION = "1.0.0";
@@ -87,15 +87,20 @@ public class Suite {
   }
 
   public void addResult(final TestResult test) {
-    tests.addElement(test);
+    if (test != null) {
+      tests.addElement(test);
+    }
   }
 
   public String getDesc(final String key) {
-    String res = key;
     if (mapping == null) {
       mapping = BaseApp.readPairs(Suite.MAPPING, '=');
+      if (mapping == null) {
+        mapping = new Pair[0];
+      }
     }
-    if (mapping != null) {
+    String res = key;
+    if (key != null) {
       for (int i = 0; i < mapping.length; i++) {
         if (key.equals(mapping[i].name)) {
           res = mapping[i].value.toString();
@@ -136,17 +141,26 @@ public class Suite {
     }
   }
 
-  public void export(OutputStream os, String version) throws IOException {
-    StringBuffer sb;
-    sb = new StringBuffer("Suite version=");
-    sb.append(version).append('\n');
-    os.write(sb.toString().getBytes());
+  public void writeData(final HTTPClient ss) {
     for (int i = 0; i < tests.size(); i++) {
       final TestResult inf = (TestResult) tests.elementAt(i);
-      sb = new StringBuffer(40);
-      Object v = (inf.val == null ? "" : inf.val);
-      sb.append(getDesc(inf.key)).append('=').append(v).append('\n');
-      os.write(sb.toString().getBytes());
+      final String v = (inf.val == null ? "" : inf.val.toString());
+      ss.addParameter(inf.key.toString(), v);
     }
   }
+
+  public byte[] getData() {
+    StringBuffer buf = new StringBuffer(8192);
+    for (int i = 0; i < tests.size(); i++) {
+      final TestResult inf = (TestResult) tests.elementAt(i);
+      final String v = (inf.val == null ? "" : inf.val.toString());
+      buf.append(inf.key).append('=').append(v).append('\n');
+    }
+    return buf.toString().getBytes();
+  }
+
+  public String getMimeType() {
+    return "text/plain";
+  }
+
 }

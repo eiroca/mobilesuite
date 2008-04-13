@@ -26,7 +26,9 @@ package test.benchmark;
 
 public class BenchmarkADD extends MathBenchmarkAbstract {
 
-  public BenchmarkADD(SuiteAbstract suite) {
+  public static final String RESID = "add.";
+
+  public BenchmarkADD(final SuiteAbstract suite) {
     super(suite);
   }
 
@@ -36,7 +38,7 @@ public class BenchmarkADD extends MathBenchmarkAbstract {
     long elapsed;
     // Array SUM
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS / 100; i++) {
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS / 100; i++) {
       for (int j = 0; j < 100; j++) {
         result = arrayA[j] + arrayB[j];
       }
@@ -46,12 +48,12 @@ public class BenchmarkADD extends MathBenchmarkAbstract {
       result = 1;
     }
     elapsed = after - before;
-    this.suite.addResult("math.add.array", elapsed + " ms");
+    suite.addResult(BenchmarkADD.RESID + "array", Long.toString(elapsed));
     // Local SUM
     final int localA = random.nextInt();
     final int localB = random.nextInt();
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS; i++) {
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS; i++) {
       result = localA + localB;
     }
     after = System.currentTimeMillis();
@@ -59,10 +61,10 @@ public class BenchmarkADD extends MathBenchmarkAbstract {
       result = 1;
     }
     elapsed = after - before;
-    this.suite.addResult("math.add.locals", elapsed + " ms");
+    suite.addResult(BenchmarkADD.RESID + "locals", Long.toString(elapsed));
     // Instance SUM
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS; i++) {
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS; i++) {
       result = instanceA + instanceB;
     }
     after = System.currentTimeMillis();
@@ -70,18 +72,18 @@ public class BenchmarkADD extends MathBenchmarkAbstract {
       result = 1;
     }
     elapsed = after - before;
-    this.suite.addResult("math.add.instance", elapsed + " ms");
+    suite.addResult(BenchmarkADD.RESID + "instance", Long.toString(elapsed));
     // Static SUM
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS; i++) {
-      result = staticA + staticB;
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS; i++) {
+      result = MathBenchmarkAbstract.staticA + MathBenchmarkAbstract.staticB;
     }
     after = System.currentTimeMillis();
     if (result > 0) {
       result = 1;
     }
     elapsed = after - before;
-    this.suite.addResult("math.add.static", elapsed + " ms");
+    suite.addResult(BenchmarkADD.RESID + "static", Long.toString(elapsed));
   }
 
 }

@@ -26,7 +26,9 @@ package test.benchmark;
 
 public class BenchmarkMUL extends MathBenchmarkAbstract {
 
-  public BenchmarkMUL(SuiteAbstract suite) {
+  public static final String RESID = "mul.";
+
+  public BenchmarkMUL(final SuiteAbstract suite) {
     super(suite);
   }
 
@@ -36,7 +38,7 @@ public class BenchmarkMUL extends MathBenchmarkAbstract {
     long elapsed;
     // Array MUL
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS / 100; i++) {
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS / 100; i++) {
       for (int j = 0; j < 100; j++) {
         result = arrayA[j] * arrayB[j];
       }
@@ -46,12 +48,12 @@ public class BenchmarkMUL extends MathBenchmarkAbstract {
       result = 1;
     }
     elapsed = after - before;
-    this.suite.addResult("math.mul.array", elapsed + " ms");
+    suite.addResult(BenchmarkMUL.RESID + "array", Long.toString(elapsed));
     // Local MUL
     final int localA = random.nextInt();
     final int localB = random.nextInt();
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS; i++) {
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS; i++) {
       result = localA * localB;
     }
     after = System.currentTimeMillis();
@@ -59,10 +61,10 @@ public class BenchmarkMUL extends MathBenchmarkAbstract {
       result = 1;
     }
     elapsed = after - before;
-    this.suite.addResult("math.mul.locals", elapsed + " ms");
+    suite.addResult(BenchmarkMUL.RESID + "locals", Long.toString(elapsed));
     // Instance MUL
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS; i++) {
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS; i++) {
       result = instanceA * instanceB;
     }
     after = System.currentTimeMillis();
@@ -70,18 +72,18 @@ public class BenchmarkMUL extends MathBenchmarkAbstract {
       result = 1;
     }
     elapsed = after - before;
-    this.suite.addResult("math.mul.instance", elapsed + " ms");
+    suite.addResult(BenchmarkMUL.RESID + "instance", Long.toString(elapsed));
     // Static MUL
     before = System.currentTimeMillis();
-    for (int i = 0; i < NUMBER_OF_OPS; i++) {
-      result = staticA * staticB;
+    for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS; i++) {
+      result = MathBenchmarkAbstract.staticA * MathBenchmarkAbstract.staticB;
     }
     after = System.currentTimeMillis();
     if (result > 0) {
       result = 1;
     }
     elapsed = after - before;
-    this.suite.addResult("math.mul.static", elapsed + " ms");
+    suite.addResult(BenchmarkMUL.RESID + "static", Long.toString(elapsed));
   }
 
 }

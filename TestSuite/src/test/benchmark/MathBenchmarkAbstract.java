@@ -19,7 +19,7 @@ abstract public class MathBenchmarkAbstract extends BenchmarkAbstract {
 
   protected final Random random = new Random();
 
-  public MathBenchmarkAbstract(SuiteAbstract suite) {
+  public MathBenchmarkAbstract(final SuiteAbstract suite) {
     super(suite);
     do {
       instanceA = random.nextInt();
@@ -30,13 +30,13 @@ abstract public class MathBenchmarkAbstract extends BenchmarkAbstract {
     }
     while (instanceB == 0);
     do {
-      staticA = random.nextInt();
+      MathBenchmarkAbstract.staticA = random.nextInt();
     }
-    while (staticA == 0);
+    while (MathBenchmarkAbstract.staticA == 0);
     do {
-      staticB = random.nextInt();
+      MathBenchmarkAbstract.staticB = random.nextInt();
     }
-    while (staticB == 0);
+    while (MathBenchmarkAbstract.staticB == 0);
     arrayA = new int[100];
     arrayB = new int[100];
     final Random r = new Random();

@@ -22,9 +22,11 @@ abstract public class AbstractProcessor {
 
   String cat;
   Suite suite;
+  String prefix;
 
-  public AbstractProcessor(final String cat) {
+  public AbstractProcessor(final String cat, final String prefix) {
     this.cat = cat;
+    this.prefix = prefix;
   }
 
   public void setSuite(final Suite suite) {
@@ -35,7 +37,7 @@ abstract public class AbstractProcessor {
     if (suite != null) {
       final TestResult test = new TestResult();
       test.category = cat;
-      test.key = key;
+      test.key = (prefix != null ? prefix + key : key);
       test.val = val;
       suite.addResult(test);
     }

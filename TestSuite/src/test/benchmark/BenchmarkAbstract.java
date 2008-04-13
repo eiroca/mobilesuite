@@ -22,7 +22,7 @@ public abstract class BenchmarkAbstract {
 
   SuiteAbstract suite;
 
-  public BenchmarkAbstract(SuiteAbstract suite) {
+  public BenchmarkAbstract(final SuiteAbstract suite) {
     this.suite = suite;
   }
 

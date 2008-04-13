@@ -24,13 +24,14 @@ import test.AbstractProcessor;
 
 public class LocalDeviceInspector extends AbstractProcessor {
 
+  public static final String PREFIX = null;
   public static final String CATEGORY = "LocalDevice";
   public static final String PROP_DATA = "data_bluetooth.txt";
 
   String[] test;
 
   public LocalDeviceInspector() {
-    super(LocalDeviceInspector.CATEGORY);
+    super(LocalDeviceInspector.CATEGORY, LocalDeviceInspector.PREFIX);
     test = BaseApp.readStrings(LocalDeviceInspector.PROP_DATA);
   }
 

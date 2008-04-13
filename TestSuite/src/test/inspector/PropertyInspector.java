@@ -23,13 +23,14 @@ import test.AbstractProcessor;
 
 public class PropertyInspector extends AbstractProcessor {
 
+  public static final String PREFIX = "prop.";
   public static final String CATEGORY = "Properties";
   public static final String PROP_DATA = "data_prop.txt";
 
   String[] test;
 
   public PropertyInspector() {
-    super(PropertyInspector.CATEGORY);
+    super(PropertyInspector.CATEGORY, PropertyInspector.PREFIX);
     test = BaseApp.readStrings(PropertyInspector.PROP_DATA);
   }
 

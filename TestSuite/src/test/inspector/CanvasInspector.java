@@ -27,13 +27,14 @@ import test.AbstractProcessor;
 
 public class CanvasInspector extends AbstractProcessor {
 
+  public static final String PREFIX = "canvas.";
   public static final String CATEGORY = "Canvas";
 
   private Canvas canvas;
   private Canvas canvasFull;
 
   public CanvasInspector() {
-    super(CanvasInspector.CATEGORY);
+    super(CanvasInspector.CATEGORY, CanvasInspector.PREFIX);
   }
 
   final private void testKey(final String desc, final int key) {
@@ -72,33 +73,33 @@ public class CanvasInspector extends AbstractProcessor {
     }
     BaseApp.setDisplay(cur);
     final Display d = BaseApp.display;
-    testInt("Screen (normal) width", canvas.getWidth());
-    testInt("Screen (normal) height", canvas.getHeight());
-    testInt("Screen (full) width", canvasFull.getWidth());
-    testInt("Screen (full) height", canvasFull.getHeight());
-    testInt("Color Depth", d.numColors());
-    testBool("Is grayscale", d.isColor());
-    testInt("Alpha Levels", d.numAlphaLevels());
-    testBool("Screen buffered", canvas.isDoubleBuffered());
-    testFont("Font Default Height", Font.getDefaultFont());
-    testFont("Font Small Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL));
-    testFont("Font Small Bold Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL));
-    testFont("Font Medium Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_MEDIUM));
-    testFont("Font Medium Bold Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_MEDIUM));
-    testFont("Font Large Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_LARGE));
-    testFont("Font Large Bold Height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_LARGE));
-    testBool("Has pointer events", canvas.hasPointerEvents());
-    testBool("Has motion events", canvas.hasPointerMotionEvents());
-    testBool("Has key-held events", canvas.hasRepeatEvents());
-    testKey("Key GAME_A", Canvas.GAME_A);
-    testKey("Key GAME_B", Canvas.GAME_B);
-    testKey("Key GAME_C", Canvas.GAME_C);
-    testKey("Key GAME_D", Canvas.GAME_D);
-    testKey("Key UP", Canvas.UP);
-    testKey("Key DOWN", Canvas.DOWN);
-    testKey("Key FIRE", Canvas.FIRE);
-    testKey("Key LEFT", Canvas.LEFT);
-    testKey("Key RIGTH", Canvas.RIGHT);
+    testInt("screen.width", canvas.getWidth());
+    testInt("screen.height", canvas.getHeight());
+    testInt("screen.fullwidth", canvasFull.getWidth());
+    testInt("screen.fullheight", canvasFull.getHeight());
+    testBool("screen.buffered", canvas.isDoubleBuffered());
+    testInt("screen.colordepth", d.numColors());
+    testBool("screen.iscolor", d.isColor());
+    testInt("screen.alphalevels", d.numAlphaLevels());
+    testFont("font.default.height", Font.getDefaultFont());
+    testFont("font.small.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL));
+    testFont("font.small.bold.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL));
+    testFont("font.medium.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_MEDIUM));
+    testFont("font.medium.bold.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_MEDIUM));
+    testFont("font.large.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_LARGE));
+    testFont("font.large.bold.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_LARGE));
+    testBool("has.pointer", canvas.hasPointerEvents());
+    testBool("has.motion", canvas.hasPointerMotionEvents());
+    testBool("has.key-held", canvas.hasRepeatEvents());
+    testKey("key.GAME_A", Canvas.GAME_A);
+    testKey("key.GAME_B", Canvas.GAME_B);
+    testKey("key.GAME_C", Canvas.GAME_C);
+    testKey("key.GAME_D", Canvas.GAME_D);
+    testKey("key.UP", Canvas.UP);
+    testKey("key.DOWN", Canvas.DOWN);
+    testKey("key.FIRE", Canvas.FIRE);
+    testKey("key.LEFT", Canvas.LEFT);
+    testKey("key.RIGHT", Canvas.RIGHT);
   }
 
 }

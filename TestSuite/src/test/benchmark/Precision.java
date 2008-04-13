@@ -26,14 +26,14 @@ package test.benchmark;
 
 public class Precision extends BenchmarkAbstract {
 
-  public Precision(SuiteAbstract suite) {
+  public Precision(final SuiteAbstract suite) {
     super(suite);
   }
 
   public void execute() {
     // Retrieve the minimum resolution timers can measure
     long iResolution = 0;
-    PrecisionThread tSleeper = new PrecisionThread();
+    final PrecisionThread tSleeper = new PrecisionThread();
     tSleeper.start();
     try {
       tSleeper.join();
@@ -42,7 +42,7 @@ public class Precision extends BenchmarkAbstract {
       // ignore
     }
     iResolution = tSleeper.iAfter - tSleeper.iBefore;
-    this.suite.addResult("thread.precision", iResolution + "ms");
+    suite.addResult("sleep", Long.toString(iResolution));
   }
 
 }
