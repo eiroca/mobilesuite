@@ -23,7 +23,6 @@ package org.kxml.io;
 
 import java.io.IOException;
 import java.io.Writer;
-
 import org.kxml.PrefixMap;
 import org.kxml.Xml;
 
@@ -144,9 +143,7 @@ public class XmlWriter extends AbstractXmlWriter {
 
   public void attribute(final String name, final String value) throws IOException {
 
-    if (!pending) {
-      throw new RuntimeException("can write attr only immediately after a startTag");
-    }
+    if (!pending) { throw new RuntimeException("can write attr only immediately after a startTag"); }
 
     writer.write(' ');
     writer.write(name);
@@ -203,9 +200,7 @@ public class XmlWriter extends AbstractXmlWriter {
     }
 
     current = current.prev;
-    if (current == null) {
-      throw new RuntimeException("too many closing tags!");
-    }
+    if (current == null) { throw new RuntimeException("too many closing tags!"); }
   }
 
   /**

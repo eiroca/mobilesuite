@@ -484,7 +484,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
    * @param c
    * @return
    */
-  public StringBuffer formatDate(final Calendar c, StringBuffer sb) {
+  public StringBuffer formatDate(final Calendar c, final StringBuffer sb) {
     sb.append(c.get(Calendar.DATE)).append('/').append((c.get(Calendar.MONTH) + 1)).append('/').append(c.get(Calendar.YEAR));
     return sb;
   }
@@ -496,7 +496,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
    * @param sec
    * @return
    */
-  public StringBuffer formatTime(final Calendar c, final boolean sec, StringBuffer sb) {
+  public StringBuffer formatTime(final Calendar c, final boolean sec, final StringBuffer sb) {
     sb.append(c.get(Calendar.HOUR_OF_DAY)).append(':').append(c.get(Calendar.MINUTE));
     if (sec) {
       sb.append(':').append(c.get(Calendar.SECOND));
@@ -655,8 +655,23 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     for (int i = 0; i < s.length(); i++) {
       ch = s.charAt(i);
       switch (ch) {
+        case '\n':
+          res.append("%0A");
+          break;
+        case '\r':
+          res.append("%0D");
+          break;
         case ' ':
           res.append("%20");
+          break;
+        case '#':
+          res.append("%23");
+          break;
+        case '%':
+          res.append("%25");
+          break;
+        case '&':
+          res.append("%26");
           break;
         case '-':
           res.append("%2D");
@@ -667,20 +682,14 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
         case ':':
           res.append("%3A");
           break;
+        case ';':
+          res.append("%3B");
+          break;
         case '=':
           res.append("%3D");
           break;
         case '?':
           res.append("%3F");
-          break;
-        case '#':
-          res.append("%23");
-          break;
-        case '\r':
-          res.append("%0D");
-          break;
-        case '\n':
-          res.append("%0A");
           break;
         default:
           res.append(ch);
@@ -972,17 +981,17 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   private static char STRIP = '\r';
   private static String COMMENT = "#";
 
-  public static InputStream getInputStream(String res) {
+  public static InputStream getInputStream(final String res) {
     StringBuffer sb = new StringBuffer(64);
     String basepath;
-    Class me = res.getClass();
+    final Class me = res.getClass();
     sb.append(BaseApp.DIR_SEP);
-    if (resPrefix != null) {
-      sb.append(resPrefix).append(DIR_SEP);
+    if (BaseApp.resPrefix != null) {
+      sb.append(BaseApp.resPrefix).append(BaseApp.DIR_SEP);
     }
     basepath = sb.toString();
-    if (locale != null) {
-      sb.append(locale).append(DIR_SEP);
+    if (BaseApp.locale != null) {
+      sb.append(BaseApp.locale).append(BaseApp.DIR_SEP);
     }
     sb.append(res);
     InputStream in = me.getResourceAsStream(sb.toString());
@@ -1009,7 +1018,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     boolean sepFound = false;
     int ch;
     try {
-      final InputStream in = getInputStream(res);
+      final InputStream in = BaseApp.getInputStream(res);
       do {
         ch = in.read();
         if (ch == -1) {
@@ -1073,7 +1082,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     StringBuffer sb = new StringBuffer(80);
     int ch;
     try {
-      final InputStream in = getInputStream(res);
+      final InputStream in = BaseApp.getInputStream(res);
       do {
         ch = in.read();
         if (ch == -1) {
@@ -1115,7 +1124,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     final StringBuffer sb = new StringBuffer(1024);
     int ch;
     try {
-      final InputStream in = getInputStream(res);
+      final InputStream in = BaseApp.getInputStream(res);
       do {
         ch = in.read();
         if (ch == -1) {
@@ -1144,7 +1153,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     final Image[] images = new Image[count];
     try {
       Graphics g;
-      final InputStream in = getInputStream(res);
+      final InputStream in = BaseApp.getInputStream(res);
       final Image image = Image.createImage(in);
       for (int i = 0; i < count; i++) {
         images[i] = Image.createImage(width, height);
@@ -1168,7 +1177,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   public static Image createImage(final String res) {
     Image image = null;
     try {
-      final InputStream in = getInputStream(res);
+      final InputStream in = BaseApp.getInputStream(res);
       image = Image.createImage(in);
     }
     catch (final IOException ex) {
@@ -1187,7 +1196,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   public static boolean loadTile(final String res, final TiledLayer tile) {
     boolean ok = true;
     try {
-      final InputStream in = getInputStream(res);
+      final InputStream in = BaseApp.getInputStream(res);
       final DataInputStream rs = new DataInputStream(in);
       final int sr = rs.readByte();
       final int sc = rs.readByte();
@@ -1501,14 +1510,14 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
    * Setup midlet and display references
    */
   public BaseApp() {
-    locale = readProperty("microedition.locale", null);
-    if (locale != null) {
-      int ps = locale.indexOf("-");
+    BaseApp.locale = BaseApp.readProperty("microedition.locale", null);
+    if (BaseApp.locale != null) {
+      final int ps = BaseApp.locale.indexOf("-");
       if (ps > 0) {
-        locale = locale.substring(0, ps);
+        BaseApp.locale = BaseApp.locale.substring(0, ps);
       }
-      if (locale.length() == 0) {
-        locale = null;
+      if (BaseApp.locale.length() == 0) {
+        BaseApp.locale = null;
       }
     }
     BaseApp.midlet = this;
@@ -1618,7 +1627,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     try {
       sValue = System.getProperty(sName);
     }
-    catch (Exception e) {
+    catch (final Exception e) {
     }
     return (sValue == null ? def : sValue);
   }
@@ -1628,7 +1637,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     try {
       sValue = getAppProperty(sName);
     }
-    catch (Exception e) {
+    catch (final Exception e) {
     }
     return (sValue == null ? def : sValue);
   }

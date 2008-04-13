@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-
 import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.helpers.OptionConverter;
 import org.apache.log4j.spi.LoggingEvent;
@@ -122,9 +121,7 @@ public class FileAppender extends AppenderSkeleton {
     // - checkEntryConditions();
     // - subAppend();
 
-    if (!checkEntryConditions()) {
-      return;
-    }
+    if (!checkEntryConditions()) { return; }
     subAppend(event);
   }
 
@@ -208,9 +205,7 @@ public class FileAppender extends AppenderSkeleton {
    * @since 0.8.1
    */
   public void setOption(final String key, String value) {
-    if (value == null) {
-      return;
-    }
+    if (value == null) { return; }
     super.setOption(key, value);
 
     if (key.toUpperCase().equals(FileAppender.FILE_OPTION.toUpperCase())) {

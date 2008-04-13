@@ -22,7 +22,6 @@
 package org.kxml.parser;
 
 import java.util.Vector;
-
 import org.kxml.Attribute;
 import org.kxml.Xml;
 
@@ -99,9 +98,7 @@ public class ParseEvent {
     for (int i = 0; i < len; i++) {
       final Attribute attr = (Attribute) attributes.elementAt(i);
 
-      if (attr.getName().equals(name) && ((namespace == null) || namespace.equals(attr.getNamespace()))) {
-        return attr;
-      }
+      if (attr.getName().equals(name) && ((namespace == null) || namespace.equals(attr.getNamespace()))) { return attr; }
     }
 
     return null;
@@ -152,9 +149,7 @@ public class ParseEvent {
 
   public String getValue(final String attrName) {
     final Attribute attr = getAttribute(attrName);
-    if (attr == null) {
-      throw new RuntimeException("Attribute " + attrName + " in " + this + " expected!");
-    }
+    if (attr == null) { throw new RuntimeException("Attribute " + attrName + " in " + this + " expected!"); }
     return attr.getValue();
   }
 

@@ -25,7 +25,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Vector;
-
 import org.kxml.Xml;
 import org.kxml.XmlIO;
 import org.kxml.io.AbstractXmlWriter;
@@ -49,9 +48,7 @@ public class Node implements XmlIO {
 
   public void addChild(final int index, final int type, final Object child) {
 
-    if (child == null) {
-      throw new NullPointerException();
-    }
+    if (child == null) { throw new NullPointerException(); }
 
     if (children == null) {
       children = new Vector();
@@ -59,15 +56,11 @@ public class Node implements XmlIO {
     }
 
     if (type == Xml.ELEMENT) {
-      if (!(child instanceof Element)) {
-        throw new RuntimeException("Element obj expected)");
-      }
+      if (!(child instanceof Element)) { throw new RuntimeException("Element obj expected)"); }
 
       ((Element) child).setParent(this);
     }
-    else if (!(child instanceof String)) {
-      throw new RuntimeException("String expected");
-    }
+    else if (!(child instanceof String)) { throw new RuntimeException("String expected"); }
 
     children.insertElementAt(child, index);
     types.insert(index, (char) type);
@@ -138,9 +131,7 @@ public class Node implements XmlIO {
     final int i = indexOf(namespace, name, 0);
     final int j = indexOf(namespace, name, i + 1);
 
-    if ((i == -1) || (j != -1)) {
-      throw new RuntimeException("Element {" + namespace + "}" + name + (i == -1 ? " not found in " : " more than once in ") + getName());
-    }
+    if ((i == -1) || (j != -1)) { throw new RuntimeException("Element {" + namespace + "}" + name + (i == -1 ? " not found in " : " more than once in ") + getName()); }
 
     return getElement(i);
   }
@@ -174,9 +165,7 @@ public class Node implements XmlIO {
       if ((getType(i) & (Xml.TEXT | Xml.WHITESPACE)) != 0) {
         buf.append(getText(i));
       }
-      else if (getType(i) == Xml.ELEMENT) {
-        throw new RuntimeException("not text-only content!");
-      }
+      else if (getType(i) == Xml.ELEMENT) { throw new RuntimeException("not text-only content!"); }
     }
 
     return buf.toString();
@@ -223,9 +212,7 @@ public class Node implements XmlIO {
 
       final Element child = getElement(i);
 
-      if ((child != null) && name.equals(child.getName()) && ((namespace == null) || namespace.equals(child.getNamespace()))) {
-        return i;
-      }
+      if ((child != null) && name.equals(child.getName()) && ((namespace == null) || namespace.equals(child.getNamespace()))) { return i; }
     }
     return -1;
   }
@@ -320,9 +307,7 @@ public class Node implements XmlIO {
   /** Writes the children of this node to the given XmlWriter. */
 
   public void writeChildren(final AbstractXmlWriter writer) throws IOException {
-    if (children == null) {
-      return;
-    }
+    if (children == null) { return; }
 
     final int len = children.size();
 

@@ -36,9 +36,7 @@ public class PrefixMap {
   public String getNamespace(final String prefix) {
     PrefixMap current = this;
     do {
-      if (prefix.equals(current.prefix)) {
-        return current.namespace;
-      }
+      if (prefix.equals(current.prefix)) { return current.namespace; }
       current = current.previous;
     }
     while (current != null);
@@ -51,9 +49,7 @@ public class PrefixMap {
     do {
       // System.err.println ("found: "+current.namespace +"/"+ current.prefix +
       // "/" +getNamespace (current.prefix));
-      if (namespace.equals(current.namespace) && namespace.equals(getNamespace(current.prefix))) {
-        return current.prefix;
-      }
+      if (namespace.equals(current.namespace) && namespace.equals(getNamespace(current.prefix))) { return current.prefix; }
 
       current = current.previous;
     }

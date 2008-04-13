@@ -14,10 +14,8 @@ package org.apache.log4j;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
-
 import net.eiroca.log4j2me.Properties;
 import net.eiroca.log4j2me.StringTokenizer;
-
 import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.helpers.OptionConverter;
 import org.apache.log4j.spi.OptionHandler;
@@ -254,9 +252,7 @@ public class PropertyConfigurator {
 
   void configureOptionHandler(final OptionHandler oh, final String prefix, final Properties props) {
     final String[] options = oh.getOptionStrings();
-    if (options == null) {
-      return;
-    }
+    if (options == null) { return; }
 
     String value;
     for (int i = 0; i < options.length; i++) {
@@ -336,9 +332,7 @@ public class PropertyConfigurator {
     if (!(value.startsWith(",") || value.equals(""))) {
 
       // just to be on the safe side...
-      if (!st.hasMoreTokens()) {
-        return;
-      }
+      if (!st.hasMoreTokens()) { return; }
 
       final String priorityStr = st.nextToken();
       LogLog.debug("Priority token is [" + priorityStr + "].");

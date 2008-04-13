@@ -6,7 +6,6 @@ package org.kxml.wap;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Vector;
-
 import org.kxml.Attribute;
 import org.kxml.Xml;
 import org.kxml.io.ParseException;
@@ -66,9 +65,7 @@ public class WbxmlParser extends AbstractXmlParser {
 
   public ParseEvent peek() throws IOException {
     String s;
-    if (next != null) {
-      return next;
-    }
+    if (next != null) { return next; }
     if ((current != null) && current.getDegenerated()) {
       next = new Tag(Xml.END_TAG, current, current.getNamespace(), current.getName());
       current = current.getParent();
@@ -78,15 +75,11 @@ public class WbxmlParser extends AbstractXmlParser {
       final int id = in.read();
       switch (id) {
         case -1:
-          if (current != null) {
-            throw new RuntimeException("unclosed elements: " + current);
-          }
+          if (current != null) { throw new RuntimeException("unclosed elements: " + current); }
           next = new ParseEvent(Xml.END_DOCUMENT, null);
           break;
         case Wbxml.SWITCH_PAGE:
-          if (readByte() != 0) {
-            throw new IOException("Curr. only CP0 supported");
-          }
+          if (readByte() != 0) { throw new IOException("Curr. only CP0 supported"); }
           break;
         case Wbxml.END:
           next = new Tag(Xml.END_TAG, current, current.getNamespace(), current.getName());
@@ -205,9 +198,7 @@ public class WbxmlParser extends AbstractXmlParser {
           case Wbxml.EXT_2:
           case Wbxml.OPAQUE:
             final ParseEvent e = parseWapExtension(id);
-            if (!((e.getType() != Xml.TEXT) && (e.getType() != Xml.WHITESPACE))) {
-              throw new RuntimeException("parse WapExtension must return Text Event in order to work inside Attributes!");
-            }
+            if (!((e.getType() != Xml.TEXT) && (e.getType() != Xml.WHITESPACE))) { throw new RuntimeException("parse WapExtension must return Text Event in order to work inside Attributes!"); }
             value.append(e.getText());
             // value.append (handleExtension (id)); // skip EXT in ATTR
             // break;
@@ -227,12 +218,8 @@ public class WbxmlParser extends AbstractXmlParser {
 
   String resolveId(final String[] tab, final int id) throws IOException {
     final int idx = (id & 0x07f) - 5;
-    if (idx == -1) {
-      return readStrT();
-    }
-    if ((idx < 0) || (tab == null) || (idx >= tab.length) || (tab[idx] == null)) {
-      throw new IOException("id " + id + " undef.");
-    }
+    if (idx == -1) { return readStrT(); }
+    if ((idx < 0) || (tab == null) || (idx >= tab.length) || (tab[idx] == null)) { throw new IOException("id " + id + " undef."); }
     return tab[idx];
   }
 
@@ -260,9 +247,7 @@ public class WbxmlParser extends AbstractXmlParser {
 
   int readByte() throws IOException {
     final int i = in.read();
-    if (i == -1) {
-      throw new IOException("Unexpected EOF");
-    }
+    if (i == -1) { throw new IOException("Unexpected EOF"); }
     return i;
   }
 
@@ -284,9 +269,7 @@ public class WbxmlParser extends AbstractXmlParser {
     boolean wsp = true;
     while (true) {
       final int i = in.read();
-      if (i == -1) {
-        throw new IOException("Unexpected EOF");
-      }
+      if (i == -1) { throw new IOException("Unexpected EOF"); }
       if (i == 0) {
         break;
       }
@@ -313,9 +296,7 @@ public class WbxmlParser extends AbstractXmlParser {
 
   public void setTagTable(final int page, final String[] tagTable) {
     this.tagTable = tagTable;
-    if (page != 0) {
-      throw new RuntimeException("code pages curr. not supp.");
-    }
+    if (page != 0) { throw new RuntimeException("code pages curr. not supp."); }
   }
 
   /**
@@ -327,9 +308,7 @@ public class WbxmlParser extends AbstractXmlParser {
 
   public void setAttrStartTable(final int page, final String[] attrStartTable) {
     this.attrStartTable = attrStartTable;
-    if (page != 0) {
-      throw new RuntimeException("code pages curr. not supp.");
-    }
+    if (page != 0) { throw new RuntimeException("code pages curr. not supp."); }
   }
 
   /**
@@ -340,9 +319,7 @@ public class WbxmlParser extends AbstractXmlParser {
 
   public void setAttrValueTable(final int page, final String[] attrStartTable) {
     attrValueTable = attrStartTable;
-    if (page != 0) {
-      throw new RuntimeException("code pages curr. not supp.");
-    }
+    if (page != 0) { throw new RuntimeException("code pages curr. not supp."); }
   }
 
 }

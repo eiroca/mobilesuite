@@ -23,7 +23,6 @@ package org.kxml.parser;
 
 import java.io.IOException;
 import java.util.Vector;
-
 import org.kxml.Xml;
 import org.kxml.io.ParseException;
 
@@ -93,9 +92,7 @@ public abstract class AbstractXmlParser {
 
   public ParseEvent read(final int type, final String namespace, final String name) throws IOException {
 
-    if (peek(type, namespace, name)) {
-      return read();
-    }
+    if (peek(type, namespace, name)) { return read(); }
     throw new ParseException("unexpected: " + peek(), null, peek().getLineNumber(), -1);
   }
 

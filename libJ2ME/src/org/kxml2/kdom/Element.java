@@ -22,7 +22,6 @@ package org.kxml2.kdom;
 
 import java.io.IOException;
 import java.util.Vector;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
@@ -100,9 +99,7 @@ public class Element extends Node {
 
   public String getAttributeValue(final String namespace, final String name) {
     for (int i = 0; i < getAttributeCount(); i++) {
-      if (name.equals(getAttributeName(i)) && ((namespace == null) || namespace.equals(getAttributeNamespace(i)))) {
-        return getAttributeValue(i);
-      }
+      if (name.equals(getAttributeName(i)) && ((namespace == null) || namespace.equals(getAttributeNamespace(i)))) { return getAttributeValue(i); }
     }
     return null;
   }
@@ -117,9 +114,7 @@ public class Element extends Node {
     Element current = this;
 
     while (current.parent != null) {
-      if (!(current.parent instanceof Element)) {
-        return current.parent;
-      }
+      if (!(current.parent instanceof Element)) { return current.parent; }
       current = (Element) current.parent;
     }
 
@@ -149,9 +144,7 @@ public class Element extends Node {
   public String getNamespaceUri(final String prefix) {
     final int cnt = getNamespaceCount();
     for (int i = 0; i < cnt; i++) {
-      if ((prefix == getNamespacePrefix(i)) || ((prefix != null) && prefix.equals(getNamespacePrefix(i)))) {
-        return getNamespaceUri(i);
-      }
+      if ((prefix == getNamespacePrefix(i)) || ((prefix != null) && prefix.equals(getNamespacePrefix(i)))) { return getNamespaceUri(i); }
     }
     return parent instanceof Element ? ((Element) parent).getNamespaceUri(prefix) : null;
   }
@@ -284,9 +277,7 @@ public class Element extends Node {
    */
 
   public void setNamespace(final String namespace) {
-    if (namespace == null) {
-      throw new NullPointerException("Use \"\" for empty namespace");
-    }
+    if (namespace == null) { throw new NullPointerException("Use \"\" for empty namespace"); }
     this.namespace = namespace;
   }
 

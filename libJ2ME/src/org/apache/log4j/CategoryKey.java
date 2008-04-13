@@ -27,12 +27,8 @@ class CategoryKey {
   }
 
   final public boolean equals(final Object rArg) {
-    if (this == rArg) {
-      return true;
-    }
-    if ((rArg != null) && (rArg instanceof CategoryKey)) {
-      return name.equals(((CategoryKey) rArg).name);
-    }
+    if (this == rArg) { return true; }
+    if ((rArg != null) && (rArg instanceof CategoryKey)) { return name.equals(((CategoryKey) rArg).name); }
     return false;
   }
 }

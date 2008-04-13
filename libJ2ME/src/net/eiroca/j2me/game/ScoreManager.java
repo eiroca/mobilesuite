@@ -23,9 +23,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Vector;
-
 import javax.microedition.rms.RecordStore;
-
 import net.eiroca.j2me.app.BaseApp;
 
 public class ScoreManager {
@@ -50,9 +48,7 @@ public class ScoreManager {
 
   public Score getHighScore(final int dif) {
     final int size = scores[dif].size();
-    if (size == 0) {
-      return null;
-    }
+    if (size == 0) { return null; }
     return (Score) scores[dif].elementAt(0);
   }
 
@@ -62,9 +58,7 @@ public class ScoreManager {
 
   public boolean isHighScore(final int dif, final Score score) {
     final int size = scores[dif].size();
-    if (size < listLength) {
-      return true;
-    }
+    if (size < listLength) { return true; }
     final Score last = (Score) scores[dif].elementAt(size - 1);
     return (score.score > last.score);
   }
@@ -88,9 +82,7 @@ public class ScoreManager {
           flipped = true;
         }
       }
-      if (!flipped) {
-        return;
-      }
+      if (!flipped) { return; }
     }
   }
 
@@ -149,9 +141,7 @@ public class ScoreManager {
   }
 
   public void addNewScore(final int dif, final Score score) {
-    if (score == null) {
-      return;
-    }
+    if (score == null) { return; }
     final Score s = new Score(score.name, score.level, score.score);
     scores[dif].addElement(s);
     sort(dif);

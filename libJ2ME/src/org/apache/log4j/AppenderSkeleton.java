@@ -142,9 +142,7 @@ public abstract class AppenderSkeleton implements Appender, OptionHandler {
       LogLog.warn("Appender [" + name + "] is closed.");
     }
 
-    if (!isAsSevereAsThreshold(event.priority)) {
-      return;
-    }
+    if (!isAsSevereAsThreshold(event.priority)) { return; }
 
     append(event);
   }

@@ -22,7 +22,6 @@ import javax.microedition.lcdui.Choice;
 import javax.microedition.lcdui.ChoiceGroup;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Gauge;
-
 import net.eiroca.j2me.app.BaseApp;
 
 public class GameUISettings extends Form {

@@ -86,9 +86,7 @@ public class RMSTable {
           break;
         }
       }
-      if (current.children[i] == 0) {
-        return null;
-      }
+      if (current.children[i] == 0) { return null; }
       current = new RMSTableNode(this, current.children[i]);
     }
   }
@@ -101,9 +99,7 @@ public class RMSTable {
    */
   public void put(final String key, final String value) throws RecordStoreException {
     root.put(key, value);
-    if (root.size < RMSTable.N + RMSTable.N + 1) {
-      return;
-    }
+    if (root.size < RMSTable.N + RMSTable.N + 1) { return; }
     // split root....
     final RMSTableNode left = root;
     root = new RMSTableNode(this);

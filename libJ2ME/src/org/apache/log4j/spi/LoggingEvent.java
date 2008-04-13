@@ -154,9 +154,7 @@ public class LoggingEvent {
    * <code>null</code> if there is no such information.
    */
   public String getThrowableStr() {
-    if (throwable == null) {
-      return null;
-    }
+    if (throwable == null) { return null; }
 
     if (throwableStr == null) {
       throwableStr = "j2me can only print stack into standard error.\n";

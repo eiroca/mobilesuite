@@ -93,9 +93,7 @@ public class LogLog {
    * way to disable error statements. Output goes to <code>System.err</code>.
    */
   public static void error(final String msg, final Throwable t) {
-    if (LogLog.quietMode) {
-      return;
-    }
+    if (LogLog.quietMode) { return; }
 
     System.err.println(LogLog.ERR_PREFIX + msg);
     if (t != null) {
@@ -138,9 +136,7 @@ public class LogLog {
    * disable warning statements. Output goes to <code>System.err</code>.
    */
   public static void warn(final String msg, final Throwable t) {
-    if (LogLog.quietMode) {
-      return;
-    }
+    if (LogLog.quietMode) { return; }
 
     System.err.println(LogLog.WARN_PREFIX + msg);
     if (t != null) {

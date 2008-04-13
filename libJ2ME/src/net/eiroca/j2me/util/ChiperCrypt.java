@@ -333,9 +333,7 @@ public class ChiperCrypt {
    * consisting of a salt number and an encrypted password
    */
   public static final boolean match(final String test, final String full) {
-    if ((full == null) || (full.length() < 3)) {
-      return false;
-    }
+    if ((full == null) || (full.length() < 3)) { return false; }
     return full.equals(ChiperCrypt.crypt(full.substring(0, 2), test));
   }
 

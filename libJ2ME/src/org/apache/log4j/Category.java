@@ -21,7 +21,6 @@
 package org.apache.log4j;
 
 import java.util.Vector;
-
 import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.RootLogger;
@@ -97,9 +96,7 @@ public class Category {
    */
   synchronized public void addAppender(final Appender newAppender) {
     // Null values for newAppender parameter are strictly forbidden.
-    if (newAppender == null) {
-      return;
-    }
+    if (newAppender == null) { return; }
 
     if (appenderList == null) {
       appenderList = new Vector(1);
@@ -170,9 +167,7 @@ public class Category {
    * @param message the message object to log.
    */
   public void debug(final Object message) {
-    if (hierarchy.enableInt > Priority.DEBUG_INT) {
-      return;
-    }
+    if (hierarchy.enableInt > Priority.DEBUG_INT) { return; }
     if (Priority.DEBUG.isGreaterOrEqual(getChainedPriority())) {
       forcedLog(Priority.DEBUG, message, null);
     }
@@ -187,9 +182,7 @@ public class Category {
    * @param t the exception to log, including its stack trace.
    */
   public void debug(final Object message, final Throwable t) {
-    if (hierarchy.enableInt > Priority.DEBUG_INT) {
-      return;
-    }
+    if (hierarchy.enableInt > Priority.DEBUG_INT) { return; }
     if (Priority.DEBUG.isGreaterOrEqual(getChainedPriority())) {
       forcedLog(Priority.DEBUG, message, t);
     }
@@ -210,9 +203,7 @@ public class Category {
    * @param message the message object to log
    */
   public void error(final Object message) {
-    if (hierarchy.enableInt > Priority.ERROR_INT) {
-      return;
-    }
+    if (hierarchy.enableInt > Priority.ERROR_INT) { return; }
     if (Priority.ERROR.isGreaterOrEqual(getChainedPriority())) {
       forcedLog(Priority.ERROR, message, null);
     }
@@ -227,9 +218,7 @@ public class Category {
    * @param t the exception to log, including its stack trace.
    */
   public void error(final Object message, final Throwable t) {
-    if (hierarchy.enableInt > Priority.ERROR_INT) {
-      return;
-    }
+    if (hierarchy.enableInt > Priority.ERROR_INT) { return; }
     if (Priority.ERROR.isGreaterOrEqual(getChainedPriority())) {
       forcedLog(Priority.ERROR, message, t);
     }
@@ -251,9 +240,7 @@ public class Category {
    * @param message the message object to log
    */
   public void fatal(final Object message) {
-    if (hierarchy.enableInt > Priority.FATAL_INT) {
-      return;
-    }
+    if (hierarchy.enableInt > Priority.FATAL_INT) { return; }
     if (Priority.FATAL.isGreaterOrEqual(getChainedPriority())) {
       forcedLog(Priority.FATAL, message, null);
     }
@@ -268,9 +255,7 @@ public class Category {
    * @param t the exception to log, including its stack trace.
    */
   public void fatal(final Object message, final Throwable t) {
-    if (hierarchy.enableInt > Priority.FATAL_INT) {
-      return;
-    }
+    if (hierarchy.enableInt > Priority.FATAL_INT) { return; }
     if (Priority.FATAL.isGreaterOrEqual(getChainedPriority())) {
       forcedLog(Priority.FATAL, message, t);
     }
@@ -301,9 +286,7 @@ public class Category {
    */
   public Priority getChainedPriority() {
     for (Category c = this; c != null; c = c.parent) {
-      if (c.priority != null) {
-        return c.priority;
-      }
+      if (c.priority != null) { return c.priority; }
     }
     return null; // If reached will cause an NullPointerException.
   }
@@ -383,9 +366,7 @@ public class Category {
    * @param message the message object to log
    */
   public void info(final Object message) {
-    if (hierarchy.enableInt > Priority.INFO_INT) {
-      return;
-    }
+    if (hierarchy.enableInt > Priority.INFO_INT) { return; }
     if (Priority.INFO.isGreaterOrEqual(getChainedPriority())) {
       forcedLog(Priority.INFO, message, null);
     }
@@ -400,9 +381,7 @@ public class Category {
    * @param t the exception to log, including its stack trace.
    */
   public void info(final Object message, final Throwable t) {
-    if (hierarchy.enableInt > Priority.INFO_INT) {
-      return;
-    }
+    if (hierarchy.enableInt > Priority.INFO_INT) { return; }
     if (Priority.INFO.isGreaterOrEqual(getChainedPriority())) {
       forcedLog(Priority.INFO, message, t);
     }
@@ -445,9 +424,7 @@ public class Category {
    *         <code>false</code> otherwise.
    */
   public boolean isDebugEnabled() {
-    if (hierarchy.enableInt > Priority.DEBUG_INT) {
-      return false;
-    }
+    if (hierarchy.enableInt > Priority.DEBUG_INT) { return false; }
     return Priority.DEBUG.isGreaterOrEqual(getChainedPriority());
   }
 
@@ -457,9 +434,7 @@ public class Category {
    * @return boolean True if this category is enabled for <code>priority</code>.
    */
   public boolean isEnabledFor(final Priority priority) {
-    if (hierarchy.enableInt > priority.level) {
-      return false;
-    }
+    if (hierarchy.enableInt > priority.level) { return false; }
     return priority.isGreaterOrEqual(getChainedPriority());
   }
 
@@ -470,9 +445,7 @@ public class Category {
    *         priority info, <code>false</code> otherwise.
    */
   public boolean isInfoEnabled() {
-    if (hierarchy.enableInt > Priority.INFO_INT) {
-      return false;
-    }
+    if (hierarchy.enableInt > Priority.INFO_INT) { return false; }
     return Priority.INFO.isGreaterOrEqual(getChainedPriority());
   }
 
@@ -498,9 +471,7 @@ public class Category {
    * @since 0.8.2
    */
   synchronized public void removeAppender(final Appender appender) {
-    if ((appender == null) || (appenderList == null)) {
-      return;
-    }
+    if ((appender == null) || (appenderList == null)) { return; }
     appenderList.removeElement(appender);
   }
 
@@ -510,9 +481,7 @@ public class Category {
    * @since 0.8.2
    */
   synchronized public void removeAppender(final String name) {
-    if ((name == null) || (appenderList == null)) {
-      return;
-    }
+    if ((name == null) || (appenderList == null)) { return; }
     final int size = appenderList.size();
     for (int i = 0; i < size; i++) {
       if (name.equals(((Appender) appenderList.elementAt(i)).getName())) {
@@ -563,9 +532,7 @@ public class Category {
    * @param message the message object to log.
    */
   public void warn(final Object message) {
-    if (hierarchy.enableInt > Priority.WARN_INT) {
-      return;
-    }
+    if (hierarchy.enableInt > Priority.WARN_INT) { return; }
 
     if (Priority.WARN.isGreaterOrEqual(getChainedPriority())) {
       forcedLog(Priority.WARN, message, null);
@@ -581,9 +548,7 @@ public class Category {
    * @param t the exception to log, including its stack trace.
    */
   public void warn(final Object message, final Throwable t) {
-    if (hierarchy.enableInt > Priority.WARN_INT) {
-      return;
-    }
+    if (hierarchy.enableInt > Priority.WARN_INT) { return; }
     if (Priority.WARN.isGreaterOrEqual(getChainedPriority())) {
       forcedLog(Priority.WARN, message, t);
     }

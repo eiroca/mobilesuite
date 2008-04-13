@@ -74,9 +74,7 @@ public abstract class Application extends BaseApp implements CommandListener, It
     for (int i = 0; i < BaseApp.menu.length; i++) {
       def = BaseApp.menu[i];
       if (def[BaseApp.MD_MENUID] == id) {
-        if (ps == idx) {
-          return def[BaseApp.MD_MENUAC];
-        }
+        if (ps == idx) { return def[BaseApp.MD_MENUAC]; }
         ps++;
       }
     }

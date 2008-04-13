@@ -30,7 +30,6 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 import java.util.Vector;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -93,9 +92,7 @@ public class WbxmlParser implements XmlPullParser {
   public int version;
 
   public boolean getFeature(final String feature) {
-    if (XmlPullParser.FEATURE_PROCESS_NAMESPACES.equals(feature)) {
-      return processNsp;
-    }
+    if (XmlPullParser.FEATURE_PROCESS_NAMESPACES.equals(feature)) { return processNsp; }
     return false;
   }
 
@@ -113,9 +110,7 @@ public class WbxmlParser implements XmlPullParser {
   }
 
   public int getNamespaceCount(final int depth) {
-    if (depth > this.depth) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (depth > this.depth) { throw new IndexOutOfBoundsException(); }
     return nspCounts[depth];
   }
 
@@ -129,22 +124,14 @@ public class WbxmlParser implements XmlPullParser {
 
   public String getNamespace(final String prefix) {
 
-    if ("xml".equals(prefix)) {
-      return "http://www.w3.org/XML/1998/namespace";
-    }
-    if ("xmlns".equals(prefix)) {
-      return "http://www.w3.org/2000/xmlns/";
-    }
+    if ("xml".equals(prefix)) { return "http://www.w3.org/XML/1998/namespace"; }
+    if ("xmlns".equals(prefix)) { return "http://www.w3.org/2000/xmlns/"; }
 
     for (int i = (getNamespaceCount(depth) << 1) - 2; i >= 0; i -= 2) {
       if (prefix == null) {
-        if (nspStack[i] == null) {
-          return nspStack[i + 1];
-        }
+        if (nspStack[i] == null) { return nspStack[i + 1]; }
       }
-      else if (prefix.equals(nspStack[i])) {
-        return nspStack[i + 1];
-      }
+      else if (prefix.equals(nspStack[i])) { return nspStack[i + 1]; }
     }
     return null;
   }
@@ -268,39 +255,29 @@ public class WbxmlParser implements XmlPullParser {
   }
 
   public String getAttributeNamespace(final int index) {
-    if (index >= attributeCount) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[index << 2];
   }
 
   public String getAttributeName(final int index) {
-    if (index >= attributeCount) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[(index << 2) + 2];
   }
 
   public String getAttributePrefix(final int index) {
-    if (index >= attributeCount) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[(index << 2) + 1];
   }
 
   public String getAttributeValue(final int index) {
-    if (index >= attributeCount) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[(index << 2) + 3];
   }
 
   public String getAttributeValue(final String namespace, final String name) {
 
     for (int i = (attributeCount << 2) - 4; i >= 0; i -= 4) {
-      if (attributes[i + 2].equals(name) && ((namespace == null) || attributes[i].equals(namespace))) {
-        return attributes[i + 3];
-      }
+      if (attributes[i + 2].equals(name) && ((namespace == null) || attributes[i].equals(namespace))) { return attributes[i + 3]; }
     }
 
     return null;
@@ -550,9 +527,7 @@ public class WbxmlParser implements XmlPullParser {
 
           final String attrNs = getNamespace(attrPrefix);
 
-          if (attrNs == null) {
-            throw new RuntimeException("Undefined Prefix: " + attrPrefix + " in " + this);
-          }
+          if (attrNs == null) { throw new RuntimeException("Undefined Prefix: " + attrPrefix + " in " + this); }
 
           attributes[i] = attrNs;
           attributes[i + 1] = attrPrefix;
@@ -590,9 +565,7 @@ public class WbxmlParser implements XmlPullParser {
   }
 
   private final void setTable(final int page, final int type, final String[] table) {
-    if (stringTable != null) {
-      throw new RuntimeException("setXxxTable must be called before setInput!");
-    }
+    if (stringTable != null) { throw new RuntimeException("setXxxTable must be called before setInput!"); }
     while (tables.size() < 3 * page + 3) {
       tables.addElement(null);
     }
@@ -604,9 +577,7 @@ public class WbxmlParser implements XmlPullParser {
   }
 
   private void selectPage(final int nr, final boolean tags) throws XmlPullParserException {
-    if ((tables.size() == 0) && (nr == 0)) {
-      return;
-    }
+    if ((tables.size() == 0) && (nr == 0)) { return; }
 
     if (nr * 3 > tables.size()) {
       exception("Code Page " + nr + " undefined!");
@@ -858,9 +829,7 @@ public class WbxmlParser implements XmlPullParser {
       wapCode = -1;
       return readStrT();
     }
-    if ((idx < 0) || (tab == null) || (idx >= tab.length) || (tab[idx] == null)) {
-      throw new IOException("id " + id + " undef.");
-    }
+    if ((idx < 0) || (tab == null) || (idx >= tab.length) || (tab[idx] == null)) { throw new IOException("id " + id + " undef."); }
 
     wapCode = idx + 5;
 
@@ -916,9 +885,7 @@ public class WbxmlParser implements XmlPullParser {
   }
 
   private final String[] ensureCapacity(final String[] arr, final int required) {
-    if (arr.length >= required) {
-      return arr;
-    }
+    if (arr.length >= required) { return arr; }
     final String[] bigger = new String[required + 16];
     System.arraycopy(arr, 0, bigger, 0, arr.length);
     return bigger;
@@ -926,9 +893,7 @@ public class WbxmlParser implements XmlPullParser {
 
   int readByte() throws IOException {
     final int i = in.read();
-    if (i == -1) {
-      throw new IOException("Unexpected EOF");
-    }
+    if (i == -1) { throw new IOException("Unexpected EOF"); }
     return i;
   }
 
@@ -953,9 +918,7 @@ public class WbxmlParser implements XmlPullParser {
       if (i == 0) {
         break;
       }
-      if (i == -1) {
-        throw new IOException(WbxmlParser.UNEXPECTED_EOF);
-      }
+      if (i == -1) { throw new IOException(WbxmlParser.UNEXPECTED_EOF); }
       if (i > 32) {
         wsp = false;
       }
