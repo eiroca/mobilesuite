@@ -23,7 +23,6 @@ package org.kxml.kdom;
 
 import java.io.IOException;
 import java.util.Vector;
-
 import org.kxml.Attribute;
 import org.kxml.PrefixMap;
 import org.kxml.Xml;
@@ -103,9 +102,7 @@ public class Element extends Node {
 
     for (int i = 0; i < len; i++) {
       final Attribute attr = getAttribute(i);
-      if (name.equals(attr.getName()) && ((namespace == null) || namespace.equals(attr.getNamespace()))) {
-        return attr;
-      }
+      if (name.equals(attr.getName()) && ((namespace == null) || namespace.equals(attr.getNamespace()))) { return attr; }
     }
     return null;
   }
@@ -133,13 +130,9 @@ public class Element extends Node {
 
   public Document getDocument() {
 
-    if (parent instanceof Document) {
-      return (Document) parent;
-    }
+    if (parent instanceof Document) { return (Document) parent; }
 
-    if (parent instanceof Element) {
-      return ((Element) parent).getDocument();
-    }
+    if (parent instanceof Element) { return ((Element) parent).getDocument(); }
 
     return null;
   }
@@ -286,9 +279,7 @@ public class Element extends Node {
 
   protected void setParent(final Node parent) {
     this.parent = parent;
-    if (init(parent, namespace, name, attributes) != this) {
-      throw new RuntimeException("init must return this");
-    }
+    if (init(parent, namespace, name, attributes) != this) { throw new RuntimeException("init must return this"); }
   }
 
   /** Sets the namespace prefix map of this Node. */

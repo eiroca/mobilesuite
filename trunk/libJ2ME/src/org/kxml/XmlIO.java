@@ -1,7 +1,6 @@
 package org.kxml;
 
 import java.io.IOException;
-
 import org.kxml.io.AbstractXmlWriter;
 import org.kxml.parser.AbstractXmlParser;
 

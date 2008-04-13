@@ -26,7 +26,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Hashtable;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -105,12 +104,8 @@ public class KXmlParser implements XmlPullParser {
   }
 
   private final boolean isProp(final String n1, final boolean prop, final String n2) {
-    if (!n1.startsWith("http://xmlpull.org/v1/doc/")) {
-      return false;
-    }
-    if (prop) {
-      return n1.substring(42).equals(n2);
-    }
+    if (!n1.startsWith("http://xmlpull.org/v1/doc/")) { return false; }
+    if (prop) { return n1.substring(42).equals(n2); }
     return n1.substring(40).equals(n2);
   }
 
@@ -177,9 +172,7 @@ public class KXmlParser implements XmlPullParser {
 
           final String attrNs = getNamespace(attrPrefix);
 
-          if ((attrNs == null) && !relaxed) {
-            throw new RuntimeException("Undefined Prefix: " + attrPrefix + " in " + this);
-          }
+          if ((attrNs == null) && !relaxed) { throw new RuntimeException("Undefined Prefix: " + attrPrefix + " in " + this); }
 
           attributes[i] = attrNs;
           attributes[i + 1] = attrPrefix;
@@ -219,9 +212,7 @@ public class KXmlParser implements XmlPullParser {
   }
 
   private final String[] ensureCapacity(final String[] arr, final int required) {
-    if (arr.length >= required) {
-      return arr;
-    }
+    if (arr.length >= required) { return arr; }
     final String[] bigger = new String[required + 16];
     System.arraycopy(arr, 0, bigger, 0, arr.length);
     return bigger;
@@ -333,9 +324,7 @@ public class KXmlParser implements XmlPullParser {
 
         default:
           type = parseLegacy(token);
-          if (type != KXmlParser.XML_DECL) {
-            return;
-          }
+          if (type != KXmlParser.XML_DECL) { return; }
       }
     }
   }
@@ -506,9 +495,7 @@ public class KXmlParser implements XmlPullParser {
 
         case '>':
           if (!quoted) {
-            if ((--nesting) == 0) {
-              return;
-            }
+            if ((--nesting) == 0) { return; }
           }
           break;
       }
@@ -956,9 +943,7 @@ public class KXmlParser implements XmlPullParser {
     version = null;
     standalone = null;
 
-    if (reader == null) {
-      return;
-    }
+    if (reader == null) { return; }
 
     srcPos = 0;
     srcCount = 0;
@@ -979,9 +964,7 @@ public class KXmlParser implements XmlPullParser {
     srcCount = 0;
     String enc = _enc;
 
-    if (is == null) {
-      throw new IllegalArgumentException();
-    }
+    if (is == null) { throw new IllegalArgumentException(); }
 
     try {
 
@@ -1110,29 +1093,19 @@ public class KXmlParser implements XmlPullParser {
   }
 
   public void defineEntityReplacementText(final String entity, final String value) throws XmlPullParserException {
-    if (entityMap == null) {
-      throw new RuntimeException("entity replacement text must be defined after setInput!");
-    }
+    if (entityMap == null) { throw new RuntimeException("entity replacement text must be defined after setInput!"); }
     entityMap.put(entity, value);
   }
 
   public Object getProperty(final String property) {
-    if (isProp(property, true, "xmldecl-version")) {
-      return version;
-    }
-    if (isProp(property, true, "xmldecl-standalone")) {
-      return standalone;
-    }
-    if (isProp(property, true, "location")) {
-      return location != null ? location : reader.toString();
-    }
+    if (isProp(property, true, "xmldecl-version")) { return version; }
+    if (isProp(property, true, "xmldecl-standalone")) { return standalone; }
+    if (isProp(property, true, "location")) { return location != null ? location : reader.toString(); }
     return null;
   }
 
   public int getNamespaceCount(final int depth) {
-    if (depth > this.depth) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (depth > this.depth) { throw new IndexOutOfBoundsException(); }
     return nspCounts[depth];
   }
 
@@ -1146,22 +1119,14 @@ public class KXmlParser implements XmlPullParser {
 
   public String getNamespace(final String prefix) {
 
-    if ("xml".equals(prefix)) {
-      return "http://www.w3.org/XML/1998/namespace";
-    }
-    if ("xmlns".equals(prefix)) {
-      return "http://www.w3.org/2000/xmlns/";
-    }
+    if ("xml".equals(prefix)) { return "http://www.w3.org/XML/1998/namespace"; }
+    if ("xmlns".equals(prefix)) { return "http://www.w3.org/2000/xmlns/"; }
 
     for (int i = (getNamespaceCount(depth) << 1) - 2; i >= 0; i -= 2) {
       if (prefix == null) {
-        if (nspStack[i] == null) {
-          return nspStack[i + 1];
-        }
+        if (nspStack[i] == null) { return nspStack[i + 1]; }
       }
-      else if (prefix.equals(nspStack[i])) {
-        return nspStack[i + 1];
-      }
+      else if (prefix.equals(nspStack[i])) { return nspStack[i + 1]; }
     }
     return null;
   }
@@ -1297,39 +1262,29 @@ public class KXmlParser implements XmlPullParser {
   }
 
   public String getAttributeNamespace(final int index) {
-    if (index >= attributeCount) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[index << 2];
   }
 
   public String getAttributeName(final int index) {
-    if (index >= attributeCount) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[(index << 2) + 2];
   }
 
   public String getAttributePrefix(final int index) {
-    if (index >= attributeCount) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[(index << 2) + 1];
   }
 
   public String getAttributeValue(final int index) {
-    if (index >= attributeCount) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[(index << 2) + 3];
   }
 
   public String getAttributeValue(final String namespace, final String name) {
 
     for (int i = (attributeCount << 2) - 4; i >= 0; i -= 4) {
-      if (attributes[i + 2].equals(name) && ((namespace == null) || attributes[i].equals(namespace))) {
-        return attributes[i + 3];
-      }
+      if (attributes[i + 2].equals(name) && ((namespace == null) || attributes[i].equals(namespace))) { return attributes[i + 3]; }
     }
 
     return null;

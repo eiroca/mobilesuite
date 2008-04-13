@@ -28,7 +28,6 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Hashtable;
 import java.util.Vector;
-
 import org.xmlpull.v1.XmlSerializer;
 
 // TODO: make some of the "direct" WBXML token writing methods public??
@@ -139,9 +138,7 @@ public class WbxmlSerializer implements XmlSerializer {
   }
 
   public void checkPending(final boolean degenerated) throws IOException {
-    if (pending == null) {
-      return;
-    }
+    if (pending == null) { return; }
 
     final int len = attributes.size();
 
@@ -257,9 +254,7 @@ public class WbxmlSerializer implements XmlSerializer {
 
   public XmlSerializer startTag(final String namespace, final String name) throws IOException {
 
-    if ((namespace != null) && !"".equals(namespace)) {
-      throw new RuntimeException("NSP NYI");
-    }
+    if ((namespace != null) && !"".equals(namespace)) { throw new RuntimeException("NSP NYI"); }
 
     // current = new State(current, prefixMap, name);
 

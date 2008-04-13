@@ -8,7 +8,6 @@
 package org.apache.log4j.helpers;
 
 import java.util.Date;
-
 import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
 
@@ -453,9 +452,7 @@ public class PatternParser {
 
     public String convert(final LoggingEvent event) {
       final String n = getFullyQualifiedName(event);
-      if (precision <= 0) {
-        return n;
-      }
+      if (precision <= 0) { return n; }
       final int len = n.length();
       // We substract 1 from 'len' when assigning to 'end' to avoid out of
       // bounds exception in return r.substring(end+1, len). This can happen
@@ -463,9 +460,7 @@ public class PatternParser {
       int end = len - 1;
       for (int i = precision; i > 0; i--) {
         end = n.lastIndexOf('.', end - 1);
-        if (end == -1) {
-          return n;
-        }
+        if (end == -1) { return n; }
       }
       return n.substring(end + 1, len);
     }

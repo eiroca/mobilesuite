@@ -92,9 +92,7 @@ public class WordWrap {
   public int next() {
     int i = pos;
     final int len = txt.length();
-    if (pos >= len) {
-      return -1;
-    }
+    if (pos >= len) { return -1; }
     final int start = pos;
     while (true) {
       while ((i < len) && (txt.charAt(i) > ' ')) {

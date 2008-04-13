@@ -57,9 +57,7 @@ public class StringTokenizer {
   }
 
   public String nextToken() throws NoSuchElementException {
-    if (!hasMoreTokens()) {
-      throw new NoSuchElementException("There are not more token.");
-    }
+    if (!hasMoreTokens()) { throw new NoSuchElementException("There are not more token."); }
     String strRtn = m_strParsed.substring(m_nCurrentPoint);
     String strToken = "";
     String strTookToken = "";

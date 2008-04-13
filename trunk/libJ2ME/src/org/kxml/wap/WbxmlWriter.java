@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Hashtable;
 import java.util.Vector;
-
 import org.kxml.PrefixMap;
 import org.kxml.io.AbstractXmlWriter;
 import org.kxml.io.State;
@@ -97,9 +96,7 @@ public class WbxmlWriter extends AbstractXmlWriter {
   }
 
   public void checkPending(final boolean degenerated) throws IOException {
-    if (pending == null) {
-      return;
-    }
+    if (pending == null) { return; }
 
     final int len = attributes.size();
 
@@ -234,9 +231,7 @@ public class WbxmlWriter extends AbstractXmlWriter {
         this.tagTable.put(tagTable[i], idx);
       }
     }
-    if (page != 0) {
-      throw new RuntimeException("code pages curr. not supp.");
-    }
+    if (page != 0) { throw new RuntimeException("code pages curr. not supp."); }
   }
 
   /**
@@ -253,9 +248,7 @@ public class WbxmlWriter extends AbstractXmlWriter {
         this.attrStartTable.put(attrStartTable[i], idx);
       }
     }
-    if (page != 0) {
-      throw new RuntimeException("code pages curr. not supp.");
-    }
+    if (page != 0) { throw new RuntimeException("code pages curr. not supp."); }
   }
 
   /**
@@ -271,8 +264,6 @@ public class WbxmlWriter extends AbstractXmlWriter {
         this.attrValueTable.put(attrValueTable[i], idx);
       }
     }
-    if (page != 0) {
-      throw new RuntimeException("code pages curr. not supp.");
-    }
+    if (page != 0) { throw new RuntimeException("code pages curr. not supp."); }
   }
 }

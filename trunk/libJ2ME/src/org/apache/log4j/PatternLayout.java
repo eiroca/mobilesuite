@@ -384,9 +384,7 @@ public class PatternLayout extends Layout {
    * </dl>
    */
   public void setOption(final String option, final String value) {
-    if (value == null) {
-      return;
-    }
+    if (value == null) { return; }
     if (option.toUpperCase().equals(PatternLayout.CONVERSION_PATTERN_OPTION.toUpperCase())) {
       head = new PatternParser(value).parse();
     }

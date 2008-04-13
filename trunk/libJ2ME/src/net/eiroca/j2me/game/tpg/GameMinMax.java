@@ -19,7 +19,6 @@
 package net.eiroca.j2me.game.tpg;
 
 import java.util.Vector;
-
 import net.eiroca.j2me.app.BaseApp;
 
 public class GameMinMax {
@@ -106,9 +105,7 @@ public class GameMinMax {
           kMove = null;
         }
         actMove = GameMinMax.minimax(depth - 1, newState, (byte) (1 - player), tpg, alphabeta, -maxPoint, order, kill, kMove);
-        if (actMove == null) {
-          return null;
-        }
+        if (actMove == null) { return null; }
         actPoint = -actMove.getPoint();
       }
       if ((i == 0) || (actPoint > maxPoint)) {
@@ -142,9 +139,7 @@ public class GameMinMax {
     GameMinMax.precalculated_OpponentMoves.removeAllElements();
     GameMinMax.precalculated_ResponseMoves.removeAllElements();
     final GameMove pMoves[] = tpg.possibleMoves(state, (byte) (1 - player));
-    if (pMoves == null) {
-      return;
-    }
+    if (pMoves == null) { return; }
     final GameTable newState = state.copyFrom();
     GameMove bestMove;
     for (int i = 0; i < pMoves.length; ++i) {
@@ -153,9 +148,7 @@ public class GameMinMax {
       }
       tpg.turn(state, (byte) (1 - player), pMoves[i], newState);
       bestMove = GameMinMax.minimax(depth, newState, player, tpg, alphabeta, alpha, order, kill, null);
-      if (bestMove == null) {
-        return;
-      }
+      if (bestMove == null) { return; }
       GameMinMax.precalculated_OpponentMoves.addElement(pMoves[i]);
       GameMinMax.precalculated_ResponseMoves.addElement(bestMove);
     }
@@ -168,9 +161,7 @@ public class GameMinMax {
 
   public static GameMove precalculatedBestMove(final GameMove move) {
     for (int i = 0; i < GameMinMax.precalculated_OpponentMoves.size(); i++) {
-      if (move.equals(GameMinMax.precalculated_OpponentMoves.elementAt(i))) {
-        return (GameMove) GameMinMax.precalculated_ResponseMoves.elementAt(i);
-      }
+      if (move.equals(GameMinMax.precalculated_OpponentMoves.elementAt(i))) { return (GameMove) GameMinMax.precalculated_ResponseMoves.elementAt(i); }
     }
     return null;
   }

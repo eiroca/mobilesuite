@@ -24,7 +24,6 @@ package org.kxml.parser;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Vector;
-
 import org.kxml.Attribute;
 import org.kxml.Xml;
 import org.kxml.io.ParseException;
@@ -57,9 +56,7 @@ public class XmlParser extends AbstractXmlParser {
   protected ParseEvent next;
 
   int peekChar() throws IOException {
-    if (eof) {
-      return -1;
-    }
+    if (eof) { return -1; }
 
     if (bufPos >= bufCount) {
 
@@ -108,9 +105,7 @@ public class XmlParser extends AbstractXmlParser {
   public String readName() throws IOException {
 
     int c = readChar();
-    if ((c < 128) && (c != '_') && (c != ':') && ((c < 'a') || (c > 'z')) && ((c < 'A') || (c > 'Z'))) {
-      throw new DefaultParserException("name expected!", null);
-    }
+    if ((c < 128) && (c != '_') && (c != ':') && ((c < 'a') || (c > 'z')) && ((c < 'A') || (c > 'Z'))) { throw new DefaultParserException("name expected!", null); }
 
     final StringBuffer buf = new StringBuffer();
     buf.append((char) c);
@@ -172,9 +167,7 @@ public class XmlParser extends AbstractXmlParser {
 
     final StringBuffer buf = new StringBuffer();
 
-    if (readChar() != '-') {
-      throw new DefaultParserException("'-' expected", null);
-    }
+    if (readChar() != '-') { throw new DefaultParserException("'-' expected", null); }
 
     int cnt;
     int lst;
@@ -182,9 +175,7 @@ public class XmlParser extends AbstractXmlParser {
     while (true) {
       readTo('-', buf);
 
-      if (readChar() == -1) {
-        throw new DefaultParserException(XmlParser.UNEXPECTED_EOF, null);
-      }
+      if (readChar() == -1) { throw new DefaultParserException(XmlParser.UNEXPECTED_EOF, null); }
 
       cnt = 0;
 
@@ -228,9 +219,7 @@ public class XmlParser extends AbstractXmlParser {
           nesting++;
           break;
         case '>':
-          if ((--nesting) == 0) {
-            return new ParseEvent(Xml.DOCTYPE, buf.toString());
-          }
+          if ((--nesting) == 0) { return new ParseEvent(Xml.DOCTYPE, buf.toString()); }
           break;
       }
       buf.append((char) i);
@@ -241,9 +230,7 @@ public class XmlParser extends AbstractXmlParser {
 
     final StringBuffer buf = readTo('[', new StringBuffer());
 
-    if (!buf.toString().equals("CDATA")) {
-      throw new DefaultParserException("Invalid CDATA start!", null);
-    }
+    if (!buf.toString().equals("CDATA")) { throw new DefaultParserException("Invalid CDATA start!", null); }
 
     buf.setLength(0);
 
@@ -255,9 +242,7 @@ public class XmlParser extends AbstractXmlParser {
     while (true) {
       final int c2 = readChar();
 
-      if (c2 == -1) {
-        throw new DefaultParserException(XmlParser.UNEXPECTED_EOF, null);
-      }
+      if (c2 == -1) { throw new DefaultParserException(XmlParser.UNEXPECTED_EOF, null); }
 
       if ((c0 == ']') && (c1 == ']') && (c2 == '>')) {
         break;
@@ -279,16 +264,12 @@ public class XmlParser extends AbstractXmlParser {
     final String name = readName();
     skipWhitespace();
 
-    if (readChar() != '>') {
-      throw new DefaultParserException("'>' expected", null);
-    }
+    if (readChar() != '>') { throw new DefaultParserException("'>' expected", null); }
 
     int last = qNames.size();
     while (true) {
       if (last == 0) {
-        if (relaxed) {
-          return new ParseEvent(Xml.END_DOCUMENT, null);
-        }
+        if (relaxed) { return new ParseEvent(Xml.END_DOCUMENT, null); }
         throw new DefaultParserException("tagstack empty parsing </" + name + ">", null);
       }
       final String qName = (String) qNames.elementAt(--last);
@@ -297,9 +278,7 @@ public class XmlParser extends AbstractXmlParser {
       if (qName.equals(name)) {
         break;
       }
-      if (!relaxed) {
-        throw new DefaultParserException("StartTag <" + qName + "> does not match end tag </" + name + ">", null);
-      }
+      if (!relaxed) { throw new DefaultParserException("StartTag <" + qName + "> does not match end tag </" + name + ">", null); }
       if (qName.toLowerCase().equals(name.toLowerCase())) {
         break;
       }
@@ -324,9 +303,7 @@ public class XmlParser extends AbstractXmlParser {
       buf.append('?');
 
       final int r = readChar();
-      if (r == -1) {
-        throw new DefaultParserException(XmlParser.UNEXPECTED_EOF, null);
-      }
+      if (r == -1) { throw new DefaultParserException(XmlParser.UNEXPECTED_EOF, null); }
 
       buf.append((char) r);
       readTo('?', buf);
@@ -359,9 +336,7 @@ public class XmlParser extends AbstractXmlParser {
         immediateClose = true;
         readChar();
         skipWhitespace();
-        if (readChar() != '>') {
-          throw new DefaultParserException("illegal element termination", null);
-        }
+        if (readChar() != '>') { throw new DefaultParserException("illegal element termination", null); }
         break;
       }
 
@@ -370,29 +345,21 @@ public class XmlParser extends AbstractXmlParser {
         break;
       }
 
-      if (c == -1) {
-        throw new DefaultParserException(XmlParser.UNEXPECTED_EOF, null);
-      }
+      if (c == -1) { throw new DefaultParserException(XmlParser.UNEXPECTED_EOF, null); }
 
       final String attrName = readName();
 
-      if (attrName.length() == 0) {
-        throw new DefaultParserException("illegal char / attr", null);
-      }
+      if (attrName.length() == 0) { throw new DefaultParserException("illegal char / attr", null); }
 
       skipWhitespace();
 
-      if (readChar() != '=') {
-        throw new DefaultParserException("Attribute name " + attrName + "must be followed by '='!", null);
-      }
+      if (readChar() != '=') { throw new DefaultParserException("Attribute name " + attrName + "must be followed by '='!", null); }
 
       skipWhitespace();
       int delimiter = readChar();
 
       if ((delimiter != '\'') && (delimiter != '"')) {
-        if (!relaxed) {
-          throw new DefaultParserException("<" + qname + ">: invalid delimiter: " + (char) delimiter, null);
-        }
+        if (!relaxed) { throw new DefaultParserException("<" + qname + ">: invalid delimiter: " + (char) delimiter, null); }
 
         delimiter = ' ';
       }
@@ -550,9 +517,7 @@ public class XmlParser extends AbstractXmlParser {
             break;
 
           case -1:
-            if ((current != null) && !relaxed) {
-              throw new DefaultParserException("End tag missing for: " + current, null);
-            }
+            if ((current != null) && !relaxed) { throw new DefaultParserException("End tag missing for: " + current, null); }
             next = new ParseEvent(Xml.END_DOCUMENT, null);
             break;
 

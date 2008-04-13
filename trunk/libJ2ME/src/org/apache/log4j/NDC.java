@@ -15,7 +15,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Stack;
 import java.util.Vector;
-
 import org.apache.log4j.helpers.LogLog;
 
 /**
@@ -138,9 +137,7 @@ public class NDC {
    */
   public static Stack cloneStack() {
     final Object o = NDC.ht.get(Thread.currentThread());
-    if (o == null) {
-      return null;
-    }
+    if (o == null) { return null; }
     final Stack stack = (Stack) o;
     final Object[] allElements = new Object[stack.size()];
     stack.copyInto(allElements);
@@ -180,9 +177,7 @@ public class NDC {
    */
   static public String get() {
     final Stack s = (Stack) NDC.ht.get(Thread.currentThread());
-    if ((s != null) && !s.isEmpty()) {
-      return ((DiagnosticContext) s.peek()).fullMessage;
-    }
+    if ((s != null) && !s.isEmpty()) { return ((DiagnosticContext) s.peek()).fullMessage; }
     return null;
   }
 
@@ -193,9 +188,7 @@ public class NDC {
    */
   public static int getDepth() {
     final Stack stack = (Stack) NDC.ht.get(Thread.currentThread());
-    if (stack == null) {
-      return 0;
-    }
+    if (stack == null) { return 0; }
     return stack.size();
   }
 
@@ -208,8 +201,7 @@ public class NDC {
 
     synchronized (NDC.ht) {
       // Avoid calling clean-up too often.
-      if (++NDC.pushCounter <= NDC.REAP_THRESHOLD) {
-        return; // We release the lock ASAP.
+      if (++NDC.pushCounter <= NDC.REAP_THRESHOLD) { return; // We release the lock ASAP.
       }
       NDC.pushCounter = 0; // OK let's do some work.
 
@@ -250,9 +242,7 @@ public class NDC {
   public static String pop() {
     final Thread key = Thread.currentThread();
     final Stack stack = (Stack) NDC.ht.get(key);
-    if ((stack != null) && !stack.isEmpty()) {
-      return ((DiagnosticContext) stack.pop()).message;
-    }
+    if ((stack != null) && !stack.isEmpty()) { return ((DiagnosticContext) stack.pop()).message; }
     return "";
   }
 
@@ -267,9 +257,7 @@ public class NDC {
   public static String peek() {
     final Thread key = Thread.currentThread();
     final Stack stack = (Stack) NDC.ht.get(key);
-    if ((stack != null) && !stack.isEmpty()) {
-      return ((DiagnosticContext) stack.peek()).message;
-    }
+    if ((stack != null) && !stack.isEmpty()) { return ((DiagnosticContext) stack.peek()).message; }
     return "";
   }
 

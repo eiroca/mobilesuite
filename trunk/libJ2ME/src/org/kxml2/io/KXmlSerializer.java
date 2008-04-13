@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-
 import org.xmlpull.v1.XmlSerializer;
 
 public class KXmlSerializer implements XmlSerializer {
@@ -47,9 +46,7 @@ public class KXmlSerializer implements XmlSerializer {
   private String encoding;
 
   private final void check(final boolean close) throws IOException {
-    if (!pending) {
-      return;
-    }
+    if (!pending) { return; }
 
     depth++;
     pending = false;
@@ -68,9 +65,7 @@ public class KXmlSerializer implements XmlSerializer {
         writer.write(':');
         writer.write(nspStack[i * 2]);
       }
-      else if ("".equals(getNamespace()) && !"".equals(nspStack[i * 2 + 1])) {
-        throw new IllegalStateException("Cannot set default namespace for elements in no namespace");
-      }
+      else if ("".equals(getNamespace()) && !"".equals(nspStack[i * 2 + 1])) { throw new IllegalStateException("Cannot set default namespace for elements in no namespace"); }
       writer.write("=\"");
       writeEscaped(nspStack[i * 2 + 1], '"');
       writer.write('"');
@@ -184,15 +179,11 @@ public class KXmlSerializer implements XmlSerializer {
             break;
           }
         }
-        if (cand != null) {
-          return cand;
-        }
+        if (cand != null) { return cand; }
       }
     }
 
-    if (!create) {
-      return null;
-    }
+    if (!create) { return null; }
 
     String prefix;
 
@@ -254,9 +245,7 @@ public class KXmlSerializer implements XmlSerializer {
 
     // boil out if already defined
 
-    if (prefix.equals(defined)) {
-      return;
-    }
+    if (prefix.equals(defined)) { return; }
 
     int pos = (nspCounts[depth + 1]++) << 1;
 
@@ -292,9 +281,7 @@ public class KXmlSerializer implements XmlSerializer {
   }
 
   public void setOutput(final OutputStream os, final String encoding) throws IOException {
-    if (os == null) {
-      throw new IllegalArgumentException();
-    }
+    if (os == null) { throw new IllegalArgumentException(); }
     setOutput(encoding == null ? new OutputStreamWriter(os) : new OutputStreamWriter(os, encoding));
     this.encoding = encoding;
     if ((encoding != null) && encoding.toLowerCase().startsWith("utf")) {
@@ -351,9 +338,7 @@ public class KXmlSerializer implements XmlSerializer {
 
     if ("".equals(namespace)) {
       for (int i = nspCounts[depth]; i < nspCounts[depth + 1]; i++) {
-        if ("".equals(nspStack[i * 2]) && !"".equals(nspStack[i * 2 + 1])) {
-          throw new IllegalStateException("Cannot set default namespace for elements in no namespace");
-        }
+        if ("".equals(nspStack[i * 2]) && !"".equals(nspStack[i * 2 + 1])) { throw new IllegalStateException("Cannot set default namespace for elements in no namespace"); }
       }
     }
 
@@ -375,9 +360,7 @@ public class KXmlSerializer implements XmlSerializer {
   }
 
   public XmlSerializer attribute(String namespace, final String name, final String value) throws IOException {
-    if (!pending) {
-      throw new IllegalStateException("illegal position for attribute");
-    }
+    if (!pending) { throw new IllegalStateException("illegal position for attribute"); }
 
     // int cnt = nspCounts[depth];
 
@@ -431,9 +414,8 @@ public class KXmlSerializer implements XmlSerializer {
       // namespace = "";
     }
 
-    if (((namespace == null) && (elementStack[depth * 3] != null)) || ((namespace != null) && !namespace.equals(elementStack[depth * 3])) || !elementStack[depth * 3 + 2].equals(name)) {
-      throw new IllegalArgumentException("</{" + namespace + "}" + name + "> does not match start");
-    }
+    if (((namespace == null) && (elementStack[depth * 3] != null)) || ((namespace != null) && !namespace.equals(elementStack[depth * 3])) || !elementStack[depth * 3 + 2].equals(name)) { throw new IllegalArgumentException(
+        "</{" + namespace + "}" + name + "> does not match start"); }
 
     if (pending) {
       check(true);

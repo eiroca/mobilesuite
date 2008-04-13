@@ -19,12 +19,10 @@
 package net.eiroca.j2me.app;
 
 import java.util.Timer;
-
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
-
 import net.eiroca.j2me.util.ScheduledWaekup;
 import net.eiroca.j2me.util.SchedulerNotify;
 

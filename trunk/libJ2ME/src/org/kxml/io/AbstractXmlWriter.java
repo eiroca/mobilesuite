@@ -2,7 +2,6 @@ package org.kxml.io;
 
 import java.io.IOException;
 import java.io.Writer;
-
 import org.kxml.PrefixMap;
 import org.kxml.Xml;
 

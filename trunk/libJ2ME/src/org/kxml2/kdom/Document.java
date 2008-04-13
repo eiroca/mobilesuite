@@ -21,7 +21,6 @@
 package org.kxml2.kdom;
 
 import java.io.IOException;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
@@ -94,9 +93,7 @@ public class Document extends Node {
 
     super.parse(parser);
 
-    if (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
-      throw new RuntimeException("Document end expected!");
-    }
+    if (parser.getEventType() != XmlPullParser.END_DOCUMENT) { throw new RuntimeException("Document end expected!"); }
 
   }
 
@@ -114,9 +111,7 @@ public class Document extends Node {
   /** returns the root element of this document. */
 
   public Element getRootElement() {
-    if (rootIndex == -1) {
-      throw new RuntimeException("Document has no root element!");
-    }
+    if (rootIndex == -1) { throw new RuntimeException("Document has no root element!"); }
 
     return (Element) getChild(rootIndex);
   }

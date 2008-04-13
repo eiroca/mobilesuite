@@ -1,7 +1,6 @@
 package org.kxml.kdom;
 
 import java.io.IOException;
-
 import org.kxml.Xml;
 import org.kxml.parser.AbstractXmlParser;
 
@@ -27,9 +26,7 @@ public class Document extends Node {
 
   public void addChild(final int index, final int type, final Object child) {
     if (type == Xml.ELEMENT) {
-      if (rootIndex != -1) {
-        throw new RuntimeException("Only one document root element allowed");
-      }
+      if (rootIndex != -1) { throw new RuntimeException("Only one document root element allowed"); }
 
       rootIndex = index;
     }
@@ -48,9 +45,7 @@ public class Document extends Node {
 
   public void parse(final AbstractXmlParser parser) throws IOException {
     super.parse(parser);
-    if (parser.read().getType() != Xml.END_DOCUMENT) {
-      throw new RuntimeException("Document end expected!");
-    }
+    if (parser.read().getType() != Xml.END_DOCUMENT) { throw new RuntimeException("Document end expected!"); }
 
   }
 
@@ -68,9 +63,7 @@ public class Document extends Node {
   /** returns the root element of this document. */
 
   public Element getRootElement() {
-    if (rootIndex == -1) {
-      throw new RuntimeException("Document has no root element!");
-    }
+    if (rootIndex == -1) { throw new RuntimeException("Document has no root element!"); }
 
     return (Element) getChild(rootIndex);
   }

@@ -140,33 +140,17 @@ public class Priority {
    * fails, then this method returns the value of <code>defaultPriority</code>.
    */
   public static Priority toPriority(final String sArg, final Priority defaultPriority) {
-    if (sArg == null) {
-      return defaultPriority;
-    }
+    if (sArg == null) { return defaultPriority; }
 
     final String s = sArg.toUpperCase();
 
-    if (s.equals("ALL")) {
-      return Priority.ALL;
-    }
-    if (s.equals("DEBUG")) {
-      return Priority.DEBUG;
-    }
-    if (s.equals("INFO")) {
-      return Priority.INFO;
-    }
-    if (s.equals("WARN")) {
-      return Priority.WARN;
-    }
-    if (s.equals("ERROR")) {
-      return Priority.ERROR;
-    }
-    if (s.equals("FATAL")) {
-      return Priority.FATAL;
-    }
-    if (s.equals("OFF")) {
-      return Priority.OFF;
-    }
+    if (s.equals("ALL")) { return Priority.ALL; }
+    if (s.equals("DEBUG")) { return Priority.DEBUG; }
+    if (s.equals("INFO")) { return Priority.INFO; }
+    if (s.equals("WARN")) { return Priority.WARN; }
+    if (s.equals("ERROR")) { return Priority.ERROR; }
+    if (s.equals("FATAL")) { return Priority.FATAL; }
+    if (s.equals("OFF")) { return Priority.OFF; }
     return defaultPriority;
   }
 

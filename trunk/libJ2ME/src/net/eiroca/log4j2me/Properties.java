@@ -17,7 +17,7 @@ import java.util.Hashtable;
  */
 public class Properties {
 
-  private Hashtable data = new Hashtable();
+  private final Hashtable data = new Hashtable();
 
   public Properties() {
     //
@@ -27,7 +27,7 @@ public class Properties {
     return (String) data.get(key);
   }
 
-  public void put(Object key, Object val) {
+  public void put(final Object key, final Object val) {
     data.put(key, val);
   }
 

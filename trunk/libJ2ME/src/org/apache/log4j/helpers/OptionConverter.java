@@ -12,16 +12,10 @@ import net.eiroca.log4j2me.Properties;
 public class OptionConverter {
 
   public static boolean toBoolean(final String value, final boolean defaultVal) {
-    if (value == null) {
-      return defaultVal;
-    }
+    if (value == null) { return defaultVal; }
     final String trimmedVal = value.trim();
-    if ("true".equals(trimmedVal.toLowerCase())) {
-      return true;
-    }
-    if ("false".equals(trimmedVal.toLowerCase())) {
-      return false;
-    }
+    if ("true".equals(trimmedVal.toLowerCase())) { return true; }
+    if ("false".equals(trimmedVal.toLowerCase())) { return false; }
     return defaultVal;
   }
 

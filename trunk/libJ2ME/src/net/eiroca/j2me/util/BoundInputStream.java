@@ -60,9 +60,7 @@ public class BoundInputStream extends InputStream {
   }
 
   public int read() throws IOException {
-    if (remaining <= 0) {
-      return -1;
-    }
+    if (remaining <= 0) { return -1; }
     remaining--;
     return is.read();
   }

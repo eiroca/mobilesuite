@@ -1,7 +1,6 @@
 package org.kxml.parser;
 
 import java.util.Vector;
-
 import org.kxml.Attribute;
 import org.kxml.PrefixMap;
 import org.kxml.Xml;
@@ -30,9 +29,7 @@ public class StartTag extends Tag {
 
     prefixMap = parent == null ? PrefixMap.DEFAULT : parent.prefixMap;
 
-    if (!processNamespaces) {
-      return;
-    }
+    if (!processNamespaces) { return; }
 
     boolean any = false;
 
@@ -85,9 +82,7 @@ public class StartTag extends Tag {
 
             final String attrNs = prefixMap.getNamespace(attrPrefix);
 
-            if (attrNs == null) {
-              throw new RuntimeException("Undefined Prefix: " + attrPrefix + " in " + this);
-            }
+            if (attrNs == null) { throw new RuntimeException("Undefined Prefix: " + attrPrefix + " in " + this); }
 
             attributes.setElementAt(new Attribute(attrNs, attrName, attr.getValue()), i);
           }
@@ -112,9 +107,7 @@ public class StartTag extends Tag {
     this.namespace = prefixMap.getNamespace(prefix);
 
     if (this.namespace == null) {
-      if (prefix.length() != 0) {
-        throw new RuntimeException("undefined prefix: " + prefix + " in " + prefixMap + " at " + this);
-      }
+      if (prefix.length() != 0) { throw new RuntimeException("undefined prefix: " + prefix + " in " + prefixMap + " at " + this); }
       this.namespace = Xml.NO_NAMESPACE;
     }
   }

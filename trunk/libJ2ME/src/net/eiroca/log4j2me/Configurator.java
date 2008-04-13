@@ -32,10 +32,10 @@ public class Configurator {
    * @param midlet
    * @return FormAppenders.
    */
-  static public void load(Properties props, final MIDlet midlet) {
+  static public void load(final Properties props, final MIDlet midlet) {
     // Get CATEGORY_LIST
     final Vector categories = new Vector();
-    String catLst = midlet.getAppProperty(Configurator.CATEGORY_LIST);
+    final String catLst = midlet.getAppProperty(Configurator.CATEGORY_LIST);
     final StringTokenizer st = new StringTokenizer(catLst, ",");
     LogLog.debug(Configurator.CATEGORY_LIST + ":" + midlet.getAppProperty(Configurator.CATEGORY_LIST));
     while (st.hasMoreTokens()) {
@@ -55,8 +55,8 @@ public class Configurator {
     LogLog.debug(props.toString());
   }
 
-  static public void load(Properties props, String resPath) {
-    Pair[] pairs = BaseApp.readPairs(resPath, ':');
+  static public void load(final Properties props, final String resPath) {
+    final Pair[] pairs = BaseApp.readPairs(resPath, ':');
     Pair p;
     for (int i = 0; i < pairs.length; i++) {
       p = pairs[i];

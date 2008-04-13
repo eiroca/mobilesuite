@@ -22,7 +22,6 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
-
 import net.eiroca.j2me.app.BaseApp;
 
 public class GameUIMessage extends Canvas {

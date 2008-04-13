@@ -46,7 +46,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
 import javax.microedition.rms.RecordStoreException;
 
 /** Node helper class */
@@ -88,9 +87,7 @@ public class RMSTableNode {
     this.rmsIndex = rmsIndex;
     this.index = index;
     final byte[] data = this.rmsIndex.store.getRecord(index);
-    if ((data == null) || (data.length == 0)) {
-      return;
-    }
+    if ((data == null) || (data.length == 0)) { return; }
     try {
       final DataInputStream dis = new DataInputStream(new ByteArrayInputStream(data));
       size = dis.readInt();
@@ -123,9 +120,7 @@ public class RMSTableNode {
     if (children[i] != 0) {
       final RMSTableNode child = new RMSTableNode(rmsIndex, children[i]);
       child.put(key, value);
-      if (child.size < RMSTable.N + RMSTable.N + 1) {
-        return;
-      }
+      if (child.size < RMSTable.N + RMSTable.N + 1) { return; }
       final RMSTableNode split = new RMSTableNode(rmsIndex, child);
       newIndex = split.index;
       key = child.keys[RMSTable.N];

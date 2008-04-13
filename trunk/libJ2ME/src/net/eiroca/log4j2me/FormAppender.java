@@ -13,7 +13,6 @@
 package net.eiroca.log4j2me;
 
 import javax.microedition.lcdui.Form;
-
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.Layout;
 import org.apache.log4j.spi.LoggingEvent;
@@ -89,9 +88,7 @@ public class FormAppender extends AppenderSkeleton {
   }
 
   public void setOption(final String key, String value) {
-    if (value == null) {
-      return;
-    }
+    if (value == null) { return; }
     super.setOption(key, value);
     if (key.toUpperCase().equals(FormAppender.TITLE_OPTION.toUpperCase())) {
       value = value.trim();

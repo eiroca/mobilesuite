@@ -125,9 +125,7 @@ public class XmlReader {
   }
 
   private final void push(final int c) {
-    if (c == 0) {
-      return;
-    }
+    if (c == 0) { return; }
     if (txtPos == txtBuf.length) {
       final char[] bigger = new char[txtPos * 4 / 3 + 4];
       System.arraycopy(txtBuf, 0, bigger, 0, txtPos);
@@ -240,9 +238,7 @@ public class XmlReader {
           nesting++;
           break;
         case '>':
-          if ((--nesting) == 0) {
-            return;
-          }
+          if ((--nesting) == 0) { return; }
           break;
       }
     }
@@ -291,9 +287,7 @@ public class XmlReader {
   }
 
   private static final String[] ensureCapacity(final String[] arr, final int required) {
-    if (arr.length >= required) {
-      return arr;
-    }
+    if (arr.length >= required) { return arr; }
     final String[] bigger = new String[required + 16];
     System.arraycopy(arr, 0, bigger, 0, arr.length);
     return bigger;
@@ -485,24 +479,18 @@ public class XmlReader {
   }
 
   public String getAttributeName(final int index) {
-    if (index >= attributeCount) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[index << 1];
   }
 
   public String getAttributeValue(final int index) {
-    if (index >= attributeCount) {
-      throw new IndexOutOfBoundsException();
-    }
+    if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[(index << 1) + 1];
   }
 
   public String getAttributeValue(final String name) {
     for (int i = (attributeCount << 1) - 2; i >= 0; i -= 2) {
-      if (attributes[i].equals(name)) {
-        return attributes[i + 1];
-      }
+      if (attributes[i].equals(name)) { return attributes[i + 1]; }
     }
     return null;
   }
@@ -602,9 +590,7 @@ public class XmlReader {
    */
 
   public String readText() throws IOException {
-    if (type != XmlReader.TEXT) {
-      return "";
-    }
+    if (type != XmlReader.TEXT) { return ""; }
     final String result = getText();
     next();
     return result;

@@ -1,7 +1,6 @@
 package org.kxml2.wap.wv;
 
 import java.io.IOException;
-
 import org.kxml2.wap.WbxmlParser;
 
 /*
