@@ -35,6 +35,7 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.observable.Observable;
 import net.eiroca.j2me.observable.Observer;
+import net.eiroca.j2me.util.HTTPClient;
 import test.DataSender;
 import test.Suite;
 import test.benchmark.MathSuite;
@@ -250,6 +251,10 @@ public final class TestSuite extends Application implements Observer {
   public void notify(final Observable observable) {
     if (observable instanceof DataSender) {
       final DataSender ds = (DataSender) observable;
+      fMenu.set(4, menuDesc[4] + " (" + ds.getStatus() + ")", ClassBrowserHelper.imPlus);
+    }
+    else if (observable instanceof HTTPClient) {
+      final HTTPClient ds = (HTTPClient) observable;
       fMenu.set(4, menuDesc[4] + " (" + ds.getStatus() + ")", ClassBrowserHelper.imPlus);
     }
   }
