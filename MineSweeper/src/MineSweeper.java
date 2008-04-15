@@ -189,18 +189,18 @@ public class MineSweeper extends GameApp {
     final Font f = Font.getFont(Font.STYLE_BOLD);
     for (int l = 0; l < GameApp.hsMaxLevel; l++) {
       final Vector scores = GameApp.highscore.getList(l);
-      final StringItem txt = new StringItem(BaseApp.messages[MineSweeper.MSG_HS_LEVEL] + BaseApp.messages[MineSweeper.MSG_TEXT_LEVEL_01 + l] + "\n", null);
+      final StringItem txt = new StringItem(BaseApp.messages[MineSweeper.MSG_HS_LEVEL] + BaseApp.messages[MineSweeper.MSG_TEXT_LEVEL_01 + l] + BaseApp.CR, null);
       txt.setFont(f);
       form.append(txt);
       if (scores.size() == 0) {
         form.append(BaseApp.messages[GameApp.MSG_TEXT_HIGHSCORE_01]);
-        form.append("\n");
+        form.append(BaseApp.sCR);
       }
       else {
         Score s;
         for (int i = 0; i < scores.size(); i++) {
           s = (Score) scores.elementAt(i);
-          form.append("" + (i + 1) + ": " + s.getScore() + " (" + s.name + ")\n");
+          form.append("" + (i + 1) + ": " + s.getScore() + " (" + s.name + ")" + BaseApp.CR);
         }
       }
     }
