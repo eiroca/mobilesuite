@@ -243,7 +243,7 @@ public class FeedUpdateThread extends Thread {
         donetext = BaseApp.format(NewsReader.MSG_UPDATEOK02, o);
         if (feed.lastFeedLen > 0) {
           o[0] = new Integer((int) (feed.lastFeedLen / 1024));
-          donetext += "\n" + BaseApp.format(NewsReader.MSG_UPDATEOK03, o);
+          donetext += BaseApp.CR + BaseApp.format(NewsReader.MSG_UPDATEOK03, o);
         }
       }
     }

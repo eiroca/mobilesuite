@@ -21,6 +21,7 @@ package net.eiroca.j2me.RSSReader;
 
 import java.util.Vector;
 import javax.microedition.lcdui.Font;
+import net.eiroca.j2me.app.BaseApp;
 
 public class RenderedWord {
 
@@ -57,7 +58,7 @@ public class RenderedWord {
   public static final Vector createWordList(final String text, final int width, final int height, final int colTxt, final int colTit) {
     final Vector wordList = new Vector();
     RenderedWord oldWord;
-    final String tmpText = text.replace('\n', ' ');
+    final String tmpText = text.replace(BaseApp.CR, ' ');
     int color = colTxt;
     int index = 0;
     final int lung = tmpText.length();
