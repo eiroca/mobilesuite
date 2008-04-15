@@ -25,6 +25,7 @@ package net.eiroca.j2me.xml;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Hashtable;
+import net.eiroca.j2me.app.BaseApp;
 
 /**
  * A minimalistic XML pull parser, similar to kXML, but not supporting
@@ -100,10 +101,10 @@ public class XmlReader {
       eof = true;
       return r;
     }
-    else if ((r == '\n') || (r == '\r')) {
+    else if ((r == BaseApp.CR) || (r == BaseApp.LF)) {
       line++;
       column = 0;
-      if ((r == '\r') && (peek0 == '\n')) {
+      if ((r == BaseApp.LF) && (peek0 == BaseApp.CR)) {
         peek0 = 0;
       }
     }

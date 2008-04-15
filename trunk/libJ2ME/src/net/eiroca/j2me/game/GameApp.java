@@ -273,7 +273,9 @@ public abstract class GameApp extends Application {
       }
       if ((score > 0) && (GameApp.highscore.isHighScore(GameApp.hsLevel, GameApp.game.score))) {
         gameNewHighScore = getNewHighScore();
-        tScore.setLabel(BaseApp.messages[GameApp.MSG_TEXT_HIGHSCORE_03] + GameApp.game.score.getScore() + "\n");
+        final StringBuffer buf = new StringBuffer(80);
+        buf.append(BaseApp.messages[GameApp.MSG_TEXT_HIGHSCORE_03]).append(GameApp.game.score.getScore()).append(BaseApp.CR);
+        tScore.setLabel(buf.toString());
         tName.setString(GameApp.game.score.name);
         BaseApp.setDisplay(gameNewHighScore);
       }
@@ -321,7 +323,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Show highscore
+   * Show high score
    */
   public void doHighScore() {
     final Displayable d = getHighScore();
@@ -373,7 +375,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Build Highscore Display
+   * Build High score Display
    * @return
    */
   protected Displayable getHighScore() {
@@ -386,7 +388,9 @@ public abstract class GameApp extends Application {
       Score s;
       for (int i = 0; i < scores.size(); i++) {
         s = (Score) scores.elementAt(i);
-        form.append("" + (i + 1) + ": " + s.getScore() + " (" + s.name + ")\n");
+        final StringBuffer buf = new StringBuffer(80);
+        buf.append((i + 1)).append(": ").append(s.getScore()).append(" (").append(s.name).append(')').append(BaseApp.CR);
+        form.append(buf.toString());
       }
     }
     BaseApp.setup(form, BaseApp.cBACK, null);

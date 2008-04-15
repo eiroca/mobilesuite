@@ -15,15 +15,20 @@ import net.eiroca.j2me.observable.ObserverManager;
 
 public class HTTPClient implements Observable, Runnable {
 
-  public static final String BOUNDARY = "---eiroca---123XYZ123---eiroca---";
-  //  public static final String NL = "\r\n";
-  public static final String NL = "\n";
+  private static final String BOUNDARY = "eiroca123XYZ123";
+  private static final String BOUNDARY_PRE = "--";
+  private static final String CONTENT_TYPE = "Content-type";
+
+  private static final String SEP = "" + BaseApp.CR;
+
+  public static final int MODE_GET = 0;
+  public static final int MODE_POST = 1;
+  public static final int MODE_MULTIPART = 2;
 
   public String userAgent = "eIrOcA MIDlet";
   public String acceptLanguage = "en-US";
-  public boolean usePost = false;
   public boolean useKeepAlive = false;
-  public boolean useMultipart = false;
+  public int mode = HTTPClient.MODE_GET;
 
   public String result = null;
   public int status = -1;
@@ -51,7 +56,6 @@ public class HTTPClient implements Observable, Runnable {
 
   public void addAttach(final HTTPAttach data) {
     attach.addElement(data);
-    useMultipart = true;
   }
 
   public String getPostData() {
@@ -76,24 +80,28 @@ public class HTTPClient implements Observable, Runnable {
   private HttpConnection getConnection() throws IOException {
     HttpConnection connection = null;
     String uri;
-    if (!usePost) {
-      final String postData = getPostData();
-      if (url.indexOf('?') > 0) {
-        uri = url + '&' + postData;
-      }
-      else {
-        uri = url + '?' + postData;
-      }
-    }
-    else {
-      uri = url;
+    switch (mode) {
+      case MODE_GET:
+        final String postData = getPostData();
+        if (url.indexOf('?') > 0) {
+          uri = url + '&' + postData;
+        }
+        else {
+          uri = url + '?' + postData;
+        }
+        break;
+      default:
+        uri = url;
+        break;
     }
     connection = (HttpConnection) Connector.open(uri, Connector.READ_WRITE);
-    if (usePost) {
-      connection.setRequestMethod(HttpConnection.POST);
-    }
-    else {
-      connection.setRequestMethod(HttpConnection.GET);
+    switch (mode) {
+      case MODE_GET:
+        connection.setRequestMethod(HttpConnection.GET);
+        break;
+      default:
+        connection.setRequestMethod(HttpConnection.POST);
+        break;
     }
     connection.setRequestProperty("User-Agent", userAgent);
     connection.setRequestProperty("Accept-Language", acceptLanguage);
@@ -102,11 +110,15 @@ public class HTTPClient implements Observable, Runnable {
       connection.setRequestProperty("Connection", "keep-alive");
       connection.setRequestProperty("Keep-Alive", "300");
     }
-    if (useMultipart) {
-      connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + HTTPClient.BOUNDARY);
-    }
-    else {
-      connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
+    switch (mode) {
+      case MODE_MULTIPART:
+        connection.setRequestProperty(CONTENT_TYPE, "multipart/form-data; boundary=" + HTTPClient.BOUNDARY);
+        break;
+      case MODE_POST:
+        connection.setRequestProperty(CONTENT_TYPE, "application/x-www-form-urlencoded");
+        break;
+      case MODE_GET:
+        break;
     }
     return connection;
   }
@@ -118,39 +130,58 @@ public class HTTPClient implements Observable, Runnable {
     dos.close();
   }
 
-  public void writePostData(final ByteArrayOutputStream byteOut) throws IOException {
+  public void sendData(final HttpConnection connection) throws IOException {
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    StringBuffer buf;
     if (params.size() > 0) {
-      StringBuffer buf = new StringBuffer(200);
       for (int i = 0; i < params.size(); i++) {
         final Pair p = (Pair) params.elementAt(i);
         buf = new StringBuffer(200);
-        buf.append(HTTPClient.BOUNDARY).append(HTTPClient.NL);
-        buf.append("Content-Disposition: form-data; name=").append('"').append(p.name).append('"').append(HTTPClient.NL);
-        buf.append(HTTPClient.NL).append((p.value != null ? p.value : "")).append(HTTPClient.NL);
-        byteOut.write(buf.toString().getBytes());
+        buf.append(BOUNDARY_PRE).append(HTTPClient.BOUNDARY).append(SEP);
+        buf.append("content-disposition: form-data; name=").append('"').append(p.name).append('"').append(SEP);
+        buf.append(SEP).append((p.value != null ? p.value : "")).append(SEP);
+        out.write(buf.toString().getBytes());
       }
     }
-  }
-
-  public void sendData(final HttpConnection connection) throws IOException {
-    final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-    writePostData(byteOut);
-    StringBuffer buf;
     for (int i = 0; i < attach.size(); i++) {
       final HTTPAttach sendable = (HTTPAttach) attach.elementAt(i);
       final String mimeType = sendable.getMimeType();
       final byte[] data = sendable.getData();
+      String name = "file_" + Integer.toString(i);
       buf = new StringBuffer(200);
-      buf.append(HTTPClient.BOUNDARY).append(HTTPClient.NL);
-      buf.append("Content-Disposition: form-data;");
-      buf.append(" name=\"file_").append(i).append("\"").append(HTTPClient.NL);
-      buf.append("Content-Type: ").append(mimeType).append(HTTPClient.NL).append(HTTPClient.NL);
-      byteOut.write(buf.toString().getBytes());
-      byteOut.write(data);
-      byteOut.write(HTTPClient.NL.getBytes());
+      buf.append(BOUNDARY_PRE).append(HTTPClient.BOUNDARY).append(SEP);
+      buf.append("content-disposition: form-data;");
+      buf.append(" name=").append('"').append(name).append('"');
+      buf.append("; filename=").append('"').append(name).append('"');
+      buf.append(SEP);
+      buf.append(CONTENT_TYPE + ": ").append(mimeType).append(SEP).append(SEP);
+      out.write(buf.toString().getBytes());
+      out.write(data);
+      out.write(SEP.getBytes());
+    }
+    buf = new StringBuffer(200);
+    buf.append(BOUNDARY_PRE).append(HTTPClient.BOUNDARY).append(BOUNDARY_PRE).append(SEP);
+    out.write(buf.toString().getBytes());
+    final OutputStream dos = connection.openOutputStream();
+    final byte[] b = out.toByteArray();
+    System.out.println(new String(b));
+    dos.write(b);
+    dos.close();
+  }
+
+  public void sendDataXXX(final HttpConnection connection) throws IOException {
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    for (int i = 0; i < attach.size(); i++) {
+      final HTTPAttach sendable = (HTTPAttach) attach.elementAt(i);
+      final String mimeType = sendable.getMimeType();
+      final byte[] data = sendable.getData();
+      if (i == 0) {
+        connection.setRequestProperty(CONTENT_TYPE, mimeType);
+      }
+      out.write(data);
     }
     final OutputStream dos = connection.openOutputStream();
-    final byte[] b = byteOut.toByteArray();
+    final byte[] b = out.toByteArray();
     System.out.println(new String(b));
     dos.write(b);
     dos.close();
@@ -173,13 +204,16 @@ public class HTTPClient implements Observable, Runnable {
     setStatus(0);
     try {
       final HttpConnection httpConn = getConnection();
-      if (useMultipart) {
-        sendData(httpConn);
-      }
-      else {
-        if (usePost) {
+      switch (mode) {
+        case MODE_MULTIPART:
+          sendData(httpConn);
+          break;
+        case MODE_POST:
           sendPostData(httpConn);
-        }
+          break;
+        case MODE_GET:
+          sendDataXXX(httpConn);
+          break;
       }
       final int responseCode = httpConn.getResponseCode();
       result = readResult(httpConn);
