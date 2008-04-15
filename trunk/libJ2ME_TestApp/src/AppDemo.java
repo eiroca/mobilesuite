@@ -11,6 +11,7 @@ import javax.microedition.rms.RecordListener;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 import net.eiroca.j2me.app.Application;
+import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.rms.RMSTable;
 import net.eiroca.j2me.rms.Settings;
 import net.eiroca.log4j2me.Configurator;
@@ -278,7 +279,7 @@ public final class AppDemo extends Application implements RecordListener {
     }
     String sKey = "Key " + i;
     String data = ri.get(sKey);
-    form.append(data + "=" + i + "\n");
+    form.append(data + "=" + i + BaseApp.NL);
   }
 
   private Form initForm01() {
@@ -298,11 +299,11 @@ public final class AppDemo extends Application implements RecordListener {
     Form form = new Form("Iso Date");
     Date date = new Date();
     String id = dateToString(date, DATE_TIME);
-    form.append("ISO Date Now:    " + id + "\n");
+    form.append("ISO Date Now:    " + id + BaseApp.CR);
     Date date2 = stringToDate(id, DATE_TIME);
     String id2 = dateToString(date2, DATE_TIME);
-    form.append("After Roundtrip: " + id2 + "\n");
-    form.append("Equals:          " + date.equals(date2) + "\n");
+    form.append("After Roundtrip: " + id2 + BaseApp.CR);
+    form.append("Equals:          " + date.equals(date2) + BaseApp.CR);
     form.addCommand(CBACK);
     form.setCommandListener(this);
     return form;
@@ -313,13 +314,13 @@ public final class AppDemo extends Application implements RecordListener {
     RMSTable ri = null;
     try {
       ri = new RMSTable("idxtest_9");
-      form.append("Sequential write\n");
+      form.append("Sequential write"+BaseApp.CR);
       for (int element = 0; element < COUNT; element++) {
         String sKey = "Key " + element;
         String data = "Element " + element;
         ri.put(sKey, data);
       }
-      form.append("Random read\n");
+      form.append("Random read"+BaseApp.CR);
       read(form, 1, ri);
       read(form, COUNT / 3, ri);
       read(form, COUNT / 2, ri);

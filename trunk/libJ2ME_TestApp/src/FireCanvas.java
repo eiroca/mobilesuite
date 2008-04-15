@@ -77,9 +77,7 @@ public final class FireCanvas extends Canvas implements CommandListener, Runnabl
   }
 
   public void paint(Graphics g) {
-    if (paused) {
-      return;
-    }
+    if (paused) { return; }
     painting = true;
     if (erase) {
       if (isColor) {
