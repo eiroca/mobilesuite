@@ -23,7 +23,6 @@ import javax.microedition.lcdui.Form;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.Pair;
 import net.eiroca.j2me.util.HTTPAttach;
-import net.eiroca.j2me.util.HTTPClient;
 import test.benchmark.MathSuite;
 import test.benchmark.PrecisionSuite;
 import test.benchmark.SuiteAbstract;
@@ -111,6 +110,10 @@ public class Suite implements HTTPAttach {
     return res;
   }
 
+  public Vector getTests(){
+    return tests;
+  }
+
   public void benchmark(final Form list, final String category) {
     if (!finished) {
       finished = true;
@@ -123,7 +126,7 @@ public class Suite implements HTTPAttach {
     }
     export(list, category);
     if (!finished) {
-      list.append("... still working ...\n");
+      list.append("... still working ..."+BaseApp.NL);
     }
   }
 
@@ -134,18 +137,10 @@ public class Suite implements HTTPAttach {
       if (inf.category.equals(category)) {
         if (inf.val != null) {
           sb = new StringBuffer(40);
-          sb.append(getDesc(inf.key)).append('=').append(inf.val).append('\n');
+          sb.append(getDesc(inf.key)).append('=').append(inf.val).append(BaseApp.NL);
           list.append(sb.toString());
         }
       }
-    }
-  }
-
-  public void writeData(final HTTPClient ss) {
-    for (int i = 0; i < tests.size(); i++) {
-      final TestResult inf = (TestResult) tests.elementAt(i);
-      final String v = (inf.val == null ? "" : inf.val.toString());
-      ss.addParameter(inf.key.toString(), v);
     }
   }
 
@@ -154,7 +149,7 @@ public class Suite implements HTTPAttach {
     for (int i = 0; i < tests.size(); i++) {
       final TestResult inf = (TestResult) tests.elementAt(i);
       final String v = (inf.val == null ? "" : inf.val.toString());
-      buf.append(inf.key).append('=').append(v).append('\n');
+      buf.append(inf.key).append('=').append(v).append(BaseApp.CR);
     }
     return buf.toString().getBytes();
   }
