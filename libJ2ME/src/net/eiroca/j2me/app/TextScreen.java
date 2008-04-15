@@ -33,7 +33,7 @@ public class TextScreen extends Form implements CommandListener {
     this.next = next;
     for (int i = 0; i < msg.length; i++) {
       append(msg[i]);
-      append("\n");
+      append(BaseApp.sCR);
     }
     backCommand = new Command(label, Command.BACK, 1);
     addCommand(backCommand);

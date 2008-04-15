@@ -75,6 +75,11 @@ import javax.microedition.rms.RecordStoreException;
 
 public abstract class BaseApp extends MIDlet implements CommandListener, ItemCommandListener {
 
+  public static final String NL = "\n\r";
+  public static final String sCR = "\n";
+  public static final char CR = '\n';
+  public static final char LF = '\r';
+
   /*
    * Mathematics
    */
@@ -241,7 +246,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
       i += 3;
       if (n++ >= 14) {
         n = 0;
-        buf.append("\r\n");
+        buf.append(BaseApp.LF);
       }
     }
     if (i == start + len - 2) {
@@ -351,7 +356,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   }
 
   /**
-   * Count lines (\n as separator)
+   * Count lines (CR as separator)
    *
    * @param message
    * @return
@@ -359,7 +364,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   public static int lineBreaks(final String message) {
     int breaks = 0;
     int index = 0;
-    while ((index = message.indexOf('\n', index)) != -1) {
+    while ((index = message.indexOf(BaseApp.CR, index)) != -1) {
       ++breaks;
       ++index;
     }
@@ -367,7 +372,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   }
 
   /**
-   * Return max width of a line of a string (\n as line separator)
+   * Return max width of a line of a string (CR as line separator)
    *
    * @param f
    * @param message
@@ -380,7 +385,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     int messageWidth;
     while (endIndex < message.length()) {
       startIndex = endIndex + 1;
-      endIndex = message.indexOf('\n', startIndex);
+      endIndex = message.indexOf(BaseApp.CR, startIndex);
       if (endIndex == -1) {
         endIndex = message.length();
       }
@@ -410,7 +415,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     while (htmlStartIndex >= 0) {
       plainText.append(htmlText.substring(0, htmlStartIndex));
       if (htmlText.substring(htmlStartIndex + 1, htmlStartIndex + 3).toLowerCase().equals("br")) {
-        plainText.append('\n');
+        plainText.append(BaseApp.CR);
       }
       htmlEndIndex = htmlText.indexOf(">", htmlStartIndex);
       htmlText = htmlText.substring(htmlEndIndex + 1);
@@ -655,10 +660,10 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     for (int i = 0; i < s.length(); i++) {
       ch = s.charAt(i);
       switch (ch) {
-        case '\n':
+        case CR:
           res.append("%0A");
           break;
-        case '\r':
+        case LF:
           res.append("%0D");
           break;
         case ' ':
@@ -977,8 +982,8 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
 
   public static int pSpecial;
 
-  private static char LINESEP = '\n';
-  private static char STRIP = '\r';
+  private static char LINESEP = BaseApp.CR;
+  private static char STRIP = BaseApp.LF;
   private static String COMMENT = "#";
 
   public static InputStream getInputStream(final String res) {
@@ -1004,7 +1009,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
 
   /**
    * Read a resource file into a Pair[], the format is name&lt;sep&gt;value.
-   * Line separator is \n
+   * Line separator is CR
    *
    * @param res
    * @param sep
@@ -1071,7 +1076,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   }
 
   /**
-   * Read a resource file into a String[]. Line separator is \n.
+   * Read a resource file into a String[]. Line separator is CR.
    *
    * @param res
    * @return

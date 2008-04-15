@@ -61,6 +61,7 @@
 package net.eiroca.j2me.util;
 
 import javax.microedition.lcdui.Font;
+import net.eiroca.j2me.app.BaseApp;
 
 /**
  * A class supporting word wrap for MIDP.
@@ -111,7 +112,7 @@ public class WordWrap {
       if (w <= width) {
         pos = i;
       }
-      if ((w > width) || (i >= len) || (txt.charAt(i) == '\n')) {
+      if ((w > width) || (i >= len) || (txt.charAt(i) == BaseApp.CR)) {
         break;
       }
       i++;
