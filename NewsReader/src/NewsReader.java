@@ -59,7 +59,6 @@ public class NewsReader extends Application implements Comparator {
   private static final String STR_GOOGLE = "http://www.google.com/gwt/n?u=";
   private static final String STR_HTTP = "http://";
   private static final String STR_EMPTY = "";
-  private static final char STR_NEWLINE = '\n';
 
   // Nome Applicazione
   public static final int MSG_APPLICATION = 0;
@@ -822,30 +821,30 @@ public class NewsReader extends Application implements Comparator {
     if (infoFeed != null) {
       sb = new StringBuffer(300);
       sb.append(BaseApp.messages[NewsReader.MSG_DBINFO1]);
-      sb.append(NewsReader.STR_NEWLINE);
+      sb.append(BaseApp.CR);
       o[0] = new Integer(infoFeed.numRec);
       sb.append(BaseApp.format(NewsReader.MSG_DBINFO2, o));
-      sb.append(NewsReader.STR_NEWLINE);
+      sb.append(BaseApp.CR);
       o[0] = new Integer(info.numRec);
       sb.append(BaseApp.format(NewsReader.MSG_DBINFO3, o));
-      sb.append(NewsReader.STR_NEWLINE);
+      sb.append(BaseApp.CR);
       o[0] = new Integer(info.used / 1024);
       sb.append(BaseApp.format(NewsReader.MSG_DBINFO4, o));
-      sb.append(NewsReader.STR_NEWLINE);
+      sb.append(BaseApp.CR);
       o[0] = new Integer(info.avail / 1024);
       sb.append(BaseApp.format(NewsReader.MSG_DBINFO5, o));
-      sb.append(NewsReader.STR_NEWLINE);
+      sb.append(BaseApp.CR);
       sMemory.append(sb.toString());
     }
     sb = new StringBuffer(300);
     sb.append(BaseApp.messages[NewsReader.MSG_MEMINFO1]);
-    sb.append(NewsReader.STR_NEWLINE);
+    sb.append(BaseApp.CR);
     o[0] = new Integer((int) used);
     sb.append(BaseApp.format(NewsReader.MSG_MEMINFO2, o));
-    sb.append(NewsReader.STR_NEWLINE);
+    sb.append(BaseApp.CR);
     o[0] = new Integer((int) free);
     sb.append(BaseApp.format(NewsReader.MSG_MEMINFO3, o));
-    sb.append(NewsReader.STR_NEWLINE);
+    sb.append(BaseApp.CR);
     sMemory.append(sb.toString());
     BaseApp.setup(sMemory, BaseApp.cBACK, null);
     return sMemory;
@@ -902,27 +901,27 @@ public class NewsReader extends Application implements Comparator {
     final StringBuffer feedinfo = new StringBuffer();
     o[0] = currentFeed.description;
     feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO01, o));
-    feedinfo.append(NewsReader.STR_NEWLINE);
+    feedinfo.append(BaseApp.CR);
     if ((currentFeed.lastUpdateTime > 0)) {
       o[0] = NewsReader.timeDiff(currentFeed.lastUpdateTime, System.currentTimeMillis());
       feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO02, o));
-      feedinfo.append(NewsReader.STR_NEWLINE);
+      feedinfo.append(BaseApp.CR);
     }
     o[0] = new Integer(currentFeed.minsBetweenUpdates);
     feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO03, o));
-    feedinfo.append(NewsReader.STR_NEWLINE);
+    feedinfo.append(BaseApp.CR);
     o[0] = new Integer(currentFeed.getItemsCount());
     feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO04, o));
-    feedinfo.append(NewsReader.STR_NEWLINE);
+    feedinfo.append(BaseApp.CR);
     if (!currentFeed.lastBuildDate.equals(NewsReader.STR_EMPTY)) {
       o[0] = currentFeed.lastBuildDate;
       feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO05, o));
-      feedinfo.append(NewsReader.STR_NEWLINE);
+      feedinfo.append(BaseApp.CR);
     }
     if ((currentFeed.lastFeedLen > 0)) {
       o[0] = new Integer((int) (currentFeed.lastFeedLen / 1024));
       feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO06, o).toString());
-      feedinfo.append(NewsReader.STR_NEWLINE);
+      feedinfo.append(BaseApp.CR);
     }
     o[0] = currentFeed.URL;
     feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO07, o));
@@ -1019,11 +1018,11 @@ public class NewsReader extends Application implements Comparator {
     Form itemform;
     itemform = new Form(currentItem.title);
     if (!currentItem.description.equals(NewsReader.STR_EMPTY)) {
-      itemform.append(currentItem.description + NewsReader.STR_NEWLINE);
+      itemform.append(currentItem.description + BaseApp.CR);
     }
     else {
       // Print the title if no description exists
-      itemform.append(currentItem.title + NewsReader.STR_NEWLINE);
+      itemform.append(currentItem.title + BaseApp.CR);
     }
     if ((currentItem.image != null) && (!currentItem.image.equals(NewsReader.STR_EMPTY))) {
       // Handle the Image
@@ -1032,7 +1031,7 @@ public class NewsReader extends Application implements Comparator {
     if (!currentItem.pubDate.equals(NewsReader.STR_EMPTY)) {
       o[0] = currentItem.pubDate;
       itemform.append(BaseApp.format(NewsReader.MSG_FEEDITEMINFO01, o));
-      itemform.append("" + NewsReader.STR_NEWLINE);
+      itemform.append(BaseApp.sCR);
     }
     if ((currentItem.link != null) && (!currentItem.link.equals(NewsReader.STR_EMPTY))) {
       itemform.addCommand(NewsReader.cGO);
