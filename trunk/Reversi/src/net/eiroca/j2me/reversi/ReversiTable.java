@@ -20,6 +20,7 @@
  */
 package net.eiroca.j2me.reversi;
 
+import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.tpg.GameMove;
 import net.eiroca.j2me.game.tpg.GameTable;
 
@@ -127,9 +128,9 @@ public final class ReversiTable implements GameTable {
       for (int j = 0; j < 8; ++j) {
         ret.append(getItem(j, i));
       }
-      ret.append('\n');
+      ret.append(BaseApp.CR);
     }
-    ret.append("pass: ").append(getPassNum()).append('\n');
+    ret.append("pass: ").append(getPassNum()).append(BaseApp.CR);
     return ret.toString();
   }
 
