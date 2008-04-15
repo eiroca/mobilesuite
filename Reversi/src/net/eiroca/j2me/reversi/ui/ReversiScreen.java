@@ -36,7 +36,6 @@ import net.eiroca.j2me.reversi.ReversiTable;
 
 public final class ReversiScreen extends GameScreen {
 
-  private static final char NL = '\n';
   private static final String SEP = ": ";
   private static final int COLOR_TEXT_BG = 0xEEEEEE;
   private static final int COLOR_TEXT_FG = 0x000000;
@@ -186,7 +185,7 @@ public final class ReversiScreen extends GameScreen {
     screen.drawRect(cornerX, cornerY, maxWidth - 2, (breaks + 1) * fontHeight + 4);
     while (endIndex < message.length()) {
       startIndex = endIndex + 1;
-      endIndex = message.indexOf(NL, startIndex);
+      endIndex = message.indexOf(BaseApp.NL, startIndex);
       if (endIndex == -1) {
         endIndex = message.length();
       }
@@ -443,7 +442,7 @@ public final class ReversiScreen extends GameScreen {
           }
           final int firstNum = ReversiScreen.rgame.numFirstPlayer;
           final int secondNum = ReversiScreen.rgame.numSecondPlayer;
-          endMessage += ReversiScreen.NL + Reversi.playerNames[0] + ReversiScreen.SEP + firstNum + ReversiScreen.NL + Reversi.playerNames[1] + ReversiScreen.SEP + secondNum;
+          endMessage += BaseApp.NL + Reversi.playerNames[0] + ReversiScreen.SEP + firstNum + BaseApp.NL + Reversi.playerNames[1] + ReversiScreen.SEP + secondNum;
           setMessage(endMessage);
           gameEnded = true;
         }
