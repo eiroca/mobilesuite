@@ -1,9 +1,16 @@
-com.nokia.mid.sound.Sound
+com.motorola.extentions.RemoteControl
+.nokia.mid.sound.Sound
 ....Listener
 ...ui.DeviceControl
 ....DirectGraphics
 ....DirectUtils
 ....FullCanvas
+.samsung.util.Acceleration
+...AudioClip
+...LCDLight
+...SM
+...SMS
+...Vibration
 .siemens.mp.color_game.GameCanvas
 ....Layer
 ....LayerManager

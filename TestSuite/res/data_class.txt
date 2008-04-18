@@ -17,3 +17,6 @@ com.nokia.mid.sound.Sound
 com.nokia.mid.ui.FullCanvas
 com.siemens.mp.MIDlet
 com.siemens.mp.color_game.GameCanvas
+com.samsung.util.Vibration
+com.samsung.util.Acceleration
+com.motorola.extentions.RemoteControl
