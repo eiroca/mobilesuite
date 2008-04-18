@@ -185,7 +185,7 @@ public class SecureSMS extends Application implements StoreObserver {
   public SecureSMS() {
     super();
     BaseApp.messages = BaseApp.readStrings("messages.txt");
-    BaseApp.cOK = BaseApp.newCommand(SecureSMS.MSG_OK, Command.OK, 30);
+    BaseApp.cOK = BaseApp.newCommand(SecureSMS.MSG_OK, Command.OK, 30, 0);
     BaseApp.cBACK = BaseApp.newCommand(SecureSMS.MSG_BACK, Command.BACK, 20, BaseApp.AC_BACK);
     BaseApp.cEXIT = BaseApp.newCommand(SecureSMS.MSG_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
     SecureSMS.cADRADD = BaseApp.newCommand(SecureSMS.MSG_ADD, Command.OK, 2, SecureSMS.AC_ADDRESSBOOKADD);
