@@ -58,6 +58,18 @@ public final class TestSuite extends Application implements Observer {
   public static final int MSG_PREV = 4;
   public static final int MSG_ABOUT = 5;
 
+  private static final int AC_SHOWINSPECTOR = 1;
+  private static final int AC_SHOWBENCHMARK = 2;
+  private static final int AC_SHOWCLASSBROWSER = 3;
+  private static final int AC_SHOWKEYSTATE = 4;
+  private static final int AC_SHOWPOSTDATA = 5;
+  private static final int AC_DOABOUT = 6;
+  private static final int AC_OK = 7;
+  private static final int AC_PREV = 8;
+  private static final int AC_DOINSPECTOR = 9;
+  private static final int AC_DOBENCHMARK = 10;
+  private static final int AC_OPENCLASS = 11;
+
   static final int COUNT = 15;
 
   private final String[] INSPECTOR_CAT = new String[] {
@@ -70,13 +82,7 @@ public final class TestSuite extends Application implements Observer {
 
   private Command cPREV;
   private List fMenu;
-  private List fMenuInspector;
-  private List fMenuBenchmark;
   private Form fSpec;
-  private Form fPostData;
-  private Canvas fKeyState;
-  private List fClassBrowser;
-  private Displayable fAbout;
 
   /** The full path name to the level of class hierarchy being shown. */
   private String cbPackagePath;
@@ -91,19 +97,93 @@ public final class TestSuite extends Application implements Observer {
     super();
   }
 
-  public boolean handleAction(final int action, final Displayable d, final Command cmd) {
-    return false;
-  }
+  private Displayable fAbout;
+  private Canvas fKeyState;
+  private Form fPostData;
+  private List fClassBrowser;
+  private List fMenuInspector;
+  private List fMenuBenchmark;
 
-  /**
-   * @param c
-   * @param d
-   */
-  public void commandAction(final Command c, final Displayable d) {
-    boolean processed = false;
-    if (d == fClassBrowser) {
-      if (c == List.SELECT_COMMAND) {
+  public boolean handleAction(int action, Displayable d, Command cmd) {
+    boolean processed = true;
+    int i;
+    switch (action) {
+      case AC_OK:
+        processed = false;
+        if (d == fPostData) {
+          processed = true;
+          final DataSender ds = new DataSender(suite, ver);
+          ds.addObserver(this);
+          ds.submit(url);
+          BaseApp.back(null);
+        }
+      case AC_SHOWINSPECTOR:
+        if (fMenuInspector == null) {
+          fMenuInspector = new List("Inspectors", Choice.IMPLICIT, INSPECTOR_CAT, null);
+          BaseApp.setup(fMenuInspector, BaseApp.cBACK, null);
+          registerList(fMenuInspector, AC_DOINSPECTOR);
+        }
+        BaseApp.show(null, fMenuInspector, true);
+        break;
+      case AC_SHOWBENCHMARK:
+        if (fMenuBenchmark == null) {
+          fMenuBenchmark = new List("Benchmark", Choice.IMPLICIT, BENCHMARK_CAT, null);
+          BaseApp.setup(fMenuBenchmark, BaseApp.cBACK, null);
+          registerList(fMenuBenchmark, AC_DOBENCHMARK);
+        }
+        BaseApp.show(null, fMenuBenchmark, true);
+        break;
+      case AC_SHOWCLASSBROWSER:
+        if (fClassBrowser == null) {
+          ClassBrowserHelper.imPlus = BaseApp.createImage("Plus.png");
+          ClassBrowserHelper.imDash = BaseApp.createImage("Dash.png");
+          classes = BaseApp.readStrings("classes.txt");
+          fClassBrowser = new List("", Choice.IMPLICIT);
+          cbPackagePath = "";
+          loadClasses();
+          BaseApp.setup(fClassBrowser, cPREV, BaseApp.cBACK);
+          registerList(fClassBrowser, AC_OPENCLASS);
+        }
+        BaseApp.show(null, fClassBrowser, true);
+        break;
+      case AC_SHOWKEYSTATE:
+        if (fKeyState == null) {
+          fKeyState = new KeyStateCanvas();
+          BaseApp.setup(fKeyState, BaseApp.cBACK, null);
+        }
+        BaseApp.show(null, fKeyState, true);
+        break;
+      case AC_SHOWPOSTDATA:
+        if (fPostData == null) {
+          fPostData = getPostDataForm();
+        }
+        BaseApp.show(null, fPostData, true);
+        break;
+      case AC_DOABOUT:
+        if (fAbout == null) {
+          fAbout = BaseApp.getTextForm(TestSuite.MSG_ABOUT, "about.txt");
+        }
+        BaseApp.show(null, fAbout, true);
+        break;
+      case AC_DOINSPECTOR:
+        fSpec.deleteAll();
+        i = fMenuInspector.getSelectedIndex();
+        fSpec.setTitle("Inspector: " + INSPECTOR_CAT[i]);
+        if (suite != null) {
+          suite.export(fSpec, INSPECTOR_CAT[i]);
+        }
+        BaseApp.show(null, fSpec, true);
+      case AC_DOBENCHMARK:
         processed = true;
+        fSpec.deleteAll();
+        i = fMenuBenchmark.getSelectedIndex();
+        fSpec.setTitle("Benchmark: " + BENCHMARK_CAT[i]);
+        if (suite != null) {
+          suite.benchmark(fSpec, BENCHMARK_CAT[i]);
+        }
+        BaseApp.show(null, fSpec, true);
+        break;
+      case AC_OPENCLASS:
         final int iIdx = fClassBrowser.getSelectedIndex();
         final String sPackageElement = fClassBrowser.getString(iIdx);
         // package elements always begin with a lower-case letter..
@@ -118,9 +198,8 @@ public final class TestSuite extends Application implements Observer {
           // redraw the screen object
           loadClasses();
         }
-      }
-      else if (c == cPREV) {
-        processed = true;
+        break;
+      case AC_PREV:
         // strip off the last bit of the package path
         final int iPos = cbPackagePath.lastIndexOf('.');
         if (iPos == -1) {
@@ -131,44 +210,12 @@ public final class TestSuite extends Application implements Observer {
         }
         // redraw the screen object
         loadClasses();
-      }
+        break;
+      default:
+        processed = false;
+        break;
     }
-    else if (d == fMenuInspector) {
-      if (c == List.SELECT_COMMAND) {
-        processed = true;
-        fSpec.deleteAll();
-        final int i = fMenuInspector.getSelectedIndex();
-        fSpec.setTitle("Inspector: " + INSPECTOR_CAT[i]);
-        if (suite != null) {
-          suite.export(fSpec, INSPECTOR_CAT[i]);
-        }
-        BaseApp.show(null, fSpec, true);
-      }
-    }
-    if (d == fMenuBenchmark) {
-      if (c == List.SELECT_COMMAND) {
-        processed = true;
-        fSpec.deleteAll();
-        final int i = fMenuBenchmark.getSelectedIndex();
-        fSpec.setTitle("Benchmark: " + BENCHMARK_CAT[i]);
-        if (suite != null) {
-          suite.benchmark(fSpec, BENCHMARK_CAT[i]);
-        }
-        BaseApp.show(null, fSpec, true);
-      }
-    }
-    else if (d == fPostData) {
-      if (c == BaseApp.cOK) {
-        processed = true;
-        final DataSender ds = new DataSender(suite, ver);
-        ds.addObserver(this);
-        ds.submit(url);
-        BaseApp.back(null);
-      }
-    }
-    if (!processed) {
-      super.commandAction(c, d);
-    }
+    return processed;
   }
 
   /**
@@ -180,15 +227,12 @@ public final class TestSuite extends Application implements Observer {
       url = readAppProperty("POSTURL", "http://www.eiroca.net/services/testsuite/store.php");
       ver = readAppProperty("MIDlet-Version", "1.0.0");
       BaseApp.messages = BaseApp.readStrings("messages.txt");
-      classes = BaseApp.readStrings("classes.txt");
-      ClassBrowserHelper.imPlus = BaseApp.createImage("Plus.png");
-      ClassBrowserHelper.imDash = BaseApp.createImage("Dash.png");
       final Image[] icons = new Image[6];
       icons[0] = BaseApp.createImage("Specs.png");
-      icons[1] = icons[0];
+      icons[1] = BaseApp.createImage("Specs.png");
       icons[2] = BaseApp.createImage("ClassBrowser.png");
       icons[3] = BaseApp.createImage("Keys.png");
-      icons[4] = ClassBrowserHelper.imDash;
+      icons[4] = BaseApp.createImage("Dash.png");
       icons[5] = BaseApp.createImage("icon.png");
       suite = new Suite();
       suite.run();
@@ -196,31 +240,19 @@ public final class TestSuite extends Application implements Observer {
           "Inspectors", "Benchmark", "Class browser", "Keys", "Post data", "About"
       };
       fMenu = new List("Main Menu", Choice.IMPLICIT, menuDesc, icons);
-      BaseApp.cOK = BaseApp.newCommand(TestSuite.MSG_OK, Command.OK, 30);
+      BaseApp.cOK = BaseApp.newCommand(TestSuite.MSG_OK, Command.OK, 30, AC_OK);
       BaseApp.cBACK = BaseApp.newCommand(TestSuite.MSG_BACK, Command.BACK, 20, BaseApp.AC_BACK);
       BaseApp.cEXIT = BaseApp.newCommand(TestSuite.MSG_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
-      cPREV = BaseApp.newCommand(TestSuite.MSG_PREV, Command.SCREEN, 1);
-      fMenuInspector = new List("Inspectors", Choice.IMPLICIT, INSPECTOR_CAT, null);
-      fMenuBenchmark = new List("Benchmark", Choice.IMPLICIT, BENCHMARK_CAT, null);
-      fClassBrowser = new List("", Choice.IMPLICIT);
-      fSpec = new Form("");
-      fKeyState = new KeyStateCanvas();
-      fPostData = getPostDataForm();
-      fAbout = BaseApp.getTextForm(TestSuite.MSG_ABOUT, "about.txt");
-      BaseApp.registerListItem(fMenu, 0, fMenuInspector);
-      BaseApp.registerListItem(fMenu, 1, fMenuBenchmark);
-      BaseApp.registerListItem(fMenu, 2, fClassBrowser);
-      BaseApp.registerListItem(fMenu, 3, fKeyState);
-      BaseApp.registerListItem(fMenu, 4, fPostData);
-      BaseApp.registerListItem(fMenu, 5, fAbout);
+      cPREV = BaseApp.newCommand(TestSuite.MSG_PREV, Command.SCREEN, 1, AC_PREV);
+      BaseApp.registerListItem(fMenu, 0, AC_SHOWINSPECTOR);
+      BaseApp.registerListItem(fMenu, 1, AC_SHOWBENCHMARK);
+      BaseApp.registerListItem(fMenu, 2, AC_SHOWCLASSBROWSER);
+      BaseApp.registerListItem(fMenu, 3, AC_SHOWKEYSTATE);
+      BaseApp.registerListItem(fMenu, 4, AC_SHOWPOSTDATA);
+      BaseApp.registerListItem(fMenu, 5, AC_DOABOUT);
       BaseApp.setup(fMenu, BaseApp.cEXIT, null);
-      BaseApp.setup(fMenuInspector, BaseApp.cBACK, null);
-      BaseApp.setup(fMenuBenchmark, BaseApp.cBACK, null);
-      BaseApp.setup(fKeyState, BaseApp.cBACK, null);
-      BaseApp.setup(fClassBrowser, cPREV, BaseApp.cBACK);
+      fSpec = new Form("");
       BaseApp.setup(fSpec, BaseApp.cBACK, null);
-      cbPackagePath = "";
-      loadClasses();
     }
     catch (final Exception e) {
       fMenu.setTitle(e.getMessage());
@@ -248,7 +280,7 @@ public final class TestSuite extends Application implements Observer {
     }
   }
 
-  public void notify(final Observable observable) {
+  public void changed(final Observable observable) {
     if (observable instanceof DataSender) {
       final DataSender ds = (DataSender) observable;
       fMenu.set(4, menuDesc[4] + " (" + ds.getStatus() + ")", ClassBrowserHelper.imPlus);

@@ -137,7 +137,7 @@ public class Suite implements HTTPAttach {
       if (inf.category.equals(category)) {
         if (inf.val != null) {
           sb = new StringBuffer(40);
-          sb.append(getDesc(inf.key)).append('=').append(inf.val).append(BaseApp.NL);
+          sb.append(getDesc(inf.key)).append('=').append(inf.val).append(BaseApp.CR);
           list.append(sb.toString());
         }
       }
