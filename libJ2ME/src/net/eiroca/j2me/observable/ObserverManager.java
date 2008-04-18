@@ -43,7 +43,7 @@ public class ObserverManager {
 
   public void notifyObservers(final Observable observable) {
     for (int i = 0; i < observers.size(); i++) {
-      ((Observer) observers.elementAt(i)).notify(observable);
+      ((Observer) observers.elementAt(i)).changed(observable);
     }
   }
 

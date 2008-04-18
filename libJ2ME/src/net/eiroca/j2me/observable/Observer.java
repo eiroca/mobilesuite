@@ -21,6 +21,6 @@ package net.eiroca.j2me.observable;
 
 public interface Observer {
 
-  public abstract void notify(Observable observable);
+  public abstract void changed(Observable observable);
 
 }

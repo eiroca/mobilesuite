@@ -58,11 +58,15 @@ abstract public class GameScreen extends GameCanvas {
   abstract public boolean tick();
 
   public void hide() {
-    animationThread.stopped = true;
-    animationThread = null;
+    if (animationThread != null) {
+      animationThread.stopped = true;
+      animationThread = null;
+      setFullScreenMode(false);
+    }
   }
 
   public void done() {
+    hide();
     active = false;
     score.endGame();
   }
