@@ -12,3 +12,7 @@ com.sonyericsson.net.rat
 com.sonyericsson.net.cellid
 com.sonyericsson.net.lac
 com.sonyericsson.net.status
+CellID
+IMEI
+MSISDN
+IMSI
