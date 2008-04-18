@@ -68,6 +68,17 @@ public final class AppDemo extends Application implements RecordListener {
   private final static int AC_SHOWPROPE = 5;
   private final static int AC_SHOWPROPF = 6;
   private final static int AC_SHOWRMS = 7;
+  private final static int AC_LIST00 = 8;
+  private final static int AC_LIST10 = 9;
+  private final static int AC_LIST20 = 10;
+  private final static int AC_LIST11 = 11;
+  private final static int AC_LIST12 = 12;
+  private final static int AC_LIST21 = 13;
+  private final static int AC_FORM01 = 14;
+  private final static int AC_FORM02 = 15;
+  private final static int AC_LOGFORM = 16;
+  private final static int AC_SAVE = 17;
+  private final static int AC_CLEAR = 18;
 
   public AppDemo() {
     super();
@@ -119,14 +130,11 @@ public final class AppDemo extends Application implements RecordListener {
     log.warn("Record deleted");
   }
 
-  /**
-   * @param previous
-   * @param next
-   * @param returnCode
-   */
-  public void afterChange(Displayable previous, Displayable next) {
-    if (previous != null && next != null) {
-      log.warn("From: " + previous.getTitle() + " To: " + next.getTitle());
+  public void changed(final int event, final Displayable previous, final Displayable next) {
+    if (event == EV_AFTERCHANGE) {
+      if (previous != null && next != null) {
+        log.warn("From: " + previous.getTitle() + " To: " + next.getTitle());
+      }
     }
   }
 
@@ -158,45 +166,65 @@ public final class AppDemo extends Application implements RecordListener {
         show(null, valueF, true);
         break;
       case AC_SHOWRMS:
-        Form f = initForm03();
-        show(null, f, true);
+        show(null, initForm03(), true);
+        break;
+      case AC_LIST00:
+        BaseApp.show(null, list00, true);
+        break;
+      case AC_LIST10:
+        BaseApp.show(null, list10, true);
+        break;
+      case AC_LIST20:
+        BaseApp.show(null, list20, true);
+        break;
+      case AC_LIST11:
+        BaseApp.show(null, list11, true);
+        break;
+      case AC_LIST12:
+        BaseApp.show(null, list12, true);
+        break;
+      case AC_LIST21:
+        BaseApp.show(null, list21, true);
+        break;
+      case AC_FORM01:
+        BaseApp.show(null, initForm01(), true);
+        break;
+      case AC_FORM02:
+        BaseApp.show(null, initForm02(), true);
+        break;
+      case AC_LOGFORM:
+        BaseApp.show(null, logForm, true);
+        break;
+      case AC_SAVE:
+        if (d == valueA) {
+          Settings.put("ValueA", valueA.getString());
+        }
+        else if (d == valueB) {
+          Settings.put("ValueB", valueB.getString());
+        }
+        else if (d == valueC) {
+          Settings.put("ValueC", valueC.getString());
+        }
+        else if (d == valueD) {
+          Settings.put("ValueD", valueD.getString());
+        }
+        else if (d == valueE) {
+          Settings.put("ValueE", valueE.getString());
+        }
+        else if (d == valueF) {
+          Settings.put("ValueF", valueF.getString());
+        }
+        Settings.save();
+        back(null);
+        break;
+      case AC_CLEAR:
+        logForm.deleteAll();
         break;
       default:
         processed = false;
         break;
     }
     return processed;
-  }
-
-  public void commandAction(Command c, Displayable d) {
-    if (c == CCLEAR) {
-      logForm.deleteAll();
-    }
-    else if (c == CSAVE) {
-      if (d == valueA) {
-        Settings.put("ValueA", valueA.getString());
-      }
-      else if (d == valueB) {
-        Settings.put("ValueB", valueB.getString());
-      }
-      else if (d == valueC) {
-        Settings.put("ValueC", valueC.getString());
-      }
-      else if (d == valueD) {
-        Settings.put("ValueD", valueD.getString());
-      }
-      else if (d == valueE) {
-        Settings.put("ValueE", valueE.getString());
-      }
-      else if (d == valueF) {
-        Settings.put("ValueF", valueF.getString());
-      }
-      Settings.save();
-      back(null);
-    }
-    else {
-      super.commandAction(c, d);
-    }
   }
 
   /**
@@ -227,8 +255,8 @@ public final class AppDemo extends Application implements RecordListener {
     list21 = new List("Props 2.1", List.IMPLICIT, new String[] {
       "ValueF"
     }, null);
-    registerCommand(CSAVE, 0);
-    registerCommand(CCLEAR, 0);
+    registerCommand(CSAVE, AC_SAVE);
+    registerCommand(CCLEAR, AC_CLEAR);
     setup(menu, CEXIT, null);
     setup(list00, CBACK, null);
     setup(list10, CBACK, null);
@@ -242,16 +270,16 @@ public final class AppDemo extends Application implements RecordListener {
     setup(valueD, CSAVE, CBACK);
     setup(valueE, CSAVE, CBACK);
     setup(valueF, CSAVE, CBACK);
-    registerListItem(menu, 0, list00);
-    registerListItem(menu, 1, initForm01());
-    registerListItem(menu, 2, initForm02());
+    registerListItem(menu, 0, AC_LIST00);
+    registerListItem(menu, 1, AC_FORM01);
+    registerListItem(menu, 2, AC_FORM02);
     registerListItem(menu, 3, AC_SHOWRMS);
-    registerListItem(menu, 4, logForm);
-    registerListItem(list00, 0, list10);
-    registerListItem(list00, 1, list20);
-    registerListItem(list10, 0, list11);
-    registerListItem(list10, 1, list12);
-    registerListItem(list20, 0, list21);
+    registerListItem(menu, 4, AC_LOGFORM);
+    registerListItem(list00, 0, AC_LIST10);
+    registerListItem(list00, 1, AC_LIST20);
+    registerListItem(list10, 0, AC_LIST11);
+    registerListItem(list10, 1, AC_LIST12);
+    registerListItem(list20, 0, AC_LIST21);
     registerListItem(list11, 0, AC_SHOWPROPA);
     registerListItem(list11, 1, AC_SHOWPROPB);
     registerListItem(list11, 2, AC_SHOWPROPC);
@@ -279,63 +307,72 @@ public final class AppDemo extends Application implements RecordListener {
     }
     String sKey = "Key " + i;
     String data = ri.get(sKey);
-    form.append(data + "=" + i + BaseApp.NL);
+    form.append(data + "=" + i + BaseApp.CR);
   }
+
+  private Form form01;
 
   private Form initForm01() {
-    Form form = new Form("ScaleDemo");
-    Image img = createImage("/icon.png");
-    form.append(Image.createImage(img)); // immutable vers.
-    Image big = Application.scaleImage(img, 30, 30);
-    form.append(Image.createImage(big)); // immutable vers.
-    Image small = Application.scaleImage(img, 5, 5);
-    form.append(Image.createImage(small)); // immutable vers.
-    form.addCommand(CBACK);
-    form.setCommandListener(this);
-    return form;
+    if (form01 == null) {
+      form01 = new Form("ScaleDemo");
+      Image img = createImage("/icon.png");
+      form01.append(Image.createImage(img)); // immutable vers.
+      Image big = Application.scaleImage(img, 30, 30);
+      form01.append(Image.createImage(big)); // immutable vers.
+      Image small = Application.scaleImage(img, 5, 5);
+      form01.append(Image.createImage(small)); // immutable vers.
+      setup(form01, CBACK, null);
+    }
+    return form01;
   }
+
+  private Form form02;
 
   private Form initForm02() {
-    Form form = new Form("Iso Date");
-    Date date = new Date();
-    String id = dateToString(date, DATE_TIME);
-    form.append("ISO Date Now:    " + id + BaseApp.CR);
-    Date date2 = stringToDate(id, DATE_TIME);
-    String id2 = dateToString(date2, DATE_TIME);
-    form.append("After Roundtrip: " + id2 + BaseApp.CR);
-    form.append("Equals:          " + date.equals(date2) + BaseApp.CR);
-    form.addCommand(CBACK);
-    form.setCommandListener(this);
-    return form;
+    if (form02 == null) {
+      form02 = new Form("Iso Date");
+      Date date = new Date();
+      String id = dateToString(date, DATE_TIME);
+      form02.append("ISO Date Now:    " + id + BaseApp.CR);
+      Date date2 = stringToDate(id, DATE_TIME);
+      String id2 = dateToString(date2, DATE_TIME);
+      form02.append("After Roundtrip: " + id2 + BaseApp.CR);
+      form02.append("Equals:          " + date.equals(date2) + BaseApp.CR);
+      setup(form02, CBACK, null);
+    }
+    return form02;
   }
 
+  private Form form03;
+
   private Form initForm03() {
-    Form form = new Form("RMS Index");
-    RMSTable ri = null;
-    try {
-      ri = new RMSTable("idxtest_9");
-      form.append("Sequential write"+BaseApp.CR);
-      for (int element = 0; element < COUNT; element++) {
-        String sKey = "Key " + element;
-        String data = "Element " + element;
-        ri.put(sKey, data);
+    if (form03 == null) {
+      form03 = new Form("RMS Index");
+      RMSTable ri = null;
+      try {
+        ri = new RMSTable("idxtest_9");
+        form03.append("Sequential write" + BaseApp.CR);
+        for (int element = 0; element < COUNT; element++) {
+          String sKey = "Key " + element;
+          String data = "Element " + element;
+          ri.put(sKey, data);
+        }
+        form03.append("Random read" + BaseApp.CR);
+        read(form03, 1, ri);
+        read(form03, COUNT / 3, ri);
+        read(form03, COUNT / 2, ri);
+        read(form03, COUNT - 4, ri);
+        read(form03, COUNT - 3, ri);
+        read(form03, COUNT - 2, ri);
+        read(form03, COUNT, ri);
+        ri.close();
       }
-      form.append("Random read"+BaseApp.CR);
-      read(form, 1, ri);
-      read(form, COUNT / 3, ri);
-      read(form, COUNT / 2, ri);
-      read(form, COUNT - 4, ri);
-      read(form, COUNT - 3, ri);
-      read(form, COUNT - 2, ri);
-      read(form, COUNT, ri);
-      ri.close();
+      catch (RecordStoreException e) {
+        e.printStackTrace();
+      }
+      setup(form03, CBACK, null);
     }
-    catch (RecordStoreException e) {
-      e.printStackTrace();
-    }
-    form.addCommand(CBACK);
-    form.setCommandListener(this);
-    return form;
+    return form03;
   }
 
 }
