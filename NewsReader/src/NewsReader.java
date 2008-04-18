@@ -275,7 +275,7 @@ public class NewsReader extends Application implements Comparator {
     bold = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_MEDIUM);
     normal = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_MEDIUM);
     BaseApp.messages = BaseApp.readStrings(NewsReader.RES_MESSAGES);
-    BaseApp.cOK = newCommand(NewsReader.MSG_CM_OK, Command.OK, 30);
+    BaseApp.cOK = newCommand(NewsReader.MSG_CM_OK, Command.OK, 30, AC_NONE);
     BaseApp.cBACK = newCommand(NewsReader.MSG_CM_BACK, Command.BACK, 20, BaseApp.AC_BACK);
     BaseApp.cEXIT = newCommand(NewsReader.MSG_CM_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
     NewsReader.cADDFEEDURL = newCommand(NewsReader.MSG_CM_ADDFEEDURL, Command.OK, 31, NewsReader.AC_ADDFEEDURL);
@@ -622,39 +622,41 @@ public class NewsReader extends Application implements Comparator {
     return true;
   }
 
-  public void beforeChange(final Displayable previous, final Displayable next) {
-    if (next == sFeedMenu) {
-      // Delete all options in the list
-      sFeedMenu.delete(0);
-      sFeedMenu.setTitle(currentFeed.title);
-      final int nr = currentFeed.nr;
-      final int nn = currentFeed.nn;
-      o[0] = new Integer(nr);
-      o[1] = new Integer(nn);
-      sFeedMenu.insert(0, BaseApp.format(NewsReader.MSG_NEWREAD, o), null);
-      if (nr > 0) {
-        sFeedMenu.setSelectedIndex(0, true);
-      }
-      else {
-        sFeedMenu.setSelectedIndex(1, true);
-      }
-    }
-    else if (next == sFeedMenu) {
-      sFeedMenu.setTitle(currentFeed.title);
-    }
-    else if (next == sAddFeedBrowse) {
-      sAddFeedBrowse.deleteAll();
-      if (browseFeedList.size() == 0) {
-        sAddFeedBrowse.append(BaseApp.messages[NewsReader.MSG_FEEDFILEERROR], null);
-        sAddFeedBrowse.removeCommand(NewsReader.cADDFEEDLIST);
-      }
-      else {
-        RSSFeed feed;
-        for (int i = 0; i < browseFeedList.size(); i++) {
-          feed = (RSSFeed) browseFeedList.elementAt(i);
-          sAddFeedBrowse.append(feed.title, null);
+  public void changed(final int event, final Displayable previous, final Displayable next) {
+    if (event == EV_BEFORECHANGE) {
+      if (next == sFeedMenu) {
+        // Delete all options in the list
+        sFeedMenu.delete(0);
+        sFeedMenu.setTitle(currentFeed.title);
+        final int nr = currentFeed.nr;
+        final int nn = currentFeed.nn;
+        o[0] = new Integer(nr);
+        o[1] = new Integer(nn);
+        sFeedMenu.insert(0, BaseApp.format(NewsReader.MSG_NEWREAD, o), null);
+        if (nr > 0) {
+          sFeedMenu.setSelectedIndex(0, true);
         }
-        sAddFeedBrowse.addCommand(NewsReader.cADDFEEDLIST);
+        else {
+          sFeedMenu.setSelectedIndex(1, true);
+        }
+      }
+      else if (next == sFeedMenu) {
+        sFeedMenu.setTitle(currentFeed.title);
+      }
+      else if (next == sAddFeedBrowse) {
+        sAddFeedBrowse.deleteAll();
+        if (browseFeedList.size() == 0) {
+          sAddFeedBrowse.append(BaseApp.messages[NewsReader.MSG_FEEDFILEERROR], null);
+          sAddFeedBrowse.removeCommand(NewsReader.cADDFEEDLIST);
+        }
+        else {
+          RSSFeed feed;
+          for (int i = 0; i < browseFeedList.size(); i++) {
+            feed = (RSSFeed) browseFeedList.elementAt(i);
+            sAddFeedBrowse.append(feed.title, null);
+          }
+          sAddFeedBrowse.addCommand(NewsReader.cADDFEEDLIST);
+        }
       }
     }
   }

@@ -28,13 +28,12 @@ import net.eiroca.j2me.app.BaseApp;
 public class ShowNews extends Canvas {
 
   private int corr;
-  private final int height;
   private final int border = 5;
   private final int border1 = 2;
   private final int w1;
   private final int h1;
-  private final int wi;
-  private final int he;
+  private final int width;
+  private final int height;
   private boolean isBegin;
   private boolean isEnd;
   private final Vector vect;
@@ -42,18 +41,17 @@ public class ShowNews extends Canvas {
 
   public ShowNews(final NewsReader newMidlet, final RSSFeed feed, final RSSItem rssItem) {
     this.feed = feed;
-    height = getHeight();
     isBegin = true;
     isEnd = true;
     corr = 0;
-    wi = getWidth();
-    he = getHeight();
-    w1 = wi - 2 * border1;
-    h1 = he - 2 * border1;
+    width = getWidth();
+    height = getHeight();
+    w1 = width - 2 * border1;
+    h1 = height - 2 * border1;
     final String txt = "<tit>" + rssItem.title + "</tit>" + rssItem.description;
-    vect = RenderedWord.createWordList(txt, wi - 2 * border, he - 2 * border, feed.colText, feed.colTitl);
+    vect = RenderedWord.createWordList(txt, width - 2 * border, height - 2 * border, feed.colText, feed.colTitl);
     BaseApp.setup(this, BaseApp.cBACK, null);
-    if (!rssItem.link.equals("")) {
+    if (!BaseApp.isEmpty(rssItem.link)) {
       addCommand(NewsReader.cGO);
     }
   }
@@ -75,7 +73,7 @@ public class ShowNews extends Canvas {
   protected void paint(final Graphics g) {
     isEnd = true;
     g.setColor(feed.colBord);
-    g.fillRect(0, 0, wi, he);
+    g.fillRect(0, 0, width, height);
     g.setColor(feed.colBckG);
     g.fillRect(border1, border1, w1, h1);
     int j = 0;
