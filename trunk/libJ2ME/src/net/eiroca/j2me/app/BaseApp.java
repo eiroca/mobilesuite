@@ -55,6 +55,7 @@ import java.util.TimeZone;
 import java.util.Vector;
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
+import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
@@ -1283,23 +1284,18 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   public static final int AC_BACK = -101;
   public static final int AC_EXIT = -100;
 
+  public static final int EV_BEFORECHANGE = 1;
+  public static final int EV_AFTERCHANGE = 2;
+
   /**
    * Whenever go() or back() is called. This method will be invoked too. It lets
    * developer knows A Displayable is changed to B Displayble.
    *
    * @param previous, previous Displayable
    * @param next, next Displayable
-   * @param returnCode
    */
-  public void afterChange(final Displayable previous, final Displayable next) {
-    //
-  }
 
-  /**
-   * @param previous
-   * @param next
-   */
-  public void beforeChange(final Displayable previous, final Displayable next) {
+  public void changed(final int event, final Displayable previous, final Displayable next) {
     //
   }
 
@@ -1317,14 +1313,14 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
       final Displayable previous = (Displayable) BaseApp.displayableStack.pop();
       // get the instance of the previous one but remain it in the stack.
       final Displayable next = (Displayable) BaseApp.displayableStack.peek();
-      BaseApp.midlet.beforeChange(previous, next);
+      BaseApp.midlet.changed(BaseApp.EV_BEFORECHANGE, previous, next);
       if (alert == null) {
         BaseApp.setDisplay(next);
       }
       else {
         BaseApp.setDisplay(alert, next);
       }
-      BaseApp.midlet.afterChange(previous, next);
+      BaseApp.midlet.changed(BaseApp.EV_AFTERCHANGE, previous, next);
       return next;
     }
     return null;
@@ -1376,24 +1372,19 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
         BaseApp.displayableStack.push(next);
       }
     }
-    BaseApp.midlet.beforeChange(previous, next);
+    BaseApp.midlet.changed(BaseApp.EV_BEFORECHANGE, previous, next);
     if (alert == null) {
       BaseApp.setDisplay(next);
     }
     else {
       BaseApp.setDisplay(alert, next);
     }
-    BaseApp.midlet.afterChange(previous, next);
+    BaseApp.midlet.changed(BaseApp.EV_AFTERCHANGE, previous, next);
   }
 
   public static Command newCommand(final int label, final int commandType, final int priority, final int action) {
     final Command cmd = new Command(BaseApp.messages[label], commandType, priority);
     BaseApp.commands.put(cmd, new Integer(action));
-    return cmd;
-  }
-
-  public static Command newCommand(final int label, final int commandType, final int priority) {
-    final Command cmd = new Command(BaseApp.messages[label], commandType, priority);
     return cmd;
   }
 
@@ -1403,14 +1394,6 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
    */
   public static void registerCommand(final Command cmd, final int action) {
     BaseApp.commands.put(cmd, new Integer(action));
-  }
-
-  /**
-   * @param cmd
-   * @param next
-   */
-  public static void registerCommand(final Command cmd, final Displayable next) {
-    BaseApp.commands.put(cmd, next);
   }
 
   /**
@@ -1428,15 +1411,6 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
    */
   public static void registerListItem(final List list, final int index, final int action) {
     BaseApp.listItems.put(list + "#" + index, new Integer(action));
-  }
-
-  /**
-   * @param list
-   * @param index
-   * @param next
-   */
-  public static void registerListItem(final List list, final int index, final Displayable next) {
-    BaseApp.listItems.put(list + "#" + index, next);
   }
 
   /**
@@ -1464,22 +1438,19 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
       at = BaseApp.commands.get(cmd);
     }
     if (at != null) {
-      if (at instanceof Displayable) {
-        BaseApp.show(null, (Displayable) at, true);
-      }
-      else {
-        final int action = ((Integer) at).intValue();
-        boolean processed = handleAction(action, d, cmd);
-        if (!processed) {
-          switch (action) {
-            case AC_BACK: {
-              BaseApp.back(null);
-              break;
-            }
-            case AC_EXIT: {
-              BaseApp.midlet.notifyDestroyed();
-              break;
-            }
+      final int action = ((Integer) at).intValue();
+      boolean processed = handleAction(action, d, cmd);
+      if (!processed) {
+        switch (action) {
+          case AC_BACK: {
+            BaseApp.back(null);
+            processed = true;
+            break;
+          }
+          case AC_EXIT: {
+            BaseApp.midlet.notifyDestroyed();
+            processed = true;
+            break;
           }
         }
       }
@@ -1622,9 +1593,9 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   }
 
   /**
-   * Retrieves the system property, and returns it, or "unknown" if it is null.
+   * Retrieves the system property, and returns it, or def if it is null.
    *
-   * @param sName the name of the system property, eg. for System.getProperty
+   * @param sName the name of the system property, e.g. for System.getProperty
    * @return the contents of the property, never null
    */
   public static String readProperty(final String sName, final String def) {

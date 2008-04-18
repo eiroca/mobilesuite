@@ -52,6 +52,7 @@ public class GameThread extends Thread {
     catch (final InterruptedException e) {
       // Nothing to do
     }
+    screen = null;
   }
 
 }
