@@ -89,7 +89,7 @@ public class DataSender implements Observable, Observer {
     manager.notifyObservers(this);
   }
 
-  public void notify(Observable observable) {
+  public void changed(Observable observable) {
     manager.notifyObservers(observable);
   }
 
