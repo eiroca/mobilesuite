@@ -24,7 +24,7 @@ import test.AbstractProcessor;
 public class APIsInspector extends AbstractProcessor {
 
   public static final String CATEGORY = "APIs";
-  public static final String PREFIX = "api.";
+  public static final String PREFIX = "A.";
   public static final String PROP_DATA = "data_class.txt";
 
   String[] test;

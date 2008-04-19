@@ -23,7 +23,7 @@ import test.AbstractProcessor;
 
 public class MultimediaInspector extends AbstractProcessor {
 
-  public static final String PREFIX = "multimedia.";
+  public static final String PREFIX = "M.";
   public static final String CATEGORY = "Multimedia";
 
   public MultimediaInspector() {

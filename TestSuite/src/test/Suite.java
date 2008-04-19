@@ -145,7 +145,7 @@ public class Suite implements HTTPAttach {
   }
 
   public byte[] getData() {
-    StringBuffer buf = new StringBuffer(8192);
+    final StringBuffer buf = new StringBuffer(8192);
     for (int i = 0; i < tests.size(); i++) {
       final TestResult inf = (TestResult) tests.elementAt(i);
       final String v = (inf.val == null ? "" : inf.val.toString());

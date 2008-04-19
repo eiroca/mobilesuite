@@ -23,7 +23,7 @@ import test.AbstractProcessor;
 
 public class PropertyInspector extends AbstractProcessor {
 
-  public static final String PREFIX = "prop.";
+  public static final String PREFIX = "P.";
   public static final String CATEGORY = "Properties";
   public static final String PROP_DATA = "data_prop.txt";
 
