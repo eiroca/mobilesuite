@@ -23,7 +23,7 @@ import test.AbstractProcessor;
 
 public class SystemInspector extends AbstractProcessor {
 
-  public static final String PREFIX = "system.";
+  public static final String PREFIX = "S.";
   public static final String CATEGORY = "System";
 
   public SystemInspector() {
@@ -42,10 +42,10 @@ public class SystemInspector extends AbstractProcessor {
       timeZonesBuffer.append(timeZoneIDs[i]);
     }
     Runtime.getRuntime().gc();
-    addResult("mem.total", Long.toString(Runtime.getRuntime().totalMemory()));
-    addResult("mem.free", Long.toString(Runtime.getRuntime().freeMemory()));
-    addResult("timezone", tz.getID());
-    addResult("timezone.available", timeZonesBuffer.toString());
+    addResult("mem.T", Long.toString(Runtime.getRuntime().totalMemory()));
+    addResult("mem.F", Long.toString(Runtime.getRuntime().freeMemory()));
+    addResult("TZ", tz.getID());
+    addResult("TZ.AV", timeZonesBuffer.toString());
   }
 
 }

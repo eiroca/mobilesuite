@@ -26,7 +26,7 @@ import test.AbstractProcessor;
 
 public class Graphic3DInspector extends AbstractProcessor {
 
-  public static final String PREFIX = "graphic3D.";
+  public static final String PREFIX = "G.";
   public static final String CATEGORY = "Graphic3D";
 
   public Graphic3DInspector() {
@@ -41,7 +41,7 @@ public class Graphic3DInspector extends AbstractProcessor {
       for (final Enumeration e = props.keys(); e.hasMoreElements();) {
         key = e.nextElement();
         val = props.get(key);
-        addResult("Graphics3D." + key, val);
+        addResult("3D." + key, val);
       }
 
     }

@@ -6,12 +6,14 @@ import net.eiroca.j2me.observable.Observer;
 import net.eiroca.j2me.observable.ObserverManager;
 import net.eiroca.j2me.util.HTTPClient;
 
-public class DataSender implements Observable, Observer {
+public class DataSender implements Observable, Observer, Runnable {
 
-  private static final int SIZE = 800;
   Suite suite;
   String version;
-  int status;
+  String status;
+  String url;
+  int size = 0;
+
   private final ObserverManager manager = new ObserverManager();
 
   public DataSender(final Suite suite, final String version) {
@@ -19,53 +21,52 @@ public class DataSender implements Observable, Observer {
     this.version = version;
   }
 
-  public void submit(final String url) {
-    HTTPClient client = new HTTPClient();
+  public void run() {
+    final HTTPClient client = new HTTPClient();
     client.addObserver(this);
-    Vector tests = suite.getTests();
-    if (SIZE > 0) {
+    final Vector tests = suite.getTests();
+    if (size > 0) {
       client.mode = HTTPClient.MODE_POST;
       int part = 0;
       int i = 0;
       int siz = 0;
-      setStatus(part);
       while (i < tests.size()) {
         final TestResult inf = (TestResult) tests.elementAt(i);
         final String v = (inf.val == null ? "" : inf.val.toString());
         final String k = inf.key.toString();
         client.addParameter(k, v);
         siz = siz + k.length() + v.length();
-        System.out.println("K=" + k + " V=" + v + " S=" + siz);
-        if (siz > SIZE) {
+        if (siz > size) {
           client.addParameter("TestSuite", version);
           client.addParameter("PART", Integer.toString(part));
-          client.submit(url);
-          part++;
-          setStatus(part);
+          client.submit(url, false);
           siz = 0;
-          try {
-            Thread.sleep(3000);
+          if (client.getStatus() >= 400) {
+            break;
           }
-          catch (InterruptedException e) {
-          }
-          client = new HTTPClient();
-          client.mode = HTTPClient.MODE_POST;
+          part++;
+          client.clear();
         }
         i++;
       }
       if (siz > 0) {
         client.addParameter("TestSuite", version);
         client.addParameter("PART", Integer.toString(part));
-        client.submit(url);
-        setStatus(part);
+        client.submit(url, false);
       }
     }
     else {
       client.mode = HTTPClient.MODE_MULTIPART;
       client.addParameter("TestSuite", version);
       client.addAttach(suite);
-      client.submit(url);
+      client.submit(url, false);
     }
+  }
+
+  public void submit(final String url, final int size) {
+    this.url = url;
+    this.size = size;
+    new Thread(this).start();
   }
 
   public ObserverManager getObserverManager() {
@@ -80,17 +81,24 @@ public class DataSender implements Observable, Observer {
     manager.removeObserver(observer);
   }
 
-  public int getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(final int status) {
+  public void setStatus(final String status) {
     this.status = status;
     manager.notifyObservers(this);
   }
 
-  public void changed(Observable observable) {
-    manager.notifyObservers(observable);
+  public void changed(final Observable observable) {
+    final HTTPClient client = (HTTPClient) observable;
+    final int stCod = client.getStatus();
+    if (stCod == 999) {
+      setStatus("ERR=" + client.getResult());
+    }
+    else if (stCod >= 400) {
+      setStatus("HTTP=" + client.getStatus());
+    }
   }
 
 }

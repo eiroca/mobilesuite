@@ -23,7 +23,7 @@ import test.AbstractProcessor;
 
 public class PrivacyPropertyInspector extends AbstractProcessor {
 
-  public static final String PREFIX = "prop.x.";
+  public static final String PREFIX = "X.";
   public static final String CATEGORY = "Privacy Properties";
   public static final String PROP_DATA = "data_ppp.txt";
 

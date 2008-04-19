@@ -35,7 +35,6 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.observable.Observable;
 import net.eiroca.j2me.observable.Observer;
-import net.eiroca.j2me.util.HTTPClient;
 import test.DataSender;
 import test.Suite;
 import test.benchmark.MathSuite;
@@ -82,7 +81,6 @@ public final class TestSuite extends Application implements Observer {
 
   private Command cPREV;
   private List fMenu;
-  private Form fSpec;
 
   /** The full path name to the level of class hierarchy being shown. */
   private String cbPackagePath;
@@ -104,9 +102,10 @@ public final class TestSuite extends Application implements Observer {
   private List fMenuInspector;
   private List fMenuBenchmark;
 
-  public boolean handleAction(int action, Displayable d, Command cmd) {
+  public boolean handleAction(final int action, final Displayable d, final Command cmd) {
     boolean processed = true;
     int i;
+    Form fSpec;
     switch (action) {
       case AC_OK:
         processed = false;
@@ -114,14 +113,15 @@ public final class TestSuite extends Application implements Observer {
           processed = true;
           final DataSender ds = new DataSender(suite, ver);
           ds.addObserver(this);
-          ds.submit(url);
+          ds.submit(url, 500);
           BaseApp.back(null);
         }
+        break;
       case AC_SHOWINSPECTOR:
         if (fMenuInspector == null) {
           fMenuInspector = new List("Inspectors", Choice.IMPLICIT, INSPECTOR_CAT, null);
           BaseApp.setup(fMenuInspector, BaseApp.cBACK, null);
-          registerList(fMenuInspector, AC_DOINSPECTOR);
+          BaseApp.registerList(fMenuInspector, TestSuite.AC_DOINSPECTOR);
         }
         BaseApp.show(null, fMenuInspector, true);
         break;
@@ -129,7 +129,7 @@ public final class TestSuite extends Application implements Observer {
         if (fMenuBenchmark == null) {
           fMenuBenchmark = new List("Benchmark", Choice.IMPLICIT, BENCHMARK_CAT, null);
           BaseApp.setup(fMenuBenchmark, BaseApp.cBACK, null);
-          registerList(fMenuBenchmark, AC_DOBENCHMARK);
+          BaseApp.registerList(fMenuBenchmark, TestSuite.AC_DOBENCHMARK);
         }
         BaseApp.show(null, fMenuBenchmark, true);
         break;
@@ -142,7 +142,7 @@ public final class TestSuite extends Application implements Observer {
           cbPackagePath = "";
           loadClasses();
           BaseApp.setup(fClassBrowser, cPREV, BaseApp.cBACK);
-          registerList(fClassBrowser, AC_OPENCLASS);
+          BaseApp.registerList(fClassBrowser, TestSuite.AC_OPENCLASS);
         }
         BaseApp.show(null, fClassBrowser, true);
         break;
@@ -166,18 +166,18 @@ public final class TestSuite extends Application implements Observer {
         BaseApp.show(null, fAbout, true);
         break;
       case AC_DOINSPECTOR:
-        fSpec.deleteAll();
         i = fMenuInspector.getSelectedIndex();
-        fSpec.setTitle("Inspector: " + INSPECTOR_CAT[i]);
+        fSpec = new Form("Inspector: " + INSPECTOR_CAT[i]);
+        BaseApp.setup(fSpec, BaseApp.cBACK, null);
         if (suite != null) {
           suite.export(fSpec, INSPECTOR_CAT[i]);
         }
         BaseApp.show(null, fSpec, true);
+        break;
       case AC_DOBENCHMARK:
-        processed = true;
-        fSpec.deleteAll();
         i = fMenuBenchmark.getSelectedIndex();
-        fSpec.setTitle("Benchmark: " + BENCHMARK_CAT[i]);
+        fSpec = new Form("Benchmark: " + BENCHMARK_CAT[i]);
+        BaseApp.setup(fSpec, BaseApp.cBACK, null);
         if (suite != null) {
           suite.benchmark(fSpec, BENCHMARK_CAT[i]);
         }
@@ -240,19 +240,17 @@ public final class TestSuite extends Application implements Observer {
           "Inspectors", "Benchmark", "Class browser", "Keys", "Post data", "About"
       };
       fMenu = new List("Main Menu", Choice.IMPLICIT, menuDesc, icons);
-      BaseApp.cOK = BaseApp.newCommand(TestSuite.MSG_OK, Command.OK, 30, AC_OK);
+      BaseApp.cOK = BaseApp.newCommand(TestSuite.MSG_OK, Command.OK, 30, TestSuite.AC_OK);
       BaseApp.cBACK = BaseApp.newCommand(TestSuite.MSG_BACK, Command.BACK, 20, BaseApp.AC_BACK);
       BaseApp.cEXIT = BaseApp.newCommand(TestSuite.MSG_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
-      cPREV = BaseApp.newCommand(TestSuite.MSG_PREV, Command.SCREEN, 1, AC_PREV);
-      BaseApp.registerListItem(fMenu, 0, AC_SHOWINSPECTOR);
-      BaseApp.registerListItem(fMenu, 1, AC_SHOWBENCHMARK);
-      BaseApp.registerListItem(fMenu, 2, AC_SHOWCLASSBROWSER);
-      BaseApp.registerListItem(fMenu, 3, AC_SHOWKEYSTATE);
-      BaseApp.registerListItem(fMenu, 4, AC_SHOWPOSTDATA);
-      BaseApp.registerListItem(fMenu, 5, AC_DOABOUT);
+      cPREV = BaseApp.newCommand(TestSuite.MSG_PREV, Command.SCREEN, 1, TestSuite.AC_PREV);
+      BaseApp.registerListItem(fMenu, 0, TestSuite.AC_SHOWINSPECTOR);
+      BaseApp.registerListItem(fMenu, 1, TestSuite.AC_SHOWBENCHMARK);
+      BaseApp.registerListItem(fMenu, 2, TestSuite.AC_SHOWCLASSBROWSER);
+      BaseApp.registerListItem(fMenu, 3, TestSuite.AC_SHOWKEYSTATE);
+      BaseApp.registerListItem(fMenu, 4, TestSuite.AC_SHOWPOSTDATA);
+      BaseApp.registerListItem(fMenu, 5, TestSuite.AC_DOABOUT);
       BaseApp.setup(fMenu, BaseApp.cEXIT, null);
-      fSpec = new Form("");
-      BaseApp.setup(fSpec, BaseApp.cBACK, null);
     }
     catch (final Exception e) {
       fMenu.setTitle(e.getMessage());
@@ -281,14 +279,9 @@ public final class TestSuite extends Application implements Observer {
   }
 
   public void changed(final Observable observable) {
-    if (observable instanceof DataSender) {
-      final DataSender ds = (DataSender) observable;
-      fMenu.set(4, menuDesc[4] + " (" + ds.getStatus() + ")", ClassBrowserHelper.imPlus);
-    }
-    else if (observable instanceof HTTPClient) {
-      final HTTPClient ds = (HTTPClient) observable;
-      fMenu.set(4, menuDesc[4] + " (" + ds.getStatus() + ")", ClassBrowserHelper.imPlus);
-    }
+    final DataSender ds = (DataSender) observable;
+    System.out.println(" " + ds.getStatus());
+    fMenu.set(4, menuDesc[4] + " (" + ds.getStatus() + ")", ClassBrowserHelper.imPlus);
   }
 
 }

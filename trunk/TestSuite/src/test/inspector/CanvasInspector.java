@@ -27,7 +27,7 @@ import test.AbstractProcessor;
 
 public class CanvasInspector extends AbstractProcessor {
 
-  public static final String PREFIX = "canvas.";
+  public static final String PREFIX = "C.";
   public static final String CATEGORY = "Canvas";
 
   private Canvas canvas;
