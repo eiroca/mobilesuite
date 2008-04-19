@@ -123,14 +123,14 @@ public class HTTPClient implements Observable, Runnable {
     return connection;
   }
 
-  private void sendPostData(final HttpConnection connection) throws IOException {
+  private void sendPost(final HttpConnection connection) throws IOException {
     final String postData = getPostData();
     final OutputStream dos = connection.openOutputStream();
     dos.write(postData.getBytes());
     dos.close();
   }
 
-  public void sendData(final HttpConnection connection) throws IOException {
+  public void sendMultipart(final HttpConnection connection) throws IOException {
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     StringBuffer buf;
     if (params.size() > 0) {
@@ -164,12 +164,11 @@ public class HTTPClient implements Observable, Runnable {
     out.write(buf.toString().getBytes());
     final OutputStream dos = connection.openOutputStream();
     final byte[] b = out.toByteArray();
-    System.out.println(new String(b));
     dos.write(b);
     dos.close();
   }
 
-  public void sendDataXXX(final HttpConnection connection) throws IOException {
+  public void sendGet(final HttpConnection connection) throws IOException {
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     for (int i = 0; i < attach.size(); i++) {
       final HTTPAttach sendable = (HTTPAttach) attach.elementAt(i);
@@ -199,26 +198,26 @@ public class HTTPClient implements Observable, Runnable {
     return buf.toString();
   }
 
-  public void run() {
+  public void execute() {
     result = null;
     setStatus(0);
     try {
       final HttpConnection httpConn = getConnection();
       switch (mode) {
         case MODE_MULTIPART:
-          sendData(httpConn);
+          sendMultipart(httpConn);
           break;
         case MODE_POST:
-          sendPostData(httpConn);
+          sendPost(httpConn);
           break;
         case MODE_GET:
-          sendDataXXX(httpConn);
+          sendGet(httpConn);
           break;
       }
       final int responseCode = httpConn.getResponseCode();
       result = readResult(httpConn);
       setStatus(responseCode);
-      System.out.println(result);
+      httpConn.close();
     }
     catch (final IOException e) {
       result = e.getMessage();
@@ -226,11 +225,20 @@ public class HTTPClient implements Observable, Runnable {
     }
   }
 
-  public void submit(final String url) {
+  public void submit(final String url, final boolean async) {
     this.url = url;
     final int first = url.indexOf('/');
     host = url.substring(first + 2, url.indexOf('/', first + 2));
-    new Thread(this).start();
+    if (async) {
+      new Thread(this).start();
+    }
+    else {
+      execute();
+    }
+  }
+
+  public void run() {
+    execute();
   }
 
   public int getStatus() {
@@ -252,6 +260,10 @@ public class HTTPClient implements Observable, Runnable {
 
   public void removeObserver(final Observer observer) {
     manager.removeObserver(observer);
+  }
+
+  public String getResult() {
+    return result;
   }
 
 }
