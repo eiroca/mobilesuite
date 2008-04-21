@@ -42,6 +42,7 @@ import test.benchmark.PrecisionSuite;
 import test.inspector.APIsInspector;
 import test.inspector.CanvasInspector;
 import test.inspector.Graphic3DInspector;
+import test.inspector.LocalDeviceInspector;
 import test.inspector.MultimediaInspector;
 import test.inspector.PrivacyPropertyInspector;
 import test.inspector.PropertyInspector;
@@ -72,7 +73,7 @@ public final class TestSuite extends Application implements Observer {
   static final int COUNT = 15;
 
   private final String[] INSPECTOR_CAT = new String[] {
-      PropertyInspector.CATEGORY, APIsInspector.CATEGORY, CanvasInspector.CATEGORY, SystemInspector.CATEGORY, MultimediaInspector.CATEGORY, Graphic3DInspector.CATEGORY,
+      PropertyInspector.CATEGORY, APIsInspector.CATEGORY, CanvasInspector.CATEGORY, SystemInspector.CATEGORY, MultimediaInspector.CATEGORY, LocalDeviceInspector.CATEGORY, Graphic3DInspector.CATEGORY,
       PrivacyPropertyInspector.CATEGORY
   };
   private final String[] BENCHMARK_CAT = new String[] {
@@ -88,7 +89,6 @@ public final class TestSuite extends Application implements Observer {
   private String[] classes;
 
   private String url;
-  private String ver;
   private String[] menuDesc;
 
   public TestSuite() {
@@ -111,9 +111,9 @@ public final class TestSuite extends Application implements Observer {
         processed = false;
         if (d == fPostData) {
           processed = true;
-          final DataSender ds = new DataSender(suite, ver);
+          final DataSender ds = new DataSender(suite);
           ds.addObserver(this);
-          ds.submit(url, 500);
+          ds.submit(url, 400);
           BaseApp.back(null);
         }
         break;
@@ -225,7 +225,6 @@ public final class TestSuite extends Application implements Observer {
     super.init();
     try {
       url = readAppProperty("POSTURL", "http://www.eiroca.net/services/testsuite/store.php");
-      ver = readAppProperty("MIDlet-Version", "1.0.0");
       BaseApp.messages = BaseApp.readStrings("messages.txt");
       final Image[] icons = new Image[6];
       icons[0] = BaseApp.createImage("Specs.png");

@@ -26,7 +26,10 @@ package test.benchmark;
 
 public class BenchmarkDIV extends MathBenchmarkAbstract {
 
-  public static final String RESID = "div.";
+  public static final String RES_ID1 = "D.a";
+  public static final String RES_ID2 = "D.l";
+  public static final String RES_ID3 = "D.i";
+  public static final String RES_ID4 = "D.s";
 
   public BenchmarkDIV(final SuiteAbstract suite) {
     super(suite);
@@ -51,7 +54,7 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
     }
     after = System.currentTimeMillis();
     elapsed = after - before;
-    suite.addResult(BenchmarkDIV.RESID + "array", Long.toString(elapsed));
+    suite.addResult(BenchmarkDIV.RES_ID1, Long.toString(elapsed));
     // Local DIV
     int localA;
     int localB;
@@ -72,7 +75,7 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
       result = 1;
     }
     elapsed = after - before;
-    suite.addResult(BenchmarkDIV.RESID + "locals", Long.toString(elapsed));
+    suite.addResult(BenchmarkDIV.RES_ID2, Long.toString(elapsed));
     // Instance DIV
     before = System.currentTimeMillis();
     for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS; i++) {
@@ -83,7 +86,7 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
       result = 1;
     }
     elapsed = after - before;
-    suite.addResult(BenchmarkDIV.RESID + "instance", Long.toString(elapsed));
+    suite.addResult(BenchmarkDIV.RES_ID3, Long.toString(elapsed));
     // Static DIV
     before = System.currentTimeMillis();
     for (int i = 0; i < MathBenchmarkAbstract.NUMBER_OF_OPS; i++) {
@@ -94,7 +97,7 @@ public class BenchmarkDIV extends MathBenchmarkAbstract {
       result = 1;
     }
     elapsed = after - before;
-    suite.addResult(BenchmarkDIV.RESID + "static", Long.toString(elapsed));
+    suite.addResult(BenchmarkDIV.RES_ID4, Long.toString(elapsed));
   }
 
 }

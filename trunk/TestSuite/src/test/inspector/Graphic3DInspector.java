@@ -41,7 +41,7 @@ public class Graphic3DInspector extends AbstractProcessor {
       for (final Enumeration e = props.keys(); e.hasMoreElements();) {
         key = e.nextElement();
         val = props.get(key);
-        addResult("3D." + key, val);
+        addResult("3." + key, val);
       }
 
     }

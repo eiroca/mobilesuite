@@ -18,6 +18,8 @@
  */
 package test.inspector;
 
+import java.util.Enumeration;
+import java.util.Hashtable;
 import net.eiroca.j2me.app.BaseApp;
 import test.AbstractProcessor;
 
@@ -27,21 +29,28 @@ public class PropertyInspector extends AbstractProcessor {
   public static final String CATEGORY = "Properties";
   public static final String PROP_DATA = "data_prop.txt";
 
-  String[] test;
+  Hashtable test;
 
   public PropertyInspector() {
     super(PropertyInspector.CATEGORY, PropertyInspector.PREFIX);
-    test = BaseApp.readStrings(PropertyInspector.PROP_DATA);
+    test = BaseApp.readMap(PropertyInspector.PROP_DATA, '=');
   }
 
-  final private void testProp(final String prop) {
-    addResult(prop, BaseApp.readProperty(prop, null));
+  final private void testProp(final String name, final String prop) {
+    addResult(name, BaseApp.readProperty(prop, null));
   }
 
   public void execute() {
     if (test != null) {
-      for (int i = 0; i < test.length; i++) {
-        testProp(test[i]);
+      for (final Enumeration e = test.keys(); e.hasMoreElements();) {
+        final String k = (String) e.nextElement();
+        String v = (String) test.get(k);
+        if (v == null) {
+          v = k;
+        }
+        if (k != null) {
+          testProp(v, k);
+        }
       }
     }
   }

@@ -18,6 +18,8 @@
  */
 package test.inspector;
 
+import java.util.Enumeration;
+import java.util.Hashtable;
 import net.eiroca.j2me.app.BaseApp;
 import test.AbstractProcessor;
 
@@ -27,21 +29,28 @@ public class APIsInspector extends AbstractProcessor {
   public static final String PREFIX = "A.";
   public static final String PROP_DATA = "data_class.txt";
 
-  String[] test;
+  Hashtable test;
 
   public APIsInspector() {
     super(APIsInspector.CATEGORY, APIsInspector.PREFIX);
-    test = BaseApp.readStrings(APIsInspector.PROP_DATA);
+    test = BaseApp.readMap(APIsInspector.PROP_DATA, '=');
   }
 
-  final private void testClass(final String clazz) {
-    addResult(clazz, BaseApp.isClass(clazz) ? Boolean.TRUE : Boolean.FALSE);
+  final private void testClass(final String name, final String clazz) {
+    addResult(name, BaseApp.isClass(clazz) ? Boolean.TRUE : Boolean.FALSE);
   }
 
   public void execute() {
     if (test != null) {
-      for (int i = 0; i < test.length; i++) {
-        testClass(test[i]);
+      for (final Enumeration e = test.keys(); e.hasMoreElements();) {
+        final String k = (String) e.nextElement();
+        String v = (String) test.get(k);
+        if (v == null) {
+          v = k;
+        }
+        if (k != null) {
+          testClass(v, k);
+        }
       }
     }
   }

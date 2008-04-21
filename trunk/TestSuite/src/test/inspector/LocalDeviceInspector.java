@@ -18,24 +18,26 @@
  */
 package test.inspector;
 
+import java.util.Enumeration;
+import java.util.Hashtable;
 import javax.bluetooth.LocalDevice;
 import net.eiroca.j2me.app.BaseApp;
 import test.AbstractProcessor;
 
 public class LocalDeviceInspector extends AbstractProcessor {
 
-  public static final String PREFIX = null;
-  public static final String CATEGORY = "LocalDevice";
+  public static final String PREFIX = "L.";
+  public static final String CATEGORY = "Bluetooth";
   public static final String PROP_DATA = "data_bluetooth.txt";
 
-  String[] test;
+  Hashtable test;
 
   public LocalDeviceInspector() {
     super(LocalDeviceInspector.CATEGORY, LocalDeviceInspector.PREFIX);
-    test = BaseApp.readStrings(LocalDeviceInspector.PROP_DATA);
+    test = BaseApp.readMap(LocalDeviceInspector.PROP_DATA, '=');
   }
 
-  final private void testProp(final String prop) {
+  final private void testProp(final String name, final String prop) {
     String val;
     try {
       val = LocalDevice.getProperty(prop);
@@ -43,14 +45,19 @@ public class LocalDeviceInspector extends AbstractProcessor {
     catch (final Exception e) {
       val = null;
     }
-    addResult(prop, val);
+    addResult(name, val);
   }
 
   public void execute() {
     if (BaseApp.isClass("javax.bluetooth.LocalDevice")) {
-      if (test != null) {
-        for (int i = 0; i < test.length; i++) {
-          testProp(test[i]);
+      for (final Enumeration e = test.keys(); e.hasMoreElements();) {
+        final String k = (String) e.nextElement();
+        String v = (String) test.get(k);
+        if (v == null) {
+          v = k;
+        }
+        if (k != null) {
+          testProp(v, k);
         }
       }
     }

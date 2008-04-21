@@ -20,7 +20,7 @@ package test.benchmark;
 
 public class PrecisionSuite extends SuiteAbstract {
 
-  public static final String PREFIX = "benchmark.precision.";
+  public static final String PREFIX = "B.P.";
   public static final String CATEGORY = "Precision";
 
   public PrecisionSuite() {

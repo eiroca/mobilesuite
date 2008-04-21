@@ -20,7 +20,7 @@ package test.benchmark;
 
 public class MathSuite extends SuiteAbstract {
 
-  public static final String PREFIX = "benchmark.math.";
+  public static final String PREFIX = "B.M.";
 
   public static final String CATEGORY = "Math";
 

@@ -18,10 +18,10 @@
  */
 package test;
 
+import java.util.Hashtable;
 import java.util.Vector;
 import javax.microedition.lcdui.Form;
 import net.eiroca.j2me.app.BaseApp;
-import net.eiroca.j2me.app.Pair;
 import net.eiroca.j2me.util.HTTPAttach;
 import test.benchmark.MathSuite;
 import test.benchmark.PrecisionSuite;
@@ -30,6 +30,7 @@ import test.inspector.APIsInspector;
 import test.inspector.CanvasInspector;
 import test.inspector.Graphic3DInspector;
 import test.inspector.LocalDeviceInspector;
+import test.inspector.MIDletInspector;
 import test.inspector.MultimediaInspector;
 import test.inspector.PrivacyPropertyInspector;
 import test.inspector.PropertyInspector;
@@ -42,21 +43,22 @@ public class Suite implements HTTPAttach {
 
   private boolean finished = false;
   private final Vector tests = new Vector();
-  private Pair[] mapping = null;
+  private Hashtable mapping = null;
   private final AbstractProcessor[] inspectors;
   private final SuiteAbstract[] benchmarks;
 
   public Suite() {
-    inspectors = new AbstractProcessor[8];
+    inspectors = new AbstractProcessor[9];
     benchmarks = new SuiteAbstract[2];
-    inspectors[0] = new CanvasInspector();
-    inspectors[1] = new PropertyInspector();
-    inspectors[2] = new APIsInspector();
-    inspectors[3] = new SystemInspector();
-    inspectors[4] = new MultimediaInspector();
-    inspectors[5] = new PrivacyPropertyInspector();
-    inspectors[6] = new LocalDeviceInspector();
-    inspectors[7] = new Graphic3DInspector();
+    inspectors[0] = new MIDletInspector();
+    inspectors[1] = new CanvasInspector();
+    inspectors[2] = new PropertyInspector();
+    inspectors[3] = new APIsInspector();
+    inspectors[4] = new SystemInspector();
+    inspectors[5] = new MultimediaInspector();
+    inspectors[6] = new PrivacyPropertyInspector();
+    inspectors[7] = new LocalDeviceInspector();
+    inspectors[8] = new Graphic3DInspector();
     benchmarks[0] = new PrecisionSuite();
     benchmarks[1] = new MathSuite();
     for (int i = 0; i < inspectors.length; i++) {
@@ -93,24 +95,22 @@ public class Suite implements HTTPAttach {
 
   public String getDesc(final String key) {
     if (mapping == null) {
-      mapping = BaseApp.readPairs(Suite.MAPPING, '=');
+      mapping = BaseApp.readMap(Suite.MAPPING, '=');
       if (mapping == null) {
-        mapping = new Pair[0];
+        mapping = new Hashtable();
       }
     }
     String res = key;
     if (key != null) {
-      for (int i = 0; i < mapping.length; i++) {
-        if (key.equals(mapping[i].name)) {
-          res = mapping[i].value.toString();
-          break;
-        }
+      res = (String) mapping.get(key);
+      if (res == null) {
+        res = key;
       }
     }
     return res;
   }
 
-  public Vector getTests(){
+  public Vector getTests() {
     return tests;
   }
 
@@ -126,7 +126,7 @@ public class Suite implements HTTPAttach {
     }
     export(list, category);
     if (!finished) {
-      list.append("... still working ..."+BaseApp.NL);
+      list.append("... still working ..." + BaseApp.NL);
     }
   }
 
