@@ -30,6 +30,34 @@ public class CanvasInspector extends AbstractProcessor {
   public static final String PREFIX = "C.";
   public static final String CATEGORY = "Canvas";
 
+  public static final String RES_ID01 = "S.W";
+  public static final String RES_ID02 = "S.H";
+  public static final String RES_ID03 = "S.FW";
+  public static final String RES_ID04 = "S.FH";
+  public static final String RES_ID05 = "S.B";
+  public static final String RES_ID06 = "S.CD";
+  public static final String RES_ID07 = "S.IC";
+  public static final String RES_ID08 = "S.AL";
+  public static final String RES_ID09 = "F.D.H";
+  public static final String RES_ID10 = "F.S.H";
+  public static final String RES_ID11 = "F.S.B.H";
+  public static final String RES_ID12 = "F.M.H";
+  public static final String RES_ID13 = "F.M.B.H";
+  public static final String RES_ID14 = "F.L.H";
+  public static final String RES_ID15 = "F.L.B.H";
+  public static final String RES_ID16 = "H.P";
+  public static final String RES_ID17 = "H.M";
+  public static final String RES_ID18 = "H.H";
+  public static final String RES_ID19 = "K.GAME_A";
+  public static final String RES_ID20 = "K.GAME_B";
+  public static final String RES_ID21 = "K.GAME_C";
+  public static final String RES_ID22 = "K.GAME_D";
+  public static final String RES_ID23 = "K.UP";
+  public static final String RES_ID24 = "K.DOWN";
+  public static final String RES_ID25 = "K.FIRE";
+  public static final String RES_ID26 = "K.LEFT";
+  public static final String RES_ID27 = "K.RIGHT";
+
   private Canvas canvas;
   private Canvas canvasFull;
 
@@ -73,33 +101,33 @@ public class CanvasInspector extends AbstractProcessor {
     }
     BaseApp.setDisplay(cur);
     final Display d = BaseApp.display;
-    testInt("screen.width", canvas.getWidth());
-    testInt("screen.height", canvas.getHeight());
-    testInt("screen.fullwidth", canvasFull.getWidth());
-    testInt("screen.fullheight", canvasFull.getHeight());
-    testBool("screen.buffered", canvas.isDoubleBuffered());
-    testInt("screen.colordepth", d.numColors());
-    testBool("screen.iscolor", d.isColor());
-    testInt("screen.alphalevels", d.numAlphaLevels());
-    testFont("font.default.height", Font.getDefaultFont());
-    testFont("font.small.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL));
-    testFont("font.small.bold.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL));
-    testFont("font.medium.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_MEDIUM));
-    testFont("font.medium.bold.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_MEDIUM));
-    testFont("font.large.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_LARGE));
-    testFont("font.large.bold.height", Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_LARGE));
-    testBool("has.pointer", canvas.hasPointerEvents());
-    testBool("has.motion", canvas.hasPointerMotionEvents());
-    testBool("has.key-held", canvas.hasRepeatEvents());
-    testKey("key.GAME_A", Canvas.GAME_A);
-    testKey("key.GAME_B", Canvas.GAME_B);
-    testKey("key.GAME_C", Canvas.GAME_C);
-    testKey("key.GAME_D", Canvas.GAME_D);
-    testKey("key.UP", Canvas.UP);
-    testKey("key.DOWN", Canvas.DOWN);
-    testKey("key.FIRE", Canvas.FIRE);
-    testKey("key.LEFT", Canvas.LEFT);
-    testKey("key.RIGHT", Canvas.RIGHT);
+    testInt(CanvasInspector.RES_ID01, canvas.getWidth());
+    testInt(CanvasInspector.RES_ID02, canvas.getHeight());
+    testInt(CanvasInspector.RES_ID03, canvasFull.getWidth());
+    testInt(CanvasInspector.RES_ID04, canvasFull.getHeight());
+    testBool(CanvasInspector.RES_ID05, canvas.isDoubleBuffered());
+    testInt(CanvasInspector.RES_ID06, d.numColors());
+    testBool(CanvasInspector.RES_ID07, d.isColor());
+    testInt(CanvasInspector.RES_ID08, d.numAlphaLevels());
+    testFont(CanvasInspector.RES_ID09, Font.getDefaultFont());
+    testFont(CanvasInspector.RES_ID10, Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL));
+    testFont(CanvasInspector.RES_ID11, Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_SMALL));
+    testFont(CanvasInspector.RES_ID12, Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_MEDIUM));
+    testFont(CanvasInspector.RES_ID13, Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_MEDIUM));
+    testFont(CanvasInspector.RES_ID14, Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_LARGE));
+    testFont(CanvasInspector.RES_ID15, Font.getFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_LARGE));
+    testBool(CanvasInspector.RES_ID16, canvas.hasPointerEvents());
+    testBool(CanvasInspector.RES_ID17, canvas.hasPointerMotionEvents());
+    testBool(CanvasInspector.RES_ID18, canvas.hasRepeatEvents());
+    testKey(CanvasInspector.RES_ID19, Canvas.GAME_A);
+    testKey(CanvasInspector.RES_ID20, Canvas.GAME_B);
+    testKey(CanvasInspector.RES_ID21, Canvas.GAME_C);
+    testKey(CanvasInspector.RES_ID22, Canvas.GAME_D);
+    testKey(CanvasInspector.RES_ID23, Canvas.UP);
+    testKey(CanvasInspector.RES_ID24, Canvas.DOWN);
+    testKey(CanvasInspector.RES_ID25, Canvas.FIRE);
+    testKey(CanvasInspector.RES_ID26, Canvas.LEFT);
+    testKey(CanvasInspector.RES_ID27, Canvas.RIGHT);
   }
 
 }

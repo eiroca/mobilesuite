@@ -18,6 +18,8 @@
  */
 package test.inspector;
 
+import java.util.Enumeration;
+import java.util.Hashtable;
 import net.eiroca.j2me.app.BaseApp;
 import test.AbstractProcessor;
 
@@ -27,22 +29,29 @@ public class PrivacyPropertyInspector extends AbstractProcessor {
   public static final String CATEGORY = "Privacy Properties";
   public static final String PROP_DATA = "data_ppp.txt";
 
-  String[] test;
+  Hashtable test;
 
   public PrivacyPropertyInspector() {
     super(PrivacyPropertyInspector.CATEGORY, PrivacyPropertyInspector.PREFIX);
-    test = BaseApp.readStrings(PrivacyPropertyInspector.PROP_DATA);
+    test = BaseApp.readMap(PrivacyPropertyInspector.PROP_DATA, '=');
   }
 
-  final private void testProp(final String prop) {
+  final private void testProp(final String name, final String prop) {
     final Object val = BaseApp.readProperty(prop, null);
-    addResult(prop, (val != null ? Boolean.TRUE : null));
+    addResult(name, (val != null ? Boolean.TRUE : null));
   }
 
   public void execute() {
     if (test != null) {
-      for (int i = 0; i < test.length; i++) {
-        testProp(test[i]);
+      for (final Enumeration e = test.keys(); e.hasMoreElements();) {
+        final String k = (String) e.nextElement();
+        String v = (String) test.get(k);
+        if (v == null) {
+          v = k;
+        }
+        if (k != null) {
+          testProp(v, k);
+        }
       }
     }
   }

@@ -9,20 +9,19 @@ import net.eiroca.j2me.util.HTTPClient;
 public class DataSender implements Observable, Observer, Runnable {
 
   Suite suite;
-  String version;
   String status;
   String url;
   int size = 0;
 
   private final ObserverManager manager = new ObserverManager();
 
-  public DataSender(final Suite suite, final String version) {
+  public DataSender(final Suite suite) {
     this.suite = suite;
-    this.version = version;
   }
 
   public void run() {
     final HTTPClient client = new HTTPClient();
+    client.userAgent = "TestSuite DataSender";
     client.addObserver(this);
     final Vector tests = suite.getTests();
     if (size > 0) {
@@ -37,9 +36,8 @@ public class DataSender implements Observable, Observer, Runnable {
         client.addParameter(k, v);
         siz = siz + k.length() + v.length();
         if (siz > size) {
-          client.addParameter("TestSuite", version);
-          client.addParameter("PART", Integer.toString(part));
-          client.submit(url, false);
+          client.addParameter("_P", Integer.toString(part));
+          client.submit(url, false, false);
           siz = 0;
           if (client.getStatus() >= 400) {
             break;
@@ -50,16 +48,14 @@ public class DataSender implements Observable, Observer, Runnable {
         i++;
       }
       if (siz > 0) {
-        client.addParameter("TestSuite", version);
-        client.addParameter("PART", Integer.toString(part));
-        client.submit(url, false);
+        client.addParameter("_P", Integer.toString(part));
+        client.submit(url, false, false);
       }
     }
     else {
       client.mode = HTTPClient.MODE_MULTIPART;
-      client.addParameter("TestSuite", version);
       client.addAttach(suite);
-      client.submit(url, false);
+      client.submit(url, false, false);
     }
   }
 

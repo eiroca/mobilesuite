@@ -26,6 +26,8 @@ package test.benchmark;
 
 public class Precision extends BenchmarkAbstract {
 
+  public static final String RES_ID1 = "S";
+
   public Precision(final SuiteAbstract suite) {
     super(suite);
   }
@@ -42,7 +44,7 @@ public class Precision extends BenchmarkAbstract {
       // ignore
     }
     iResolution = tSleeper.iAfter - tSleeper.iBefore;
-    suite.addResult("sleep", Long.toString(iResolution));
+    suite.addResult(Precision.RES_ID1, Long.toString(iResolution));
   }
 
 }
