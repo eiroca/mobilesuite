@@ -19,14 +19,14 @@ public class HTTPClient implements Observable, Runnable {
   private static final String BOUNDARY_PRE = "--";
   private static final String CONTENT_TYPE = "Content-type";
 
-  private static final String SEP = "" + BaseApp.CR;
+  private static final String SEP = "" + BaseApp.NL;
 
   public static final int MODE_GET = 0;
   public static final int MODE_POST = 1;
   public static final int MODE_MULTIPART = 2;
 
-  public String userAgent = "eIrOcA MIDlet";
-  public String acceptLanguage = "en-US";
+  public String userAgent = "eIrOcAMIDlet";
+  public String acceptLanguage = null;
   public boolean useKeepAlive = false;
   public int mode = HTTPClient.MODE_GET;
 
@@ -104,18 +104,22 @@ public class HTTPClient implements Observable, Runnable {
         break;
     }
     connection.setRequestProperty("User-Agent", userAgent);
-    connection.setRequestProperty("Accept-Language", acceptLanguage);
-    connection.setRequestProperty("Host", host);
+    if (acceptLanguage != null) {
+      connection.setRequestProperty("Accept-Language", acceptLanguage);
+    }
+    if (host != null) {
+      connection.setRequestProperty("Host", host);
+    }
     if (useKeepAlive) {
       connection.setRequestProperty("Connection", "keep-alive");
       connection.setRequestProperty("Keep-Alive", "300");
     }
     switch (mode) {
       case MODE_MULTIPART:
-        connection.setRequestProperty(CONTENT_TYPE, "multipart/form-data; boundary=" + HTTPClient.BOUNDARY);
+        connection.setRequestProperty(HTTPClient.CONTENT_TYPE, "multipart/form-data; boundary=" + HTTPClient.BOUNDARY);
         break;
       case MODE_POST:
-        connection.setRequestProperty(CONTENT_TYPE, "application/x-www-form-urlencoded");
+        connection.setRequestProperty(HTTPClient.CONTENT_TYPE, "application/x-www-form-urlencoded");
         break;
       case MODE_GET:
         break;
@@ -137,9 +141,9 @@ public class HTTPClient implements Observable, Runnable {
       for (int i = 0; i < params.size(); i++) {
         final Pair p = (Pair) params.elementAt(i);
         buf = new StringBuffer(200);
-        buf.append(BOUNDARY_PRE).append(HTTPClient.BOUNDARY).append(SEP);
-        buf.append("content-disposition: form-data; name=").append('"').append(p.name).append('"').append(SEP);
-        buf.append(SEP).append((p.value != null ? p.value : "")).append(SEP);
+        buf.append(HTTPClient.BOUNDARY_PRE).append(HTTPClient.BOUNDARY).append(HTTPClient.SEP);
+        buf.append("Content-Disposition: form-data; name=").append('"').append(p.name).append('"').append(HTTPClient.SEP);
+        buf.append(HTTPClient.SEP).append((p.value != null ? p.value : "")).append(HTTPClient.SEP);
         out.write(buf.toString().getBytes());
       }
     }
@@ -147,20 +151,21 @@ public class HTTPClient implements Observable, Runnable {
       final HTTPAttach sendable = (HTTPAttach) attach.elementAt(i);
       final String mimeType = sendable.getMimeType();
       final byte[] data = sendable.getData();
-      String name = "file_" + Integer.toString(i);
+      final String name = "file_" + Integer.toString(i);
       buf = new StringBuffer(200);
-      buf.append(BOUNDARY_PRE).append(HTTPClient.BOUNDARY).append(SEP);
-      buf.append("content-disposition: form-data;");
+      buf.append(HTTPClient.BOUNDARY_PRE).append(HTTPClient.BOUNDARY).append(HTTPClient.SEP);
+      buf.append("Content-Disposition: form-data;");
       buf.append(" name=").append('"').append(name).append('"');
       buf.append("; filename=").append('"').append(name).append('"');
-      buf.append(SEP);
-      buf.append(CONTENT_TYPE + ": ").append(mimeType).append(SEP).append(SEP);
+      buf.append(HTTPClient.SEP);
+      buf.append(HTTPClient.CONTENT_TYPE + ": ").append(mimeType).append(HTTPClient.SEP);
+      buf.append(HTTPClient.SEP);
       out.write(buf.toString().getBytes());
       out.write(data);
-      out.write(SEP.getBytes());
+      out.write(HTTPClient.SEP.getBytes());
     }
     buf = new StringBuffer(200);
-    buf.append(BOUNDARY_PRE).append(HTTPClient.BOUNDARY).append(BOUNDARY_PRE).append(SEP);
+    buf.append(HTTPClient.BOUNDARY_PRE).append(HTTPClient.BOUNDARY).append(HTTPClient.BOUNDARY_PRE).append(HTTPClient.SEP);
     out.write(buf.toString().getBytes());
     final OutputStream dos = connection.openOutputStream();
     final byte[] b = out.toByteArray();
@@ -175,7 +180,7 @@ public class HTTPClient implements Observable, Runnable {
       final String mimeType = sendable.getMimeType();
       final byte[] data = sendable.getData();
       if (i == 0) {
-        connection.setRequestProperty(CONTENT_TYPE, mimeType);
+        connection.setRequestProperty(HTTPClient.CONTENT_TYPE, mimeType);
       }
       out.write(data);
     }
@@ -225,10 +230,12 @@ public class HTTPClient implements Observable, Runnable {
     }
   }
 
-  public void submit(final String url, final boolean async) {
+  public void submit(final String url, final boolean addHost, final boolean async) {
     this.url = url;
-    final int first = url.indexOf('/');
-    host = url.substring(first + 2, url.indexOf('/', first + 2));
+    if (addHost) {
+      final int first = url.indexOf('/');
+      host = url.substring(first + 2, url.indexOf('/', first + 2));
+    }
     if (async) {
       new Thread(this).start();
     }

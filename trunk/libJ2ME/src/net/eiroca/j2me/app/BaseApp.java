@@ -75,7 +75,7 @@ import javax.microedition.rms.RecordStoreException;
 
 public abstract class BaseApp extends MIDlet implements CommandListener, ItemCommandListener {
 
-  public static final String NL = "\n\r";
+  public static final String NL = "\r\n";
   public static final String sCR = "\n";
   public static final char CR = '\n';
   public static final char LF = '\r';
@@ -986,8 +986,10 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   private static char STRIP = BaseApp.LF;
   private static String COMMENT = "#";
 
+  private static int BUF_SIZE = 40;
+
   public static InputStream getInputStream(final String res) {
-    StringBuffer sb = new StringBuffer(64);
+    StringBuffer sb = new StringBuffer(BaseApp.BUF_SIZE);
     String basepath;
     final Class me = res.getClass();
     sb.append(BaseApp.DIR_SEP);
@@ -995,8 +997,9 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
       sb.append(BaseApp.resPrefix).append(BaseApp.DIR_SEP);
     }
     basepath = sb.toString();
-    if (BaseApp.locale != null) {
-      sb.append(BaseApp.locale).append(BaseApp.DIR_SEP);
+    final String locale = Device.getLocale();
+    if (locale != null) {
+      sb.append(locale).append(BaseApp.DIR_SEP);
     }
     sb.append(res);
     InputStream in = me.getResourceAsStream(sb.toString());
@@ -1005,6 +1008,32 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
       in = me.getResourceAsStream(sb.toString());
     }
     return in;
+  }
+
+  public static String readLine(final InputStream in) throws IOException {
+    String res = null;
+    final StringBuffer buf = new StringBuffer(BaseApp.BUF_SIZE);
+    int ch = -1;
+    boolean eof = true;
+    do {
+      ch = in.read();
+      if (ch == -1) {
+        if (!eof) {
+          res = buf.toString();
+        }
+        break;
+      }
+      else if (ch == BaseApp.LINESEP) {
+        res = buf.toString();
+        break;
+      }
+      else if (ch != BaseApp.STRIP) {
+        buf.append((char) ch);
+        eof = false;
+      }
+    }
+    while (true);
+    return res;
   }
 
   /**
@@ -1017,50 +1046,28 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
    */
   public static Pair[] readPairs(final String res, final char sep) {
     final Vector s = new Vector();
-    Pair p = new Pair();
-    StringBuffer sb = new StringBuffer(60);
-    boolean inName = true;
-    boolean sepFound = false;
-    int ch;
+    Pair p;
+    String line;
+    int pos;
     try {
       final InputStream in = BaseApp.getInputStream(res);
       do {
-        ch = in.read();
-        if (ch == -1) {
-          if (sb.length() > 0) {
-            if (!inName) {
-              p.value = sb.toString();
-            }
-            else {
-              p.name = sb.toString();
-              p.value = null;
-            }
-            s.addElement(p);
-          }
+        line = BaseApp.readLine(in);
+        if (line == null) {
           break;
         }
-        else if ((ch == sep) && (!sepFound)) {
-          sepFound = true;
-          p.name = sb.toString();
-          p.value = null;
-          sb = new StringBuffer(60);
-          inName = false;
-        }
-        else if (ch == BaseApp.LINESEP) {
-          sepFound = false;
-          if (!inName) {
-            p.value = sb.toString();
+        else if ((line.length() > 0) && (!line.startsWith(BaseApp.COMMENT))) {
+          p = new Pair();
+          pos = line.indexOf(sep);
+          if (pos > 0) {
+            p.name = line.substring(0, pos);
+            p.value = line.substring(0, pos + 1);
           }
           else {
-            p.name = sb.toString();
+            p.name = line;
             p.value = null;
           }
           s.addElement(p);
-          p = new Pair();
-          sb = new StringBuffer(80);
-        }
-        else if (ch != BaseApp.STRIP) {
-          sb.append((char) ch);
         }
       }
       while (true);
@@ -1075,36 +1082,57 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     return out;
   }
 
+  public static Hashtable readMap(final String res, final char sep) {
+    final Hashtable result = new Hashtable();
+    int pos;
+    String name;
+    String val;
+    String line;
+    try {
+      final InputStream in = BaseApp.getInputStream(res);
+      do {
+        line = BaseApp.readLine(in);
+        if (line == null) {
+          break;
+        }
+        else if ((line.length() > 0) && (!line.startsWith(BaseApp.COMMENT))) {
+          pos = line.indexOf(sep);
+          if (pos > 0) {
+            name = line.substring(0, pos);
+            val = line.substring(pos + 1);
+            result.put(name, val);
+          }
+          else {
+            result.put(line, null);
+          }
+        }
+      }
+      while (true);
+    }
+    catch (final IOException e) {
+      result.clear();
+    }
+    return result;
+  }
+
   /**
-   * Read a resource file into a String[]. Line separator is CR.
+   * Read a resource file into a String[]. Line separator is "sep".
    *
    * @param res
    * @return
    */
   public static String[] readStrings(final String res) {
     final Vector s = new Vector();
-    String txt;
-    StringBuffer sb = new StringBuffer(80);
-    int ch;
+    String line;
     try {
       final InputStream in = BaseApp.getInputStream(res);
       do {
-        ch = in.read();
-        if (ch == -1) {
-          if (sb.length() > 0) {
-            s.addElement(sb);
-          }
+        line = BaseApp.readLine(in);
+        if (line == null) {
           break;
         }
-        else if (ch == BaseApp.LINESEP) {
-          txt = sb.toString();
-          if (!txt.startsWith(BaseApp.COMMENT)) {
-            s.addElement(txt);
-          }
-          sb = new StringBuffer(80);
-        }
-        else if (ch != BaseApp.STRIP) {
-          sb.append((char) ch);
+        else if ((line.length() > 0) && (!line.startsWith(BaseApp.COMMENT))) {
+          s.addElement(line);
         }
       }
       while (true);
@@ -1165,7 +1193,6 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
         g = images[i].getGraphics();
         g.drawImage(image, -i * width, 0, 0);
       }
-      g = null;
     }
     catch (final IOException ex) {
       System.err.println("missing " + res);
@@ -1478,23 +1505,13 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
   protected boolean initialized = false;
   public static BaseApp midlet;
   public static Display display;
-  public static String locale = null;
   public static String resPrefix = null;
 
   /**
    * Setup midlet and display references
    */
   public BaseApp() {
-    BaseApp.locale = BaseApp.readProperty("microedition.locale", null);
-    if (BaseApp.locale != null) {
-      final int ps = BaseApp.locale.indexOf("-");
-      if (ps > 0) {
-        BaseApp.locale = BaseApp.locale.substring(0, ps);
-      }
-      if (BaseApp.locale.length() == 0) {
-        BaseApp.locale = null;
-      }
-    }
+    Device.init();
     BaseApp.midlet = this;
     BaseApp.display = Display.getDisplay(this);
   }
