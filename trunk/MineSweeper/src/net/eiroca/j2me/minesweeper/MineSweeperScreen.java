@@ -237,96 +237,109 @@ public final class MineSweeperScreen extends GameScreen {
     }
   }
 
+  private void doFire() {
+    final Vector v = game.checkCell(cur_x, cur_y);
+    if (game.status == MineSweeperGame.GE_EXPLODED) {
+      GameApp.play(pBomb);
+    }
+    else {
+      GameApp.play(pTicTac);
+    }
+    for (int i = 0; i < v.size(); i++) {
+      final MineInfo m = (MineInfo) v.elementAt(i);
+      info[m.x][m.y] = m.status_guess;
+    }
+  }
+
   protected void keyPressed(final int aKeyCode) {
     final int action = getGameAction(aKeyCode);
     if (game.status != MineSweeperGame.GE_RUNNING) {
       midlet.doGameStop();
       return;
     }
-    if (aKeyCode == Canvas.KEY_NUM0) {
-      midlet.doGamePause();
-      return;
-    }
-    else if (action == Canvas.LEFT) {
-      if (cur_x > 0) {
-        cur_x--;
-      }
-    }
-    else if (action == Canvas.RIGHT) {
-      if (cur_x < (game.size_width - 1)) {
-        cur_x++;
-      }
-    }
-    else if (action == Canvas.UP) {
-      if (cur_y > 0) {
-        cur_y--;
-      }
-    }
-    else if (action == Canvas.DOWN) {
-      if (cur_y < (game.size_height - 1)) {
-        cur_y++;
-      }
-    }
-    else if (aKeyCode == Canvas.KEY_NUM1) {
-      if ((cur_x > 0) && (cur_y > 0)) {
-        cur_x--;
-        cur_y--;
-      }
-    }
-    else if (aKeyCode == Canvas.KEY_NUM3) {
-      if ((cur_x < game.size_width - 1) && (cur_y > 0)) {
-        cur_x++;
-        cur_y--;
-      }
-    }
-    else if (aKeyCode == Canvas.KEY_NUM9) {
-      if ((cur_x < game.size_width - 1) && (cur_y < game.size_height - 1)) {
-        cur_x++;
-        cur_y++;
-      }
-    }
-    else if (aKeyCode == Canvas.KEY_NUM7) {
-      if ((cur_x > 0) && (cur_y < game.size_height - 1)) {
-        cur_x--;
-        cur_y++;
-      }
-    }
-    else if (action == Canvas.FIRE) {
-      final Vector v = game.checkCell(cur_x, cur_y);
-      if (game.status == MineSweeperGame.GE_EXPLODED) {
-        GameApp.play(pBomb);
-      }
-      else {
-        GameApp.play(pTicTac);
-      }
-      for (int i = 0; i < v.size(); i++) {
-        final MineInfo m = (MineInfo) v.elementAt(i);
-        info[m.x][m.y] = m.status_guess;
-      }
-    }
-    else if (aKeyCode == Canvas.KEY_STAR) {
-      if (game.canDoubleClick(cur_x, cur_y)) {
-        final Vector v = game.doubleClick(cur_x, cur_y);
-        if (game.status == MineSweeperGame.GE_EXPLODED) {
-          GameApp.play(pBomb);
+    final Vector v;
+    switch (action) {
+      case Canvas.LEFT:
+        if (cur_x > 0) {
+          cur_x--;
         }
-        else {
-          GameApp.play(pTicTac);
+        break;
+      case Canvas.RIGHT:
+        if (cur_x < (game.size_width - 1)) {
+          cur_x++;
         }
-        for (int i = 0; i < v.size(); i++) {
-          final MineInfo m = (MineInfo) v.elementAt(i);
-          info[m.x][m.y] = m.status_guess;
+        break;
+      case Canvas.UP:
+        if (cur_y > 0) {
+          cur_y--;
         }
-      }
-    }
-    else if (aKeyCode == Canvas.KEY_POUND) {
-      if (((info[cur_x][cur_y] == MineSweeperGame.MINE_UNCHECKED) && (game.checked() < game.bomb)) || (info[cur_x][cur_y] == MineSweeperGame.MINE_CHECKED)) {
-        final Vector v = game.markBomb(cur_x, cur_y);
-        for (int i = 0; i < v.size(); i++) {
-          final MineInfo m = (MineInfo) v.elementAt(i);
-          info[m.x][m.y] = m.status_guess;
+        break;
+      case Canvas.DOWN:
+        if (cur_y < (game.size_height - 1)) {
+          cur_y++;
         }
-      }
+        break;
+      case Canvas.FIRE:
+        doFire();
+        break;
+      default:
+        switch (aKeyCode) {
+          case Canvas.KEY_NUM1:
+            if ((cur_x > 0) && (cur_y > 0)) {
+              cur_x--;
+              cur_y--;
+            }
+            break;
+          case Canvas.KEY_NUM3:
+            if ((cur_x < game.size_width - 1) && (cur_y > 0)) {
+              cur_x++;
+              cur_y--;
+            }
+            break;
+          case Canvas.KEY_NUM5:
+            doFire();
+            break;
+          case Canvas.KEY_NUM9:
+            if ((cur_x < game.size_width - 1) && (cur_y < game.size_height - 1)) {
+              cur_x++;
+              cur_y++;
+            }
+            break;
+          case Canvas.KEY_NUM7:
+            if ((cur_x > 0) && (cur_y < game.size_height - 1)) {
+              cur_x--;
+              cur_y++;
+            }
+            break;
+          case Canvas.KEY_STAR:
+            if (game.canDoubleClick(cur_x, cur_y)) {
+              v = game.doubleClick(cur_x, cur_y);
+              if (game.status == MineSweeperGame.GE_EXPLODED) {
+                GameApp.play(pBomb);
+              }
+              else {
+                GameApp.play(pTicTac);
+              }
+              for (int i = 0; i < v.size(); i++) {
+                final MineInfo m = (MineInfo) v.elementAt(i);
+                info[m.x][m.y] = m.status_guess;
+              }
+            }
+            break;
+          case Canvas.KEY_POUND:
+            if (((info[cur_x][cur_y] == MineSweeperGame.MINE_UNCHECKED) && (game.checked() < game.bomb)) || (info[cur_x][cur_y] == MineSweeperGame.MINE_CHECKED)) {
+              v = game.markBomb(cur_x, cur_y);
+              for (int i = 0; i < v.size(); i++) {
+                final MineInfo m = (MineInfo) v.elementAt(i);
+                info[m.x][m.y] = m.status_guess;
+              }
+            }
+            break;
+          default:
+            midlet.doGamePause();
+            break;
+        }
+        break;
     }
     if (game.status == MineSweeperGame.GE_RESOLVED) {
       final int timeElapsed = -getElapsed();
