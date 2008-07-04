@@ -8,3 +8,4 @@ bluetooth.l2cap.receiveMTU.max=mtu.max
 bluetooth.master.switch=mas.swi
 bluetooth.sd.attr.retrievable.max=sd.ret
 bluetooth.sd.trans.max=sd.tra
+bluetooth.system.state=status
