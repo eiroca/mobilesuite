@@ -1,4 +1,12 @@
+#IMEI
+phone.imei=P.IMEI
+com.nokia.mid.imei=N.IMEI.1
+com.nokia.IMEI=N.IMEI.2
+IMEI=M.IMEI.1
+com.motorola.IMEI=M.IMEI.2
 com.sonyericsson.imei=SE.IMEI
+com.samsung.imei=SA.IMEI
+com.siemens.imei=SI.IMEI
 com.sonyericsson.sim.subscribernumber=SE.MSISDN
 com.sonyericsson.jackknifeopen=SE.jackknifeopen
 com.sonyericsson.flipopen=SE.flipopen
@@ -13,7 +21,5 @@ com.sonyericsson.net.cellid=SE.CellID
 com.sonyericsson.net.lac=SE.lac
 com.sonyericsson.net.status=SE.status
 CellID=M.CellID
-IMEI=M.IMEI
 MSISDN=M.MSISDN
 IMSI=M.IMSI
-com.nokia.mid.imei=N.IMEI
