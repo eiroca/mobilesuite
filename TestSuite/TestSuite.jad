@@ -3,7 +3,7 @@ MIDlet-1: TestSuite,/icon.png,TestSuite
 MIDlet-Jar-URL: TestSuite.jar
 MIDlet-Icon: /icon.png
 MicroEdition-Configuration: CLDC-1.0
-MIDlet-Version: 1.0.5
+MIDlet-Version: 1.1.0
 MIDlet-Name: TestSuite
 MIDlet-Vendor: eIrOcA
 MicroEdition-Profile: MIDP-2.0
