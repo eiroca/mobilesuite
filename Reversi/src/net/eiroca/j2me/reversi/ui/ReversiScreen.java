@@ -24,6 +24,7 @@ import Reversi;
 import java.util.Timer;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
@@ -102,7 +103,7 @@ public final class ReversiScreen extends GameScreen {
   public ReversiScreen(final GameApp midlet) {
     super(midlet, false, true);
     ReversiScreen.rgame = new ReversiGame(ReversiScreen.heurMatrix, 10, 18, true);
-    name = BaseApp.messages[Reversi.MSG_NAME];
+    name = Application.messages[Reversi.MSG_NAME];
     width = screenWidth * 8 / 10;
     vertWidth = screenWidth - width;
     height = screenHeight;
@@ -130,8 +131,8 @@ public final class ReversiScreen extends GameScreen {
 
   public void init() {
     super.init();
-    BaseApp.background = 0x00FFFFFF;
-    BaseApp.foreground = 0x00000000;
+    Application.background = 0x00FFFFFF;
+    Application.foreground = 0x00000000;
     score.beginGame(1, 0, 0);
     if (Reversi.gsPlayer == 1) {
       isHuman[0] = true;
@@ -144,7 +145,7 @@ public final class ReversiScreen extends GameScreen {
       ReversiScreen.twoplayer = true;
     }
     updateSkillInfo();
-    setMessage(BaseApp.messages[Reversi.MSG_GOODLUCK]);
+    setMessage(Application.messages[Reversi.MSG_GOODLUCK]);
     gameEnded = false;
     ReversiScreen.actPlayer = 0;
     ReversiScreen.turnNum = 1;
@@ -153,7 +154,7 @@ public final class ReversiScreen extends GameScreen {
   }
 
   public boolean tick() {
-    screen.setColor(BaseApp.background);
+    screen.setColor(Application.background);
     screen.fillRect(0, 0, screenWidth, screenHeight);
     drawBoard();
     drawTable();
@@ -265,7 +266,7 @@ public final class ReversiScreen extends GameScreen {
     drawPiece(9, 0, 1);
     drawPiece(9, 7, 0);
     // numbers
-    screen.setColor(BaseApp.foreground);
+    screen.setColor(Application.foreground);
     screen.drawString(infoLines[0], width + vertWidth, off_y + sizey + 2, Graphics.TOP | Graphics.RIGHT);
     screen.drawString(infoLines[1], width + vertWidth, off_y + 7 * sizey, Graphics.BOTTOM | Graphics.RIGHT);
     // active player
@@ -329,7 +330,7 @@ public final class ReversiScreen extends GameScreen {
 
   public void updateSkillInfo() {
     if (!ReversiScreen.twoplayer) {
-      infoLines[2] = BaseApp.messages[Reversi.MSG_LEVELPREFIX] + Reversi.gsLevel;
+      infoLines[2] = Application.messages[Reversi.MSG_LEVELPREFIX] + Reversi.gsLevel;
     }
     else {
       infoLines[2] = null;
@@ -339,7 +340,7 @@ public final class ReversiScreen extends GameScreen {
   protected ReversiMove computerTurn(final ReversiMove prevMove) {
     ReversiMove move = (ReversiMove) GameMinMax.precalculatedBestMove(prevMove);
     if (move == null) {
-      setMessage(BaseApp.messages[Reversi.MSG_THINKING]);
+      setMessage(Application.messages[Reversi.MSG_THINKING]);
       GameMinMax.cancel(false);
       move = (ReversiMove) GameMinMax.minimax(ReversiScreen.getActSkill(), ReversiScreen.table, ReversiScreen.actPlayer, ReversiScreen.rgame, true, 0, true, true, null);
     }
@@ -397,7 +398,7 @@ public final class ReversiScreen extends GameScreen {
     tables = ReversiScreen.rgame.animatedTurn(ReversiScreen.table, ReversiScreen.actPlayer, move, newTable);
     boolean goodMove = (tables != null);
     if (!goodMove) {
-      setMessage(BaseApp.messages[Reversi.MSG_INVALIDMOVE], 2000);
+      setMessage(Application.messages[Reversi.MSG_INVALIDMOVE], 2000);
     }
     else {
       if (startForeThinking) {
@@ -427,17 +428,17 @@ public final class ReversiScreen extends GameScreen {
           final boolean firstWin = ((result == TwoPlayerGame.LOSS) && (ReversiScreen.actPlayer == 0)) || ((result == TwoPlayerGame.WIN) && (ReversiScreen.actPlayer == 1));
           final int winner = firstWin ? 1 : 0;
           if (!ReversiScreen.twoplayer && firstWin) {
-            endMessage = BaseApp.messages[Reversi.MSG_WONCOMPUTER];
+            endMessage = Application.messages[Reversi.MSG_WONCOMPUTER];
           }
           else if (result == TwoPlayerGame.DRAW) {
-            endMessage = BaseApp.messages[Reversi.MSG_DRAW];
+            endMessage = Application.messages[Reversi.MSG_DRAW];
           }
           else {
             if (ReversiScreen.twoplayer) {
-              endMessage = Reversi.playerNames[winner] + BaseApp.messages[Reversi.MSG_PLAYERWON];
+              endMessage = Reversi.playerNames[winner] + Application.messages[Reversi.MSG_PLAYERWON];
             }
             else {
-              endMessage = BaseApp.messages[Reversi.MSG_HUMANWON];
+              endMessage = Application.messages[Reversi.MSG_HUMANWON];
             }
           }
           final int firstNum = ReversiScreen.rgame.numFirstPlayer;
@@ -456,11 +457,11 @@ public final class ReversiScreen extends GameScreen {
                 message = Reversi.playerNames[ReversiScreen.actPlayer];
               }
               else {
-                message = BaseApp.messages[Reversi.MSG_HUMAN];
+                message = Application.messages[Reversi.MSG_HUMAN];
               }
             }
             else {
-              message = BaseApp.messages[Reversi.MSG_COMPUTER];
+              message = Application.messages[Reversi.MSG_COMPUTER];
             }
             setMessage(message + Reversi.MSG_PASS, 3000);
             ReversiScreen.table.setPassNum(ReversiScreen.table.getPassNum() + 1);
