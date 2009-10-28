@@ -139,13 +139,13 @@ public class MineSweeperGame {
     int bombs = 0;
     if (m.status_guess > 0) {
       for (int dx = -1; dx < 2; dx++) {
-        int nx = x + dx;
+        final int nx = x + dx;
         if ((nx >= 0) && (nx < size_width)) {
           for (int dy = -1; dy < 2; dy++) {
             if ((dx == 0) & (dy == 0)) {
               continue;
             }
-            int ny = y + dy;
+            final int ny = y + dy;
             if ((ny >= 0) && (ny < size_height)) {
               if (field[nx][ny].status_guess == MineSweeperGame.MINE_CHECKED) {
                 bombs++;
@@ -170,13 +170,13 @@ public class MineSweeperGame {
       if (status == MineSweeperGame.GE_EXPLODED) {
         break;
       }
-      int nx = x + dx;
+      final int nx = x + dx;
       if ((nx >= 0) && (nx < size_width)) {
         for (int dy = -1; dy < 2; dy++) {
           if ((dx == 0) & (dy == 0)) {
             continue;
           }
-          int ny = y + dy;
+          final int ny = y + dy;
           if ((ny >= 0) && (ny < size_height)) {
             doubleCheck(result, field[nx][ny]);
           }
@@ -253,13 +253,13 @@ public class MineSweeperGame {
       final MineInfo m = (MineInfo) res.elementAt(i);
       if (m.status_real == 0) {
         for (int dx = -1; dx < 2; dx++) {
-          int nx = m.x + dx;
+          final int nx = m.x + dx;
           if ((nx >= 0) && (nx < size_width)) {
             for (int dy = -1; dy < 2; dy++) {
               if ((dx == 0) & (dy == 0)) {
                 continue;
               }
-              int ny = m.y + dy;
+              final int ny = m.y + dy;
               if ((ny >= 0) && (ny < size_height)) {
                 check(res, field[nx][ny]);
               }
@@ -329,13 +329,13 @@ public class MineSweeperGame {
   private int bomb(final int x, final int y) {
     int result = 0;
     for (int dx = -1; dx < 2; dx++) {
-      int nx = x + dx;
+      final int nx = x + dx;
       if ((nx >= 0) && (nx < size_width)) {
         for (int dy = -1; dy < 2; dy++) {
           if ((dx == 0) & (dy == 0)) {
             continue;
           }
-          int ny = y + dy;
+          final int ny = y + dy;
           if ((ny >= 0) && (ny < size_height)) {
             if (field[nx][ny].status_real == MineSweeperGame.MINE_BOMB) {
               result++;

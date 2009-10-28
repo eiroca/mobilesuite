@@ -22,7 +22,7 @@ package net.eiroca.j2me.minesweeper;
 import MineSweeper;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.TextField;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 
 public class CustomLevelForm extends Form {
 
@@ -31,10 +31,10 @@ public class CustomLevelForm extends Form {
   private final TextField tBomb;
 
   public CustomLevelForm() {
-    super(BaseApp.messages[MineSweeper.MSG_CUSTOMLEVEL]);
-    tHeight = new TextField(BaseApp.messages[MineSweeper.MSG_CL_HEIGTH], "", 2, TextField.NUMERIC);
-    tWidth = new TextField(BaseApp.messages[MineSweeper.MSG_CL_WIDTH], "", 2, TextField.NUMERIC);
-    tBomb = new TextField(BaseApp.messages[MineSweeper.MSG_CL_BOMBS], "", 2, TextField.NUMERIC);
+    super(Application.messages[MineSweeper.MSG_CUSTOMLEVEL]);
+    tHeight = new TextField(Application.messages[MineSweeper.MSG_CL_HEIGTH], "", 2, TextField.NUMERIC);
+    tWidth = new TextField(Application.messages[MineSweeper.MSG_CL_WIDTH], "", 2, TextField.NUMERIC);
+    tBomb = new TextField(Application.messages[MineSweeper.MSG_CL_BOMBS], "", 2, TextField.NUMERIC);
     append(tHeight);
     append(tWidth);
     append(tBomb);
