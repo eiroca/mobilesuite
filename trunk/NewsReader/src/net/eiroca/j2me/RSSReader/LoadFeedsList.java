@@ -1,6 +1,6 @@
 /** GPL >= 2.0
  * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson <gosta(at)brothas.net>
+ * Copyright (C) 2004 GÃ¶sta Jonasson <gosta(at)brothas.net>
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify
@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
 import javax.microedition.lcdui.Displayable;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import org.kxml2.io.KXmlParser;
 import org.xmlpull.v1.XmlPullParser;
@@ -55,8 +56,8 @@ public class LoadFeedsList extends Thread {
     this.aURL = aURL;
     this.remote = remote;
     if (remote) {
-      sStatus = new StatusScreen(BaseApp.messages[NewsReader.MSG_LOADFEEDLISTTITLE], NewsReader.cOK2, NewsReader.cSTOP, d);
-      sStatus.init(BaseApp.messages[NewsReader.MSG_LOADFEEDLISTST00], 3);
+      sStatus = new StatusScreen(Application.messages[NewsReader.MSG_LOADFEEDLISTTITLE], NewsReader.cOK2, NewsReader.cSTOP, d);
+      sStatus.init(Application.messages[NewsReader.MSG_LOADFEEDLISTST00], 3);
       start();
       loaded = false;
     }
@@ -75,13 +76,13 @@ public class LoadFeedsList extends Thread {
     HttpConnection httpconnection = null;
     InputStream is = null;
     try {
-      sStatus.setStatus(BaseApp.messages[NewsReader.MSG_LOADFEEDLISTST01], 1);
+      sStatus.setStatus(Application.messages[NewsReader.MSG_LOADFEEDLISTST01], 1);
       httpconnection = (HttpConnection) Connector.open(aURL, Connector.READ, false);
       is = httpconnection.openInputStream();
-      sStatus.setStatus(BaseApp.messages[NewsReader.MSG_LOADFEEDLISTST02], 2);
+      sStatus.setStatus(Application.messages[NewsReader.MSG_LOADFEEDLISTST02], 2);
       parse(is);
-      sStatus.setStatus(BaseApp.messages[NewsReader.MSG_LOADFEEDLISTST03], 3);
-      sStatus.append(BaseApp.messages[NewsReader.MSG_LOADFEEDLISTEND]);
+      sStatus.setStatus(Application.messages[NewsReader.MSG_LOADFEEDLISTST03], 3);
+      sStatus.append(Application.messages[NewsReader.MSG_LOADFEEDLISTEND]);
     }
     catch (final Exception e) {
       midlet.browseFeedList.removeAllElements();

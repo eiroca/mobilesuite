@@ -1,6 +1,6 @@
 /** GPL >= 2.0
  * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson <gosta(at)brothas.net>
+ * Copyright (C) 2004 GÃ¶sta Jonasson <gosta(at)brothas.net>
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,6 +23,7 @@ import NewsReader;
 import java.util.Vector;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 
 public class ShowNews extends Canvas {
@@ -50,7 +51,7 @@ public class ShowNews extends Canvas {
     h1 = height - 2 * border1;
     final String txt = "<tit>" + rssItem.title + "</tit>" + rssItem.description;
     vect = RenderedWord.createWordList(txt, width - 2 * border, height - 2 * border, feed.colText, feed.colTitl);
-    BaseApp.setup(this, BaseApp.cBACK, null);
+    Application.setup(this, Application.cBACK, null);
     if (!BaseApp.isEmpty(rssItem.link)) {
       addCommand(NewsReader.cGO);
     }

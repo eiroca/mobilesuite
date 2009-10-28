@@ -1,6 +1,6 @@
 /** GPL >= 2.0
  * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson
+ * Copyright (C) 2004 GÃ¶sta Jonasson
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify
@@ -274,23 +274,23 @@ public class NewsReader extends Application implements Comparator {
     o = new Object[9];
     bold = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_MEDIUM);
     normal = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_MEDIUM);
-    BaseApp.messages = BaseApp.readStrings(NewsReader.RES_MESSAGES);
-    BaseApp.cOK = newCommand(NewsReader.MSG_CM_OK, Command.OK, 30, AC_NONE);
-    BaseApp.cBACK = newCommand(NewsReader.MSG_CM_BACK, Command.BACK, 20, BaseApp.AC_BACK);
-    BaseApp.cEXIT = newCommand(NewsReader.MSG_CM_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
-    NewsReader.cADDFEEDURL = newCommand(NewsReader.MSG_CM_ADDFEEDURL, Command.OK, 31, NewsReader.AC_ADDFEEDURL);
-    NewsReader.cADDFEEDLIST = newCommand(NewsReader.MSG_CM_ADDFEEDLIST, Command.OK, 31, NewsReader.AC_ADDFEEDLIST);
-    NewsReader.cOK2 = newCommand(NewsReader.MSG_CM_OK, Command.OK, 1, NewsReader.AC_DOBROWSEFEED2);
-    NewsReader.cYES = newCommand(NewsReader.MSG_CM_YES, Command.OK, 1, NewsReader.AC_YES);
-    NewsReader.cNO = newCommand(NewsReader.MSG_CM_NO, Command.BACK, 2, NewsReader.AC_NO);
-    NewsReader.cOPEN = newCommand(NewsReader.MSG_CM_OPEN, Command.OK, 2, NewsReader.AC_OPEN);
-    NewsReader.cREAD = newCommand(NewsReader.MSG_CM_READ, Command.OK, 2, NewsReader.AC_READ);
-    NewsReader.cGO = newCommand(NewsReader.MSG_CM_GO, Command.OK, 2, NewsReader.AC_GO);
-    NewsReader.cSTOP = new Command(BaseApp.messages[NewsReader.MSG_CM_STOP], Command.OK, 2);
+    Application.messages = BaseApp.readStrings(NewsReader.RES_MESSAGES);
+    Application.cOK = Application.newCommand(NewsReader.MSG_CM_OK, Command.OK, 30, Application.AC_NONE);
+    Application.cBACK = Application.newCommand(NewsReader.MSG_CM_BACK, Command.BACK, 20, Application.AC_BACK);
+    Application.cEXIT = Application.newCommand(NewsReader.MSG_CM_EXIT, Command.EXIT, 10, Application.AC_EXIT);
+    NewsReader.cADDFEEDURL = Application.newCommand(NewsReader.MSG_CM_ADDFEEDURL, Command.OK, 31, NewsReader.AC_ADDFEEDURL);
+    NewsReader.cADDFEEDLIST = Application.newCommand(NewsReader.MSG_CM_ADDFEEDLIST, Command.OK, 31, NewsReader.AC_ADDFEEDLIST);
+    NewsReader.cOK2 = Application.newCommand(NewsReader.MSG_CM_OK, Command.OK, 1, NewsReader.AC_DOBROWSEFEED2);
+    NewsReader.cYES = Application.newCommand(NewsReader.MSG_CM_YES, Command.OK, 1, NewsReader.AC_YES);
+    NewsReader.cNO = Application.newCommand(NewsReader.MSG_CM_NO, Command.BACK, 2, NewsReader.AC_NO);
+    NewsReader.cOPEN = Application.newCommand(NewsReader.MSG_CM_OPEN, Command.OK, 2, NewsReader.AC_OPEN);
+    NewsReader.cREAD = Application.newCommand(NewsReader.MSG_CM_READ, Command.OK, 2, NewsReader.AC_READ);
+    NewsReader.cGO = Application.newCommand(NewsReader.MSG_CM_GO, Command.OK, 2, NewsReader.AC_GO);
+    NewsReader.cSTOP = new Command(Application.messages[NewsReader.MSG_CM_STOP], Command.OK, 2);
     iBullet = BaseApp.createImage(NewsReader.RES_IMAGE_STAR);
     iRead = BaseApp.createImage(NewsReader.RES_IMAGE_READ);
     iUnread = BaseApp.createImage(NewsReader.RES_IMAGE_UNREAD);
-    BaseApp.menu = new short[][] {
+    Application.menu = new short[][] {
         {
             NewsReader.ME_MAINMENU, NewsReader.MSG_ME_READFEEDS, NewsReader.AC_DOREADFEEDS, -1
         }, {
@@ -390,7 +390,7 @@ public class NewsReader extends Application implements Comparator {
         //
       }
     }
-    BaseApp.show(null, getMainMenu(), true);
+    Application.show(null, getMainMenu(), true);
   }
 
   // Implementation of the command listener interface
@@ -404,7 +404,7 @@ public class NewsReader extends Application implements Comparator {
       action = nextAction;
     }
     if (action == NewsReader.AC_NO) {
-      BaseApp.back(null);
+      Application.back(null);
       return true;
     }
     String deltext = null;
@@ -419,10 +419,10 @@ public class NewsReader extends Application implements Comparator {
         final Displayable dd = BaseApp.getDisplay();
         if (dd == sNews) {
           sNewsList = getNewsList(true);
-          BaseApp.show(null, sNewsList, false);
+          Application.show(null, sNewsList, false);
         }
         else if (dd == sNewsList) {
-          BaseApp.back(null, sFeedMenu, false);
+          Application.back(null, sFeedMenu, false);
         }
         else {
           return false;
@@ -430,19 +430,19 @@ public class NewsReader extends Application implements Comparator {
         break;
       case AC_DOREADFEEDS:
         sFeeds = getSelectFeed();
-        BaseApp.show(null, sFeeds, true);
+        Application.show(null, sFeeds, true);
         break;
       case AC_DOADDFEED:
-        BaseApp.show(null, getAddFeedMenu(), true);
+        Application.show(null, getAddFeedMenu(), true);
         break;
       case AC_DOMEMORY:
-        BaseApp.show(null, getMemoryForm(), true);
+        Application.show(null, getMemoryForm(), true);
         break;
       case AC_DOCLEANUP:
-        BaseApp.show(null, getCleanUpMenu(), true);
+        Application.show(null, getCleanUpMenu(), true);
         break;
       case AC_DOABOUT:
-        BaseApp.show(null, BaseApp.getTextForm(NewsReader.MSG_ME_ABOUT, NewsReader.RES_ABOUT), true);
+        Application.show(null, Application.getTextForm(NewsReader.MSG_ME_ABOUT, NewsReader.RES_ABOUT), true);
         break;
       case AC_DOBROWSEFEED1:
         getAddFeedBrowseList();
@@ -454,22 +454,22 @@ public class NewsReader extends Application implements Comparator {
           new LoadFeedsList(this, NewsReader.stgFeedListURL, !ready, sAddFeedBrowse);
         }
         if (ready) {
-          BaseApp.show(null, sAddFeedBrowse, true);
+          Application.show(null, sAddFeedBrowse, true);
         }
         break;
       case AC_DOBROWSEFEED2:
-        BaseApp.show(null, sAddFeedBrowse, true);
+        Application.show(null, sAddFeedBrowse, true);
         break;
       case AC_DOADDURL:
-        BaseApp.show(null, getAddFeedURL(), true);
+        Application.show(null, getAddFeedURL(), true);
         break;
       case AC_ADDFEEDURL:
         msg = addFeedURL();
-        BaseApp.back(msg, sAddFeedMenu, false);
+        Application.back(msg, sAddFeedMenu, false);
         break;
       case AC_ADDFEEDLIST:
         msg = addFeedList();
-        BaseApp.back(msg, sAddFeedMenu, false);
+        Application.back(msg, sAddFeedMenu, false);
         break;
       case AC_DOCLEANALL:
         if (confirmed) {
@@ -477,50 +477,50 @@ public class NewsReader extends Application implements Comparator {
           nf = RSSFeed.deleteAll();
           o[0] = new Integer(nf);
           o[1] = new Integer(ni);
-          deltext = BaseApp.format(NewsReader.MSG_DELETEALL, o);
+          deltext = Application.format(NewsReader.MSG_DELETEALL, o);
         }
         else {
-          confirm(NewsReader.MSG_CONFIRM, NewsReader.MSG_SUREDELETEALL, cYES, cNO);
+          confirm(NewsReader.MSG_CONFIRM, NewsReader.MSG_SUREDELETEALL, NewsReader.cYES, NewsReader.cNO);
         }
         break;
       case AC_DOCLEANITEMS:
         if (confirmed) {
           ni = RSSItem.deleteAll();
           o[0] = new Integer(ni);
-          deltext = BaseApp.format(NewsReader.MSG_DELETEITEMS, o);
+          deltext = Application.format(NewsReader.MSG_DELETEITEMS, o);
         }
         else {
-          confirm(NewsReader.MSG_CONFIRM, NewsReader.MSG_SUREDELETEALLITEMS, cYES, cNO);
+          confirm(NewsReader.MSG_CONFIRM, NewsReader.MSG_SUREDELETEALLITEMS, NewsReader.cYES, NewsReader.cNO);
         }
         break;
       case AC_DOCLEAN1DOLD:
         if (confirmed) {
           ni = RSSItem.deleteItems(new ItemFilter(System.currentTimeMillis() - NewsReader.DAYMILLIS));
           o[0] = new Integer(ni);
-          deltext = BaseApp.format(NewsReader.MSG_DELETEITEMS, o);
+          deltext = Application.format(NewsReader.MSG_DELETEITEMS, o);
         }
         else {
-          confirm(NewsReader.MSG_CONFIRM, NewsReader.MSG_SUREDELETEITEMS, cYES, cNO);
+          confirm(NewsReader.MSG_CONFIRM, NewsReader.MSG_SUREDELETEITEMS, NewsReader.cYES, NewsReader.cNO);
         }
         break;
       case AC_DOCLEAN2DOLD:
         if (confirmed) {
           ni = RSSItem.deleteItems(new ItemFilter(System.currentTimeMillis() - (2 * NewsReader.DAYMILLIS)));
           o[0] = new Integer(ni);
-          deltext = BaseApp.format(NewsReader.MSG_DELETEITEMS, o);
+          deltext = Application.format(NewsReader.MSG_DELETEITEMS, o);
         }
         else {
-          confirm(NewsReader.MSG_CONFIRM, NewsReader.MSG_SUREDELETEITEMS, cYES, cNO);
+          confirm(NewsReader.MSG_CONFIRM, NewsReader.MSG_SUREDELETEITEMS, NewsReader.cYES, NewsReader.cNO);
         }
         break;
       case AC_DOCLEAN1WOLD:
         if (confirmed) {
           ni = RSSItem.deleteItems(new ItemFilter(System.currentTimeMillis() - (7 * NewsReader.DAYMILLIS)));
           o[0] = new Integer(ni);
-          deltext = BaseApp.format(NewsReader.MSG_DELETEITEMS, o);
+          deltext = Application.format(NewsReader.MSG_DELETEITEMS, o);
         }
         else {
-          confirm(NewsReader.MSG_CONFIRM, NewsReader.MSG_SUREDELETEITEMS, cYES, cNO);
+          confirm(NewsReader.MSG_CONFIRM, NewsReader.MSG_SUREDELETEITEMS, NewsReader.cYES, NewsReader.cNO);
         }
         break;
       case AC_OPEN:
@@ -532,34 +532,34 @@ public class NewsReader extends Application implements Comparator {
           currentFeed = RSSFeed.load(feedid);
         }
         page = 0;
-        BaseApp.show(null, getFeedMenu(), true);
+        Application.show(null, getFeedMenu(), true);
         break;
       case AC_NEWSREAD:
         sNewsList = getNewsList(false);
-        BaseApp.show(null, sNewsList, false);
+        Application.show(null, sNewsList, false);
         break;
       case AC_NEWSUPDATE:
         new FeedUpdateThread(currentFeed, this);
         break;
       case AC_NEWSINFO:
-        BaseApp.show(null, getFeedInfo(), true);
+        Application.show(null, getFeedInfo(), true);
         break;
       case AC_NEWSDELETE:
         // Delete all the items for this feed
         ni = RSSItem.deleteAll(currentFeed.feedID);
         o[0] = new Integer(ni);
-        final String deletetext = BaseApp.format(NewsReader.MSG_DELETEITEMS, o);
-        final Alert newalert = new Alert(BaseApp.messages[NewsReader.MSG_NEWSDELETE], deletetext, null, AlertType.INFO);
+        final String deletetext = Application.format(NewsReader.MSG_DELETEITEMS, o);
+        final Alert newalert = new Alert(Application.messages[NewsReader.MSG_NEWSDELETE], deletetext, null, AlertType.INFO);
         newalert.setTimeout(Alert.FOREVER);
         /* Reload the feed */
         currentFeed = RSSFeed.load(currentFeed.feedID);
-        BaseApp.back(newalert, getFeedMenu(), false);
+        Application.back(newalert, getFeedMenu(), false);
         break;
       case AC_NEWSERASE:
         // Delete this feed
         RSSFeed.deleteFeed(currentFeed.feedID);
         // Need to update after delete
-        BaseApp.back(null, sMainMenu, false);
+        Application.back(null, sMainMenu, false);
         break;
       case AC_READ:
         idx = sNewsList.getSelectedIndex();
@@ -567,7 +567,7 @@ public class NewsReader extends Application implements Comparator {
         if (idx == nextIdx) {
           page++;
           sNewsList = getNewsList(false);
-          BaseApp.show(null, sNewsList, false);
+          Application.show(null, sNewsList, false);
           break;
         }
         pos = idx;
@@ -575,7 +575,7 @@ public class NewsReader extends Application implements Comparator {
           if (idx == 0) {
             page--;
             sNewsList = getNewsList(false);
-            BaseApp.show(null, sNewsList, false);
+            Application.show(null, sNewsList, false);
             break;
           }
           else {
@@ -591,12 +591,12 @@ public class NewsReader extends Application implements Comparator {
           else {
             sNews = getNewsDataTEXT();
           }
-          BaseApp.show(null, sNews, true);
+          Application.show(null, sNews, true);
           sNewsList.set(idx, currentItem.title, iRead);
           sNewsList.setFont(idx, normal);
         }
         else {
-          BaseApp.back(null, sMainMenu, false);
+          Application.back(null, sMainMenu, false);
         }
         break;
       case AC_GO:
@@ -613,17 +613,17 @@ public class NewsReader extends Application implements Comparator {
         break;
     }
     if (deltext != null) {
-      final Alert newalert = new Alert(BaseApp.messages[NewsReader.MSG_DELETED]);
+      final Alert newalert = new Alert(Application.messages[NewsReader.MSG_DELETED]);
       newalert.setTimeout(Alert.FOREVER);
       newalert.setType(AlertType.INFO);
       newalert.setString(deltext);
-      BaseApp.back(newalert, sMainMenu, false);
+      Application.back(newalert, sMainMenu, false);
     }
     return true;
   }
 
   public void changed(final int event, final Displayable previous, final Displayable next) {
-    if (event == EV_BEFORECHANGE) {
+    if (event == Application.EV_BEFORECHANGE) {
       if (next == sFeedMenu) {
         // Delete all options in the list
         sFeedMenu.delete(0);
@@ -632,7 +632,7 @@ public class NewsReader extends Application implements Comparator {
         final int nn = currentFeed.nn;
         o[0] = new Integer(nr);
         o[1] = new Integer(nn);
-        sFeedMenu.insert(0, BaseApp.format(NewsReader.MSG_NEWREAD, o), null);
+        sFeedMenu.insert(0, Application.format(NewsReader.MSG_NEWREAD, o), null);
         if (nr > 0) {
           sFeedMenu.setSelectedIndex(0, true);
         }
@@ -646,7 +646,7 @@ public class NewsReader extends Application implements Comparator {
       else if (next == sAddFeedBrowse) {
         sAddFeedBrowse.deleteAll();
         if (browseFeedList.size() == 0) {
-          sAddFeedBrowse.append(BaseApp.messages[NewsReader.MSG_FEEDFILEERROR], null);
+          sAddFeedBrowse.append(Application.messages[NewsReader.MSG_FEEDFILEERROR], null);
           sAddFeedBrowse.removeCommand(NewsReader.cADDFEEDLIST);
         }
         else {
@@ -732,7 +732,7 @@ public class NewsReader extends Application implements Comparator {
         addedfeeds++;
         // Clear the Form
         iTitle.setString(NewsReader.STR_EMPTY);
-        iURL.setString(BaseApp.messages[NewsReader.MSG_FM_HTTP]);
+        iURL.setString(Application.messages[NewsReader.MSG_FM_HTTP]);
       }
     }
     return buildAlert(addedfeeds);
@@ -742,13 +742,13 @@ public class NewsReader extends Application implements Comparator {
     Alert addalert;
     if (addedFeeds > 0) {
       o[0] = new Integer(addedFeeds);
-      addalert = new Alert(BaseApp.messages[NewsReader.MSG_ERR01_TIT], BaseApp.format(NewsReader.MSG_ERR01_MSG, o), null, AlertType.INFO);
+      addalert = new Alert(Application.messages[NewsReader.MSG_ERR01_TIT], Application.format(NewsReader.MSG_ERR01_MSG, o), null, AlertType.INFO);
     }
     else if (addedFeeds == -1) {
-      addalert = new Alert(BaseApp.messages[NewsReader.MSG_ERR02_TIT], BaseApp.messages[NewsReader.MSG_ERR02_MSG], null, AlertType.ERROR);
+      addalert = new Alert(Application.messages[NewsReader.MSG_ERR02_TIT], Application.messages[NewsReader.MSG_ERR02_MSG], null, AlertType.ERROR);
     }
     else {
-      addalert = new Alert(BaseApp.messages[NewsReader.MSG_ERR03_TIT], BaseApp.messages[NewsReader.MSG_ERR03_MSG], null, AlertType.ERROR);
+      addalert = new Alert(Application.messages[NewsReader.MSG_ERR03_TIT], Application.messages[NewsReader.MSG_ERR03_MSG], null, AlertType.ERROR);
     }
     addalert.setTimeout(Alert.FOREVER);
     return addalert;
@@ -756,24 +756,24 @@ public class NewsReader extends Application implements Comparator {
 
   private List getMainMenu() {
     if (sMainMenu == null) {
-      sMainMenu = Application.getMenu(BaseApp.messages[NewsReader.MSG_APPLICATION], NewsReader.ME_MAINMENU, -1, BaseApp.cEXIT);
+      sMainMenu = Application.getMenu(Application.messages[NewsReader.MSG_APPLICATION], NewsReader.ME_MAINMENU, -1, Application.cEXIT);
     }
     return sMainMenu;
   }
 
   private List getAddFeedMenu() {
     if (sAddFeedMenu == null) {
-      sAddFeedMenu = Application.getMenu(BaseApp.messages[NewsReader.MSG_ME_ADDFEED], NewsReader.ME_ADDFEED, -1, BaseApp.cBACK);
+      sAddFeedMenu = Application.getMenu(Application.messages[NewsReader.MSG_ME_ADDFEED], NewsReader.ME_ADDFEED, -1, Application.cBACK);
     }
     return sAddFeedMenu;
   }
 
   private Form getAddFeedURL() {
     if (sAddFeedURL == null) {
-      iTitle = new TextField(BaseApp.messages[NewsReader.MSG_FM_FEEDTITLE], NewsReader.STR_EMPTY, 64, TextField.ANY);
-      iURL = new TextField(BaseApp.messages[NewsReader.MSG_FM_FEEDURL], BaseApp.messages[NewsReader.MSG_FM_HTTP], 256, TextField.URL);
-      sAddFeedURL = new Form(BaseApp.messages[NewsReader.MSG_FM_ADDFEED]);
-      BaseApp.setup(sAddFeedURL, BaseApp.cBACK, NewsReader.cADDFEEDURL);
+      iTitle = new TextField(Application.messages[NewsReader.MSG_FM_FEEDTITLE], NewsReader.STR_EMPTY, 64, TextField.ANY);
+      iURL = new TextField(Application.messages[NewsReader.MSG_FM_FEEDURL], Application.messages[NewsReader.MSG_FM_HTTP], 256, TextField.URL);
+      sAddFeedURL = new Form(Application.messages[NewsReader.MSG_FM_ADDFEED]);
+      Application.setup(sAddFeedURL, Application.cBACK, NewsReader.cADDFEEDURL);
       sAddFeedURL.append(iTitle);
       sAddFeedURL.append(iURL);
     }
@@ -785,21 +785,21 @@ public class NewsReader extends Application implements Comparator {
    * @return the list of feed titles
    */
   private List getAddFeedBrowseList() {
-    sAddFeedBrowse = new List(BaseApp.messages[NewsReader.MSG_SOMEFEEDS], Choice.MULTIPLE);
-    BaseApp.setup(sAddFeedBrowse, BaseApp.cBACK, null);
+    sAddFeedBrowse = new List(Application.messages[NewsReader.MSG_SOMEFEEDS], Choice.MULTIPLE);
+    Application.setup(sAddFeedBrowse, Application.cBACK, null);
     return sAddFeedBrowse;
   }
 
   private List getCleanUpMenu() {
     if (sCleanUpMenu == null) {
-      sCleanUpMenu = Application.getMenu(BaseApp.messages[NewsReader.MSG_ME_CLEANUP], NewsReader.ME_CLEANUP, -1, BaseApp.cBACK);
+      sCleanUpMenu = Application.getMenu(Application.messages[NewsReader.MSG_ME_CLEANUP], NewsReader.ME_CLEANUP, -1, Application.cBACK);
     }
     return sCleanUpMenu;
   }
 
   public Form getMemoryForm() {
     System.gc();
-    final Form sMemory = new Form(BaseApp.messages[NewsReader.MSG_ME_MEMORY]);
+    final Form sMemory = new Form(Application.messages[NewsReader.MSG_ME_MEMORY]);
     final long used = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024;
     final long free = Runtime.getRuntime().freeMemory() / 1024;
     final RMSInfo info = new RMSInfo();
@@ -822,33 +822,33 @@ public class NewsReader extends Application implements Comparator {
     StringBuffer sb;
     if (infoFeed != null) {
       sb = new StringBuffer(300);
-      sb.append(BaseApp.messages[NewsReader.MSG_DBINFO1]);
+      sb.append(Application.messages[NewsReader.MSG_DBINFO1]);
       sb.append(BaseApp.CR);
       o[0] = new Integer(infoFeed.numRec);
-      sb.append(BaseApp.format(NewsReader.MSG_DBINFO2, o));
+      sb.append(Application.format(NewsReader.MSG_DBINFO2, o));
       sb.append(BaseApp.CR);
       o[0] = new Integer(info.numRec);
-      sb.append(BaseApp.format(NewsReader.MSG_DBINFO3, o));
+      sb.append(Application.format(NewsReader.MSG_DBINFO3, o));
       sb.append(BaseApp.CR);
       o[0] = new Integer(info.used / 1024);
-      sb.append(BaseApp.format(NewsReader.MSG_DBINFO4, o));
+      sb.append(Application.format(NewsReader.MSG_DBINFO4, o));
       sb.append(BaseApp.CR);
       o[0] = new Integer(info.avail / 1024);
-      sb.append(BaseApp.format(NewsReader.MSG_DBINFO5, o));
+      sb.append(Application.format(NewsReader.MSG_DBINFO5, o));
       sb.append(BaseApp.CR);
       sMemory.append(sb.toString());
     }
     sb = new StringBuffer(300);
-    sb.append(BaseApp.messages[NewsReader.MSG_MEMINFO1]);
+    sb.append(Application.messages[NewsReader.MSG_MEMINFO1]);
     sb.append(BaseApp.CR);
     o[0] = new Integer((int) used);
-    sb.append(BaseApp.format(NewsReader.MSG_MEMINFO2, o));
+    sb.append(Application.format(NewsReader.MSG_MEMINFO2, o));
     sb.append(BaseApp.CR);
     o[0] = new Integer((int) free);
-    sb.append(BaseApp.format(NewsReader.MSG_MEMINFO3, o));
+    sb.append(Application.format(NewsReader.MSG_MEMINFO3, o));
     sb.append(BaseApp.CR);
     sMemory.append(sb.toString());
-    BaseApp.setup(sMemory, BaseApp.cBACK, null);
+    Application.setup(sMemory, Application.cBACK, null);
     return sMemory;
   }
 
@@ -858,12 +858,12 @@ public class NewsReader extends Application implements Comparator {
   private List getSelectFeed() {
     /* Perhaps check if the database have changed or not! */
     /* Reset the List */
-    final List sSelectFeed = new List(BaseApp.messages[NewsReader.MSG_FEEDS], Choice.IMPLICIT);
+    final List sSelectFeed = new List(Application.messages[NewsReader.MSG_FEEDS], Choice.IMPLICIT);
     /* Update the hashtable with all the feeds */
     feedsTable = RSSFeed.getIndex(this);
     if ((feedsTable == null) || feedsTable.isEmpty()) {
       sSelectFeed.setSelectCommand(null);
-      sSelectFeed.append(BaseApp.messages[NewsReader.MSG_ERRNOFEEDS], null);
+      sSelectFeed.append(Application.messages[NewsReader.MSG_ERRNOFEEDS], null);
     }
     else {
       sSelectFeed.setSelectCommand(NewsReader.cOPEN);
@@ -872,7 +872,7 @@ public class NewsReader extends Application implements Comparator {
         sSelectFeed.append(p.name, iBullet);
       }
     }
-    BaseApp.setup(sSelectFeed, BaseApp.cBACK, null);
+    Application.setup(sSelectFeed, Application.cBACK, null);
     return sSelectFeed;
   }
 
@@ -882,7 +882,7 @@ public class NewsReader extends Application implements Comparator {
    */
   protected List getFeedMenu() {
     if (sFeedMenu == null) {
-      sFeedMenu = Application.getMenu(NewsReader.STR_EMPTY, NewsReader.ME_FEEDS, -1, BaseApp.cBACK);
+      sFeedMenu = Application.getMenu(NewsReader.STR_EMPTY, NewsReader.ME_FEEDS, -1, Application.cBACK);
     }
     return sFeedMenu;
   }
@@ -894,7 +894,7 @@ public class NewsReader extends Application implements Comparator {
   private Form getFeedInfo() {
     if (sFeedInfo == null) {
       sFeedInfo = new Form(currentFeed.title);
-      BaseApp.setup(sFeedInfo, BaseApp.cBACK, null);
+      Application.setup(sFeedInfo, Application.cBACK, null);
     }
     else {
       sFeedInfo.setTitle(currentFeed.title);
@@ -902,31 +902,31 @@ public class NewsReader extends Application implements Comparator {
     sFeedInfo.deleteAll();
     final StringBuffer feedinfo = new StringBuffer();
     o[0] = currentFeed.description;
-    feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO01, o));
+    feedinfo.append(Application.format(NewsReader.MSG_FEEDINFO01, o));
     feedinfo.append(BaseApp.CR);
     if ((currentFeed.lastUpdateTime > 0)) {
       o[0] = NewsReader.timeDiff(currentFeed.lastUpdateTime, System.currentTimeMillis());
-      feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO02, o));
+      feedinfo.append(Application.format(NewsReader.MSG_FEEDINFO02, o));
       feedinfo.append(BaseApp.CR);
     }
     o[0] = new Integer(currentFeed.minsBetweenUpdates);
-    feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO03, o));
+    feedinfo.append(Application.format(NewsReader.MSG_FEEDINFO03, o));
     feedinfo.append(BaseApp.CR);
     o[0] = new Integer(currentFeed.getItemsCount());
-    feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO04, o));
+    feedinfo.append(Application.format(NewsReader.MSG_FEEDINFO04, o));
     feedinfo.append(BaseApp.CR);
     if (!currentFeed.lastBuildDate.equals(NewsReader.STR_EMPTY)) {
       o[0] = currentFeed.lastBuildDate;
-      feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO05, o));
+      feedinfo.append(Application.format(NewsReader.MSG_FEEDINFO05, o));
       feedinfo.append(BaseApp.CR);
     }
     if ((currentFeed.lastFeedLen > 0)) {
       o[0] = new Integer((int) (currentFeed.lastFeedLen / 1024));
-      feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO06, o).toString());
+      feedinfo.append(Application.format(NewsReader.MSG_FEEDINFO06, o).toString());
       feedinfo.append(BaseApp.CR);
     }
     o[0] = currentFeed.URL;
-    feedinfo.append(BaseApp.format(NewsReader.MSG_FEEDINFO07, o));
+    feedinfo.append(Application.format(NewsReader.MSG_FEEDINFO07, o));
     sFeedInfo.append(feedinfo.toString());
     return sFeedInfo;
   }
@@ -937,12 +937,12 @@ public class NewsReader extends Application implements Comparator {
       oldPos = sNewsList.getSelectedIndex();
     }
     sNewsList = new List(currentFeed.title, Choice.IMPLICIT);
-    BaseApp.setup(sNewsList, BaseApp.cBACK, null);
+    Application.setup(sNewsList, Application.cBACK, null);
     // This might take a little while when feeds have many items Reset the List
     sNewsList.removeCommand(NewsReader.cREAD);
     // Add content to the list
     if ((currentFeed == null) || (currentFeed.getItemsCount() == 0)) {
-      sNewsList.append(BaseApp.messages[NewsReader.MSG_NOITEMS], null);
+      sNewsList.append(Application.messages[NewsReader.MSG_NOITEMS], null);
     }
     else {
       final int nrofitems = currentFeed.getItemsCount();
@@ -970,7 +970,7 @@ public class NewsReader extends Application implements Comparator {
       Image img;
       // Add all the items to the itemlist and to the table
       if (hasPrev) {
-        sNewsList.append(BaseApp.messages[NewsReader.MSG_PREV], null);
+        sNewsList.append(Application.messages[NewsReader.MSG_PREV], null);
       }
       for (int i = 0; i < n; i++) {
         tmpitem = currentFeed.getItem(start + i);
@@ -984,7 +984,7 @@ public class NewsReader extends Application implements Comparator {
         sNewsList.append(tmpitem.title, img);
       }
       if (hasNext) {
-        nextIdx = sNewsList.append(BaseApp.messages[NewsReader.MSG_NEXT], null);
+        nextIdx = sNewsList.append(Application.messages[NewsReader.MSG_NEXT], null);
       }
       else {
         nextIdx = -1;
@@ -1032,7 +1032,7 @@ public class NewsReader extends Application implements Comparator {
     // Print the published date if it exists
     if (!currentItem.pubDate.equals(NewsReader.STR_EMPTY)) {
       o[0] = currentItem.pubDate;
-      itemform.append(BaseApp.format(NewsReader.MSG_FEEDITEMINFO01, o));
+      itemform.append(Application.format(NewsReader.MSG_FEEDITEMINFO01, o));
       itemform.append(BaseApp.sCR);
     }
     if ((currentItem.link != null) && (!currentItem.link.equals(NewsReader.STR_EMPTY))) {
@@ -1041,13 +1041,13 @@ public class NewsReader extends Application implements Comparator {
     else {
       itemform.removeCommand(NewsReader.cGO);
     }
-    BaseApp.setup(itemform, BaseApp.cBACK, null);
+    Application.setup(itemform, Application.cBACK, null);
     // Print the parsed date
     parsecal.setTime(new Date(currentItem.parseTime));
     o[0] = formatDate(parsecal, new StringBuffer()).toString();
     o[1] = formatTime(parsecal, false, new StringBuffer()).toString();
     o[2] = NewsReader.timeDiff(currentItem.parseTime, System.currentTimeMillis());
-    itemform.append(BaseApp.format(NewsReader.MSG_FEEDITEMINFO02, o));
+    itemform.append(Application.format(NewsReader.MSG_FEEDITEMINFO02, o));
     return itemform;
   }
 

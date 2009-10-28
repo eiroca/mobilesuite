@@ -1,6 +1,6 @@
 /** GPL >= 2.0
  * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson <gosta(at)brothas.net>
+ * Copyright (C) 2004 GÃ¶sta Jonasson <gosta(at)brothas.net>
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify
@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.util.Hashtable;
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import org.kxml2.io.KXmlParser;
 import org.xmlpull.v1.XmlPullParser;
@@ -77,8 +78,8 @@ public class FeedUpdateThread extends Thread {
     newitems = 0;
     feed = theFeed;
     itemtable = buildItemTable();
-    sStatus = new StatusScreen(BaseApp.messages[NewsReader.MSG_UPDATETITLE], BaseApp.cOK, NewsReader.cSTOP, null);
-    sStatus.init(BaseApp.messages[NewsReader.MSG_UPDATEST00], MAXSTAT);
+    sStatus = new StatusScreen(Application.messages[NewsReader.MSG_UPDATETITLE], Application.cOK, NewsReader.cSTOP, null);
+    sStatus.init(Application.messages[NewsReader.MSG_UPDATEST00], MAXSTAT);
     start();
   }
 
@@ -98,7 +99,7 @@ public class FeedUpdateThread extends Thread {
       int items = 0;
       newitems = 0;
       String tagname, text;
-      updateStatus(BaseApp.messages[NewsReader.MSG_UPDATEST01], 1);
+      updateStatus(Application.messages[NewsReader.MSG_UPDATEST01], 1);
       // Connect to the url of the feed. Shouldn't it be true???
       httpconnection = (HttpConnection) Connector.open(feed.URL, Connector.READ_WRITE, false);
       /*
@@ -110,15 +111,15 @@ public class FeedUpdateThread extends Thread {
         httpconnection.setRequestProperty(FeedUpdateThread.HEADER_LASTMOD, feed.serverLastModified);
         httpconnection.setRequestProperty(FeedUpdateThread.HEADER_IFNONE, feed.servereTag);
       }
-      updateStatus(BaseApp.messages[NewsReader.MSG_UPDATEST02], 2);
+      updateStatus(Application.messages[NewsReader.MSG_UPDATEST02], 2);
       istream = httpconnection.openInputStream();
-      updateStatus(BaseApp.messages[NewsReader.MSG_UPDATEST03], 3);
+      updateStatus(Application.messages[NewsReader.MSG_UPDATEST03], 3);
 
       final KXmlParser parser = new KXmlParser();
       parser.setInput(new InputStreamReader(istream));
       if (httpconnection.getResponseCode() == HttpConnection.HTTP_NOT_MODIFIED) {
         /* Feed has not been updated */
-        donetext = BaseApp.format(NewsReader.MSG_UPDATEOK01, new Object[] {
+        donetext = Application.format(NewsReader.MSG_UPDATEOK01, new Object[] {
           feed.title
         });
       }
@@ -133,7 +134,7 @@ public class FeedUpdateThread extends Thread {
           feed.servereTag = tmp;
         }
         feed.lastFeedLen = httpconnection.getLength();
-        updateStatus(BaseApp.messages[NewsReader.MSG_UPDATEST04], 4);
+        updateStatus(Application.messages[NewsReader.MSG_UPDATEST04], 4);
         parser.nextTag();
         // <rss> parser.require(parser.START_TAG, null, RSS_TAG);
         parser.nextTag();
@@ -174,7 +175,7 @@ public class FeedUpdateThread extends Thread {
         // We have found the first <item>
         RSSItem tmpitem;
         final long parsetime = System.currentTimeMillis();
-        updateStatus(BaseApp.messages[NewsReader.MSG_UPDATEST05], 5);
+        updateStatus(Application.messages[NewsReader.MSG_UPDATEST05], 5);
         if (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
           do {
             tmpitem = new RSSItem();
@@ -231,7 +232,7 @@ public class FeedUpdateThread extends Thread {
           }
           while ((parser.nextTag() != XmlPullParser.END_TAG) && FeedUpdateThread.TAG_ITEM.equals(parser.getName()));
         }
-        updateStatus(BaseApp.messages[NewsReader.MSG_UPDATEST06], 6);
+        updateStatus(Application.messages[NewsReader.MSG_UPDATEST06], 6);
         /* Save the feed */
         feed.lastUpdateTime = parsetime;
         if (newitems > 0) {
@@ -240,31 +241,31 @@ public class FeedUpdateThread extends Thread {
         o[0] = feed.title;
         o[1] = new Integer(newitems);
         o[2] = new Integer((items - newitems));
-        donetext = BaseApp.format(NewsReader.MSG_UPDATEOK02, o);
+        donetext = Application.format(NewsReader.MSG_UPDATEOK02, o);
         if (feed.lastFeedLen > 0) {
           o[0] = new Integer((int) (feed.lastFeedLen / 1024));
-          donetext += BaseApp.CR + BaseApp.format(NewsReader.MSG_UPDATEOK03, o);
+          donetext += BaseApp.CR + Application.format(NewsReader.MSG_UPDATEOK03, o);
         }
       }
     }
     catch (final IllegalArgumentException e) {
       o[0] = feed.URL;
-      donetext = BaseApp.format(NewsReader.MSG_UPDATEERR01, o);
+      donetext = Application.format(NewsReader.MSG_UPDATEERR01, o);
     }
     catch (final XmlPullParserException e) {
       o[0] = feed.URL;
-      donetext = BaseApp.format(NewsReader.MSG_UPDATEERR02, o);
+      donetext = Application.format(NewsReader.MSG_UPDATEERR02, o);
     }
     catch (final InterruptedException e) {
       o[0] = feed.URL;
-      donetext = BaseApp.format(NewsReader.MSG_UPDATEERR03, o);
+      donetext = Application.format(NewsReader.MSG_UPDATEERR03, o);
     }
     catch (final Exception e) {
       o[0] = feed.URL;
-      donetext = BaseApp.format(NewsReader.MSG_UPDATEERR04, o);
+      donetext = Application.format(NewsReader.MSG_UPDATEERR04, o);
     }
     finally {
-      sStatus.setStatus(BaseApp.messages[NewsReader.MSG_UPDATEST07], MAXSTAT);
+      sStatus.setStatus(Application.messages[NewsReader.MSG_UPDATEST07], MAXSTAT);
       sStatus.append(donetext);
       sStatus.done();
       try {

@@ -1,6 +1,6 @@
 /** GPL >= 2.0
  * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson <gosta(at)brothas.net>
+ * Copyright (C) 2004 GÃ¶sta Jonasson <gosta(at)brothas.net>
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify
