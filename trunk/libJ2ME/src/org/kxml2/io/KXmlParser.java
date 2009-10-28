@@ -30,7 +30,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 /**
- * A simple, pull based XML parser. This classe replaces the kXML 1 XmlParser
+ * A simple, pull based XML parser. This class replaces the kXML 1 XmlParser
  * class and the corresponding event classes.
  */
 
@@ -592,7 +592,7 @@ public class KXmlParser implements XmlPullParser {
 
   /** Sets name and attributes */
 
-  private final void parseStartTag(boolean xmldecl) throws IOException, XmlPullParserException {
+  private final void parseStartTag(final boolean xmldecl) throws IOException, XmlPullParserException {
 
     if (!xmldecl) {
       read();
@@ -773,7 +773,7 @@ public class KXmlParser implements XmlPullParser {
    * parse to whitespace or '>'
    */
 
-  private final void pushText(final int delimiter, boolean resolveEntities) throws IOException, XmlPullParserException {
+  private final void pushText(final int delimiter, final boolean resolveEntities) throws IOException, XmlPullParserException {
 
     int next = peek(0);
     int cbrCount = 0;

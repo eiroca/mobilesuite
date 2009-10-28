@@ -22,6 +22,7 @@ import java.util.Vector;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.StringItem;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 
 public class Debug {
@@ -47,7 +48,7 @@ public class Debug {
     }
     f.addCommand(back);
     f.setCommandListener(app);
-    BaseApp.show(null, f, true);
+    Application.show(null, f, true);
   }
 
   public void addMessage(final String message) {

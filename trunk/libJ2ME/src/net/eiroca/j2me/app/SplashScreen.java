@@ -45,11 +45,11 @@ public class SplashScreen extends Canvas implements SchedulerNotify {
   }
 
   public void show() {
-    BaseApp.show(null, this, false);
+    Application.show(null, this, false);
   }
 
   public void hide() {
-    BaseApp.show(null, next, true);
+    Application.show(null, next, true);
   }
 
   protected void dismiss() {
@@ -82,7 +82,7 @@ public class SplashScreen extends Canvas implements SchedulerNotify {
   public void paint(final Graphics g) {
     final int width = getWidth();
     final int height = getHeight();
-    g.setColor(BaseApp.background);
+    g.setColor(Application.background);
     g.fillRect(0, 0, width, height);
     if (splashImage != null) {
       g.drawImage(splashImage, width / 2, height / 2, Graphics.VCENTER | Graphics.HCENTER);
