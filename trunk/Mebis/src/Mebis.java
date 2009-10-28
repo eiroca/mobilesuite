@@ -18,7 +18,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 import net.eiroca.j2me.mebis.MebisScreen;
@@ -33,7 +33,7 @@ public class Mebis extends GameApp {
 
   public Mebis() {
     super();
-    BaseApp.menu = new short[][] {
+    Application.menu = new short[][] {
         {
             GameApp.ME_MAINMENU, GameApp.MSG_MENU_MAIN_CONTINUE, GameApp.GA_CONTINUE, 0
         }, {
@@ -58,7 +58,7 @@ public class Mebis extends GameApp {
   public void processGameAction(final int action) {
     switch (action) {
       case GA_STARTUP: // Continue
-        BaseApp.show(null, gameMenu, true);
+        Application.show(null, gameMenu, true);
         break;
       case GA_CONTINUE: // Continue
         doGameResume();
