@@ -29,6 +29,7 @@ import javax.microedition.lcdui.game.Sprite;
 import javax.microedition.media.Manager;
 import javax.microedition.media.Player;
 import javax.microedition.media.control.VolumeControl;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
@@ -67,7 +68,7 @@ public final class MineSweeperScreen extends GameScreen {
 
   public MineSweeperScreen(final GameApp midlet) {
     super(midlet, false, true);
-    name = BaseApp.messages[MineSweeper.MSG_NAME];
+    name = Application.messages[MineSweeper.MSG_NAME];
     try {
       pBomb = Manager.createPlayer(getClass().getResourceAsStream(MineSweeper.RES_BOMB), "audio/x-wav");
       pTicTac = Manager.createPlayer(getClass().getResourceAsStream(MineSweeper.RES_CLOCK), "audio/x-wav");
@@ -162,7 +163,7 @@ public final class MineSweeperScreen extends GameScreen {
   }
 
   public void draw(final Graphics g) {
-    g.setColor(BaseApp.background);
+    g.setColor(Application.background);
     if (cur_x < offX) {
       offX--;
     }
@@ -227,7 +228,7 @@ public final class MineSweeperScreen extends GameScreen {
       g.drawImage(iSmile, screenWidth / 2, 2, Graphics.HCENTER | Graphics.TOP);
     }
     if (game.status == MineSweeperGame.GE_RUNNING) {
-      g.setColor(BaseApp.foreground);
+      g.setColor(Application.foreground);
       g.setFont(textFont);
       final int timeElapsed = getElapsed();
       final int min = timeElapsed / 60;

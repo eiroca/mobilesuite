@@ -36,7 +36,7 @@ public class MineInfo {
   public MineInfo(final int x, final int y, final int status, final int status_guess) {
     this.x = x;
     this.y = y;
-    this.status_real = status;
+    status_real = status;
     this.status_guess = status_guess;
   }
 
