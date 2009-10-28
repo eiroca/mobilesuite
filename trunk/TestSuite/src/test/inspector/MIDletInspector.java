@@ -31,7 +31,7 @@ public class MIDletInspector extends AbstractProcessor {
   }
 
   public void execute() {
-    String ver = BaseApp.midlet.readAppProperty("MIDlet-Version", "1.0.0");
+    final String ver = BaseApp.midlet.readAppProperty("MIDlet-Version", "1.0.0");
     addResult("TestSuite", ver);
   }
 
