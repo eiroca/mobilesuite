@@ -113,24 +113,24 @@ public final class TestSuite extends Application implements Observer {
           final DataSender ds = new DataSender(suite);
           ds.addObserver(this);
           ds.submit(url, 400);
-          BaseApp.back(null);
+          Application.back(null);
         }
         break;
       case AC_SHOWINSPECTOR:
         if (fMenuInspector == null) {
           fMenuInspector = new List("Inspectors", Choice.IMPLICIT, INSPECTOR_CAT, null);
-          BaseApp.setup(fMenuInspector, BaseApp.cBACK, null);
-          BaseApp.registerList(fMenuInspector, TestSuite.AC_DOINSPECTOR);
+          Application.setup(fMenuInspector, Application.cBACK, null);
+          Application.registerList(fMenuInspector, TestSuite.AC_DOINSPECTOR);
         }
-        BaseApp.show(null, fMenuInspector, true);
+        Application.show(null, fMenuInspector, true);
         break;
       case AC_SHOWBENCHMARK:
         if (fMenuBenchmark == null) {
           fMenuBenchmark = new List("Benchmark", Choice.IMPLICIT, BENCHMARK_CAT, null);
-          BaseApp.setup(fMenuBenchmark, BaseApp.cBACK, null);
-          BaseApp.registerList(fMenuBenchmark, TestSuite.AC_DOBENCHMARK);
+          Application.setup(fMenuBenchmark, Application.cBACK, null);
+          Application.registerList(fMenuBenchmark, TestSuite.AC_DOBENCHMARK);
         }
-        BaseApp.show(null, fMenuBenchmark, true);
+        Application.show(null, fMenuBenchmark, true);
         break;
       case AC_SHOWCLASSBROWSER:
         if (fClassBrowser == null) {
@@ -140,47 +140,47 @@ public final class TestSuite extends Application implements Observer {
           fClassBrowser = new List("", Choice.IMPLICIT);
           cbPackagePath = "";
           loadClasses();
-          BaseApp.setup(fClassBrowser, cPREV, BaseApp.cBACK);
-          BaseApp.registerList(fClassBrowser, TestSuite.AC_OPENCLASS);
+          Application.setup(fClassBrowser, cPREV, Application.cBACK);
+          Application.registerList(fClassBrowser, TestSuite.AC_OPENCLASS);
         }
-        BaseApp.show(null, fClassBrowser, true);
+        Application.show(null, fClassBrowser, true);
         break;
       case AC_SHOWKEYSTATE:
         if (fKeyState == null) {
           fKeyState = new KeyStateCanvas();
-          BaseApp.setup(fKeyState, BaseApp.cBACK, null);
+          Application.setup(fKeyState, Application.cBACK, null);
         }
-        BaseApp.show(null, fKeyState, true);
+        Application.show(null, fKeyState, true);
         break;
       case AC_SHOWPOSTDATA:
         if (fPostData == null) {
           fPostData = getPostDataForm();
         }
-        BaseApp.show(null, fPostData, true);
+        Application.show(null, fPostData, true);
         break;
       case AC_DOABOUT:
         if (fAbout == null) {
-          fAbout = BaseApp.getTextForm(TestSuite.MSG_ABOUT, "about.txt");
+          fAbout = Application.getTextForm(TestSuite.MSG_ABOUT, "about.txt");
         }
-        BaseApp.show(null, fAbout, true);
+        Application.show(null, fAbout, true);
         break;
       case AC_DOINSPECTOR:
         i = fMenuInspector.getSelectedIndex();
         fSpec = new Form("Inspector: " + INSPECTOR_CAT[i]);
-        BaseApp.setup(fSpec, BaseApp.cBACK, null);
+        Application.setup(fSpec, Application.cBACK, null);
         if (suite != null) {
           suite.export(fSpec, INSPECTOR_CAT[i]);
         }
-        BaseApp.show(null, fSpec, true);
+        Application.show(null, fSpec, true);
         break;
       case AC_DOBENCHMARK:
         i = fMenuBenchmark.getSelectedIndex();
         fSpec = new Form("Benchmark: " + BENCHMARK_CAT[i]);
-        BaseApp.setup(fSpec, BaseApp.cBACK, null);
+        Application.setup(fSpec, Application.cBACK, null);
         if (suite != null) {
           suite.benchmark(fSpec, BENCHMARK_CAT[i]);
         }
-        BaseApp.show(null, fSpec, true);
+        Application.show(null, fSpec, true);
         break;
       case AC_OPENCLASS:
         final int iIdx = fClassBrowser.getSelectedIndex();
@@ -224,7 +224,7 @@ public final class TestSuite extends Application implements Observer {
     super.init();
     try {
       url = readAppProperty("POSTURL", "http://www.eiroca.net/services/testsuite/store.php");
-      BaseApp.messages = BaseApp.readStrings("messages.txt");
+      Application.messages = BaseApp.readStrings("messages.txt");
       final Image[] icons = new Image[6];
       icons[0] = BaseApp.createImage("Specs.png");
       icons[1] = BaseApp.createImage("Specs.png");
@@ -238,28 +238,28 @@ public final class TestSuite extends Application implements Observer {
           "Inspectors", "Benchmark", "Class browser", "Keys", "Post data", "About"
       };
       fMenu = new List("Main Menu", Choice.IMPLICIT, menuDesc, icons);
-      BaseApp.cOK = BaseApp.newCommand(TestSuite.MSG_OK, Command.OK, 30, TestSuite.AC_OK);
-      BaseApp.cBACK = BaseApp.newCommand(TestSuite.MSG_BACK, Command.BACK, 20, BaseApp.AC_BACK);
-      BaseApp.cEXIT = BaseApp.newCommand(TestSuite.MSG_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
-      cPREV = BaseApp.newCommand(TestSuite.MSG_PREV, Command.SCREEN, 1, TestSuite.AC_PREV);
-      BaseApp.registerListItem(fMenu, 0, TestSuite.AC_SHOWINSPECTOR);
-      BaseApp.registerListItem(fMenu, 1, TestSuite.AC_SHOWBENCHMARK);
-      BaseApp.registerListItem(fMenu, 2, TestSuite.AC_SHOWCLASSBROWSER);
-      BaseApp.registerListItem(fMenu, 3, TestSuite.AC_SHOWKEYSTATE);
-      BaseApp.registerListItem(fMenu, 4, TestSuite.AC_SHOWPOSTDATA);
-      BaseApp.registerListItem(fMenu, 5, TestSuite.AC_DOABOUT);
-      BaseApp.setup(fMenu, BaseApp.cEXIT, null);
+      Application.cOK = Application.newCommand(TestSuite.MSG_OK, Command.OK, 30, TestSuite.AC_OK);
+      Application.cBACK = Application.newCommand(TestSuite.MSG_BACK, Command.BACK, 20, Application.AC_BACK);
+      Application.cEXIT = Application.newCommand(TestSuite.MSG_EXIT, Command.EXIT, 10, Application.AC_EXIT);
+      cPREV = Application.newCommand(TestSuite.MSG_PREV, Command.SCREEN, 1, TestSuite.AC_PREV);
+      Application.registerListItem(fMenu, 0, TestSuite.AC_SHOWINSPECTOR);
+      Application.registerListItem(fMenu, 1, TestSuite.AC_SHOWBENCHMARK);
+      Application.registerListItem(fMenu, 2, TestSuite.AC_SHOWCLASSBROWSER);
+      Application.registerListItem(fMenu, 3, TestSuite.AC_SHOWKEYSTATE);
+      Application.registerListItem(fMenu, 4, TestSuite.AC_SHOWPOSTDATA);
+      Application.registerListItem(fMenu, 5, TestSuite.AC_DOABOUT);
+      Application.setup(fMenu, Application.cEXIT, null);
     }
     catch (final Exception e) {
       fMenu.setTitle(e.getMessage());
     }
-    BaseApp.show(null, fMenu, true);
+    Application.show(null, fMenu, true);
   }
 
   private Form getPostDataForm() {
     final Form f = new Form("Post Data");
     f.append("Post data to server " + url);
-    BaseApp.setup(f, BaseApp.cBACK, BaseApp.cOK);
+    Application.setup(f, Application.cBACK, Application.cOK);
     return f;
   }
 
