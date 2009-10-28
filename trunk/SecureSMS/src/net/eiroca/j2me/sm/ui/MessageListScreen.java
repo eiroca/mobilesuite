@@ -25,7 +25,7 @@ import java.util.Date;
 import javax.microedition.lcdui.Choice;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.List;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.sm.data.SecureMessage;
 import net.eiroca.j2me.sm.data.SecureMessageStore;
 import net.eiroca.j2me.sm.util.Store;
@@ -45,12 +45,12 @@ public class MessageListScreen extends List {
    * Creates new MessageStoreScreen
    */
   public MessageListScreen(final int title, final Command del, final Command reply, final Command invalid) {
-    super(BaseApp.messages[title], Choice.IMPLICIT);
+    super(Application.messages[title], Choice.IMPLICIT);
     // Add commands
     this.del = del;
     this.reply = reply;
     this.invalid = invalid;
-    BaseApp.setup(this, BaseApp.cBACK, null);
+    Application.setup(this, Application.cBACK, null);
   }
 
   /**

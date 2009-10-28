@@ -24,7 +24,7 @@ import javax.microedition.lcdui.Choice;
 import javax.microedition.lcdui.ChoiceGroup;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.TextField;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.sm.data.Address;
 import net.eiroca.j2me.sm.data.AddressStore;
 import net.eiroca.j2me.sm.data.SecureMessage;
@@ -46,13 +46,13 @@ public class SendNewScreen extends Form {
    * Creates new MessageScreen.
    */
   public SendNewScreen() {
-    super(BaseApp.messages[SecureSMS.MSG_NEWMESSAGE]);
+    super(Application.messages[SecureSMS.MSG_NEWMESSAGE]);
     // Create and add the form items
-    text = new TextField(BaseApp.messages[SecureSMS.MSG_TEXT], "", SendNewScreen.MAX_TEXT_LENGTH, TextField.ANY);
-    addresses = new ChoiceGroup(BaseApp.messages[SecureSMS.MSG_TO], Choice.EXCLUSIVE);
+    text = new TextField(Application.messages[SecureSMS.MSG_TEXT], "", SendNewScreen.MAX_TEXT_LENGTH, TextField.ANY);
+    addresses = new ChoiceGroup(Application.messages[SecureSMS.MSG_TO], Choice.EXCLUSIVE);
     append(text);
     append(addresses);
-    BaseApp.setup(this, BaseApp.cBACK, SecureSMS.cSENDNEW);
+    Application.setup(this, Application.cBACK, SecureSMS.cSENDNEW);
   }
 
   /**

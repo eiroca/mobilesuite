@@ -21,7 +21,7 @@ import SecureSMS;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.StringItem;
 import javax.microedition.lcdui.TextField;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 
 public class InsertPINScreen extends Form {
 
@@ -32,13 +32,13 @@ public class InsertPINScreen extends Form {
   private final TextField pinText;
 
   public InsertPINScreen(final int title) {
-    super(BaseApp.messages[title]);
+    super(Application.messages[title]);
     // Create and add the form items
     err = new StringItem(null, null);
-    pinText = new TextField(BaseApp.messages[SecureSMS.MSG_PIN], "", InsertPINScreen.MAX_PIN_LENGTH, TextField.NUMERIC);
+    pinText = new TextField(Application.messages[SecureSMS.MSG_PIN], "", InsertPINScreen.MAX_PIN_LENGTH, TextField.NUMERIC);
     append(err);
     append(pinText);
-    BaseApp.setup(this, SecureSMS.cPINOK, null);
+    Application.setup(this, SecureSMS.cPINOK, null);
   }
 
   public String getPIN() {
