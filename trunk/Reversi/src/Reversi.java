@@ -22,7 +22,7 @@ import javax.microedition.lcdui.Choice;
 import javax.microedition.lcdui.ChoiceGroup;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 import net.eiroca.j2me.game.tpg.GameMinMax;
@@ -63,7 +63,7 @@ public class Reversi extends GameApp {
 
   public Reversi() {
     super();
-    BaseApp.menu = new short[][] {
+    Application.menu = new short[][] {
         {
             GameApp.ME_MAINMENU, GameApp.MSG_MENU_MAIN_CONTINUE, GameApp.GA_CONTINUE, 0
         }, {
@@ -82,7 +82,7 @@ public class Reversi extends GameApp {
   public void init() {
     super.init();
     Reversi.playerNames = new String[] {
-        BaseApp.messages[Reversi.MSG_NAMEPLAYER1], BaseApp.messages[Reversi.MSG_NAMEPLAYER2]
+        Application.messages[Reversi.MSG_NAMEPLAYER1], Application.messages[Reversi.MSG_NAMEPLAYER2]
     };
   }
 
@@ -91,18 +91,18 @@ public class Reversi extends GameApp {
   }
 
   protected Displayable getOptions() {
-    final Form form = new Form(BaseApp.messages[GameApp.MSG_MENU_MAIN_OPTIONS]);
-    opPlayers = new ChoiceGroup(BaseApp.messages[Reversi.MSG_GAMEMODE], Choice.EXCLUSIVE);
-    opPlayers.append(BaseApp.messages[Reversi.MSG_GAMEMODE1], null);
-    opPlayers.append(BaseApp.messages[Reversi.MSG_GAMEMODE2], null);
-    opLevel = new ChoiceGroup(BaseApp.messages[Reversi.MSG_AILEVEL], Choice.EXCLUSIVE);
-    opLevel.append(BaseApp.messages[Reversi.MSG_AILEVEL1], null);
-    opLevel.append(BaseApp.messages[Reversi.MSG_AILEVEL2], null);
-    opLevel.append(BaseApp.messages[Reversi.MSG_AILEVEL3], null);
-    opLevel.append(BaseApp.messages[Reversi.MSG_AILEVEL4], null);
+    final Form form = new Form(Application.messages[GameApp.MSG_MENU_MAIN_OPTIONS]);
+    opPlayers = new ChoiceGroup(Application.messages[Reversi.MSG_GAMEMODE], Choice.EXCLUSIVE);
+    opPlayers.append(Application.messages[Reversi.MSG_GAMEMODE1], null);
+    opPlayers.append(Application.messages[Reversi.MSG_GAMEMODE2], null);
+    opLevel = new ChoiceGroup(Application.messages[Reversi.MSG_AILEVEL], Choice.EXCLUSIVE);
+    opLevel.append(Application.messages[Reversi.MSG_AILEVEL1], null);
+    opLevel.append(Application.messages[Reversi.MSG_AILEVEL2], null);
+    opLevel.append(Application.messages[Reversi.MSG_AILEVEL3], null);
+    opLevel.append(Application.messages[Reversi.MSG_AILEVEL4], null);
     form.append(opPlayers);
     form.append(opLevel);
-    BaseApp.setup(form, BaseApp.cBACK, BaseApp.cOK);
+    Application.setup(form, Application.cBACK, Application.cOK);
     return form;
   }
 
