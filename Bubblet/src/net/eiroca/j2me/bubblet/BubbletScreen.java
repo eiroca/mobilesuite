@@ -23,7 +23,7 @@ package net.eiroca.j2me.bubblet;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
@@ -46,10 +46,10 @@ public class BubbletScreen extends GameScreen {
 
   public BubbletScreen(final GameApp pMidlet, final int pFieldWidth, final int pFieldHeight) {
     super(pMidlet, false, true);
-    name = BaseApp.messages[BubbletScreen.MSG_NAME];
+    name = Application.messages[BubbletScreen.MSG_NAME];
     f = Font.getDefaultFont();
-    int resX = 1;
-    int resY = 1 + f.getHeight();
+    final int resX = 1;
+    final int resY = 1 + f.getHeight();
     // Set the Display of our application
     cellWidth = (screenWidth - resX) / pFieldWidth;
     cellHeight = (screenHeight - resY) / pFieldHeight;
@@ -68,7 +68,7 @@ public class BubbletScreen extends GameScreen {
   }
 
   public boolean tick() {
-    screen.setColor(BaseApp.background);
+    screen.setColor(Application.background);
     screen.fillRect(0, 0, screenWidth, screenHeight);
     drawWholeBoard(screen);
     drawCross(screen, cross_x, cross_y);
@@ -76,7 +76,7 @@ public class BubbletScreen extends GameScreen {
   }
 
   private void drawWholeBoard(final Graphics g) {
-    g.setColor(BaseApp.foreground);
+    g.setColor(Application.foreground);
     g.drawString("Score: " + score.getScore(), off_x, 0, Graphics.TOP | Graphics.LEFT);
     for (int x = 0; x < game.fieldWidth; x++) {
       for (int y = 0; y < game.fieldHeight; y++) {
@@ -85,7 +85,7 @@ public class BubbletScreen extends GameScreen {
     }
     final int x1 = game.fieldWidth * cellWidth;
     final int y1 = game.fieldHeight * cellHeight;
-    g.setColor(BaseApp.foreground);
+    g.setColor(Application.foreground);
     g.drawRect(off_x, off_y, x1, y1);
   }
 
@@ -96,10 +96,10 @@ public class BubbletScreen extends GameScreen {
     final int y2 = off_y + y * cellHeight + cellHeight;
     final int me = game.field[x][y];
     if (me == BubbletGame.BLACK) {
-      g.setColor(BaseApp.foreground);
+      g.setColor(Application.foreground);
     }
     else {
-      g.setColor(BaseApp.background);
+      g.setColor(Application.background);
     }
     g.drawLine(x1, y1, x2, y2);
     g.drawLine(x2, y1, x1, y2);
@@ -116,7 +116,7 @@ public class BubbletScreen extends GameScreen {
     final int x1 = off_x + x * cellWidth;
     final int y1 = off_y + y * cellHeight;
     g.fillRect(x1, y1, cellWidth, cellHeight);
-    g.setColor(BaseApp.background);
+    g.setColor(Application.background);
     // g.drawRect(x1, y1, cellWidth, cellHeight);
     if (x > 0) {
       next = game.field[x - 1][y];
