@@ -1,6 +1,6 @@
 /** GPL >= 2.0
  * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson
+ * Copyright (C) 2004 GÃ¶sta Jonasson <gosta(at)brothas.net>
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Gauge;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 
 public class StatusScreen extends Form implements CommandListener {
 
@@ -53,10 +53,10 @@ public class StatusScreen extends Form implements CommandListener {
     removeCommand(cOK);
     addCommand(cSTOP);
     if (next == null) {
-      BaseApp.show(null, this, true);
+      Application.show(null, this, true);
     }
     else {
-      BaseApp.show(null, this, false);
+      Application.show(null, this, false);
     }
   }
 
@@ -83,10 +83,10 @@ public class StatusScreen extends Form implements CommandListener {
     }
     else {
       if (next == null) {
-        BaseApp.back(null);
+        Application.back(null);
       }
       else {
-        BaseApp.show(null, next, true);
+        Application.show(null, next, true);
       }
     }
   }

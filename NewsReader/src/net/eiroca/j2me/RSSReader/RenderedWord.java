@@ -1,6 +1,6 @@
 /** GPL >= 2.0
  * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson <gosta(at)brothas.net>
+ * Copyright (C) 2004 GÃ¶sta Jonasson <gosta(at)brothas.net>
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software; you can redistribute it and/or modify
@@ -83,36 +83,36 @@ public class RenderedWord {
       else {
         if (tmpText.charAt(index) == '<') {
           endTagIndex = tmpText.indexOf(">", index);
-          tag = tmpText.substring(index + 1, endTagIndex).toLowerCase();
-          if (tag.equalsIgnoreCase("tit")) {
+          tag = tmpText.substring(index + 1, endTagIndex).trim().toLowerCase();
+          if (tag.equals("tit")) {
             color = colTit;
             style = style + Font.STYLE_BOLD;
           }
-          if (tag.equalsIgnoreCase("/tit")) {
+          if (tag.equals("/tit")) {
             color = colTxt;
             style = style - Font.STYLE_BOLD;
             row = row + 14 * RenderedWord.heightFont / 10;
             offset = 0;
           }
-          if (tag.equalsIgnoreCase("b")) {
+          if (tag.equals("b")) {
             style = style + Font.STYLE_BOLD;
           }
-          if (tag.equalsIgnoreCase("/b")) {
+          if (tag.equals("/b")) {
             style = style - Font.STYLE_BOLD;
           }
-          if (tag.equalsIgnoreCase("i")) {
+          if (tag.equals("i")) {
             style = style + Font.STYLE_ITALIC;
           }
-          if (tag.equalsIgnoreCase("/i")) {
+          if (tag.equals("/i")) {
             style = style - Font.STYLE_ITALIC;
           }
-          if (tag.equalsIgnoreCase("u")) {
+          if (tag.equals("u")) {
             style = style + Font.STYLE_UNDERLINED;
           }
-          if (tag.equalsIgnoreCase("/u")) {
+          if (tag.equals("/u")) {
             style = style - Font.STYLE_UNDERLINED;
           }
-          if ((tag.equalsIgnoreCase("br")) || (tag.equalsIgnoreCase("br/"))) {
+          if ((tag.equals("br")) || (tag.equals("br/"))) {
             row = row + RenderedWord.heightFont;
             offset = 0;
           }
@@ -153,7 +153,7 @@ public class RenderedWord {
               }
             }
           }
-          if ((word != null) && (!word.equals(""))) {
+          if (!BaseApp.isEmpty(word)) {
             final int l = RenderedWord.font[style].stringWidth(word);
             int pos = offset;
             if ((offset + l) < width) {
