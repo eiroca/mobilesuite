@@ -25,7 +25,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
 import javax.microedition.lcdui.game.LayerManager;
 import javax.microedition.lcdui.game.Sprite;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
@@ -56,7 +56,7 @@ public final class PacManScreen extends GameScreen {
 
   public PacManScreen(final GameApp midlet, final boolean suppressKeys, final boolean fullScreen) {
     super(midlet, suppressKeys, fullScreen);
-    name = BaseApp.messages[PacMan.MSG_PACMAN_NAME];
+    name = Application.messages[PacMan.MSG_PACMAN_NAME];
     layerManager = new LayerManager();
     pacman = new PacmanSprite(this);
     clyde = new GhostSprite(this, 0);
@@ -72,7 +72,7 @@ public final class PacManScreen extends GameScreen {
     layerManager.append(field);
     font = Font.getDefaultFont();
     fontHeight = font.getHeight();
-    scrLivPosX = font.stringWidth(BaseApp.messages[PacMan.MSG_PACMAN_LIVES]);
+    scrLivPosX = font.stringWidth(Application.messages[PacMan.MSG_PACMAN_LIVES]);
     scrLivPosY = screenHeight - fontHeight - 1;
     scrLivSiz = fontHeight - 2;
     scrLivOff = fontHeight;
@@ -181,7 +181,7 @@ public final class PacManScreen extends GameScreen {
 
   public void draw() {
     // clear screen to black
-    screen.setColor(BaseApp.background);
+    screen.setColor(Application.background);
     screen.fillRect(0, 0, screenWidth, screenHeight);
     // draw background and sprites
     int dx = origin(pacman.getX() + pacman.getWidth() / 2, field.getWidth(), screenWidth);
@@ -193,13 +193,13 @@ public final class PacManScreen extends GameScreen {
     screen.translate(-dx, -dy);
     screen.setClip(0, 0, screenWidth, screenHeight);
     // display live & score
-    screen.setColor(BaseApp.background);
+    screen.setColor(Application.background);
     screen.fillRect(0, screenHeight - fontHeight, screenWidth, fontHeight);
-    screen.setColor(BaseApp.foreground);
+    screen.setColor(Application.foreground);
     screen.setFont(font);
     screen.drawString(Integer.toString(score.getScore()), screenWidth - 1, screenHeight, Graphics.BOTTOM | Graphics.RIGHT);
-    screen.drawString(BaseApp.messages[PacMan.MSG_PACMAN_LIVES], 1, screenHeight, Graphics.BOTTOM | Graphics.LEFT);
-    screen.setColor(BaseApp.foreground);
+    screen.drawString(Application.messages[PacMan.MSG_PACMAN_LIVES], 1, screenHeight, Graphics.BOTTOM | Graphics.LEFT);
+    screen.setColor(Application.foreground);
     final int lives = score.getLives();
     if (lives > 1) {
       screen.fillArc(scrLivPosX, scrLivPosY, scrLivSiz, scrLivSiz, 45, 270);
@@ -211,16 +211,16 @@ public final class PacManScreen extends GameScreen {
 
   public void draw_level() {
     String slevel;
-    slevel = BaseApp.messages[PacMan.MSG_PACMAN_LEVEL] + Integer.toString(score.getLevel());
+    slevel = Application.messages[PacMan.MSG_PACMAN_LEVEL] + Integer.toString(score.getLevel());
     screen.setFont(Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_LARGE));
     final int centerX = screenWidth / 2;
     final int centerY = screenHeight / 2;
-    screen.setColor(BaseApp.background);
+    screen.setColor(Application.background);
     screen.drawString(slevel, centerX, centerY - 1, Graphics.BOTTOM | Graphics.HCENTER);
     screen.drawString(slevel, centerX, centerY + 1, Graphics.BOTTOM | Graphics.HCENTER);
     screen.drawString(slevel, centerX - 1, centerY, Graphics.BOTTOM | Graphics.HCENTER);
     screen.drawString(slevel, centerX + 1, centerY, Graphics.BOTTOM | Graphics.HCENTER);
-    screen.setColor(BaseApp.foreground);
+    screen.setColor(Application.foreground);
     screen.drawString(slevel, centerX, centerY, Graphics.BOTTOM | Graphics.HCENTER);
   }
 

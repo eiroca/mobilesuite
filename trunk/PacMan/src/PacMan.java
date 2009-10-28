@@ -18,7 +18,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 import net.eiroca.j2me.game.GameUISettings;
@@ -38,10 +38,10 @@ public class PacMan extends GameApp {
   public PacMan() {
     super();
 
-    BaseApp.background = 0x00000000;
-    BaseApp.foreground = 0x00FFFF00;
+    Application.background = 0x00000000;
+    Application.foreground = 0x00FFFF00;
 
-    BaseApp.menu = new short[][] {
+    Application.menu = new short[][] {
         {
             GameApp.ME_MAINMENU, GameApp.MSG_MENU_MAIN_CONTINUE, GameApp.GA_CONTINUE, 0
         }, {
