@@ -19,14 +19,13 @@
  * IN THE SOFTWARE. */
 
 import java.io.IOException;
-
 import net.eiroca.j2me.xml.XmlReader;
 
 public class EventList {
 
-  public static void main(String[] args) throws IOException {
+  public static void main(final String[] args) throws IOException {
 
-    XmlReader xr = null;
+    final XmlReader xr = null;
     while (xr.next() != XmlReader.END_DOCUMENT) {
       System.out.println(xr.getPositionDescription());
     }

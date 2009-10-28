@@ -6,7 +6,7 @@ public final class FireDemo extends MIDlet implements Runnable {
   FireCanvas canvas;
 
   public void startApp() {
-    Display display = Display.getDisplay(this);
+    final Display display = Display.getDisplay(this);
     canvas = new FireCanvas(this, Display.getDisplay(this));
     display.setCurrent(canvas);
     // Starts painting thread
@@ -19,7 +19,7 @@ public final class FireDemo extends MIDlet implements Runnable {
     //
   }
 
-  public void destroyApp(boolean unconditional) {
+  public void destroyApp(final boolean unconditional) {
     //
   }
 
@@ -29,7 +29,7 @@ public final class FireDemo extends MIDlet implements Runnable {
       try {
         Thread.sleep(10);
       }
-      catch (Exception e) {
+      catch (final Exception e) {
         //
       }
     }

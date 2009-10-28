@@ -6,8 +6,7 @@
  * of the License, or (at your option) any later version.
  */
 import javax.microedition.lcdui.game.GameCanvas;
-
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
@@ -38,9 +37,9 @@ public final class EGameScreen extends GameScreen {
 
   public void draw() {
     // clear screen to black
-    screen.setColor(BaseApp.background);
+    screen.setColor(Application.background);
     screen.fillRect(0, 0, screenWidth, screenHeight);
-    screen.setColor(BaseApp.foreground);
+    screen.setColor(Application.foreground);
     screen.fillArc(0, 0, 50, 50, 45, 270);
     screen.drawString("Score: " + score.getScore(), 0, 75, 0);
   }
