@@ -110,14 +110,14 @@ public abstract class GameApp extends Application {
    */
   public void init() {
     super.init();
-    BaseApp.messages = BaseApp.readStrings(GameApp.RES_MSGS);
-    BaseApp.icons = BaseApp.splitImages(GameApp.RES_MENUICON, 7, 12, 12);
+    Application.messages = BaseApp.readStrings(GameApp.RES_MSGS);
+    Application.icons = BaseApp.splitImages(GameApp.RES_MENUICON, 7, 12, 12);
     GameApp.highscore = new ScoreManager(GameApp.RMS_HIGHSCORE, GameApp.hsName, GameApp.hsMaxLevel, GameApp.hsMaxScore, true);
     GameApp.game = getGameScreen();
-    BaseApp.cOK = BaseApp.newCommand(GameApp.MSG_LABEL_OK, Command.OK, 30, BaseApp.AC_NONE);
-    BaseApp.cBACK = BaseApp.newCommand(GameApp.MSG_LABEL_BACK, Command.BACK, 20, BaseApp.AC_BACK);
-    BaseApp.cEXIT = BaseApp.newCommand(GameApp.MSG_LABEL_EXIT, Command.EXIT, 10, BaseApp.AC_EXIT);
-    gameMenu = Application.getMenu(GameApp.game.name, GameApp.ME_MAINMENU, GameApp.GA_CONTINUE, BaseApp.cEXIT);
+    Application.cOK = Application.newCommand(GameApp.MSG_LABEL_OK, Command.OK, 30, Application.AC_NONE);
+    Application.cBACK = Application.newCommand(GameApp.MSG_LABEL_BACK, Command.BACK, 20, Application.AC_BACK);
+    Application.cEXIT = Application.newCommand(GameApp.MSG_LABEL_EXIT, Command.EXIT, 10, Application.AC_EXIT);
+    gameMenu = Application.getMenu(GameApp.game.name, GameApp.ME_MAINMENU, GameApp.GA_CONTINUE, Application.cEXIT);
     processGameAction(GameApp.GA_STARTUP);
   }
 
@@ -125,7 +125,7 @@ public abstract class GameApp extends Application {
    * Resume the game
    */
   public void resume() {
-    BaseApp.show(null, gameMenu, true);
+    Application.show(null, gameMenu, true);
   }
 
   /**
@@ -160,13 +160,13 @@ public abstract class GameApp extends Application {
     if (d == gameMenu) {
       int index = gameMenu.getSelectedIndex();
       if (!isActive()) {
-        if (index >= BaseApp.pSpecial) {
+        if (index >= Application.pSpecial) {
           index++;
         }
       }
-      gameAction = BaseApp.menu[index][BaseApp.MD_MENUAC];
+      gameAction = Application.menu[index][Application.MD_MENUAC];
     }
-    else if (c == BaseApp.cOK) {
+    else if (c == Application.cOK) {
       if (d == gameSettings) {
         gameAction = GameApp.GA_APPLYSETTINGS;
       }
@@ -177,11 +177,11 @@ public abstract class GameApp extends Application {
         gameAction = GameApp.GA_NEWHIGHSCORE;
       }
     }
-    if (c == BaseApp.cEXIT) {
+    if (c == Application.cEXIT) {
       BaseApp.midlet.notifyDestroyed();
     }
-    else if (c == BaseApp.cBACK) {
-      BaseApp.back(null);
+    else if (c == Application.cBACK) {
+      Application.back(null);
     }
     else {
       processGameAction(gameAction);
@@ -210,7 +210,7 @@ public abstract class GameApp extends Application {
       BaseApp.setDisplay(splash);
     }
     else {
-      BaseApp.show(null, gameMenu, true);
+      Application.show(null, gameMenu, true);
     }
   }
 
@@ -220,7 +220,7 @@ public abstract class GameApp extends Application {
   public void doGameAbort() {
     if (isActive()) {
       GameApp.game.done();
-      gameMenu.delete(BaseApp.pSpecial);
+      gameMenu.delete(Application.pSpecial);
     }
   }
 
@@ -229,10 +229,10 @@ public abstract class GameApp extends Application {
    */
   public void doGameStart() {
     doGameAbort();
-    Application.insertMenuItem(gameMenu, BaseApp.pSpecial, BaseApp.menu[BaseApp.pSpecial]);
+    Application.insertMenuItem(gameMenu, Application.pSpecial, Application.menu[Application.pSpecial]);
     GameApp.game.init();
     GameApp.game.show();
-    BaseApp.show(null, GameApp.game, true);
+    Application.show(null, GameApp.game, true);
   }
 
   /**
@@ -241,7 +241,7 @@ public abstract class GameApp extends Application {
   public void doGameResume() {
     if (isActive()) {
       GameApp.game.show();
-      BaseApp.show(null, GameApp.game, true);
+      Application.show(null, GameApp.game, true);
     }
   }
 
@@ -251,7 +251,7 @@ public abstract class GameApp extends Application {
   public void doGamePause() {
     if (isActive()) {
       GameApp.game.hide();
-      BaseApp.back(null, gameMenu, true);
+      Application.back(null, gameMenu, true);
     }
   }
 
@@ -262,7 +262,7 @@ public abstract class GameApp extends Application {
     if (isActive()) {
       GameApp.game.hide();
       GameApp.game.done();
-      gameMenu.delete(BaseApp.pSpecial);
+      gameMenu.delete(Application.pSpecial);
       int score = GameApp.game.score.getScore();
       Score hs = null;
       if (GameApp.hsLevel >= GameApp.hsMaxLevel) {
@@ -274,26 +274,26 @@ public abstract class GameApp extends Application {
       if ((score > 0) && (GameApp.highscore.isHighScore(GameApp.hsLevel, GameApp.game.score))) {
         gameNewHighScore = getNewHighScore();
         final StringBuffer buf = new StringBuffer(80);
-        buf.append(BaseApp.messages[GameApp.MSG_TEXT_HIGHSCORE_03]).append(GameApp.game.score.getScore()).append(BaseApp.CR);
+        buf.append(Application.messages[GameApp.MSG_TEXT_HIGHSCORE_03]).append(GameApp.game.score.getScore()).append(BaseApp.CR);
         tScore.setLabel(buf.toString());
         tName.setString(GameApp.game.score.name);
         BaseApp.setDisplay(gameNewHighScore);
       }
       else {
         final String[] msg = new String[3];
-        msg[0] = BaseApp.messages[GameApp.MSG_TEXT_GAMEOVER_01];
+        msg[0] = Application.messages[GameApp.MSG_TEXT_GAMEOVER_01];
         if (score > 0) {
-          msg[1] = BaseApp.messages[GameApp.MSG_TEXT_GAMEOVER_02] + score;
+          msg[1] = Application.messages[GameApp.MSG_TEXT_GAMEOVER_02] + score;
         }
         if (hs != null) {
-          msg[2] = BaseApp.messages[GameApp.MSG_TEXT_GAMEOVER_03] + hs.getScore();
+          msg[2] = Application.messages[GameApp.MSG_TEXT_GAMEOVER_03] + hs.getScore();
         }
         GameApp.flashBacklight(1000);
         BaseApp.setDisplay(new GameUIMessage(msg, gameMenu));
       }
     }
     else {
-      BaseApp.back(null, gameMenu, false);
+      Application.back(null, gameMenu, false);
     }
   }
 
@@ -303,23 +303,23 @@ public abstract class GameApp extends Application {
   public void doSetNewHighScore() {
     GameApp.game.score.name = tName.getString();
     GameApp.highscore.addNewScore(GameApp.hsLevel, GameApp.game.score);
-    BaseApp.back(null, gameMenu, true);
+    Application.back(null, gameMenu, true);
   }
 
   /**
    * Show About
    */
   public void doAbout() {
-    final Displayable d = BaseApp.getTextForm(GameApp.MSG_MENU_MAIN_ABOUT, GameApp.RES_ABOUT);
-    BaseApp.show(null, d, true);
+    final Displayable d = Application.getTextForm(GameApp.MSG_MENU_MAIN_ABOUT, GameApp.RES_ABOUT);
+    Application.show(null, d, true);
   }
 
   /**
    * Show help
    */
   public void doHelp() {
-    final Displayable d = BaseApp.getTextForm(GameApp.MSG_MENU_MAIN_HELP, GameApp.RES_HELP);
-    BaseApp.show(null, d, true);
+    final Displayable d = Application.getTextForm(GameApp.MSG_MENU_MAIN_HELP, GameApp.RES_HELP);
+    Application.show(null, d, true);
   }
 
   /**
@@ -327,7 +327,7 @@ public abstract class GameApp extends Application {
    */
   public void doHighScore() {
     final Displayable d = getHighScore();
-    BaseApp.show(null, d, true);
+    Application.show(null, d, true);
   }
 
   /**
@@ -337,14 +337,14 @@ public abstract class GameApp extends Application {
     if (gameOptions == null) {
       gameOptions = getOptions();
     }
-    BaseApp.show(null, gameOptions, true);
+    Application.show(null, gameOptions, true);
   }
 
   /**
    * Apply the game options
    */
   public void doApplyOptions() {
-    BaseApp.back(null);
+    Application.back(null);
   }
 
   /**
@@ -355,7 +355,7 @@ public abstract class GameApp extends Application {
       gameSettings = getSettings();
     }
     GameUISettings.setVals();
-    BaseApp.show(null, gameSettings, true);
+    Application.show(null, gameSettings, true);
   }
 
   /**
@@ -363,7 +363,7 @@ public abstract class GameApp extends Application {
    */
   public void doApplySettings() {
     GameUISettings.getVals();
-    BaseApp.back(null);
+    Application.back(null);
   }
 
   /**
@@ -379,10 +379,10 @@ public abstract class GameApp extends Application {
    * @return
    */
   protected Displayable getHighScore() {
-    final Form form = new Form(BaseApp.messages[GameApp.MSG_MENU_MAIN_HIGHSCORE]);
+    final Form form = new Form(Application.messages[GameApp.MSG_MENU_MAIN_HIGHSCORE]);
     final Vector scores = GameApp.highscore.getList(GameApp.hsLevel);
     if (scores.size() == 0) {
-      form.append(BaseApp.messages[GameApp.MSG_TEXT_HIGHSCORE_01]);
+      form.append(Application.messages[GameApp.MSG_TEXT_HIGHSCORE_01]);
     }
     else {
       Score s;
@@ -393,7 +393,7 @@ public abstract class GameApp extends Application {
         form.append(buf.toString());
       }
     }
-    BaseApp.setup(form, BaseApp.cBACK, null);
+    Application.setup(form, Application.cBACK, null);
     return form;
   }
 
@@ -402,12 +402,12 @@ public abstract class GameApp extends Application {
    * @return
    */
   protected Displayable getNewHighScore() {
-    final Form form = new Form(BaseApp.messages[GameApp.MSG_TEXT_HIGHSCORE_02]);
-    tScore = new StringItem(BaseApp.messages[GameApp.MSG_TEXT_HIGHSCORE_03], null);
-    tName = new TextField(BaseApp.messages[GameApp.MSG_TEXT_HIGHSCORE_04], "", 8, TextField.INITIAL_CAPS_SENTENCE);
+    final Form form = new Form(Application.messages[GameApp.MSG_TEXT_HIGHSCORE_02]);
+    tScore = new StringItem(Application.messages[GameApp.MSG_TEXT_HIGHSCORE_03], null);
+    tName = new TextField(Application.messages[GameApp.MSG_TEXT_HIGHSCORE_04], "", 8, TextField.INITIAL_CAPS_SENTENCE);
     form.append(tScore);
     form.append(tName);
-    BaseApp.setup(form, BaseApp.cOK, null);
+    Application.setup(form, Application.cOK, null);
     return form;
   }
 

@@ -168,7 +168,7 @@ public class KXmlSerializer implements XmlSerializer {
     }
   }
 
-  private final String getPrefix(final String namespace, final boolean includeDefault, boolean create) throws IOException {
+  private final String getPrefix(final String namespace, final boolean includeDefault, final boolean create) throws IOException {
 
     for (int i = nspCounts[depth + 1] * 2 - 2; i >= 0; i -= 2) {
       if (nspStack[i + 1].equals(namespace) && (includeDefault || !nspStack[i].equals(""))) {

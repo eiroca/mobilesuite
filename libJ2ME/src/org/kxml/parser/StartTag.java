@@ -19,7 +19,7 @@ public class StartTag extends Tag {
    * effects are undefined
    */
 
-  public StartTag(final StartTag parent, final String namespace, final String name, final Vector attributes, final boolean degenerated, boolean processNamespaces) {
+  public StartTag(final StartTag parent, final String namespace, final String name, final Vector attributes, final boolean degenerated, final boolean processNamespaces) {
 
     super(Xml.START_TAG, parent, namespace, name);
 

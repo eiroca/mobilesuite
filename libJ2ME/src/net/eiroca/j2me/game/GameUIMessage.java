@@ -22,7 +22,7 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 
 public class GameUIMessage extends Canvas {
 
@@ -39,17 +39,17 @@ public class GameUIMessage extends Canvas {
   public void paint(final Graphics g) {
     final int width = getWidth();
     final int height = getHeight();
-    g.setColor(BaseApp.background);
+    g.setColor(Application.background);
     g.fillRect(0, 0, width, height);
     g.setFont(Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_LARGE));
     final int centerX = width / 2;
     final int centerY = height / 2;
-    g.setColor(BaseApp.foreground);
+    g.setColor(Application.foreground);
     drawText(g, centerX, centerY - 1);
     drawText(g, centerX, centerY + 1);
     drawText(g, centerX - 1, centerY);
     drawText(g, centerX + 1, centerY);
-    g.setColor(BaseApp.background);
+    g.setColor(Application.background);
     drawText(g, centerX, centerY);
   }
 
@@ -67,7 +67,7 @@ public class GameUIMessage extends Canvas {
   }
 
   public void keyPressed(final int keyCode) {
-    BaseApp.back(null, next, true);
+    Application.back(null, next, true);
   }
 
 }
