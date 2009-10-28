@@ -25,7 +25,7 @@ import java.util.Date;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.StringItem;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.sm.data.SecureMessage;
 
 /**
@@ -40,15 +40,15 @@ public class MessageScreen extends Form {
    * Creates new MessageScreen
    */
   public MessageScreen(final int title, final int addressTitle, final int textTitle, final Command cmd1, final Command cmd2) {
-    super(BaseApp.messages[title]);
+    super(Application.messages[title]);
     // Create the string items
-    address = new StringItem(BaseApp.messages[addressTitle], "");
-    text = new StringItem(BaseApp.messages[textTitle], "");
+    address = new StringItem(Application.messages[addressTitle], "");
+    text = new StringItem(Application.messages[textTitle], "");
     append(address);
     append(text);
     // Add commands
-    addCommand(BaseApp.cBACK);
-    BaseApp.setup(this, cmd1, cmd2);
+    addCommand(Application.cBACK);
+    Application.setup(this, cmd1, cmd2);
   }
 
   /**

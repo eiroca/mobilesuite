@@ -22,6 +22,7 @@ package net.eiroca.j2me.sm.ui;
 import SecureSMS;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.TextField;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.sm.data.Address;
 
@@ -42,15 +43,15 @@ public class AddressScreen extends Form {
    * Creates new <code>AddressScreen</code> instance.
    */
   public AddressScreen(final int title, boolean isNew) {
-    super(BaseApp.messages[title]);
+    super(Application.messages[title]);
     // Create and add the form items
-    name = new TextField(BaseApp.messages[SecureSMS.MSG_NAME], "", AddressScreen.MAX_NAME_LENGTH, TextField.ANY);
-    number = new TextField(BaseApp.messages[SecureSMS.MSG_NUMBER], "", AddressScreen.MAX_NUMBER_LENGTH, TextField.PHONENUMBER);
-    password = new TextField(BaseApp.messages[SecureSMS.MSG_KEY], "", AddressScreen.MAX_PASSWORD_LENGTH, TextField.PASSWORD);
+    name = new TextField(Application.messages[SecureSMS.MSG_NAME], "", AddressScreen.MAX_NAME_LENGTH, TextField.ANY);
+    number = new TextField(Application.messages[SecureSMS.MSG_NUMBER], "", AddressScreen.MAX_NUMBER_LENGTH, TextField.PHONENUMBER);
+    password = new TextField(Application.messages[SecureSMS.MSG_KEY], "", AddressScreen.MAX_PASSWORD_LENGTH, TextField.PASSWORD);
     append(name);
     append(number);
     append(password);
-    BaseApp.setup(this, BaseApp.cBACK, SecureSMS.cADRSAV);
+    Application.setup(this, Application.cBACK, SecureSMS.cADRSAV);
     if (!isNew) {
       addCommand(SecureSMS.cADRDEL);
     }

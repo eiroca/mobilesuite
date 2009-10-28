@@ -22,7 +22,7 @@ package net.eiroca.j2me.sm.ui;
 import SecureSMS;
 import javax.microedition.lcdui.Choice;
 import javax.microedition.lcdui.List;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.sm.data.Address;
 import net.eiroca.j2me.sm.data.AddressStore;
 import net.eiroca.j2me.sm.util.StoreException;
@@ -40,8 +40,8 @@ public class AddressBookScreen extends List {
    */
   public AddressBookScreen() {
     // Create the list
-    super(BaseApp.messages[SecureSMS.MSG_ADDRESSBOOK], Choice.IMPLICIT);
-    BaseApp.setup(this, BaseApp.cBACK, SecureSMS.cADRADD);
+    super(Application.messages[SecureSMS.MSG_ADDRESSBOOK], Choice.IMPLICIT);
+    Application.setup(this, Application.cBACK, SecureSMS.cADRADD);
   }
 
   /**

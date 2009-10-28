@@ -20,7 +20,7 @@ package net.eiroca.j2me.sm.ui;
 import SecureSMS;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.TextField;
-import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.app.Application;
 
 public class PINChangeScreen extends Form {
 
@@ -30,12 +30,12 @@ public class PINChangeScreen extends Form {
   private final TextField pinText;
 
   public PINChangeScreen(final int title) {
-    super(BaseApp.messages[title]);
+    super(Application.messages[title]);
     // Create and add the form items
-    append(BaseApp.messages[SecureSMS.MSG_INSERTPINTEXT]);
-    pinText = new TextField(BaseApp.messages[SecureSMS.MSG_PIN], "", PINChangeScreen.MAX_PIN_LENGTH, TextField.NUMERIC);
+    append(Application.messages[SecureSMS.MSG_INSERTPINTEXT]);
+    pinText = new TextField(Application.messages[SecureSMS.MSG_PIN], "", PINChangeScreen.MAX_PIN_LENGTH, TextField.NUMERIC);
     append(pinText);
-    BaseApp.setup(this, BaseApp.cBACK, SecureSMS.cPINSAV);
+    Application.setup(this, Application.cBACK, SecureSMS.cPINSAV);
     setPIN(null);
   }
 
