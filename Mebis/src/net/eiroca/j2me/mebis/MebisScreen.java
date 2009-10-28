@@ -24,6 +24,7 @@ import Mebis;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
+import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
@@ -66,7 +67,7 @@ public final class MebisScreen extends GameScreen {
 
   public MebisScreen(final GameApp midlet) {
     super(midlet, false, true);
-    name = BaseApp.messages[Mebis.MSG_NAME];
+    name = Application.messages[Mebis.MSG_NAME];
     screenFont = screen.getFont();
     fontHeight = screenFont.getBaselinePosition();
     if (fontHeight <= 2) {
@@ -120,10 +121,10 @@ public final class MebisScreen extends GameScreen {
 
   public void draw() {
     /* background */
-    screen.setColor(BaseApp.background);
+    screen.setColor(Application.background);
     screen.fillRect(0, 0, screenWidth, screenHeight);
     /* game-area */
-    screen.setColor(BaseApp.background);
+    screen.setColor(Application.background);
     screen.fillRect(gameAreaOffX, gameAreaOffY, gameAreaWidth, gameAreaHeight);
     /* draw small lines */
     screen.setColor(0x999999);
@@ -157,18 +158,18 @@ public final class MebisScreen extends GameScreen {
       }
     }
     if (showLost) {
-      drawCenteredTextBox(fontAnchorX, fontAnchorY, BaseApp.messages[Mebis.MSG_LOOSE]);
+      drawCenteredTextBox(fontAnchorX, fontAnchorY, Application.messages[Mebis.MSG_LOOSE]);
     }
     else if (showWon) {
-      drawCenteredTextBox(fontAnchorX, fontAnchorY, BaseApp.messages[Mebis.MSG_WIN]);
+      drawCenteredTextBox(fontAnchorX, fontAnchorY, Application.messages[Mebis.MSG_WIN]);
     }
     /* score-area */
-    screen.setColor(BaseApp.background);
+    screen.setColor(Application.background);
     screen.fillRect(scoreOffX, scoreOffY, scoreWidth, scoreHeight);
-    screen.setColor(BaseApp.foreground);
-    screen.drawString(BaseApp.messages[Mebis.MSG_SCORE], scoreOffX, scoreOffY, Graphics.TOP | Graphics.LEFT);
+    screen.setColor(Application.foreground);
+    screen.drawString(Application.messages[Mebis.MSG_SCORE], scoreOffX, scoreOffY, Graphics.TOP | Graphics.LEFT);
     screen.drawString(String.valueOf(score.getScore()), scoreOffX + 10, scoreOffY + fontHeight, Graphics.TOP | Graphics.LEFT);
-    screen.drawString(BaseApp.messages[Mebis.MSG_LINES], scoreOffX, scoreOffY + 40, Graphics.TOP | Graphics.LEFT);
+    screen.drawString(Application.messages[Mebis.MSG_LINES], scoreOffX, scoreOffY + 40, Graphics.TOP | Graphics.LEFT);
     screen.drawString(String.valueOf(score.getLevel()), scoreOffX + 10, scoreOffY + 40 + fontHeight, Graphics.TOP | Graphics.LEFT);
   }
 
