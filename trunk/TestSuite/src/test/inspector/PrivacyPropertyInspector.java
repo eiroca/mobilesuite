@@ -38,7 +38,7 @@ public class PrivacyPropertyInspector extends AbstractProcessor {
 
   final private void testProp(final String name, final String prop) {
     final Object val = BaseApp.readProperty(prop, null);
-    addResult(name, (val != null ? Boolean.TRUE : null));
+    addResult(name, (val != null ? new Boolean(true) : null));
   }
 
   public void execute() {

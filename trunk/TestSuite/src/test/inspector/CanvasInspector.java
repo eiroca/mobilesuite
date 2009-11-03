@@ -74,7 +74,7 @@ public class CanvasInspector extends AbstractProcessor {
   }
 
   final private void testBool(final String desc, final boolean val) {
-    addResult(desc, (val ? Boolean.TRUE : Boolean.FALSE));
+    addResult(desc, (val ? new Boolean(true) : new Boolean(false)));
   }
 
   final private void testFont(final String desc, final Font f) {
