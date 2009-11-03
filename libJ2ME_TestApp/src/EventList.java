@@ -25,7 +25,7 @@ public class EventList {
 
   public static void main(final String[] args) throws IOException {
 
-    final XmlReader xr = null;
+    final XmlReader xr = new XmlReader(null);
     while (xr.next() != XmlReader.END_DOCUMENT) {
       System.out.println(xr.getPositionDescription());
     }
