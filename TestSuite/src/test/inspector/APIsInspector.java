@@ -37,7 +37,7 @@ public class APIsInspector extends AbstractProcessor {
   }
 
   final private void testClass(final String name, final String clazz) {
-    addResult(name, BaseApp.isClass(clazz) ? Boolean.TRUE : Boolean.FALSE);
+    addResult(name, BaseApp.isClass(clazz) ? new Boolean(true) : new Boolean(false));
   }
 
   public void execute() {
