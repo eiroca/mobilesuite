@@ -20,10 +20,9 @@
 package net.eiroca.j2me.RSSReader;
 
 import NewsReader;
-import java.io.InputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Hashtable;
-import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
@@ -46,10 +45,6 @@ public class FeedUpdateThread extends Thread {
   private static String TAG_LASTBUILDDATE1 = "lastBuildDate";
   private static String TAG_LASTBUILDDATE2 = "dc:date";
   private static String TAG_INFO1 = "info1";
-
-  private static String HEADER_LASTMOD = "Last-Modified";
-  private static String HEADER_IFNONE = "If-None-Match";
-  private static String HEADER_ETAG = "ETag";
 
   public int MAXSTAT = 7;
 
@@ -83,156 +78,143 @@ public class FeedUpdateThread extends Thread {
     start();
   }
 
+  private void parse1(final KXmlParser parser) throws XmlPullParserException, IOException, InterruptedException {
+    String tmp;
+    // skip <?xml>
+    parser.nextTag();
+    // skip <rss>
+    parser.nextTag();
+    // skip <channel>
+    parser.nextTag();
+    // Go through tags about the channel
+    String tagName = parser.getName();
+    while (!FeedUpdateThread.TAG_ITEM.equals(tagName) && (parser.getEventType() != XmlPullParser.END_DOCUMENT)) {
+      if (parser.getEventType() == XmlPullParser.START_TAG) {
+        if ((FeedUpdateThread.TAG_LASTBUILDDATE1.equals(tagName) || FeedUpdateThread.TAG_LASTBUILDDATE2.equals(tagName))) {
+          tmp = parser.nextText();
+          if (tmp != null) {
+            feed.lastBuildDate = tmp;
+          }
+        }
+        else if (FeedUpdateThread.TAG_DESCRIPTION.equals(tagName)) {
+          tmp = parser.nextText();
+          if (tmp != null) {
+            if (NewsReader.stgUseHTML) {
+              feed.description = tmp;
+            }
+            else {
+              feed.description = BaseApp.removeHtml(tmp);
+            }
+          }
+        }
+        else if (FeedUpdateThread.TAG_TITLE.equals(tagName) && feed.title.equals("")) {
+          // Set the title of the feed if its nothing
+          tmp = parser.nextText();
+          if (tmp != null) {
+            feed.title = parser.nextText();
+          }
+        }
+      }
+      parser.next();
+      tagName = parser.getName();
+    }
+  }
+
+  private int parse2(final KXmlParser parser, final long parsetime) throws XmlPullParserException, IOException, InterruptedException {
+    // We have found the first <item>
+    int items = 0;
+    boolean tmp_bool;
+    String tagname;
+    String text;
+    RSSItem tmpitem;
+    if (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
+      do {
+        tmpitem = new RSSItem();
+        // For every item
+        parser.require(XmlPullParser.START_TAG, null, FeedUpdateThread.TAG_ITEM);
+        while (parser.nextTag() != XmlPullParser.END_TAG) {
+          // Go through all the tags within <item>
+          // Modifica per corriere
+          if (FeedUpdateThread.TAG_INFO1.equals(parser.getName())) {
+            tmp_bool = true;
+            while (tmp_bool) {
+              if (parser.nextTag() == XmlPullParser.END_TAG) {
+                if (FeedUpdateThread.TAG_INFO1.equals(parser.getName())) {
+                  tmp_bool = false;
+                }
+              }
+            }
+            parser.nextTag();
+          }
+          // Fine modifiche per corriere
+          parser.require(XmlPullParser.START_TAG, null, null);
+          tagname = parser.getName();
+          text = parser.nextText();
+          if (text != null) {
+            if (FeedUpdateThread.TAG_PUBDATE.equals(tagname)) {
+              tmpitem.pubDate = text;
+            }
+            else if (FeedUpdateThread.TAG_TITLE.equals(tagname)) {
+              tmpitem.title = text;
+            }
+            else if (FeedUpdateThread.TAG_LINK.equals(tagname)) {
+              tmpitem.link = text;
+            }
+            else if (FeedUpdateThread.TAG_IMAGE.equals(tagname)) {
+              tmpitem.image = text;
+            }
+            else if (FeedUpdateThread.TAG_DESCRIPTION.equals(tagname)) {
+              tmpitem.description = text;
+            }
+          }
+          parser.require(XmlPullParser.END_TAG, null, tagname);
+        }
+        parser.require(XmlPullParser.END_TAG, null, FeedUpdateThread.TAG_ITEM);
+        // Add the item if it's new (All items have titles)
+        if (tmpitem.title != null) {
+          items++;
+          if (itemtable.get(tmpitem.title) == null) {
+            newitems++;
+            // A bit ugly hack for correct item ordering
+            tmpitem.parseTime = parsetime - items;
+            feed.addItem(tmpitem);
+          }
+        }
+      }
+      while ((parser.nextTag() != XmlPullParser.END_TAG) && FeedUpdateThread.TAG_ITEM.equals(parser.getName()));
+    }
+    return items;
+  }
+
   /**
-   * Method that starts running in a separate thread when UpdateThread.start()
-   * is called. This is where the downloading, parsing and item adding takes
-   * place. The method checkForInterrupt() is called every now and then to see
-   * if the user wants to abort the update.
+   * Method that starts running in a separate thread when UpdateThread.start() is called. This is where the downloading, parsing and item adding takes place. The method checkForInterrupt() is called
+   * every now and then to see if the user wants to abort the update.
    */
   public void run() {
     String donetext = "";
-    HttpConnection httpconnection = null;
-    InputStream istream = null;
-    boolean tmp_bool;
     final Object[] o = new Object[9];
+    HTTPClient data = null;
     try {
-      int items = 0;
-      newitems = 0;
-      String tagname, text;
       updateStatus(Application.messages[NewsReader.MSG_UPDATEST01], 1);
-      // Connect to the url of the feed. Shouldn't it be true???
-      httpconnection = (HttpConnection) Connector.open(feed.URL, Connector.READ_WRITE, false);
-      /*
-       * Perhaps do a conditional GET request Last-Modified and ETag
-       * If-Modified-Since If-None-Match 304 Not Modified HTTP_NOT_MODIFIED
-       */
-      if (!feed.serverLastModified.equals("")) {
-        httpconnection.setRequestMethod(HttpConnection.GET);
-        httpconnection.setRequestProperty(FeedUpdateThread.HEADER_LASTMOD, feed.serverLastModified);
-        httpconnection.setRequestProperty(FeedUpdateThread.HEADER_IFNONE, feed.servereTag);
-      }
+      newitems = 0;
       updateStatus(Application.messages[NewsReader.MSG_UPDATEST02], 2);
-      istream = httpconnection.openInputStream();
+      data = new HTTPClient(feed);
       updateStatus(Application.messages[NewsReader.MSG_UPDATEST03], 3);
-
-      final KXmlParser parser = new KXmlParser();
-      parser.setInput(new InputStreamReader(istream));
-      if (httpconnection.getResponseCode() == HttpConnection.HTTP_NOT_MODIFIED) {
+      data.open();
+      if (data.resCode == HttpConnection.HTTP_NOT_MODIFIED) {
         /* Feed has not been updated */
         donetext = Application.format(NewsReader.MSG_UPDATEOK01, new Object[] {
           feed.title
         });
       }
       else {
-        String tmp;
-        tmp = httpconnection.getHeaderField(FeedUpdateThread.HEADER_LASTMOD);
-        if (tmp != null) {
-          feed.serverLastModified = tmp;
-        }
-        tmp = httpconnection.getHeaderField(FeedUpdateThread.HEADER_ETAG);
-        if (tmp != null) {
-          feed.servereTag = tmp;
-        }
-        feed.lastFeedLen = httpconnection.getLength();
         updateStatus(Application.messages[NewsReader.MSG_UPDATEST04], 4);
-        // skip <?xml> 
-        parser.nextTag();
-        // skip <rss> 
-        parser.nextTag();
-        // skip <channel> 
-        parser.nextTag();
-        // Go through tags about the channel
-        String tagName = parser.getName();
-        while (!FeedUpdateThread.TAG_ITEM.equals(tagName) && (parser.getEventType() != XmlPullParser.END_DOCUMENT)) {
-          if (parser.getEventType() == XmlPullParser.START_TAG) {
-            if ((FeedUpdateThread.TAG_LASTBUILDDATE1.equals(tagName) || FeedUpdateThread.TAG_LASTBUILDDATE2.equals(tagName))) {
-              tmp = parser.nextText();
-              if (tmp != null) {
-                feed.lastBuildDate = tmp;
-              }
-            }
-            else if (FeedUpdateThread.TAG_DESCRIPTION.equals(tagName)) {
-              tmp = parser.nextText();
-              if (tmp != null) {
-                if (NewsReader.stgUseHTML) {
-                  feed.description = tmp;
-                }
-                else {
-                  feed.description = BaseApp.removeHtml(tmp);
-                }
-              }
-            }
-            else if (FeedUpdateThread.TAG_TITLE.equals(tagName) && feed.title.equals("")) {
-              // Set the title of the feed if its nothing
-              tmp = parser.nextText();
-              if (tmp != null) {
-                feed.title = parser.nextText();
-              }
-            }
-          }
-          parser.next();
-          tagName = parser.getName();
-        }
-        // We have found the first <item>
-        RSSItem tmpitem;
-        final long parsetime = System.currentTimeMillis();
+        final KXmlParser parser = new KXmlParser();
+        parser.setInput(new InputStreamReader(data.istream));
+        parse1(parser);
         updateStatus(Application.messages[NewsReader.MSG_UPDATEST05], 5);
-        if (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
-          do {
-            tmpitem = new RSSItem();
-            // For every item
-            parser.require(XmlPullParser.START_TAG, null, FeedUpdateThread.TAG_ITEM);
-            while (parser.nextTag() != XmlPullParser.END_TAG) {
-              // Go through all the tags within <item>
-              // Modifica per corriere
-              if (FeedUpdateThread.TAG_INFO1.equals(parser.getName())) {
-                tmp_bool = true;
-                while (tmp_bool) {
-                  if (parser.nextTag() == XmlPullParser.END_TAG) {
-                    if (FeedUpdateThread.TAG_INFO1.equals(parser.getName())) {
-                      tmp_bool = false;
-                    }
-                  }
-                }
-                parser.nextTag();
-              }
-              // Fine modifiche per corriere
-              parser.require(XmlPullParser.START_TAG, null, null);
-              tagname = parser.getName();
-              text = parser.nextText();
-              if (text != null) {
-                if (FeedUpdateThread.TAG_PUBDATE.equals(tagname)) {
-                  tmpitem.pubDate = text;
-                }
-                else if (FeedUpdateThread.TAG_TITLE.equals(tagname)) {
-                  tmpitem.title = text;
-                }
-                else if (FeedUpdateThread.TAG_LINK.equals(tagname)) {
-                  tmpitem.link = text;
-                }
-                else if (FeedUpdateThread.TAG_IMAGE.equals(tagname)) {
-                  tmpitem.image = text;
-                }
-                else if (FeedUpdateThread.TAG_DESCRIPTION.equals(tagname)) {
-                  tmpitem.description = text;
-                }
-              }
-              parser.require(XmlPullParser.END_TAG, null, tagname);
-            }
-            parser.require(XmlPullParser.END_TAG, null, FeedUpdateThread.TAG_ITEM);
-            // Add the item if it's new (All items have titles)
-            if (tmpitem.title != null) {
-              items++;
-              if (itemtable.get(tmpitem.title) == null) {
-                newitems++;
-                // A bit ugly hack for correct item ordering
-                tmpitem.parseTime = parsetime - items;
-                feed.addItem(tmpitem);
-              }
-            }
-          }
-          while ((parser.nextTag() != XmlPullParser.END_TAG) && FeedUpdateThread.TAG_ITEM.equals(parser.getName()));
-        }
+        final long parsetime = System.currentTimeMillis();
+        final int items = parse2(parser, parsetime);
         updateStatus(Application.messages[NewsReader.MSG_UPDATEST06], 6);
         /* Save the feed */
         feed.lastUpdateTime = parsetime;
@@ -269,26 +251,16 @@ public class FeedUpdateThread extends Thread {
       sStatus.setStatus(Application.messages[NewsReader.MSG_UPDATEST07], MAXSTAT);
       sStatus.append(donetext);
       sStatus.done();
-      try {
-        if (istream != null) {
-          istream.close();
-        }
-        if (httpconnection != null) {
-          httpconnection.close();
-        }
-      }
-      catch (final Exception e) {
-        //
+      if (data != null) {
+        data.close();
       }
     }
   }
 
   /**
-   * Checks if the user want to abort the update. If so, the
-   * <code>donetext</code> is set.
+   * Checks if the user want to abort the update. If so, the <code>donetext</code> is set.
    * @param status current status
-   * @param statusvalue current status value (between <code>0</code> and
-   *            <code>MAXSTAT</code>)
+   * @param statusvalue current status value (between <code>0</code> and <code>MAXSTAT</code>)
    * @return <code>TRUE</code> if the updating should be interrupted
    * @throws InterruptedException
    */
