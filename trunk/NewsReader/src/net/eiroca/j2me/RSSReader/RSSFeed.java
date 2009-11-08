@@ -53,7 +53,7 @@ public class RSSFeed implements Comparator {
   public long lastFeedLen = 0;
   public int minsBetweenUpdates = STANDARD_UPDATE;
   public String serverLastModified = "";
-  public String servereTag = "";
+  public String serverETag = "";
   public String type = RSSFeed.WEB_ITEM;
   public int nn = 0;
   public int nr = 0;
@@ -96,7 +96,7 @@ public class RSSFeed implements Comparator {
       dout.writeLong(lastFeedLen);
       dout.writeInt(minsBetweenUpdates);
       dout.writeUTF(serverLastModified);
-      dout.writeUTF(servereTag);
+      dout.writeUTF(serverETag);
       dout.writeUTF(type);
       dout.writeInt(nn);
       dout.writeInt(nr);
@@ -133,7 +133,7 @@ public class RSSFeed implements Comparator {
       feed.lastFeedLen = din.readLong();
       feed.minsBetweenUpdates = din.readInt();
       feed.serverLastModified = din.readUTF();
-      feed.servereTag = din.readUTF();
+      feed.serverETag = din.readUTF();
       feed.type = din.readUTF();
       feed.feedID = id;
       feed.nn = din.readInt();
