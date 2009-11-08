@@ -1,17 +1,17 @@
 <feeds>
   <feed>
     <title>Telefonino.net</title>
-	<URL>http://www.telefonino.net/rss.asp</URL>
+	<URL>http://rss.feedsportal.com/c/32304/f/439705/index.rss</URL>
 	<type>W</type>
   </feed>
   <feed>
     <title>Punto Informatico</title>
-        <URL>http://punto-informatico.it/fader/pixml.xml</URL>
+        <URL>http://feeds.punto-informatico.it/c/32288/f/438866/index.rss</URL>
         <type>W</type>
   </feed>
   <feed>
     <title>La Repubblica</title>
-        <URL>http://www.repubblica.it/rss/homepage/rss2.0.xml</URL>
+        <URL>http://rss.feedsportal.com/c/32275/f/438637/index.rss</URL>
         <type>W</type>
   </feed>
 </feeds>

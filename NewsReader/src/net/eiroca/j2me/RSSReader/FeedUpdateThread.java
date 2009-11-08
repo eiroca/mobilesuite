@@ -135,10 +135,11 @@ public class FeedUpdateThread extends Thread {
         }
         feed.lastFeedLen = httpconnection.getLength();
         updateStatus(Application.messages[NewsReader.MSG_UPDATEST04], 4);
+        // skip <?xml> 
         parser.nextTag();
-        // <rss> parser.require(parser.START_TAG, null, RSS_TAG);
+        // skip <rss> 
         parser.nextTag();
-        // <channel> parser.require(parser.START_TAG, null, CHANNEL_TAG);
+        // skip <channel> 
         parser.nextTag();
         // Go through tags about the channel
         String tagName = parser.getName();
