@@ -1039,7 +1039,7 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
           pos = line.indexOf(sep);
           if (pos > 0) {
             p.name = line.substring(0, pos);
-            p.value = line.substring(0, pos + 1);
+            p.value = line.substring(pos + 1);
           }
           else {
             p.name = line;

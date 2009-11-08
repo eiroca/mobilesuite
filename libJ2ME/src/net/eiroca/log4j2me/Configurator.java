@@ -37,7 +37,7 @@ public class Configurator {
     final Vector categories = new Vector();
     final String catLst = midlet.getAppProperty(Configurator.CATEGORY_LIST);
     final StringTokenizer st = new StringTokenizer(catLst, ",");
-    LogLog.debug(Configurator.CATEGORY_LIST + ":" + midlet.getAppProperty(Configurator.CATEGORY_LIST));
+    LogLog.debug(Configurator.CATEGORY_LIST + ":" + catLst);
     while (st.hasMoreTokens()) {
       categories.addElement(st.nextToken().trim());
     }
