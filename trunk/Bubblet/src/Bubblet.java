@@ -19,6 +19,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import net.eiroca.j2me.app.Application;
+import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.bubblet.BubbletScreen;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
@@ -27,7 +28,7 @@ public class Bubblet extends GameApp {
 
   public Bubblet() {
     super();
-    resPrefix = "bu";
+    BaseApp.resPrefix = "bu";
     Application.background = 0x00000000;
     Application.foreground = 0x00FFFFFF;
     Application.menu = new short[][] {
