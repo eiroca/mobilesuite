@@ -63,6 +63,9 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.ItemCommandListener;
 import javax.microedition.lcdui.game.TiledLayer;
+import javax.microedition.media.Manager;
+import javax.microedition.media.MediaException;
+import javax.microedition.media.Player;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 import javax.microedition.rms.RecordListener;
@@ -1221,7 +1224,19 @@ public abstract class BaseApp extends MIDlet implements CommandListener, ItemCom
     }
     return ok;
   }
-
+  
+  public static Player createPlayer(String res, String type) { 
+    try {
+      return Manager.createPlayer(getInputStream(res), type);
+    }
+    catch (IOException e) {
+      return null;
+    }
+    catch (MediaException e) {
+      return null;
+    }
+  }
+  
   /*
    * Midlets
    */
