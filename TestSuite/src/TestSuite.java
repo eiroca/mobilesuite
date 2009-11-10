@@ -92,6 +92,7 @@ public final class TestSuite extends Application implements Observer {
 
   public TestSuite() {
     super();
+    BaseApp.resPrefix = "te";
   }
 
   private Displayable fAbout;
