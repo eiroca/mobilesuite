@@ -267,11 +267,11 @@ public class NewsReader extends Application implements Comparator {
 
   Font bold;
   Font normal;
-  Object[] o;
+  Object[] o = new Object[9];
 
   public NewsReader() {
     super();
-    o = new Object[9];
+    BaseApp.resPrefix = "ne";
     bold = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_MEDIUM);
     normal = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_MEDIUM);
     Application.messages = BaseApp.readStrings(NewsReader.RES_MESSAGES);
