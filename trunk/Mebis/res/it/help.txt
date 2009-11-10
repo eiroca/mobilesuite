@@ -1,8 +1,0 @@
-I tasti per giocare:
-1: Ruota a sinistra
-3: Ruota a destro
-4: Sposta a sinistra
-6: Sposta a destra
-5: Accelera gravità
-7: Fai cadere subito
-e buon divertimento!
