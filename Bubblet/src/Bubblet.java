@@ -27,10 +27,9 @@ public class Bubblet extends GameApp {
 
   public Bubblet() {
     super();
-
+    resPrefix = "bu";
     Application.background = 0x00000000;
     Application.foreground = 0x00FFFFFF;
-
     Application.menu = new short[][] {
         {
             GameApp.ME_MAINMENU, GameApp.MSG_MENU_MAIN_CONTINUE, GameApp.GA_CONTINUE, 0
@@ -44,9 +43,7 @@ public class Bubblet extends GameApp {
             GameApp.ME_MAINMENU, GameApp.MSG_MENU_MAIN_ABOUT, GameApp.GA_ABOUT, 6
         }
     };
-
     GameApp.hsName = "Bubblet";
-
   }
 
   public GameScreen getGameScreen() {

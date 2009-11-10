@@ -1,1 +1,0 @@
-Muovi il cursore con le frecce e fai scoppiare le aree di colore (almeno due caselle adiacenti) con il tasto fire.
