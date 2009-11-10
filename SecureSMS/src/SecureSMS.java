@@ -180,11 +180,15 @@ public class SecureSMS extends Application implements StoreObserver {
 
   private static String STS_PIN = "PIN";
 
+  private static final String RES_MESSAGES = "messages.txt";
+  private static final String RES_ABOUT = "about.txt";
+
   short[][] menuCleanUp;
 
   public SecureSMS() {
     super();
-    Application.messages = BaseApp.readStrings("messages.txt");
+    BaseApp.resPrefix = "se";
+    Application.messages = BaseApp.readStrings(RES_MESSAGES);
     Application.cOK = Application.newCommand(SecureSMS.MSG_OK, Command.OK, 30, 0);
     Application.cBACK = Application.newCommand(SecureSMS.MSG_BACK, Command.BACK, 20, Application.AC_BACK);
     Application.cEXIT = Application.newCommand(SecureSMS.MSG_EXIT, Command.EXIT, 10, Application.AC_EXIT);
@@ -329,7 +333,7 @@ public class SecureSMS extends Application implements StoreObserver {
           Application.show(null, scAddressBook, true);
           break;
         case AC_SHOWABOUT:
-          Application.show(null, Application.getTextForm(SecureSMS.MSG_MENUABOUT, "about.txt"), true);
+          Application.show(null, Application.getTextForm(SecureSMS.MSG_MENUABOUT, RES_ABOUT), true);
           break;
         case AC_SENDNEW:
           errMsg = SecureSMS.MSG_MESSAGEHASNOTBEENSENT;
