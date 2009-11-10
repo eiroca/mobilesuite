@@ -19,6 +19,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import net.eiroca.j2me.app.Application;
+import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 import net.eiroca.j2me.mebis.MebisScreen;
@@ -33,6 +34,7 @@ public class Mebis extends GameApp {
 
   public Mebis() {
     super();
+    BaseApp.resPrefix = "me";
     Application.menu = new short[][] {
         {
             GameApp.ME_MAINMENU, GameApp.MSG_MENU_MAIN_CONTINUE, GameApp.GA_CONTINUE, 0
@@ -46,9 +48,7 @@ public class Mebis extends GameApp {
             GameApp.ME_MAINMENU, GameApp.MSG_MENU_MAIN_ABOUT, GameApp.GA_ABOUT, 6
         }
     };
-
     GameApp.hsName = "Mebis";
-
   }
 
   public GameScreen getGameScreen() {
