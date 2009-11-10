@@ -23,6 +23,7 @@ import javax.microedition.lcdui.ChoiceGroup;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
 import net.eiroca.j2me.app.Application;
+import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 import net.eiroca.j2me.game.tpg.GameMinMax;
@@ -63,6 +64,7 @@ public class Reversi extends GameApp {
 
   public Reversi() {
     super();
+    BaseApp.resPrefix = "re";
     Application.menu = new short[][] {
         {
             GameApp.ME_MAINMENU, GameApp.MSG_MENU_MAIN_CONTINUE, GameApp.GA_CONTINUE, 0
