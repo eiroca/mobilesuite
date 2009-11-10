@@ -83,7 +83,7 @@ public class MineSweeper extends GameApp {
 
   public MineSweeper() {
     super();
-
+    BaseApp.resPrefix = "mi";
     Application.menu = new short[][] {
         {
             GameApp.ME_MAINMENU, GameApp.MSG_MENU_MAIN_CONTINUE, GameApp.GA_CONTINUE, 0

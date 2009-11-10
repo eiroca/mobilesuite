@@ -26,7 +26,6 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.Sprite;
-import javax.microedition.media.Manager;
 import javax.microedition.media.Player;
 import javax.microedition.media.control.VolumeControl;
 import net.eiroca.j2me.app.Application;
@@ -69,13 +68,8 @@ public final class MineSweeperScreen extends GameScreen {
   public MineSweeperScreen(final GameApp midlet) {
     super(midlet, false, true);
     name = Application.messages[MineSweeper.MSG_NAME];
-    try {
-      pBomb = Manager.createPlayer(getClass().getResourceAsStream(MineSweeper.RES_BOMB), "audio/x-wav");
-      pTicTac = Manager.createPlayer(getClass().getResourceAsStream(MineSweeper.RES_CLOCK), "audio/x-wav");
-    }
-    catch (final Exception e1) {
-      //
-    }
+    pBomb = BaseApp.createPlayer(MineSweeper.RES_BOMB, "audio/x-wav");
+    pTicTac = BaseApp.createPlayer(MineSweeper.RES_CLOCK, "audio/x-wav");
     iSmile = BaseApp.createImage(MineSweeper.RES_SMILE);
     iSmileOK = BaseApp.createImage(MineSweeper.RES_SMILEOK);
     iSmileKO = BaseApp.createImage(MineSweeper.RES_SMILEKO);
