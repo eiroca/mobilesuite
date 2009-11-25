@@ -1,0 +1,111 @@
+# NomeApplicazione
+RSS Reader
+# Commandi di deault
+OK
+Indietro
+Esci
+Si
+No
+# Menu Principale
+Leggi notizie
+Aggiungi flusso
+Memoria
+Pulizia...
+Info su...
+# Menu Add Feed
+Aggiunge flusso da una lista
+Aggiunte flusso da una URL
+# Form Add Feed URL
+Aggiunge flusso
+Titolo:
+URL:
+http://
+Aggiungi
+# Form Browse Feed List
+Alcuni flussi
+Aggiungi
+Errore nel file dei flussi
+# Add Feed error messages
+Flusso/i aggionto/i
+$1 flusso/i aggiunti
+Nessun flusso aggiunto
+Un flusso con lo stesso titolo già esiste
+Nessun flusso aggiunto
+Nessun flusso aggiunto
+# Menu Clean up
+Tutti i flussi & le notize
+Tutte le notizie
+Notizie vecchie di almeno 1 giorno
+Notizie vecchie di almeno 2 giorni
+Notizie delle scorse settimane
+# Delete confirmations
+Confirma
+Sei sicuro di voler cancellare tutto?
+Sei sicuro di voler cancellare tutte le notizie?
+Sei sicuro di voler cancellare queste notizie?
+Cancellati
+# Feeds List
+Flussi RSS
+Letti ($1/$2)
+Aggiorna
+Info
+Cancella notizie
+Cancella
+Nessun flusso presente
+Apri
+Arresta
+# News List
+Leggi
+Vai!
+# Delete messages
+Cancellati $1 flusso/i e $2 notizia/e.
+Cancellate $1 notizia/e.
+# Database Info messages
+Database
+  $1 flussi
+  $1 notizie
+  Usati: $1KB
+  Disponibili: $1KB
+# Memory Info messages
+Memoria
+  Usata: $1 KB
+  Disponibile: $1 KB
+# Load Feed List
+Caricamento lista flussi
+Inizializzazione
+Connessione
+Lettura
+Terminato
+Caricato
+# Update Feed Items
+Aggiornamento notizie
+Inizializzazione
+Inizializzato
+Connessione
+Connesso
+Lettura flussi
+Lettura notizie
+Salvataggio flussi
+Fatto
+$1 non è cambiato dall'ultimo aggiornamento.
+Aggiornato $1 con $2 nuove notizie ($3 ignorate)
+Scaricati $1KB
+$1 è una URL invalida
+Nessuna notizia
+Interrotto
+Errore connettendosi a $1
+# Feed Info
+Descrizione: $1
+Ultimo aggiornamento: $1
+Aggiornamento minimi: $1 minuti
+Notizie: $1
+Ultimo accesso: $1
+Ultima dimensione: $1KB
+URL: $1
+# Feed Item Info
+(Nessuna notizia trovata)
+Pubblicato: $1
+Scaricato: $1 $2 ($3)
+# Page scrolling
+nuovi <<
+vecchi >>
