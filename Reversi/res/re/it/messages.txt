@@ -21,7 +21,7 @@ Volume
 Vibrazione
 Illuminazione
 Reversi
-Modalit‡ gioco
+Modalit√† gioco
 umano vs computer
 umano vs umano
 Livello computer
