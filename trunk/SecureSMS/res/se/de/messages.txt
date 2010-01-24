@@ -3,8 +3,8 @@ OK
 Speichern
 Senden
 Antworten
-Löschen
-Hinzufügen
+LÃ¶schen
+HinzufÃ¼gen
 Abbrechen
 Ausgang
 Eingang
@@ -16,27 +16,27 @@ Addresse
 Neue Addresse
 Neue Nachricht
 Text:
-Empfänger:
+EmpfÃ¤nger:
 Absender:
 Nummer:
 Name:
-Schlüssel:
+SchlÃ¼ssel:
 Nachricht versendet
 Nachricht nicht gesendet
-Nachricht gelöscht
-Nachricht nicht gelöscht
+Nachricht gelÃ¶scht
+Nachricht nicht gelÃ¶scht
 Neue Nachricht!
 Addresse gespeichert
 Addresse nicht gespeichert
-Addresse gelöscht
-Addresse nicht gelöscht
+Addresse gelÃ¶scht
+Addresse nicht gelÃ¶scht
 Fehler!
 Info
 Nachrichtenspeicher Fehler
 Adressenspeicher Fehler
 Kann SerureMessenger nicht starten
-Rückseite
-Über
+RÃ¼ckseite
+Ãœber
 Change PIN
 Insert new PIN.
 PIN:

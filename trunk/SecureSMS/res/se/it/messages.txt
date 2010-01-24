@@ -54,4 +54,4 @@ No
 +39
 Invalido
 Messaggio non decodificato. Cambia la password nella rubrica per vederlo.
-La rubrica è vuota
+La rubrica Ã¨ vuota
