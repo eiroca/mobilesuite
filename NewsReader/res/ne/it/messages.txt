@@ -29,7 +29,7 @@ Errore nel file dei flussi
 Flusso/i aggionto/i
 $1 flusso/i aggiunti
 Nessun flusso aggiunto
-Un flusso con lo stesso titolo già esiste
+Un flusso con lo stesso titolo giï¿½ esiste
 Nessun flusso aggiunto
 Nessun flusso aggiunto
 # Menu Clean up
@@ -87,10 +87,10 @@ Lettura flussi
 Lettura notizie
 Salvataggio flussi
 Fatto
-$1 non è cambiato dall'ultimo aggiornamento.
+$1 non Ã¨ cambiato dall'ultimo aggiornamento.
 Aggiornato $1 con $2 nuove notizie ($3 ignorate)
 Scaricati $1KB
-$1 è una URL invalida
+$1 Ã¨ una URL invalida
 Nessuna notizia
 Interrotto
 Errore connettendosi a $1
