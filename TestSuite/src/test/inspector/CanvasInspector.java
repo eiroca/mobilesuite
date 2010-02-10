@@ -48,10 +48,10 @@ public class CanvasInspector extends AbstractProcessor {
   public static final String RES_ID16 = "H.P";
   public static final String RES_ID17 = "H.M";
   public static final String RES_ID18 = "H.H";
-  public static final String RES_ID19 = "K.GAME_A";
-  public static final String RES_ID20 = "K.GAME_B";
-  public static final String RES_ID21 = "K.GAME_C";
-  public static final String RES_ID22 = "K.GAME_D";
+  public static final String RES_ID19 = "K.GAME.A";
+  public static final String RES_ID20 = "K.GAME.B";
+  public static final String RES_ID21 = "K.GAME.C";
+  public static final String RES_ID22 = "K.GAME.D";
   public static final String RES_ID23 = "K.UP";
   public static final String RES_ID24 = "K.DOWN";
   public static final String RES_ID25 = "K.FIRE";
