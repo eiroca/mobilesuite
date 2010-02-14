@@ -30,10 +30,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /**
- * Utility that outputs a Java class file containing an array of Strings
- * initialized to a compressed representation of the full class names of the
- * classes in the JAR-files specified on the command line. Used as part of the
- * build process of the ClassBrowser MIDlet.
+ * Utility that outputs a Java class file containing an array of Strings initialized to a compressed representation of the full class names of the classes in the JAR-files specified on the command
+ * line. Used as part of the build process of the ClassBrowser MIDlet.
  */
 public class BuildPackageTree {
 
@@ -41,10 +39,9 @@ public class BuildPackageTree {
   ArrayList<String> classNamesList;
 
   /**
-   * Constructs a BuildPackageTree object from the given array of file-names.
-   * The files are jar or zip files containing the API classes for a J2ME
-   * virtual machine implementation. Each of these class names is added to the
-   * classNamesList field.
+   * Constructs a BuildPackageTree object from the given array of file-names. The files are jar or zip files containing the API classes for a J2ME virtual machine implementation. Each of these class
+   * names is added to the classNamesList field.
+   * 
    * @param fileNames list of file-names of jar/zip files of classes
    */
   public BuildPackageTree(final String fileNames[]) {
@@ -72,9 +69,10 @@ public class BuildPackageTree {
   }
 
   /**
-   * Returns a string containing the start of the Java file that's to be
-   * generated. Essentially some comments and the start of a class and field
-   * definition.
+   * Returns a string containing the start of the Java file that's to be generated. Essentially some comments and the start of a class and field definition.
+   * 
+   * @param sb the sb
+   * 
    * @return the Java source prefix
    */
   private void emitPrefix(final StringBuffer sb) {
@@ -82,14 +80,19 @@ public class BuildPackageTree {
 
   /**
    * Returns a string containing the end of the file begun with getPrefix().
+   * 
+   * @param sb the sb
+   * 
    * @return the Java source suffix
    */
   private void emitSuffix(final StringBuffer sb) {
   }
 
   /**
-   * Writes a Java source file to stdout for the PackageTree class that contains
-   * a string array consisting of the classes in the classNamesList field.
+   * Writes a Java source file to stdout for the PackageTree class that contains a string array consisting of the classes in the classNamesList field.
+   * 
+   * @param sb the sb
+   * 
    * @see mobiledevtools.cbrowser.PackageTree
    */
   public void outputJava(final StringBuffer sb) {
@@ -101,7 +104,7 @@ public class BuildPackageTree {
       it = classNamesList.listIterator();
       prevName = null;
       while (it.hasNext()) {
-        className = (String) it.next();
+        className = it.next();
         abbrev = getAbbreviation(prevName, className);
         if (abbrev != null) {
           // skip duplicates
@@ -115,9 +118,10 @@ public class BuildPackageTree {
   }
 
   /**
-   * Tests the entry in a zip/jar file for whether it represents a
-   * class/interface or not. Returns true if it does.
+   * Tests the entry in a zip/jar file for whether it represents a class/interface or not. Returns true if it does.
+   * 
    * @param currEntry the file entry in a zip/jar file
+   * 
    * @return true if the entry represents a class
    */
   private boolean isClass(final ZipEntry currEntry) {
@@ -127,9 +131,10 @@ public class BuildPackageTree {
   }
 
   /**
-   * Turns the full path name of an entry in a zip/jar file into a fully
-   * expanded class name.
+   * Turns the full path name of an entry in a zip/jar file into a fully expanded class name.
+   * 
    * @param currEntry the file entry in a zip/jar file
+   * 
    * @return a String containing the entry as a class name
    */
   private String getClassName(final ZipEntry currEntry) {
@@ -156,11 +161,11 @@ public class BuildPackageTree {
   }
 
   /**
-   * Given two fully expanded class names, returns a kind-of difference between
-   * them. The second class name has any package elements removed, so that the
-   * name appears to start with a sequence of dots.
+   * Given two fully expanded class names, returns a kind-of difference between them. The second class name has any package elements removed, so that the name appears to start with a sequence of dots.
+   * 
    * @param prev the previous full, expanded class name of the previous class
    * @param curr the full, expanded class name of the class to output now
+   * 
    * @return an abbreviated version of the class name
    */
   private String getAbbreviation(final String prev, final String curr) {
@@ -191,9 +196,8 @@ public class BuildPackageTree {
   }
 
   /**
-   * Creates a new instance of the BuildPackageTree class for the files
-   * specified on the command line, and writes the resulting Java source file to
-   * stdout.
+   * Creates a new instance of the BuildPackageTree class for the files specified on the command line, and writes the resulting Java source file to stdout.
+   * 
    * @param args the command line arguments
    */
   public static void main(final String args[]) {
