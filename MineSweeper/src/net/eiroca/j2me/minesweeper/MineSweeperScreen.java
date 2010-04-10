@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon J2ME Minesweeper.
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) M. Jumari
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.minesweeper;
 
@@ -35,36 +33,82 @@ import net.eiroca.j2me.game.GameScreen;
 import net.eiroca.j2me.minesweeper.game.MineInfo;
 import net.eiroca.j2me.minesweeper.game.MineSweeperGame;
 
+/**
+ * The Class MineSweeperScreen.
+ */
 public final class MineSweeperScreen extends GameScreen {
 
+  /** The Constant BLKSIZE. */
   private static final int BLKSIZE = 16;
+
+  /** The Constant TOPSPACE. */
   private static final int TOPSPACE = 20;
 
+  /** The size y. */
   private int sizeY = 11;
+
+  /** The size x. */
   private int sizeX = 10;
+
+  /** The base_y. */
   private int base_y = 25;
+
+  /** The base_x. */
   private int base_x = 8;
+
+  /** The cur_y. */
   private int cur_y;
+
+  /** The cur_x. */
   private int cur_x;
+
+  /** The icons. */
   private final Sprite icons;
+
+  /** The game. */
   private final MineSweeperGame game;
 
+  /** The i smile. */
   private final Image iSmile;
+
+  /** The i smile ok. */
   private final Image iSmileOK;
+
+  /** The i smile ko. */
   private final Image iSmileKO;
+
+  /** The i all. */
   private final Image iAll;
 
-  private Player pBomb;
-  private Player pTicTac;
+  /** The p bomb. */
+  private final Player pBomb;
+
+  /** The p tic tac. */
+  private final Player pTicTac;
+
+  /** The sec. */
   private int sec = 0;
+
+  /** The last. */
   private long last;
+
+  /** The text font. */
   private final Font textFont;
 
+  /** The off x. */
   int offX;
+
+  /** The off y. */
   int offY;
 
+  /** The info. */
   private int[][] info;
 
+  /**
+   * Instantiates a new mine sweeper screen.
+   * 
+   * @param midlet the midlet
+   */
   public MineSweeperScreen(final GameApp midlet) {
     super(midlet, false, true);
     name = Application.messages[MineSweeper.MSG_NAME];
@@ -80,6 +124,9 @@ public final class MineSweeperScreen extends GameScreen {
     textFont = Font.getFont(Font.FACE_MONOSPACE, Font.STYLE_PLAIN, Font.SIZE_SMALL);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#init()
+   */
   public void init() {
     super.init();
     if (MineSweeper.usLevel == 3) {
@@ -133,29 +180,51 @@ public final class MineSweeperScreen extends GameScreen {
     offY = 0;
   }
 
+  /**
+   * Local show.
+   */
   public void localShow() {
     last = System.currentTimeMillis();
     draw(screen);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#show()
+   */
   public void show() {
     super.show();
     localShow();
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#hide()
+   */
   public void hide() {
     sec += System.currentTimeMillis() - last;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#tick()
+   */
   public boolean tick() {
     draw(screen);
     return true;
   }
 
+  /**
+   * Gets the elapsed.
+   * 
+   * @return the elapsed
+   */
   public int getElapsed() {
     return (sec + (int) (System.currentTimeMillis() - last)) / 1000;
   }
 
+  /**
+   * Draw.
+   * 
+   * @param g the g
+   */
   public void draw(final Graphics g) {
     g.setColor(Application.background);
     if (cur_x < offX) {
@@ -232,6 +301,9 @@ public final class MineSweeperScreen extends GameScreen {
     }
   }
 
+  /**
+   * Do fire.
+   */
   private void doFire() {
     final Vector v = game.checkCell(cur_x, cur_y);
     if (game.status == MineSweeperGame.GE_EXPLODED) {
@@ -246,6 +318,9 @@ public final class MineSweeperScreen extends GameScreen {
     }
   }
 
+  /* (non-Javadoc)
+   * @see javax.microedition.lcdui.Canvas#keyPressed(int)
+   */
   protected void keyPressed(final int aKeyCode) {
     final int action = getGameAction(aKeyCode);
     if (game.status != MineSweeperGame.GE_RUNNING) {

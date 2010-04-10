@@ -1,11 +1,12 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
  * Based upon J2ME Minesweeper.
+ * 
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) M. Jumari
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +14,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 import java.util.Vector;
 import javax.microedition.lcdui.Alert;
@@ -38,49 +38,104 @@ import net.eiroca.j2me.minesweeper.CustomLevelForm;
 import net.eiroca.j2me.minesweeper.MineSweeperScreen;
 import net.eiroca.j2me.minesweeper.game.MineSweeperGame;
 
+/**
+ * The Class MineSweeper.
+ */
 public class MineSweeper extends GameApp {
 
+  /** The RE s_ error. */
   public static String RES_ERROR = "error.png";
+
+  /** The RE s_ smile. */
   public static String RES_SMILE = "smile.png";
+
+  /** The RE s_ smileok. */
   public static String RES_SMILEOK = "smile_ok.png";
+
+  /** The RE s_ smileko. */
   public static String RES_SMILEKO = "smile_ko.png";
+
+  /** The RE s_ icons. */
   public static String RES_ICONS = "icons.png";
+
+  /** The RE s_ bomb. */
   public static String RES_BOMB = "bomb.wav";
+
+  /** The RE s_ clock. */
   public static String RES_CLOCK = "waktu.wav";
 
+  /** The Constant MSG_MENU_OPTIONS_LEVEL. */
   public static final int MSG_MENU_OPTIONS_LEVEL = GameApp.MSG_USERDEF + 0;
 
+  /** The Constant MSG_TEXT_LEVEL_01. */
   public static final int MSG_TEXT_LEVEL_01 = GameApp.MSG_USERDEF + 1;
+
+  /** The Constant MSG_TEXT_LEVEL_02. */
   public static final int MSG_TEXT_LEVEL_02 = GameApp.MSG_USERDEF + 2;
+
+  /** The Constant MSG_TEXT_LEVEL_03. */
   public static final int MSG_TEXT_LEVEL_03 = GameApp.MSG_USERDEF + 3;
+
+  /** The Constant MSG_TEXT_LEVEL_04. */
   public static final int MSG_TEXT_LEVEL_04 = GameApp.MSG_USERDEF + 4;
 
+  /** The Constant MSG_NAME. */
   public static final int MSG_NAME = GameApp.MSG_USERDEF + 5;
 
+  /** The Constant MSG_CUSTOMLEVEL. */
   public static final int MSG_CUSTOMLEVEL = GameApp.MSG_USERDEF + 6;
+
+  /** The Constant MSG_CL_HEIGTH. */
   public static final int MSG_CL_HEIGTH = GameApp.MSG_USERDEF + 7;
+
+  /** The Constant MSG_CL_WIDTH. */
   public static final int MSG_CL_WIDTH = GameApp.MSG_USERDEF + 8;
+
+  /** The Constant MSG_CL_BOMBS. */
   public static final int MSG_CL_BOMBS = GameApp.MSG_USERDEF + 9;
+
+  /** The Constant MSG_CL_ERR_HEIGHT. */
   public static final int MSG_CL_ERR_HEIGHT = GameApp.MSG_USERDEF + 10;
+
+  /** The Constant MSG_CL_ERR_WIDTH. */
   public static final int MSG_CL_ERR_WIDTH = GameApp.MSG_USERDEF + 11;
+
+  /** The Constant MSG_CL_ERR_BOMBS. */
   public static final int MSG_CL_ERR_BOMBS = GameApp.MSG_USERDEF + 12;
+
+  /** The Constant MSG_CL_ERR_FRM. */
   public static final int MSG_CL_ERR_FRM = GameApp.MSG_USERDEF + 13;
+
+  /** The Constant MSG_CL_ERR_TO. */
   public static final int MSG_CL_ERR_TO = GameApp.MSG_USERDEF + 14;
 
+  /** The Constant MSG_HS_LEVEL. */
   public static final int MSG_HS_LEVEL = GameApp.MSG_USERDEF + 15;
 
+  /** The us level. */
   public static int usLevel = 1;
 
+  /** The width. */
   public static int width = 9;
+
+  /** The height. */
   public static int height = 9;
+
+  /** The bomb. */
   public static int bomb = 9;
 
+  /** The game custom level. */
   private CustomLevelForm gameCustomLevel;
 
+  /** The op difficulty. */
   private ChoiceGroup opDifficulty;
 
+  /** The i error. */
   private final Image iError;
 
+  /**
+   * Instantiates a new mine sweeper.
+   */
   public MineSweeper() {
     super();
     BaseApp.resPrefix = "mi";
@@ -107,10 +162,16 @@ public class MineSweeper extends GameApp {
     iError = BaseApp.createImage(MineSweeper.RES_ERROR);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#getSettings()
+   */
   protected GameUISettings getSettings() {
     return new GameUISettings(this, GameApp.FT_AUDIO);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#getOptions()
+   */
   protected Displayable getOptions() {
     final Form form = new Form(Application.messages[GameApp.MSG_MENU_MAIN_OPTIONS]);
     opDifficulty = new ChoiceGroup(Application.messages[MineSweeper.MSG_MENU_OPTIONS_LEVEL], Choice.EXCLUSIVE);
@@ -122,11 +183,17 @@ public class MineSweeper extends GameApp {
     return form;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#doShowOptions()
+   */
   public void doShowOptions() {
     super.doShowOptions();
     opDifficulty.setSelectedIndex(MineSweeper.usLevel, true);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#doApplyOptions()
+   */
   public void doApplyOptions() {
     MineSweeper.usLevel = opDifficulty.getSelectedIndex();
     if (MineSweeper.usLevel == 3) {
@@ -142,16 +209,30 @@ public class MineSweeper extends GameApp {
     }
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#doGameStart()
+   */
   public void doGameStart() {
     GameApp.hsLevel = MineSweeper.usLevel;
     super.doGameStart();
   }
 
+  /**
+   * Make alert.
+   * 
+   * @param err the err
+   * @param min the min
+   * @param max the max
+   * @return the alert
+   */
   public Alert makeAlert(final String err, final int min, final int max) {
     return new Alert(Application.messages[MineSweeper.MSG_CUSTOMLEVEL], err + Application.messages[MineSweeper.MSG_CL_ERR_FRM] + min + Application.messages[MineSweeper.MSG_CL_ERR_TO] + max, iError,
         AlertType.ERROR);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#commandAction(javax.microedition.lcdui.Command, javax.microedition.lcdui.Displayable)
+   */
   public void commandAction(final Command c, final Displayable d) {
     boolean processed = false;
     if (c == Application.cOK) {
@@ -185,6 +266,9 @@ public class MineSweeper extends GameApp {
     }
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#getHighScore()
+   */
   protected Displayable getHighScore() {
     final Form form = new Form(Application.messages[GameApp.MSG_MENU_MAIN_HIGHSCORE]);
     final Font f = Font.getFont(Font.STYLE_BOLD);
@@ -209,10 +293,16 @@ public class MineSweeper extends GameApp {
     return form;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#getGameScreen()
+   */
   public GameScreen getGameScreen() {
     return new MineSweeperScreen(this);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#processGameAction(int)
+   */
   public void processGameAction(final int action) {
     switch (action) {
       case GA_STARTUP: // Continue
