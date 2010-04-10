@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson <gosta(at)brothas.net>
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2004 Gösta Jonasson
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.RSSReader;
 
@@ -36,37 +34,58 @@ import org.xmlpull.v1.XmlPullParserException;
 
 public class FeedUpdateThread extends Thread {
 
+  /** The TA g_ item. */
   private static String TAG_ITEM = "item";
+
+  /** The TA g_ pubdate. */
   private static String TAG_PUBDATE = "pubDate";
+
+  /** The TA g_ title. */
   private static String TAG_TITLE = "title";
+
+  /** The TA g_ description. */
   private static String TAG_DESCRIPTION = "description";
+
+  /** The TA g_ link. */
   private static String TAG_LINK = "link";
+
+  /** The TA g_ image. */
   private static String TAG_IMAGE = "image";
+
+  /** The TA g_ lastbuilddat e1. */
   private static String TAG_LASTBUILDDATE1 = "lastBuildDate";
+
+  /** The TA g_ lastbuilddat e2. */
   private static String TAG_LASTBUILDDATE2 = "dc:date";
+
+  /** The TA g_ inf o1. */
   private static String TAG_INFO1 = "info1";
 
+  /** The MAXSTAT. */
   public int MAXSTAT = 7;
 
   // The feed that is being updated
+  /** The feed. */
   private final RSSFeed feed;
   /*
    * Mapping item titles -> item so we quickly can look up if we already have
    * the item or not when parsing.
    */
+  /** The itemtable. */
   private final Hashtable itemtable;
 
+  /** The s status. */
   protected StatusScreen sStatus;
 
   /* The number of new items that was added at last update */
+  /** The newitems. */
   protected int newitems;
 
   /**
    * Constructor for the class.
+   * 
    * @param theFeed the feed that should be updated
    * @param newmidlet the running MIDlet
-   * @param cl1 the object that receives the STOP/Interrupt command
-   * @param cl2 the object that receives the OK command
    */
   public FeedUpdateThread(final RSSFeed theFeed, final NewsReader newmidlet) {
     super();
@@ -78,6 +97,14 @@ public class FeedUpdateThread extends Thread {
     start();
   }
 
+  /**
+   * Parse1.
+   * 
+   * @param parser the parser
+   * @throws XmlPullParserException the xml pull parser exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   * @throws InterruptedException the interrupted exception
+   */
   private void parse1(final KXmlParser parser) throws XmlPullParserException, IOException, InterruptedException {
     String tmp;
     // skip <?xml>
@@ -120,6 +147,16 @@ public class FeedUpdateThread extends Thread {
     }
   }
 
+  /**
+   * Parse2.
+   * 
+   * @param parser the parser
+   * @param parsetime the parsetime
+   * @return the int
+   * @throws XmlPullParserException the xml pull parser exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   * @throws InterruptedException the interrupted exception
+   */
   private int parse2(final KXmlParser parser, final long parsetime) throws XmlPullParserException, IOException, InterruptedException {
     // We have found the first <item>
     int items = 0;
@@ -259,10 +296,11 @@ public class FeedUpdateThread extends Thread {
 
   /**
    * Checks if the user want to abort the update. If so, the <code>donetext</code> is set.
+   * 
    * @param status current status
    * @param statusvalue current status value (between <code>0</code> and <code>MAXSTAT</code>)
-   * @return <code>TRUE</code> if the updating should be interrupted
-   * @throws InterruptedException
+   * @return if the updating should be interrupted
+   * @throws InterruptedException the interrupted exception
    */
   private void updateStatus(final String status, final int statusvalue) throws InterruptedException {
     sStatus.setStatus(status, statusvalue);

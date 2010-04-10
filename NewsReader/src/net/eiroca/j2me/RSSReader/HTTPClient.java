@@ -1,3 +1,19 @@
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
+ */
 package net.eiroca.j2me.RSSReader;
 
 import java.io.IOException;
@@ -6,19 +22,42 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
 import net.eiroca.j2me.app.BaseApp;
 
+/**
+ * The Class HTTPClient.
+ */
 public class HTTPClient {
 
+  /** The HEADE r_ lastmod. */
   private static String HEADER_LASTMOD = "Last-Modified";
+
+  /** The HEADE r_ ifnone. */
   private static String HEADER_IFNONE = "If-None-Match";
+
+  /** The HEADE r_ etag. */
   private static String HEADER_ETAG = "ETag";
+
+  /** The HEADE r_ location. */
   private static String HEADER_LOCATION = "Location";
 
+  /** The httpconnection. */
   HttpConnection httpconnection = null;
+
+  /** The istream. */
   InputStream istream = null;
+
+  /** The last err. */
   IOException lastErr = null;
+
+  /** The res code. */
   int resCode = 0;
+
+  /** The feed. */
   RSSFeed feed;
+
+  /** The base url. */
   String baseURL;
+
+  /** The last url. */
   String lastURL;
 
   /**
@@ -37,7 +76,7 @@ public class HTTPClient {
       return location;
     }
     else if (location.startsWith("/")) {
-      return "http://" + getHost(baseURL) + location;
+      return "http://" + HTTPClient.getHost(baseURL) + location;
     }
     else {
       if (baseURL.endsWith("/")) {
@@ -85,10 +124,18 @@ public class HTTPClient {
     return (lastSlashPos < n.length());
   }
 
+  /**
+   * Instantiates a new hTTP client.
+   * 
+   * @param feed the feed
+   */
   public HTTPClient(final RSSFeed feed) {
     this.feed = feed;
   }
 
+  /**
+   * Close.
+   */
   public void close() {
     try {
       if (istream != null) {
@@ -105,6 +152,11 @@ public class HTTPClient {
     httpconnection = null;
   }
 
+  /**
+   * Open.
+   * 
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   public void open() throws IOException {
     baseURL = feed.URL;
     lastURL = baseURL;
@@ -124,8 +176,8 @@ public class HTTPClient {
       istream = httpconnection.openInputStream();
       resCode = httpconnection.getResponseCode();
       if ((resCode == HttpConnection.HTTP_MOVED_PERM) || (resCode == HttpConnection.HTTP_MOVED_TEMP)) {
-        String location = httpconnection.getHeaderField(HTTPClient.HEADER_LOCATION);
-        lastURL = redirectURL(lastURL, location);
+        final String location = httpconnection.getHeaderField(HTTPClient.HEADER_LOCATION);
+        lastURL = HTTPClient.redirectURL(lastURL, location);
         if (resCode == HttpConnection.HTTP_MOVED_PERM) {
           baseURL = lastURL;
         }

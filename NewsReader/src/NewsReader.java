@@ -1,11 +1,12 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
  * Based upon RSS Reader MIDlet
+ * 
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2004 Gösta Jonasson
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +14,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 import java.util.Calendar;
 import java.util.Date;
@@ -44,231 +44,568 @@ import net.eiroca.j2me.app.Comparator;
 import net.eiroca.j2me.app.Pair;
 import net.eiroca.j2me.app.RMSInfo;
 
+/**
+ * The Class NewsReader.
+ */
 public class NewsReader extends Application implements Comparator {
 
   // Application properties (in JAD file)
+  /** The Constant PROP_LOCALE. */
   private static final String PROP_LOCALE = "microedition.locale";
+
+  /** The Constant PROP_FEEDLISTURL. */
   private static final String PROP_FEEDLISTURL = "RSS-FEEDLISTURL";
+
+  /** The Constant PROP_USEHTML. */
   private static final String PROP_USEHTML = "RSS-USEHTML";
+
+  /** The Constant PROP_COLBKG. */
   private static final String PROP_COLBKG = "RSS-COLBKG";
+
+  /** The Constant PROP_COLBOR. */
   private static final String PROP_COLBOR = "RSS-COLBOR";
+
+  /** The Constant PROP_COLTIT. */
   private static final String PROP_COLTIT = "RSS-COLTIT";
+
+  /** The Constant PROP_COLTXT. */
   private static final String PROP_COLTXT = "RSS-COLTXT";
 
+  /** The Constant PRM_LOCALE. */
   private static final String PRM_LOCALE = "?l=";
+
+  /** The Constant STR_GOOGLE. */
   private static final String STR_GOOGLE = "http://www.google.com/gwt/n?u=";
+
+  /** The Constant STR_HTTP. */
   private static final String STR_HTTP = "http://";
+
+  /** The Constant STR_EMPTY. */
   private static final String STR_EMPTY = "";
 
   // Nome Applicazione
+  /** The Constant MSG_APPLICATION. */
   public static final int MSG_APPLICATION = 0;
   // Comandi di default
+  /** The Constant MSG_CM_OK. */
   public static final int MSG_CM_OK = 1;
+
+  /** The Constant MSG_CM_BACK. */
   public static final int MSG_CM_BACK = 2;
+
+  /** The Constant MSG_CM_EXIT. */
   public static final int MSG_CM_EXIT = 3;
+
+  /** The Constant MSG_CM_YES. */
   public static final int MSG_CM_YES = 4;
+
+  /** The Constant MSG_CM_NO. */
   public static final int MSG_CM_NO = 5;
   // Menu Principale
+  /** The Constant MSG_ME_READFEEDS. */
   public static final int MSG_ME_READFEEDS = 6;
+
+  /** The Constant MSG_ME_ADDFEED. */
   public static final int MSG_ME_ADDFEED = 7;
+
+  /** The Constant MSG_ME_MEMORY. */
   public static final int MSG_ME_MEMORY = 8;
+
+  /** The Constant MSG_ME_CLEANUP. */
   public static final int MSG_ME_CLEANUP = 9;
+
+  /** The Constant MSG_ME_ABOUT. */
   public static final int MSG_ME_ABOUT = 10;
   // Menu Add Feed
+  /** The Constant MSG_ME_BROWSEFEEDS. */
   public static final int MSG_ME_BROWSEFEEDS = 11;
+
+  /** The Constant MSG_ME_ADDURL. */
   public static final int MSG_ME_ADDURL = 12;
   // Form Add Feed URL
+  /** The Constant MSG_FM_ADDFEED. */
   public static final int MSG_FM_ADDFEED = 13;
+
+  /** The Constant MSG_FM_FEEDTITLE. */
   public static final int MSG_FM_FEEDTITLE = 14;
+
+  /** The Constant MSG_FM_FEEDURL. */
   public static final int MSG_FM_FEEDURL = 15;
+
+  /** The Constant MSG_FM_HTTP. */
   public static final int MSG_FM_HTTP = 16;
+
+  /** The Constant MSG_CM_ADDFEEDURL. */
   public static final int MSG_CM_ADDFEEDURL = 17;
   // Form Browse Feed List
+  /** The Constant MSG_SOMEFEEDS. */
   public static final int MSG_SOMEFEEDS = 18;
+
+  /** The Constant MSG_CM_ADDFEEDLIST. */
   public static final int MSG_CM_ADDFEEDLIST = 19;
+
+  /** The Constant MSG_FEEDFILEERROR. */
   public static final int MSG_FEEDFILEERROR = 20;
   // Add Feed error messages
+  /** The Constant MSG_ERR01_TIT. */
   public static final int MSG_ERR01_TIT = 21;
+
+  /** The Constant MSG_ERR01_MSG. */
   public static final int MSG_ERR01_MSG = 22;
+
+  /** The Constant MSG_ERR02_TIT. */
   public static final int MSG_ERR02_TIT = 23;
+
+  /** The Constant MSG_ERR02_MSG. */
   public static final int MSG_ERR02_MSG = 24;
+
+  /** The Constant MSG_ERR03_TIT. */
   public static final int MSG_ERR03_TIT = 25;
+
+  /** The Constant MSG_ERR03_MSG. */
   public static final int MSG_ERR03_MSG = 26;
   // Menu Clean up
+  /** The Constant MSG_ME_CLEANUP_ALL. */
   public static final int MSG_ME_CLEANUP_ALL = 27;
+
+  /** The Constant MSG_ME_CLEANUP_ITEMS. */
   public static final int MSG_ME_CLEANUP_ITEMS = 28;
+
+  /** The Constant MSG_ME_CLEANUP_1DOLD. */
   public static final int MSG_ME_CLEANUP_1DOLD = 29;
+
+  /** The Constant MSG_ME_CLEANUP_2DOLD. */
   public static final int MSG_ME_CLEANUP_2DOLD = 30;
+
+  /** The Constant MSG_ME_CLEANUP_1WOLD. */
   public static final int MSG_ME_CLEANUP_1WOLD = 31;
   // Delete confirmations
+  /** The Constant MSG_CONFIRM. */
   public static final int MSG_CONFIRM = 32;
+
+  /** The Constant MSG_SUREDELETEALL. */
   public static final int MSG_SUREDELETEALL = 33;
+
+  /** The Constant MSG_SUREDELETEALLITEMS. */
   public static final int MSG_SUREDELETEALLITEMS = 34;
+
+  /** The Constant MSG_SUREDELETEITEMS. */
   public static final int MSG_SUREDELETEITEMS = 35;
+
+  /** The Constant MSG_DELETED. */
   public static final int MSG_DELETED = 36;
   // Feeds List
+  /** The Constant MSG_FEEDS. */
   public static final int MSG_FEEDS = 37;
+
+  /** The Constant MSG_NEWREAD. */
   public static final int MSG_NEWREAD = 38;
+
+  /** The Constant MSG_NEWSUPDATE. */
   public static final int MSG_NEWSUPDATE = 39;
+
+  /** The Constant MSG_NEWSINFO. */
   public static final int MSG_NEWSINFO = 40;
+
+  /** The Constant MSG_NEWSDELETE. */
   public static final int MSG_NEWSDELETE = 41;
+
+  /** The Constant MSG_NEWSERASE. */
   public static final int MSG_NEWSERASE = 42;
+
+  /** The Constant MSG_ERRNOFEEDS. */
   public static final int MSG_ERRNOFEEDS = 43;
+
+  /** The Constant MSG_CM_OPEN. */
   public static final int MSG_CM_OPEN = 44;
+
+  /** The Constant MSG_CM_STOP. */
   public static final int MSG_CM_STOP = 45;
   // News List
+  /** The Constant MSG_CM_READ. */
   public static final int MSG_CM_READ = 46;
+
+  /** The Constant MSG_CM_GO. */
   public static final int MSG_CM_GO = 47;
   // Delete messages
+  /** The Constant MSG_DELETEALL. */
   public static final int MSG_DELETEALL = 48;
+
+  /** The Constant MSG_DELETEITEMS. */
   public static final int MSG_DELETEITEMS = 49;
   // Database info messages
+  /** The Constant MSG_DBINFO1. */
   public static final int MSG_DBINFO1 = 50;
+
+  /** The Constant MSG_DBINFO2. */
   public static final int MSG_DBINFO2 = 51;
+
+  /** The Constant MSG_DBINFO3. */
   public static final int MSG_DBINFO3 = 52;
+
+  /** The Constant MSG_DBINFO4. */
   public static final int MSG_DBINFO4 = 53;
+
+  /** The Constant MSG_DBINFO5. */
   public static final int MSG_DBINFO5 = 54;
   // Memory info messages
+  /** The Constant MSG_MEMINFO1. */
   public static final int MSG_MEMINFO1 = 55;
+
+  /** The Constant MSG_MEMINFO2. */
   public static final int MSG_MEMINFO2 = 56;
+
+  /** The Constant MSG_MEMINFO3. */
   public static final int MSG_MEMINFO3 = 57;
   // Load Feed List
+  /** The Constant MSG_LOADFEEDLISTTITLE. */
   public static final int MSG_LOADFEEDLISTTITLE = 58;
+
+  /** The Constant MSG_LOADFEEDLISTST00. */
   public static final int MSG_LOADFEEDLISTST00 = 59;
+
+  /** The Constant MSG_LOADFEEDLISTST01. */
   public static final int MSG_LOADFEEDLISTST01 = 60;
+
+  /** The Constant MSG_LOADFEEDLISTST02. */
   public static final int MSG_LOADFEEDLISTST02 = 61;
+
+  /** The Constant MSG_LOADFEEDLISTST03. */
   public static final int MSG_LOADFEEDLISTST03 = 62;
+
+  /** The Constant MSG_LOADFEEDLISTEND. */
   public static final int MSG_LOADFEEDLISTEND = 63;
   // Update Feed Items
+  /** The Constant MSG_UPDATETITLE. */
   public static final int MSG_UPDATETITLE = 64;
+
+  /** The Constant MSG_UPDATEST00. */
   public static final int MSG_UPDATEST00 = 65;
+
+  /** The Constant MSG_UPDATEST01. */
   public static final int MSG_UPDATEST01 = 66;
+
+  /** The Constant MSG_UPDATEST02. */
   public static final int MSG_UPDATEST02 = 67;
+
+  /** The Constant MSG_UPDATEST03. */
   public static final int MSG_UPDATEST03 = 68;
+
+  /** The Constant MSG_UPDATEST04. */
   public static final int MSG_UPDATEST04 = 69;
+
+  /** The Constant MSG_UPDATEST05. */
   public static final int MSG_UPDATEST05 = 70;
+
+  /** The Constant MSG_UPDATEST06. */
   public static final int MSG_UPDATEST06 = 71;
+
+  /** The Constant MSG_UPDATEST07. */
   public static final int MSG_UPDATEST07 = 72;
+
+  /** The Constant MSG_UPDATEOK01. */
   public static final int MSG_UPDATEOK01 = 73;
+
+  /** The Constant MSG_UPDATEOK02. */
   public static final int MSG_UPDATEOK02 = 74;
+
+  /** The Constant MSG_UPDATEOK03. */
   public static final int MSG_UPDATEOK03 = 75;
+
+  /** The Constant MSG_UPDATEERR01. */
   public static final int MSG_UPDATEERR01 = 76;
+
+  /** The Constant MSG_UPDATEERR02. */
   public static final int MSG_UPDATEERR02 = 77;
+
+  /** The Constant MSG_UPDATEERR03. */
   public static final int MSG_UPDATEERR03 = 78;
+
+  /** The Constant MSG_UPDATEERR04. */
   public static final int MSG_UPDATEERR04 = 79;
   // Feed Info
+  /** The Constant MSG_FEEDINFO01. */
   public static final int MSG_FEEDINFO01 = 80;
+
+  /** The Constant MSG_FEEDINFO02. */
   public static final int MSG_FEEDINFO02 = 81;
+
+  /** The Constant MSG_FEEDINFO03. */
   public static final int MSG_FEEDINFO03 = 82;
+
+  /** The Constant MSG_FEEDINFO04. */
   public static final int MSG_FEEDINFO04 = 83;
+
+  /** The Constant MSG_FEEDINFO05. */
   public static final int MSG_FEEDINFO05 = 84;
+
+  /** The Constant MSG_FEEDINFO06. */
   public static final int MSG_FEEDINFO06 = 85;
+
+  /** The Constant MSG_FEEDINFO07. */
   public static final int MSG_FEEDINFO07 = 86;
   // Feed Item Info
+  /** The Constant MSG_NOITEMS. */
   public static final int MSG_NOITEMS = 87;
+
+  /** The Constant MSG_FEEDITEMINFO01. */
   public static final int MSG_FEEDITEMINFO01 = 88;
+
+  /** The Constant MSG_FEEDITEMINFO02. */
   public static final int MSG_FEEDITEMINFO02 = 89;
   // Page scrolling
+  /** The Constant MSG_PREV. */
   public static final int MSG_PREV = 90;
+
+  /** The Constant MSG_NEXT. */
   public static final int MSG_NEXT = 91;
 
+  /** The Constant ME_MAINMENU. */
   public static final int ME_MAINMENU = 0;
+
+  /** The Constant ME_ADDFEED. */
   public static final int ME_ADDFEED = 1;
+
+  /** The Constant ME_CLEANUP. */
   public static final int ME_CLEANUP = 2;
+
+  /** The Constant ME_FEEDS. */
   public static final int ME_FEEDS = 3;
 
+  /** The Constant AC_YES. */
   public static final int AC_YES = 1000;
+
+  /** The Constant AC_NO. */
   public static final int AC_NO = 1001;
+
+  /** The Constant AC_DOREADFEEDS. */
   public static final int AC_DOREADFEEDS = 2;
+
+  /** The Constant AC_DOADDFEED. */
   public static final int AC_DOADDFEED = 3;
+
+  /** The Constant AC_DOMEMORY. */
   public static final int AC_DOMEMORY = 4;
+
+  /** The Constant AC_DOCLEANUP. */
   public static final int AC_DOCLEANUP = 5;
+
+  /** The Constant AC_DOABOUT. */
   public static final int AC_DOABOUT = 6;
+
+  /** The Constant AC_DOBROWSEFEED1. */
   public static final int AC_DOBROWSEFEED1 = 8;
+
+  /** The Constant AC_DOBROWSEFEED2. */
   public static final int AC_DOBROWSEFEED2 = 9;
+
+  /** The Constant AC_DOADDURL. */
   public static final int AC_DOADDURL = 10;
+
+  /** The Constant AC_ADDFEEDURL. */
   public static final int AC_ADDFEEDURL = 11;
+
+  /** The Constant AC_ADDFEEDLIST. */
   public static final int AC_ADDFEEDLIST = 12;
+
+  /** The Constant AC_DOCLEANALL. */
   public static final int AC_DOCLEANALL = 14;
+
+  /** The Constant AC_DOCLEANITEMS. */
   public static final int AC_DOCLEANITEMS = 15;
+
+  /** The Constant AC_DOCLEAN1DOLD. */
   public static final int AC_DOCLEAN1DOLD = 16;
+
+  /** The Constant AC_DOCLEAN2DOLD. */
   public static final int AC_DOCLEAN2DOLD = 17;
+
+  /** The Constant AC_DOCLEAN1WOLD. */
   public static final int AC_DOCLEAN1WOLD = 18;
+
+  /** The Constant AC_OPEN. */
   public static final int AC_OPEN = 19;
+
+  /** The Constant AC_NEWSREAD. */
   public static final int AC_NEWSREAD = 21;
+
+  /** The Constant AC_NEWSUPDATE. */
   public static final int AC_NEWSUPDATE = 22;
+
+  /** The Constant AC_NEWSINFO. */
   public static final int AC_NEWSINFO = 23;
+
+  /** The Constant AC_NEWSDELETE. */
   public static final int AC_NEWSDELETE = 24;
+
+  /** The Constant AC_NEWSERASE. */
   public static final int AC_NEWSERASE = 25;
+
+  /** The Constant AC_READ. */
   public static final int AC_READ = 26;
+
+  /** The Constant AC_GO. */
   public static final int AC_GO = 27;
 
   //
+  /** The Constant CHECK_SPLASH_DONETIME. */
   private static final int CHECK_SPLASH_DONETIME = 1000;
 
   // External resources
+  /** The Constant RES_MESSAGES. */
   private static final String RES_MESSAGES = "messages.txt";
+
+  /** The Constant RES_ABOUT. */
   private static final String RES_ABOUT = "about.txt";
+
+  /** The Constant RES_FEEDSLIST. */
   private static final String RES_FEEDSLIST = "feeds.xml";
+
+  /** The Constant RES_IMAGE_STAR. */
   private static final String RES_IMAGE_STAR = "star.png";
+
+  /** The Constant RES_IMAGE_READ. */
   private static final String RES_IMAGE_READ = "read.png";
+
+  /** The Constant RES_IMAGE_UNREAD. */
   private static final String RES_IMAGE_UNREAD = "unread.png";
 
+  /** The Constant ITEMXPAGE. */
   private static final int ITEMXPAGE = 20;
 
   // Table with feed names -> RMS feed id
+  /** The feeds table. */
   private Vector feedsTable;
+
+  /** The items table. */
   private final Vector itemsTable = new Vector();
   /* Mapping feed title -> feed url in the browse feeds list */
+  /** The browse feed list. */
   public Vector browseFeedList = new Vector();
+
+  /** The parsecal. */
   private final Calendar parsecal;
   // Current Feed & Item
+  /** The current feed. */
   private RSSFeed currentFeed;
+
+  /** The current item. */
   private RSSItem currentItem;
 
+  /** The stg feed list url. */
   public static String stgFeedListURL = null;
+
+  /** The stg use html. */
   public static boolean stgUseHTML = true;
+
+  /** The stg col bck g. */
   public static int stgColBckG = 0xFFFFCC;
+
+  /** The stg col bord. */
   public static int stgColBord = 0xFFFFFF;
+
+  /** The stg col titl. */
   public static int stgColTitl = 0xFF0000;
+
+  /** The stg col text. */
   public static int stgColText = 0x000000;
 
+  /** The s main menu. */
   private List sMainMenu;
+
+  /** The s add feed menu. */
   private List sAddFeedMenu;
+
+  /** The s clean up menu. */
   private List sCleanUpMenu;
+
+  /** The s add feed browse. */
   private List sAddFeedBrowse;
+
+  /** The s add feed url. */
   private Form sAddFeedURL;
+
+  /** The i title. */
   private TextField iTitle;
+
+  /** The i url. */
   private TextField iURL;
+
+  /** The s feeds. */
   private List sFeeds;
+
+  /** The s feed menu. */
   private List sFeedMenu;
+
+  /** The s feed info. */
   private Form sFeedInfo;
+
+  /** The s news list. */
   private List sNewsList;
+
+  /** The s news. */
   private Displayable sNews;
 
+  /** The c addfeedurl. */
   public static Command cADDFEEDURL;
+
+  /** The c addfeedlist. */
   public static Command cADDFEEDLIST;
+
+  /** The c yes. */
   public static Command cYES;
+
+  /** The c no. */
   public static Command cNO;
+
+  /** The c open. */
   public static Command cOPEN;
+
+  /** The c stop. */
   public static Command cSTOP;
+
+  /** The c read. */
   public static Command cREAD;
+
+  /** The c go. */
   public static Command cGO;
+
+  /** The c o k2. */
   public static Command cOK2;
 
+  /** The i bullet. */
   private final Image iBullet;
+
+  /** The i read. */
   private final Image iRead;
+
+  /** The i unread. */
   private final Image iUnread;
 
+  /** The page. */
   int page;
+
+  /** The next idx. */
   int nextIdx;
+
+  /** The has prev. */
   boolean hasPrev;
+
+  /** The has next. */
   boolean hasNext;
 
+  /** The bold. */
   Font bold;
+
+  /** The normal. */
   Font normal;
+
+  /** The o. */
   Object[] o = new Object[9];
 
+  /**
+   * Instantiates a new news reader.
+   */
   public NewsReader() {
     super();
     BaseApp.resPrefix = "ne";
@@ -354,12 +691,23 @@ public class NewsReader extends Application implements Comparator {
     parsecal = Calendar.getInstance();
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.app.Application#done()
+   */
   public void done() {
     super.done();
     RSSItem.rs_close(true);
     RSSFeed.rs_close(true);
   }
 
+  /**
+   * Gets the int.
+   * 
+   * @param prop the prop
+   * @param def the def
+   * @param radix the radix
+   * @return the int
+   */
   public int getInt(final String prop, final int def, final int radix) {
     final String tmp = getAppProperty(prop);
     int val = def;
@@ -394,8 +742,12 @@ public class NewsReader extends Application implements Comparator {
   }
 
   // Implementation of the command listener interface
+  /** The next action. */
   private int nextAction = NewsReader.AC_NO;
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.app.Application#handleAction(int, javax.microedition.lcdui.Displayable, javax.microedition.lcdui.Command)
+   */
   public boolean handleAction(int action, final Displayable d, final Command c) {
     Alert msg;
     boolean confirmed = false;
@@ -622,6 +974,9 @@ public class NewsReader extends Application implements Comparator {
     return true;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.app.BaseApp#changed(int, javax.microedition.lcdui.Displayable, javax.microedition.lcdui.Displayable)
+   */
   public void changed(final int event, final Displayable previous, final Displayable next) {
     if (event == Application.EV_BEFORECHANGE) {
       if (next == sFeedMenu) {
@@ -661,9 +1016,16 @@ public class NewsReader extends Application implements Comparator {
     }
   }
 
+  /** The Constant SECMILLIS. */
   public final static long SECMILLIS = 1000;
+
+  /** The Constant MINMILLIS. */
   public final static long MINMILLIS = NewsReader.SECMILLIS * 60;
+
+  /** The Constant HOURMILLIS. */
   public final static long HOURMILLIS = NewsReader.MINMILLIS * 60;
+
+  /** The Constant DAYMILLIS. */
   public final static long DAYMILLIS = NewsReader.HOURMILLIS * 24;
 
   /**
@@ -691,6 +1053,11 @@ public class NewsReader extends Application implements Comparator {
     return diff;
   }
 
+  /**
+   * Adds the feed list.
+   * 
+   * @return the alert
+   */
   private Alert addFeedList() {
     int addedfeeds = 0;
     RSSFeed feed;
@@ -713,6 +1080,11 @@ public class NewsReader extends Application implements Comparator {
     return buildAlert(addedfeeds);
   }
 
+  /**
+   * Adds the feed url.
+   * 
+   * @return the alert
+   */
   private Alert addFeedURL() {
     RSSFeed newfeed;
     int addedfeeds = 0;
@@ -738,6 +1110,12 @@ public class NewsReader extends Application implements Comparator {
     return buildAlert(addedfeeds);
   }
 
+  /**
+   * Builds the alert.
+   * 
+   * @param addedFeeds the added feeds
+   * @return the alert
+   */
   private Alert buildAlert(final int addedFeeds) {
     Alert addalert;
     if (addedFeeds > 0) {
@@ -754,6 +1132,11 @@ public class NewsReader extends Application implements Comparator {
     return addalert;
   }
 
+  /**
+   * Gets the main menu.
+   * 
+   * @return the main menu
+   */
   private List getMainMenu() {
     if (sMainMenu == null) {
       sMainMenu = Application.getMenu(Application.messages[NewsReader.MSG_APPLICATION], NewsReader.ME_MAINMENU, -1, Application.cEXIT);
@@ -761,6 +1144,11 @@ public class NewsReader extends Application implements Comparator {
     return sMainMenu;
   }
 
+  /**
+   * Gets the adds the feed menu.
+   * 
+   * @return the adds the feed menu
+   */
   private List getAddFeedMenu() {
     if (sAddFeedMenu == null) {
       sAddFeedMenu = Application.getMenu(Application.messages[NewsReader.MSG_ME_ADDFEED], NewsReader.ME_ADDFEED, -1, Application.cBACK);
@@ -768,6 +1156,11 @@ public class NewsReader extends Application implements Comparator {
     return sAddFeedMenu;
   }
 
+  /**
+   * Gets the adds the feed url.
+   * 
+   * @return the adds the feed url
+   */
   private Form getAddFeedURL() {
     if (sAddFeedURL == null) {
       iTitle = new TextField(Application.messages[NewsReader.MSG_FM_FEEDTITLE], NewsReader.STR_EMPTY, 64, TextField.ANY);
@@ -790,6 +1183,11 @@ public class NewsReader extends Application implements Comparator {
     return sAddFeedBrowse;
   }
 
+  /**
+   * Gets the clean up menu.
+   * 
+   * @return the clean up menu
+   */
   private List getCleanUpMenu() {
     if (sCleanUpMenu == null) {
       sCleanUpMenu = Application.getMenu(Application.messages[NewsReader.MSG_ME_CLEANUP], NewsReader.ME_CLEANUP, -1, Application.cBACK);
@@ -797,6 +1195,11 @@ public class NewsReader extends Application implements Comparator {
     return sCleanUpMenu;
   }
 
+  /**
+   * Gets the memory form.
+   * 
+   * @return the memory form
+   */
   public Form getMemoryForm() {
     System.gc();
     final Form sMemory = new Form(Application.messages[NewsReader.MSG_ME_MEMORY]);
@@ -854,6 +1257,8 @@ public class NewsReader extends Application implements Comparator {
 
   /**
    * Refreshes the feed list and the feed title Hashtable.
+   * 
+   * @return the select feed
    */
   private List getSelectFeed() {
     /* Perhaps check if the database have changed or not! */
@@ -931,6 +1336,12 @@ public class NewsReader extends Application implements Comparator {
     return sFeedInfo;
   }
 
+  /**
+   * Gets the news list.
+   * 
+   * @param keepPos the keep pos
+   * @return the news list
+   */
   private List getNewsList(final boolean keepPos) {
     int oldPos = -1;
     if (sNewsList != null) {
@@ -1009,13 +1420,18 @@ public class NewsReader extends Application implements Comparator {
 
   /**
    * Returns a form with the given item info. The form is always refreshed when this method is called.
-   * @param item the item that should be displayed
+   * 
    * @return the refreshed form with info about the current item
    */
   public Displayable getNewsDataHTML() {
     return new ShowNews(this, currentFeed, currentItem);
   }
 
+  /**
+   * Gets the news data text.
+   * 
+   * @return the news data text
+   */
   public Displayable getNewsDataTEXT() {
     Form itemform;
     itemform = new Form(currentItem.title);
@@ -1051,6 +1467,9 @@ public class NewsReader extends Application implements Comparator {
     return itemform;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.app.Comparator#compare(java.lang.Object, java.lang.Object)
+   */
   public int compare(final Object o1, final Object o2) {
     return ((Pair) o1).name.compareTo(((Pair) o2).name);
   }

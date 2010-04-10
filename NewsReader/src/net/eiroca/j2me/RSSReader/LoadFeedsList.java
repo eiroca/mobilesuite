@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson <gosta(at)brothas.net>
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2004 Gösta Jonasson
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.RSSReader;
 
@@ -32,25 +30,64 @@ import org.kxml2.io.KXmlParser;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+/**
+ * The Class LoadFeedsList.
+ */
 public class LoadFeedsList extends Thread {
 
+  /** The Constant TAG_FEEDS. */
   private static final String TAG_FEEDS = "feeds";
+
+  /** The Constant TAG_FEEDDEF. */
   private static final String TAG_FEEDDEF = "feed";
+
+  /** The Constant TAG_TITLE. */
   private static final String TAG_TITLE = "title";
+
+  /** The Constant TAG_URL. */
   private static final String TAG_URL = "URL";
+
+  /** The Constant TAG_TYPE. */
   private static final String TAG_TYPE = "type";
+
+  /** The Constant TAG_COLOR. */
   private static final String TAG_COLOR = "color";
+
+  /** The Constant ATR_BCKG. */
   private static final String ATR_BCKG = "background";
+
+  /** The Constant ATR_BORD. */
   private static final String ATR_BORD = "border";
+
+  /** The Constant ATR_TITL. */
   private static final String ATR_TITL = "title";
+
+  /** The Constant ATR_TEXT. */
   private static final String ATR_TEXT = "text";
 
+  /** The loaded. */
   public boolean loaded;
+
+  /** The a url. */
   String aURL;
+
+  /** The remote. */
   boolean remote;
+
+  /** The midlet. */
   NewsReader midlet;
+
+  /** The s status. */
   StatusScreen sStatus;
 
+  /**
+   * Instantiates a new load feeds list.
+   * 
+   * @param midlet the midlet
+   * @param aURL the a url
+   * @param remote the remote
+   * @param d the d
+   */
   public LoadFeedsList(final NewsReader midlet, final String aURL, final boolean remote, final Displayable d) {
     this.midlet = midlet;
     this.aURL = aURL;
@@ -72,6 +109,9 @@ public class LoadFeedsList extends Thread {
     }
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Thread#run()
+   */
   public void run() {
     HttpConnection httpconnection = null;
     InputStream is = null;
@@ -104,6 +144,13 @@ public class LoadFeedsList extends Thread {
     loaded = true;
   }
 
+  /**
+   * Parses the.
+   * 
+   * @param is the is
+   * @throws XmlPullParserException the xml pull parser exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   public void parse(final InputStream is) throws XmlPullParserException, IOException {
     RSSFeed feed;
     String tagname;
