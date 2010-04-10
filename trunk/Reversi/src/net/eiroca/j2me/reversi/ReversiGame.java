@@ -1,12 +1,10 @@
-/** GPL >= 2.0
- * Based upon jtReversi game written by Jataka Ltd.
- *
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002-2004 Salamon Andras
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -14,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.reversi;
 
@@ -26,30 +23,79 @@ import net.eiroca.j2me.game.tpg.GameMove;
 import net.eiroca.j2me.game.tpg.GameTable;
 import net.eiroca.j2me.game.tpg.TwoPlayerGame;
 
+/**
+ * The Class ReversiGame.
+ */
 public final class ReversiGame extends TwoPlayerGame {
 
+  /** The eval num. */
   protected int evalNum = 0;
+
+  /** The heur matrix. */
   protected int[][] heurMatrix;
+
+  /** The liberty penalty. */
   protected int libertyPenalty;
+
+  /** The num first free neighbours. */
   protected int numFirstFreeNeighbours;
+
+  /** The num second free neighbours. */
   protected int numSecondFreeNeighbours;
+
+  /** The num first player. */
   public int numFirstPlayer;
+
+  /** The num second player. */
   public int numSecondPlayer;
+
+  /** The point. */
   protected int point;
+
+  /** The point first player. */
   protected int pointFirstPlayer;
+
+  /** The point second player. */
   protected int pointSecondPlayer;
+
+  /** The s01. */
   protected int s01;
+
+  /** The s11. */
   protected int s11;
+
+  /** The s bonus. */
   protected int sBonus;
+
+  /** The square erase. */
   protected boolean squareErase;
+
+  /** The r player. */
   protected byte rPlayer;
+
+  /** The r table. */
   protected ReversiTable rTable;
+
+  /** The table int array. */
   protected int[][] tableIntArray = new int[8][8];
 
+  /**
+   * Instantiates a new reversi game.
+   * 
+   * @param heurMatrix the heur matrix
+   */
   public ReversiGame(final int[][] heurMatrix) {
     this(heurMatrix, 0, 0, false);
   }
 
+  /**
+   * Instantiates a new reversi game.
+   * 
+   * @param heurMatrix the heur matrix
+   * @param libertyPenalty the liberty penalty
+   * @param sBonus the s bonus
+   * @param squareErase the square erase
+   */
   public ReversiGame(final int[][] heurMatrix, final int libertyPenalty, final int sBonus, final boolean squareErase) {
     this.heurMatrix = heurMatrix;
     this.libertyPenalty = libertyPenalty;
@@ -57,6 +103,16 @@ public final class ReversiGame extends TwoPlayerGame {
     this.squareErase = squareErase;
   }
 
+  /**
+   * _turn.
+   * 
+   * @param table the table
+   * @param player the player
+   * @param move the move
+   * @param newTable the new table
+   * @param animated the animated
+   * @return the game table[]
+   */
   private GameTable[] _turn(final ReversiTable table, final byte player, final ReversiMove move, final ReversiTable newTable, final boolean animated) {
     final int row = move.row;
     final int col = move.col;
@@ -122,10 +178,21 @@ public final class ReversiGame extends TwoPlayerGame {
    * @see net.eiroca.j2me.minmax.TwoPlayerGame#animatedTurn(net.eiroca.j2me.minmax.Table,
    *      byte, net.eiroca.j2me.minmax.Move, net.eiroca.j2me.minmax.Table)
    */
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#animatedTurn(net.eiroca.j2me.game.tpg.GameTable, byte, net.eiroca.j2me.game.tpg.GameMove, net.eiroca.j2me.game.tpg.GameTable)
+   */
   public GameTable[] animatedTurn(final GameTable table, final byte player, final GameMove move, final GameTable newt) {
     return _turn((ReversiTable) table, player, (ReversiMove) move, (ReversiTable) newt, true);
   }
 
+  /**
+   * Erase square heuristic.
+   * 
+   * @param i the i
+   * @param j the j
+   * @param id the id
+   * @param jd the jd
+   */
   protected void eraseSquareHeuristic(final int i, final int j, final int id, final int jd) {
     s01 = heurMatrix[i][j + jd];
     s11 = heurMatrix[i + id][j + jd];
@@ -134,9 +201,14 @@ public final class ReversiGame extends TwoPlayerGame {
     heurMatrix[i + id][j + jd] = 0;
   }
 
-  protected void eval(boolean fullProcess) {
+  /**
+   * Eval.
+   * 
+   * @param fullProcess the full process
+   */
+  protected void eval(final boolean fullProcess) {
     rTable.convertToIntArray(tableIntArray);
-    boolean lazyProcess = !fullProcess || isGameEnded() || (numFirstPlayer + numSecondPlayer > 58);
+    final boolean lazyProcess = !fullProcess || isGameEnded() || (numFirstPlayer + numSecondPlayer > 58);
     numFirstPlayer = 0;
     numSecondPlayer = 0;
     pointFirstPlayer = 0;
@@ -211,6 +283,13 @@ public final class ReversiGame extends TwoPlayerGame {
     }
   }
 
+  /**
+   * Free neighbours.
+   * 
+   * @param i the i
+   * @param j the j
+   * @return the int
+   */
   protected int freeNeighbours(final int i, final int j) {
     int freeNeighbours = 0;
     for (int id = -1; id <= 1; ++id) {
@@ -223,10 +302,16 @@ public final class ReversiGame extends TwoPlayerGame {
     return freeNeighbours;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#getEvalNum()
+   */
   public int getEvalNum() {
     return evalNum;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#getGameResult()
+   */
   public int getGameResult() {
     int piecediff = numFirstPlayer - numSecondPlayer;
     if (rPlayer == 1) {
@@ -243,20 +328,32 @@ public final class ReversiGame extends TwoPlayerGame {
     }
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#getPoint()
+   */
   public int getPoint() {
     return point;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#hasPossibleMove(net.eiroca.j2me.game.tpg.GameTable, byte)
+   */
   public boolean hasPossibleMove(final GameTable table, final byte player) {
     final ReversiMove[] moves = (ReversiMove[]) possibleMoves(table, player);
     return (moves != null) && ((moves.length > 1) || (moves[0].row != 8));
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#isGameEnded()
+   */
   public boolean isGameEnded() {
     if ((numFirstPlayer + numSecondPlayer == 64) || (numFirstPlayer == 0) || (numSecondPlayer == 0) || (rTable.getPassNum() == 2)) { return true; }
     return false;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#possibleMoves(net.eiroca.j2me.game.tpg.GameTable, byte)
+   */
   public GameMove[] possibleMoves(final GameTable table, final byte player) {
     if (!(table instanceof ReversiTable)) { return null; }
     final Vector moves = new Vector();
@@ -291,16 +388,30 @@ public final class ReversiGame extends TwoPlayerGame {
     return retMoves;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#resetEvalNum()
+   */
   public void resetEvalNum() {
     evalNum = 0;
   }
 
+  /**
+   * Restore square heuristic.
+   * 
+   * @param i the i
+   * @param j the j
+   * @param id the id
+   * @param jd the jd
+   */
   protected void restoreSquareHeuristic(final int i, final int j, final int id, final int jd) {
     heurMatrix[i][j + jd] = s01;
     heurMatrix[i + id][j] = s01;
     heurMatrix[i + id][j + jd] = s11;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#setTable(net.eiroca.j2me.game.tpg.GameTable, byte, boolean)
+   */
   protected void setTable(final GameTable table, final byte player, final boolean fullProcess) {
     if (!(table instanceof ReversiTable)) { throw new IllegalArgumentException(); }
     rTable = (ReversiTable) table;
@@ -309,6 +420,11 @@ public final class ReversiGame extends TwoPlayerGame {
     eval(fullProcess);
   }
 
+  /**
+   * Square bonus.
+   * 
+   * @return the int
+   */
   protected int squareBonus() {
     boolean c1 = true;
     boolean c2 = true;
@@ -395,6 +511,9 @@ public final class ReversiGame extends TwoPlayerGame {
     return bonus[1] - bonus[2];
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.TwoPlayerGame#turn(net.eiroca.j2me.game.tpg.GameTable, byte, net.eiroca.j2me.game.tpg.GameMove, net.eiroca.j2me.game.tpg.GameTable)
+   */
   public boolean turn(final GameTable table, final byte player, final GameMove move, final GameTable newt) {
     return _turn((ReversiTable) table, player, (ReversiMove) move, (ReversiTable) newt, false) != null;
   }
