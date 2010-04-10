@@ -1,12 +1,10 @@
-/** GPL >= 2.0
- * Based upon jtReversi game written by Jataka Ltd.
- *
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002-2004 Salamon Andras
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -14,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.reversi;
 
@@ -24,18 +21,30 @@ import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.tpg.GameMove;
 import net.eiroca.j2me.game.tpg.GameTable;
 
+/**
+ * The Class ReversiTable.
+ */
 public final class ReversiTable implements GameTable {
 
-  /**
-   * Two bits for every place: 00: nothing 01: 1 10: 2 11: oops
-   */
+  /** Two bits for every place: 00: nothing 01: 1 10: 2 11: oops. */
   protected byte[] board;
+
+  /** The pass num. */
   protected int passNum;
 
+  /**
+   * Gets the player item.
+   * 
+   * @param player the player
+   * @return the player item
+   */
   public static byte getPlayerItem(final byte player) {
     return (byte) (player + 1);
   }
 
+  /**
+   * Instantiates a new reversi table.
+   */
   public ReversiTable() {
     board = new byte[64];
     passNum = 0;
@@ -45,18 +54,34 @@ public final class ReversiTable implements GameTable {
     setItem(4, 3, (byte) 1);
   }
 
+  /**
+   * Instantiates a new reversi table.
+   * 
+   * @param byteArray the byte array
+   * @param offset the offset
+   */
   public ReversiTable(final byte[] byteArray, final int offset) {
     board = new byte[64];
     passNum = byteArray[offset];
     System.arraycopy(byteArray, offset + 1, board, 0, 64);
   }
 
+  /**
+   * Instantiates a new reversi table.
+   * 
+   * @param table the table
+   */
   public ReversiTable(final ReversiTable table) {
     board = new byte[64];
     System.arraycopy(table.board, 0, board, 0, 64);
     passNum = table.passNum;
   }
 
+  /**
+   * Convert to int array.
+   * 
+   * @param array the array
+   */
   public void convertToIntArray(final int[][] array) {
     for (int i = 0; i < 8; ++i) {
       for (int j = 0; j < 8; ++j) {
@@ -65,25 +90,49 @@ public final class ReversiTable implements GameTable {
     }
   }
 
+  /**
+   * Copy data from.
+   * 
+   * @param table the table
+   */
   public void copyDataFrom(final GameTable table) {
     final ReversiTable rtable = (ReversiTable) table;
     System.arraycopy(rtable.board, 0, board, 0, 64);
     passNum = rtable.passNum;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.GameTable#copyFrom()
+   */
   public GameTable copyFrom() {
     final ReversiTable rtable = new ReversiTable(this);
     return rtable;
   }
 
+  /**
+   * Flip.
+   * 
+   * @param row the row
+   * @param col the col
+   */
   public void flip(final int row, final int col) {
     setItem(row, col, (byte) (3 - getItem(row, col)));
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.tpg.GameTable#getEmptyMove()
+   */
   public GameMove getEmptyMove() {
     return new ReversiMove(0, 0);
   }
 
+  /**
+   * Gets the item.
+   * 
+   * @param row the row
+   * @param col the col
+   * @return the item
+   */
   public byte getItem(final int row, final int col) {
     return board[row * 8 + col];
   }
@@ -96,6 +145,13 @@ public final class ReversiTable implements GameTable {
     return passNum;
   }
 
+  /**
+   * Sets the item.
+   * 
+   * @param row the row
+   * @param col the col
+   * @param value the value
+   */
   public void setItem(final int row, final int col, final byte value) {
     board[row * 8 + col] = value;
   }
@@ -108,12 +164,23 @@ public final class ReversiTable implements GameTable {
     passNum = v;
   }
 
+  /**
+   * To byte array.
+   * 
+   * @return the byte[]
+   */
   public byte[] toByteArray() {
     final byte[] byteArray = new byte[65];
     toByteArray(byteArray, 0);
     return byteArray;
   }
 
+  /**
+   * To byte array.
+   * 
+   * @param byteArray the byte array
+   * @param offset the offset
+   */
   public void toByteArray(final byte[] byteArray, final int offset) {
     byteArray[offset] = (byte) passNum;
     System.arraycopy(board, 0, byteArray, offset + 1, board.length);
@@ -121,6 +188,8 @@ public final class ReversiTable implements GameTable {
 
   /**
    * Should use StringBuffer instead of String, but this method is only for debug purposes.
+   * 
+   * @return the string
    */
   public String toString() {
     final StringBuffer ret = new StringBuffer(80);

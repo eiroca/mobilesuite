@@ -1,12 +1,10 @@
-/** GPL >= 2.0
- * Based upon jtReversi game written by Jataka Ltd.
- *
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002-2004 Salamon Andras
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -14,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.reversi.ui;
 
@@ -35,18 +32,42 @@ import net.eiroca.j2me.reversi.ReversiGame;
 import net.eiroca.j2me.reversi.ReversiMove;
 import net.eiroca.j2me.reversi.ReversiTable;
 
+/**
+ * The Class ReversiScreen.
+ */
 public final class ReversiScreen extends GameScreen {
 
+  /** The Constant SEP. */
   private static final String SEP = ": ";
+
+  /** The Constant COLOR_TEXT_BG. */
   private static final int COLOR_TEXT_BG = 0xEEEEEE;
+
+  /** The Constant COLOR_TEXT_FG. */
   private static final int COLOR_TEXT_FG = 0x000000;
+
+  /** The Constant COLOR_BG. */
   private static final int COLOR_BG = 0xFFFFD0;
+
+  /** The Constant COLOR_FG. */
   private static final int COLOR_FG = 0x000000;
+
+  /** The Constant COLOR_P1. */
   private static final int COLOR_P1 = 0xFF0000;
+
+  /** The Constant COLOR_P2. */
   private static final int COLOR_P2 = 0x0000FF;
+
+  /** The Constant COLOR_DARKBOX. */
   private static final int COLOR_DARKBOX = 0x000000;
+
+  /** The Constant ASPECT_LIMIT_A. */
   private static final int ASPECT_LIMIT_A = 400; // 1.5
+
+  /** The Constant ASPECT_LIMIT_B. */
   private static final int ASPECT_LIMIT_B = 300; // 1.5
+
+  /** The Constant heurMatrix. */
   private static final int[][] heurMatrix = {
       {
           500, -240, 85, 69, 69, 85, -240, 500
@@ -66,40 +87,99 @@ public final class ReversiScreen extends GameScreen {
           500, -240, 85, 69, 69, 85, -240, 500
       }
   };
+
+  /** The info lines. */
   private final String infoLines[] = new String[3];
+
+  /** The message. */
   private String message;
+
+  /** The pnums. */
   private final int pnums[] = new int[2];
+
+  /** The possible moves. */
   private ReversiMove[] possibleMoves;
+
+  /** The sizex. */
   private int sizex;
+
+  /** The sizey. */
   private int sizey;
+
+  /** The vert width. */
   private final int vertWidth;
+
+  /** The width. */
   private int width;
+
+  /** The height. */
   private int height;
+
+  /** The selx. */
   public int selx;
+
+  /** The sely. */
   public int sely;
 
+  /** The message end. */
   public long messageEnd;
 
+  /** The mtt. */
   private MinimaxTimerTask mtt;
+
+  /** The timer. */
   private final Timer timer = new Timer();
 
+  /** The act player. */
   public static byte actPlayer;
+
+  /** The game ended. */
   public boolean gameEnded = true;
+
+  /** The is human. */
   public boolean[] isHuman = new boolean[2];
+
+  /** The tables. */
   public GameTable[] tables;
+
+  /** The turn num. */
   public static int turnNum;
+
+  /** The table. */
   public static ReversiTable table;
+
+  /** The rgame. */
   public static ReversiGame rgame;
+
+  /** The twoplayer. */
   public static boolean twoplayer;
 
+  /** The font height. */
   private final int fontHeight;
+
+  /** The off_y. */
   private final int off_y;
+
+  /** The off_x. */
   private final int off_x;
+
+  /** The piece width. */
   private final int pieceWidth;
+
+  /** The piece height. */
   private final int pieceHeight;
+
+  /** The piece_offx. */
   private final int piece_offx;
+
+  /** The piece_offy. */
   private final int piece_offy;
 
+  /**
+   * Instantiates a new reversi screen.
+   * 
+   * @param midlet the midlet
+   */
   public ReversiScreen(final GameApp midlet) {
     super(midlet, false, true);
     ReversiScreen.rgame = new ReversiGame(ReversiScreen.heurMatrix, 10, 18, true);
@@ -129,6 +209,9 @@ public final class ReversiScreen extends GameScreen {
     updateSkillInfo();
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#init()
+   */
   public void init() {
     super.init();
     Application.background = 0x00FFFFFF;
@@ -153,6 +236,9 @@ public final class ReversiScreen extends GameScreen {
     updatePossibleMoves();
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#tick()
+   */
   public boolean tick() {
     screen.setColor(Application.background);
     screen.fillRect(0, 0, screenWidth, screenHeight);
@@ -165,6 +251,9 @@ public final class ReversiScreen extends GameScreen {
     return true;
   }
 
+  /**
+   * Draw message.
+   */
   protected void drawMessage() {
     if ((message == null) || ((messageEnd != 0) && (messageEnd > System.currentTimeMillis()))) { return; }
     int startIndex;
@@ -196,6 +285,9 @@ public final class ReversiScreen extends GameScreen {
     }
   }
 
+  /**
+   * Draw board.
+   */
   protected void drawBoard() {
     screen.setColor(ReversiScreen.COLOR_BG);
     screen.fillRect(off_x, off_y, width, height);
@@ -206,6 +298,13 @@ public final class ReversiScreen extends GameScreen {
     }
   }
 
+  /**
+   * Draw piece.
+   * 
+   * @param row the row
+   * @param col the col
+   * @param player the player
+   */
   protected void drawPiece(final int row, final int col, final int player) {
     final int x = off_x + row * sizex + piece_offx;
     final int y = off_y + col * sizey + piece_offy;
@@ -218,6 +317,9 @@ public final class ReversiScreen extends GameScreen {
     screen.fillArc(x, y, pieceWidth, pieceHeight, 0, 360);
   }
 
+  /**
+   * Draw possible moves.
+   */
   protected void drawPossibleMoves() {
     if (possibleMoves == null) {
       // end of the game
@@ -233,6 +335,9 @@ public final class ReversiScreen extends GameScreen {
     }
   }
 
+  /**
+   * Draw selection box.
+   */
   protected void drawSelectionBox() {
     if (ReversiScreen.getActPlayer() == 0) {
       screen.setColor(ReversiScreen.COLOR_P1);
@@ -244,6 +349,9 @@ public final class ReversiScreen extends GameScreen {
     screen.drawRect(off_x + selx * sizex + 1, off_y + sely * sizey + 1, sizex - 2, sizey - 2);
   }
 
+  /**
+   * Draw table.
+   */
   protected void drawTable() {
     pnums[0] = 0;
     pnums[1] = 0;
@@ -261,6 +369,9 @@ public final class ReversiScreen extends GameScreen {
     infoLines[1] = Integer.toString(pnums[1]);
   }
 
+  /**
+   * Draw vert info.
+   */
   public void drawVertInfo() {
     // two pieces
     drawPiece(9, 0, 1);
@@ -277,6 +388,9 @@ public final class ReversiScreen extends GameScreen {
     }
   }
 
+  /* (non-Javadoc)
+   * @see javax.microedition.lcdui.Canvas#keyPressed(int)
+   */
   public void keyPressed(final int keyCode) {
     if (gameEnded) {
       midlet.doGameStop();
@@ -314,20 +428,37 @@ public final class ReversiScreen extends GameScreen {
     }
   }
 
+  /**
+   * Sets the message.
+   * 
+   * @param message the new message
+   */
   public void setMessage(final String message) {
     this.message = message;
     messageEnd = 0;
   }
 
+  /**
+   * Sets the message.
+   * 
+   * @param message the message
+   * @param delay the delay
+   */
   public void setMessage(final String message, final int delay) {
     this.message = message;
     messageEnd = System.currentTimeMillis() + delay * 1000;
   }
 
+  /**
+   * Update possible moves.
+   */
   public void updatePossibleMoves() {
     possibleMoves = (ReversiMove[]) ReversiScreen.rgame.possibleMoves(ReversiScreen.table, ReversiScreen.actPlayer);
   }
 
+  /**
+   * Update skill info.
+   */
   public void updateSkillInfo() {
     if (!ReversiScreen.twoplayer) {
       infoLines[2] = Application.messages[Reversi.MSG_LEVELPREFIX] + Reversi.gsLevel;
@@ -337,6 +468,12 @@ public final class ReversiScreen extends GameScreen {
     }
   }
 
+  /**
+   * Computer turn.
+   * 
+   * @param prevMove the prev move
+   * @return the reversi move
+   */
   protected ReversiMove computerTurn(final ReversiMove prevMove) {
     ReversiMove move = (ReversiMove) GameMinMax.precalculatedBestMove(prevMove);
     if (move == null) {
@@ -349,10 +486,20 @@ public final class ReversiScreen extends GameScreen {
     return move;
   }
 
+  /**
+   * Gets the act player.
+   * 
+   * @return the act player
+   */
   public static byte getActPlayer() {
     return ReversiScreen.actPlayer;
   }
 
+  /**
+   * Gets the act skill.
+   * 
+   * @return the act skill
+   */
   public static int getActSkill() {
     int actSkill = Reversi.gsLevel;
     if (ReversiScreen.turnNum > 50) {
@@ -364,6 +511,12 @@ public final class ReversiScreen extends GameScreen {
     return actSkill;
   }
 
+  /**
+   * Next turn.
+   * 
+   * @param row the row
+   * @param col the col
+   */
   public void nextTurn(final int row, final int col) {
     if (mtt != null) {
       mtt.cancel();
@@ -393,10 +546,16 @@ public final class ReversiScreen extends GameScreen {
     }
   }
 
+  /**
+   * Process move.
+   * 
+   * @param move the move
+   * @param startForeThinking the start fore thinking
+   */
   protected void processMove(final ReversiMove move, final boolean startForeThinking) {
     final ReversiTable newTable = new ReversiTable();
     tables = ReversiScreen.rgame.animatedTurn(ReversiScreen.table, ReversiScreen.actPlayer, move, newTable);
-    boolean goodMove = (tables != null);
+    final boolean goodMove = (tables != null);
     if (!goodMove) {
       setMessage(Application.messages[Reversi.MSG_INVALIDMOVE], 2000);
     }
@@ -476,6 +635,12 @@ public final class ReversiScreen extends GameScreen {
     }
   }
 
+  /**
+   * Save game parameters.
+   * 
+   * @param b the b
+   * @param offset the offset
+   */
   public void saveGameParameters(final byte[] b, final int offset) {
     int index = offset;
     // isHuman
@@ -494,7 +659,9 @@ public final class ReversiScreen extends GameScreen {
   }
 
   /**
-   * Saves data into byte[]
+   * Saves data into byte[].
+   * 
+   * @return the byte[]
    */
   public byte[] saveRecordStore() {
     final byte[] result = new byte[70];
@@ -505,6 +672,12 @@ public final class ReversiScreen extends GameScreen {
     return result;
   }
 
+  /**
+   * Load game parameters.
+   * 
+   * @param b the b
+   * @param offset the offset
+   */
   public void loadGameParameters(final byte[] b, final int offset) {
     int index = offset;
     isHuman[0] = false;
@@ -522,7 +695,10 @@ public final class ReversiScreen extends GameScreen {
   }
 
   /**
-   * Loads data from byte[]
+   * Loads data from byte[].
+   * 
+   * @param b the b
+   * @return true, if successful
    */
   public boolean loadRecordStore(final byte[] b) {
     if (b.length != 70) { return false; }
