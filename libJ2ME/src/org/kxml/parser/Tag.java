@@ -32,8 +32,7 @@ public class Tag extends ParseEvent {
   }
 
   /**
-   * Returns the (corresponding) start tag or the start tag of the parent
-   * element, depending on the event type.
+   * Returns the (corresponding) start tag or the start tag of the parent element, depending on the event type.
    */
 
   public StartTag getParent() {

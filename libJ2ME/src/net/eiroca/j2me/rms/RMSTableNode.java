@@ -1,22 +1,18 @@
-/**
+/** GPL >= 3.0
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the
- *      Free Software Foundation, Inc.,
- *      59 Temple Place, Suite 330,
- *      Boston, MA 02111-1307
- *      USA
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  *
  * Copyright (c) 2002,2003, Stefan Haustein, Oberhausen, Rhld., Germany
  *
@@ -37,7 +33,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
- *
  */
 package net.eiroca.j2me.rms;
 
@@ -48,28 +43,51 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import javax.microedition.rms.RecordStoreException;
 
-/** Node helper class */
+/**
+ * Node helper class.
+ */
 
 public class RMSTableNode {
 
+  /** The DUMMY. */
   static byte[] DUMMY = new byte[0];
 
-  /**
-   *
-   */
+  /** The rms index. */
   private final RMSTable rmsIndex;
+
+  /** The index. */
   public int index;
+
+  /** The size. */
   public int size;
+
+  /** The keys. */
   public String[] keys = new String[RMSTable.N + RMSTable.N + 1];
+
+  /** The values. */
   public String[] values = new String[RMSTable.N + RMSTable.N + 1];
+
+  /** The children. */
   public int[] children = new int[RMSTable.N + RMSTable.N + 2];
 
-  /** Create a new Node */
+  /**
+   * Create a new Node.
+   * 
+   * @param rmsIndex the rms index
+   * @throws RecordStoreException the record store exception
+   */
   public RMSTableNode(final RMSTable rmsIndex) throws RecordStoreException {
     this.rmsIndex = rmsIndex;
     index = this.rmsIndex.store.addRecord(RMSTableNode.DUMMY, 0, 0);
   }
 
+  /**
+   * Instantiates a new rMS table node.
+   * 
+   * @param rmsIndex the rms index
+   * @param split the split
+   * @throws RecordStoreException the record store exception
+   */
   public RMSTableNode(final RMSTable rmsIndex, final RMSTableNode split) throws RecordStoreException {
     this(rmsIndex);
     System.arraycopy(split.keys, RMSTable.N + 1, keys, 0, RMSTable.N);
@@ -81,7 +99,13 @@ public class RMSTableNode {
     store();
   }
 
-  /** Load the node at the given index position */
+  /**
+   * Load the node at the given index position.
+   * 
+   * @param rmsIndex the rms index
+   * @param index the index
+   * @throws RecordStoreException the record store exception
+   */
 
   public RMSTableNode(final RMSTable rmsIndex, final int index) throws RecordStoreException {
     this.rmsIndex = rmsIndex;
@@ -103,6 +127,13 @@ public class RMSTableNode {
     }
   }
 
+  /**
+   * Put.
+   * 
+   * @param key the key
+   * @param value the value
+   * @throws RecordStoreException the record store exception
+   */
   public void put(String key, String value) throws RecordStoreException {
     int i;
     for (i = 0; i < size; i++) {
@@ -139,6 +170,11 @@ public class RMSTableNode {
     }
   }
 
+  /**
+   * Store.
+   * 
+   * @throws RecordStoreException the record store exception
+   */
   public void store() throws RecordStoreException {
     try {
       final ByteArrayOutputStream bos = new ByteArrayOutputStream();

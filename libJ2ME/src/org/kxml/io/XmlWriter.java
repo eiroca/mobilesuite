@@ -60,9 +60,7 @@ public class XmlWriter extends AbstractXmlWriter {
   }
 
   /**
-   * flushes the XmlWriter. Attention: If a closing angle braket is pending, it
-   * will be appended before flushing the underlying writer. Thus, after flush
-   * attributes cannot be added any longer
+   * flushes the XmlWriter. Attention: If a closing angle braket is pending, it will be appended before flushing the underlying writer. Thus, after flush attributes cannot be added any longer
    */
 
   public void flush() throws IOException {
@@ -204,8 +202,7 @@ public class XmlWriter extends AbstractXmlWriter {
   }
 
   /**
-   * ATTENTION: Application needs to take care about not writing illegal
-   * character sequences (like comment end in comments)
+   * ATTENTION: Application needs to take care about not writing illegal character sequences (like comment end in comments)
    */
 
   public void writeLegacy(final int type, final String content) throws IOException {
@@ -232,8 +229,7 @@ public class XmlWriter extends AbstractXmlWriter {
   }
 
   /**
-   * writes a string without escaping. Use with care! Not available in wbxml
-   * writer
+   * writes a string without escaping. Use with care! Not available in wbxml writer
    */
 
   public void writeRaw(final String s) throws IOException {

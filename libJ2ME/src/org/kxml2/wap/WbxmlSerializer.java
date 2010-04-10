@@ -129,8 +129,7 @@ public class WbxmlSerializer implements XmlSerializer {
   }
 
   /**
-   * ATTENTION: flush cannot work since Wbxml documents require buffering. Thus,
-   * this call does nothing.
+   * ATTENTION: flush cannot work since Wbxml documents require buffering. Thus, this call does nothing.
    */
 
   public void flush() {
@@ -440,8 +439,7 @@ public class WbxmlSerializer implements XmlSerializer {
   }
 
   /**
-   * Sets the tag table for a given page. The first string in the array defines
-   * tag 5, the second tag 6 etc.
+   * Sets the tag table for a given page. The first string in the array defines tag 5, the second tag 6 etc.
    */
 
   public void setTagTable(final int page, final String[] tagTable) {
@@ -458,10 +456,8 @@ public class WbxmlSerializer implements XmlSerializer {
   }
 
   /**
-   * Sets the attribute start Table for a given page. The first string in the
-   * array defines attribute 5, the second attribute 6 etc. Please use the
-   * character '=' (without quote!) as delimiter between the attribute name and
-   * the (start of the) value
+   * Sets the attribute start Table for a given page. The first string in the array defines attribute 5, the second attribute 6 etc. Please use the character '=' (without quote!) as delimiter between
+   * the attribute name and the (start of the) value
    */
   public void setAttrStartTable(final int page, final String[] attrStartTable) {
 
@@ -476,8 +472,7 @@ public class WbxmlSerializer implements XmlSerializer {
   }
 
   /**
-   * Sets the attribute value Table for a given page. The first string in the
-   * array defines attribute value 0x85, the second attribute value 0x86 etc.
+   * Sets the attribute value Table for a given page. The first string in the array defines attribute value 0x85, the second attribute value 0x86 etc.
    */
   public void setAttrValueTable(final int page, final String[] attrValueTable) {
     // clear entries in this.table!

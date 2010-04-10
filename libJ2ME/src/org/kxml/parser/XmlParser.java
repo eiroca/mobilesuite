@@ -29,8 +29,7 @@ import org.kxml.Xml;
 import org.kxml.io.ParseException;
 
 /**
- * A simple, pull based "Common XML" parser. Attention: This class has been
- * renamed from DefaultParser for consitency with the org.kxml.io package.
+ * A simple, pull based "Common XML" parser. Attention: This class has been renamed from DefaultParser for consitency with the org.kxml.io package.
  */
 
 public class XmlParser extends AbstractXmlParser {
@@ -124,8 +123,7 @@ public class XmlParser extends AbstractXmlParser {
   }
 
   /**
-   * Reads chars to the given buffer until the given stopChar is reached. The
-   * stopChar itself is not consumed.
+   * Reads chars to the given buffer until the given stopChar is reached. The stopChar itself is not consumed.
    */
 
   public StringBuffer readTo(final char stopChar, final StringBuffer buf) throws IOException {

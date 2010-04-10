@@ -31,10 +31,8 @@ public abstract class Layout implements OptionHandler {
   abstract public String format(LoggingEvent event);
 
   /**
-   * If the layout handles the throwable object contained within
-   * {@link LoggingEvent}, then the layout should return <code>false</code>.
-   * Otherwise, if the layout ignores throwable object, then the layout should
-   * return <code>true</code>.
+   * If the layout handles the throwable object contained within {@link LoggingEvent}, then the layout should return <code>false</code>. Otherwise, if the layout ignores throwable object, then the
+   * layout should return <code>true</code>.
    * @since 1.0
    */
   abstract public boolean ignoresThrowable();

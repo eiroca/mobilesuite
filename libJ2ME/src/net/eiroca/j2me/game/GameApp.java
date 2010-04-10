@@ -1,10 +1,9 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -12,9 +11,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.game;
 
@@ -30,83 +28,202 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.SplashScreen;
 
+/**
+ * The Class GameApp.
+ */
 public abstract class GameApp extends Application {
 
+  /** The Constant ME_MAINMENU. */
   public static final int ME_MAINMENU = 0;
 
+  /** The Constant MSG_LABEL_OK. */
   public final static int MSG_LABEL_OK = 0;
+
+  /** The Constant MSG_LABEL_BACK. */
   public final static int MSG_LABEL_BACK = 1;
+
+  /** The Constant MSG_LABEL_EXIT. */
   public final static int MSG_LABEL_EXIT = 2;
+
+  /** The Constant MSG_LABEL_YES. */
   public final static int MSG_LABEL_YES = 3;
+
+  /** The Constant MSG_LABEL_NO. */
   public final static int MSG_LABEL_NO = 4;
+
+  /** The Constant MSG_TEXT_GAMEOVER_01. */
   public final static int MSG_TEXT_GAMEOVER_01 = 5;
+
+  /** The Constant MSG_TEXT_GAMEOVER_02. */
   public final static int MSG_TEXT_GAMEOVER_02 = 6;
+
+  /** The Constant MSG_TEXT_GAMEOVER_03. */
   public final static int MSG_TEXT_GAMEOVER_03 = 7;
+
+  /** The Constant MSG_TEXT_HIGHSCORE_01. */
   public final static int MSG_TEXT_HIGHSCORE_01 = 8;
+
+  /** The Constant MSG_TEXT_HIGHSCORE_02. */
   public final static int MSG_TEXT_HIGHSCORE_02 = 9;
+
+  /** The Constant MSG_TEXT_HIGHSCORE_03. */
   public final static int MSG_TEXT_HIGHSCORE_03 = 10;
+
+  /** The Constant MSG_TEXT_HIGHSCORE_04. */
   public final static int MSG_TEXT_HIGHSCORE_04 = 11;
+
+  /** The Constant MSG_MENU_MAIN_CONTINUE. */
   public final static int MSG_MENU_MAIN_CONTINUE = 12;
+
+  /** The Constant MSG_MENU_MAIN_NEWGAME. */
   public final static int MSG_MENU_MAIN_NEWGAME = 13;
+
+  /** The Constant MSG_MENU_MAIN_HIGHSCORE. */
   public final static int MSG_MENU_MAIN_HIGHSCORE = 14;
+
+  /** The Constant MSG_MENU_MAIN_SETTINGS. */
   public final static int MSG_MENU_MAIN_SETTINGS = 15;
+
+  /** The Constant MSG_MENU_MAIN_OPTIONS. */
   public final static int MSG_MENU_MAIN_OPTIONS = 16;
+
+  /** The Constant MSG_MENU_MAIN_HELP. */
   public final static int MSG_MENU_MAIN_HELP = 17;
+
+  /** The Constant MSG_MENU_MAIN_ABOUT. */
   public final static int MSG_MENU_MAIN_ABOUT = 18;
+
+  /** The Constant MSG_MENU_SETTINGS_VOLUME. */
   public final static int MSG_MENU_SETTINGS_VOLUME = 19;
+
+  /** The Constant MSG_MENU_SETTINGS_VIBRATE. */
   public final static int MSG_MENU_SETTINGS_VIBRATE = 20;
+
+  /** The Constant MSG_MENU_SETTINGS_BACKLIGHT. */
   public final static int MSG_MENU_SETTINGS_BACKLIGHT = 21;
+
+  /** The Constant MSG_USERDEF. */
   public final static int MSG_USERDEF = 22;
 
+  /** The Constant GA_NONE. */
   public static final int GA_NONE = 0;
+
+  /** The Constant GA_STARTUP. */
   public static final int GA_STARTUP = 1;
+
+  /** The Constant GA_CONTINUE. */
   public static final int GA_CONTINUE = 2;
+
+  /** The Constant GA_NEWGAME. */
   public static final int GA_NEWGAME = 3;
+
+  /** The Constant GA_HIGHSCORE. */
   public static final int GA_HIGHSCORE = 4;
+
+  /** The Constant GA_OPTIONS. */
   public static final int GA_OPTIONS = 5;
+
+  /** The Constant GA_SETTINGS. */
   public static final int GA_SETTINGS = 6;
+
+  /** The Constant GA_HELP. */
   public static final int GA_HELP = 7;
+
+  /** The Constant GA_ABOUT. */
   public static final int GA_ABOUT = 8;
+
+  /** The Constant GA_APPLYSETTINGS. */
   public static final int GA_APPLYSETTINGS = 9;
+
+  /** The Constant GA_APPLYOPTIONS. */
   public static final int GA_APPLYOPTIONS = 10;
+
+  /** The Constant GA_NEWHIGHSCORE. */
   public static final int GA_NEWHIGHSCORE = 11;
+
+  /** The Constant GA_USERDEF. */
   public static final int GA_USERDEF = 12;
 
+  /** The Constant FT_SOUNDFX. */
   public static final int FT_SOUNDFX = 1;
+
+  /** The Constant FT_MUSIC. */
   public static final int FT_MUSIC = 2;
+
+  /** The Constant FT_AUDIO. */
   public static final int FT_AUDIO = GameApp.FT_MUSIC + GameApp.FT_SOUNDFX;
+
+  /** The Constant FT_VIBRATE. */
   public static final int FT_VIBRATE = 4;
+
+  /** The Constant FT_LIGHT. */
   public static final int FT_LIGHT = 8;
 
+  /** The Constant RES_MENUICON. */
   public static final String RES_MENUICON = "menu.png";
+
+  /** The Constant RES_ABOUT. */
   public static final String RES_ABOUT = "about.txt";
+
+  /** The Constant RES_HELP. */
   public static final String RES_HELP = "help.txt";
+
+  /** The Constant RES_MSGS. */
   public static final String RES_MSGS = "messages.txt";
+
+  /** The Constant RES_SPLASH. */
   public static final String RES_SPLASH = "splash.png";
 
+  /** The us vibrate. */
   public static boolean usVibrate = true;
+
+  /** The us back light. */
   public static boolean usBackLight = true;
+
+  /** The us volume. */
   public static int usVolume = 100;
 
+  /** The RM s_ highscore. */
   public static String RMS_HIGHSCORE = "HighScore";
+
+  /** The hs name. */
   public static String hsName = "HighScore";
+
+  /** The hs level. */
   public static int hsLevel = 0;
+
+  /** The hs max level. */
   public static int hsMaxLevel = 1;
+
+  /** The hs max score. */
   public static int hsMaxScore = 5;
 
+  /** The game. */
   public static GameScreen game;
+
+  /** The highscore. */
   public static ScoreManager highscore;
 
+  /** The game menu. */
   protected List gameMenu;
+
+  /** The game settings. */
   protected Displayable gameSettings;
+
+  /** The game options. */
   protected Displayable gameOptions;
+
+  /** The game new high score. */
   protected Displayable gameNewHighScore;
 
+  /** The t name. */
   private TextField tName;
+
+  /** The t score. */
   private StringItem tScore;
 
   /**
-   * Initialize the game
+   * Initialize the game.
    */
   public void init() {
     super.init();
@@ -122,21 +239,21 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Resume the game
+   * Resume the game.
    */
   public void resume() {
     Application.show(null, gameMenu, true);
   }
 
   /**
-   * Pause the game
+   * Pause the game.
    */
   public void pause() {
     doGamePause();
   }
 
   /**
-   * Destroy the game
+   * Destroy the game.
    */
   public void done() {
     doGameAbort();
@@ -145,15 +262,19 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * The game is active?
-   * @return
+   * The game is active?.
+   * 
+   * @return true, if is active
    */
   private final boolean isActive() {
     return (GameApp.game != null) && (GameApp.game.isActive());
   }
 
   /**
-   * Command dispatcher
+   * Command dispatcher.
+   * 
+   * @param c the c
+   * @param d the d
    */
   public void commandAction(final Command c, final Displayable d) {
     int gameAction = GameApp.GA_NONE;
@@ -189,20 +310,21 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Implements the game action
-   * @param action
+   * Implements the game action.
+   * 
+   * @param action the action
    */
   abstract public void processGameAction(int action);
 
-  /**
-   *
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.app.Application#handleAction(int, javax.microedition.lcdui.Displayable, javax.microedition.lcdui.Command)
    */
   public boolean handleAction(final int action, final Displayable d, final Command cmd) {
     return false;
   }
 
   /**
-   * Game Startup
+   * Game Startup.
    */
   public void doStartup() {
     final Displayable splash = getSplash();
@@ -215,7 +337,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Abort the game
+   * Abort the game.
    */
   public void doGameAbort() {
     if (isActive()) {
@@ -225,7 +347,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Start the game
+   * Start the game.
    */
   public void doGameStart() {
     doGameAbort();
@@ -236,7 +358,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Resume the game
+   * Resume the game.
    */
   public void doGameResume() {
     if (isActive()) {
@@ -246,7 +368,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Pause the game
+   * Pause the game.
    */
   public void doGamePause() {
     if (isActive()) {
@@ -256,7 +378,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Stop the game
+   * Stop the game.
    */
   public void doGameStop() {
     if (isActive()) {
@@ -298,7 +420,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Set new high score
+   * Set new high score.
    */
   public void doSetNewHighScore() {
     GameApp.game.score.name = tName.getString();
@@ -307,7 +429,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Show About
+   * Show About.
    */
   public void doAbout() {
     final Displayable d = Application.getTextForm(GameApp.MSG_MENU_MAIN_ABOUT, GameApp.RES_ABOUT);
@@ -315,7 +437,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Show help
+   * Show help.
    */
   public void doHelp() {
     final Displayable d = Application.getTextForm(GameApp.MSG_MENU_MAIN_HELP, GameApp.RES_HELP);
@@ -323,7 +445,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Show high score
+   * Show high score.
    */
   public void doHighScore() {
     final Displayable d = getHighScore();
@@ -331,7 +453,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Show game options
+   * Show game options.
    */
   public void doShowOptions() {
     if (gameOptions == null) {
@@ -341,14 +463,14 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Apply the game options
+   * Apply the game options.
    */
   public void doApplyOptions() {
     Application.back(null);
   }
 
   /**
-   * Show game settings
+   * Show game settings.
    */
   public void doShowSettings() {
     if (gameSettings == null) {
@@ -359,7 +481,7 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Apply new game settings
+   * Apply new game settings.
    */
   public void doApplySettings() {
     GameUISettings.getVals();
@@ -367,16 +489,18 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Build Splash display
-   * @return
+   * Build Splash display.
+   * 
+   * @return the splash
    */
   protected Displayable getSplash() {
     return new SplashScreen(GameApp.RES_SPLASH, gameMenu, 3000);
   }
 
   /**
-   * Build High score Display
-   * @return
+   * Build High score Display.
+   * 
+   * @return the high score
    */
   protected Displayable getHighScore() {
     final Form form = new Form(Application.messages[GameApp.MSG_MENU_MAIN_HIGHSCORE]);
@@ -398,8 +522,9 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Build new high score display
-   * @return
+   * Build new high score display.
+   * 
+   * @return the new high score
    */
   protected Displayable getNewHighScore() {
     final Form form = new Form(Application.messages[GameApp.MSG_TEXT_HIGHSCORE_02]);
@@ -412,30 +537,34 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Build Options display
-   * @return
+   * Build Options display.
+   * 
+   * @return the options
    */
   protected Displayable getOptions() {
     return null;
   }
 
   /**
-   * Build Settings display
-   * @return
+   * Build Settings display.
+   * 
+   * @return the settings
    */
   protected GameUISettings getSettings() {
     return null;
   }
 
   /**
-   * Build main game display
-   * @return
+   * Build main game display.
+   * 
+   * @return the game screen
    */
   abstract protected GameScreen getGameScreen();
 
   /**
-   * Vibrate the handset
-   * @param millis
+   * Vibrate the handset.
+   * 
+   * @param millis the millis
    */
   public static void vibrate(final int millis) {
     if (GameApp.usVibrate) {
@@ -444,8 +573,9 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Flash backlight
-   * @param millis
+   * Flash backlight.
+   * 
+   * @param millis the millis
    */
   public static void flashBacklight(final int millis) {
     if (GameApp.usBackLight) {
@@ -454,8 +584,9 @@ public abstract class GameApp extends Application {
   }
 
   /**
-   * Play a sound
-   * @param p
+   * Play a sound.
+   * 
+   * @param p the p
    */
   public static void play(final Player p) {
     if (GameApp.usVolume > 0) {

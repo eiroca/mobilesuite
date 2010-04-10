@@ -71,8 +71,7 @@ public class WbxmlWriter extends AbstractXmlWriter {
   }
 
   /**
-   * ATTENTION: flush cannot work since Wbxml documents cannot need buffering.
-   * Thus, this call does nothing.
+   * ATTENTION: flush cannot work since Wbxml documents cannot need buffering. Thus, this call does nothing.
    */
 
   public void flush() {
@@ -220,8 +219,7 @@ public class WbxmlWriter extends AbstractXmlWriter {
   }
 
   /**
-   * Sets the tag table for a given page. The first string in the array defines
-   * tag 5, the second tag 6 etc. Currently, only page 0 is supported
+   * Sets the tag table for a given page. The first string in the array defines tag 5, the second tag 6 etc. Currently, only page 0 is supported
    */
   public void setTagTable(final int page, final String[] tagTable) {
     // clear entries in tagTable!
@@ -235,10 +233,8 @@ public class WbxmlWriter extends AbstractXmlWriter {
   }
 
   /**
-   * Sets the attribute start Table for a given page. The first string in the
-   * array defines attribute 5, the second attribute 6 etc. Currently, only page
-   * 0 is supported. Please use the character '=' (without quote!) as delimiter
-   * between the attribute name and the (start of the) value
+   * Sets the attribute start Table for a given page. The first string in the array defines attribute 5, the second attribute 6 etc. Currently, only page 0 is supported. Please use the character '='
+   * (without quote!) as delimiter between the attribute name and the (start of the) value
    */
   public void setAttrStartTable(final int page, final String[] attrStartTable) {
     // clear entries in this.table!
@@ -252,9 +248,7 @@ public class WbxmlWriter extends AbstractXmlWriter {
   }
 
   /**
-   * Sets the attribute value Table for a given page. The first string in the
-   * array defines attribute value 0x85, the second attribute value 0x86 etc.
-   * Currently, only page 0 is supported.
+   * Sets the attribute value Table for a given page. The first string in the array defines attribute value 0x85, the second attribute value 0x86 etc. Currently, only page 0 is supported.
    */
   public void setAttrValueTable(final int page, final String[] attrValueTable) {
     // clear entries in this.table!

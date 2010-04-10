@@ -1,8 +1,7 @@
 package org.kxml.wap;
 
 /**
- * This class contains the wml coding tables for elements and attributes needed
- * by the WmlParser.
+ * This class contains the wml coding tables for elements and attributes needed by the WmlParser.
  */
 
 public class Wml {

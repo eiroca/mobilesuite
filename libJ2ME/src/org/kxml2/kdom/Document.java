@@ -26,8 +26,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
 /**
- * The document consists of some legacy events and a single root element. This
- * class basically adds some consistency checks to Node.
+ * The document consists of some legacy events and a single root element. This class basically adds some consistency checks to Node.
  */
 
 public class Document extends Node {
@@ -59,8 +58,7 @@ public class Document extends Node {
   }
 
   /**
-   * Adds a child at the given index position. Throws an exception when a second
-   * root element is added
+   * Adds a child at the given index position. Throws an exception when a second root element is added
    */
 
   public void addChild(final int index, final int type, final Object child) {
@@ -78,9 +76,7 @@ public class Document extends Node {
   }
 
   /**
-   * reads the document and checks if the last event is END_DOCUMENT. If not, an
-   * exception is thrown. The end event is consumed. For parsing partial XML
-   * structures, consider using Node.parse ().
+   * reads the document and checks if the last event is END_DOCUMENT. If not, an exception is thrown. The end event is consumed. For parsing partial XML structures, consider using Node.parse ().
    */
 
   public void parse(final XmlPullParser parser) throws IOException, XmlPullParserException {
@@ -117,9 +113,7 @@ public class Document extends Node {
   }
 
   /**
-   * Writes this node to the given XmlWriter. For node and document, this method
-   * is identical to writeChildren, except that the stream is flushed
-   * automatically.
+   * Writes this node to the given XmlWriter. For node and document, this method is identical to writeChildren, except that the stream is flushed automatically.
    */
 
   public void write(final XmlSerializer writer) throws IOException {

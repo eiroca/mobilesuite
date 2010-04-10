@@ -16,11 +16,9 @@ import org.apache.log4j.spi.LoggingEvent;
 // Reinhard Deschler <reinhard.deschler@web.de>
 
 /**
- * Most of the work of the {@link org.apache.log4j.PatternLayout} class is
- * delegated to the PatternParser class.
+ * Most of the work of the {@link org.apache.log4j.PatternLayout} class is delegated to the PatternParser class.
  * <p>
- * It is this class that parses conversion patterns and creates a chained list
- * of {@link OptionConverter OptionConverters}.
+ * It is this class that parses conversion patterns and creates a chained list of {@link OptionConverter OptionConverters}.
  * @author <a href=mailto:"cakalijp@Maritz.com">James P. Cakalic</a>
  * @author Ceki G&uuml;lc&uuml;
  * @author Anders Kristensen
@@ -87,8 +85,7 @@ public class PatternParser {
   }
 
   /**
-   * The option is expected to be in decimal and positive. In case of error,
-   * zero is returned.
+   * The option is expected to be in decimal and positive. In case of error, zero is returned.
    */
   protected int extractPrecisionOption() {
     final String opt = extractOption();

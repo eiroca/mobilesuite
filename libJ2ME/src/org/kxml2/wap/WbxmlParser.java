@@ -38,8 +38,7 @@ public class WbxmlParser implements XmlPullParser {
   static final String HEX_DIGITS = "0123456789abcdef";
 
   /**
-   * Parser event type for Wbxml-specific events. The Wbxml event code can be
-   * accessed with getWapCode()
+   * Parser event type for Wbxml-specific events. The Wbxml event code can be accessed with getWapCode()
    */
 
   public static final int WAP_EXTENSION = 64;
@@ -803,8 +802,7 @@ public class WbxmlParser implements XmlPullParser {
   }
 
   /**
-   * overwrite for own WAP extension handling in attributes and high level
-   * parsing (above nextToken() level)
+   * overwrite for own WAP extension handling in attributes and high level parsing (above nextToken() level)
    */
 
   protected String resolveWapExtension(final int id, final Object data) {
@@ -956,8 +954,7 @@ public class WbxmlParser implements XmlPullParser {
   }
 
   /**
-   * Sets the tag table for a given page. The first string in the array defines
-   * tag 5, the second tag 6 etc.
+   * Sets the tag table for a given page. The first string in the array defines tag 5, the second tag 6 etc.
    */
 
   public void setTagTable(final int page, final String[] table) {
@@ -969,10 +966,8 @@ public class WbxmlParser implements XmlPullParser {
   }
 
   /**
-   * Sets the attribute start Table for a given page. The first string in the
-   * array defines attribute 5, the second attribute 6 etc. Please use the
-   * character '=' (without quote!) as delimiter between the attribute name and
-   * the (start of the) value
+   * Sets the attribute start Table for a given page. The first string in the array defines attribute 5, the second attribute 6 etc. Please use the character '=' (without quote!) as delimiter between
+   * the attribute name and the (start of the) value
    */
 
   public void setAttrStartTable(final int page, final String[] table) {
@@ -981,8 +976,7 @@ public class WbxmlParser implements XmlPullParser {
   }
 
   /**
-   * Sets the attribute value Table for a given page. The first string in the
-   * array defines attribute value 0x85, the second attribute value 0x86 etc.
+   * Sets the attribute value Table for a given page. The first string in the array defines attribute value 0x85, the second attribute value 0x86 etc.
    */
 
   public void setAttrValueTable(final int page, final String[] table) {
@@ -991,8 +985,7 @@ public class WbxmlParser implements XmlPullParser {
   }
 
   /**
-   * Returns the token ID for start tags or the event type for wap proprietary
-   * events such as OPAQUE.
+   * Returns the token ID for start tags or the event type for wap proprietary events such as OPAQUE.
    */
 
   public int getWapCode() {

@@ -12,19 +12,37 @@ import java.util.NoSuchElementException;
 import java.util.Vector;
 
 /**
+ * The Class StringTokenizer.
+ * 
  * @author Witmate
  */
 public class StringTokenizer {
 
+  /** The m_bool return token. */
   protected boolean m_boolReturnToken = false;
+
+  /** The m_n current point. */
   protected int m_nCurrentPoint = 0;
+
+  /** The m_str parsed. */
   protected String m_strParsed = "";
+
+  /** The m_v tokenizer. */
   protected Vector m_vTokenizer = new Vector();
 
+  /**
+   * Instantiates a new string tokenizer.
+   */
   public StringTokenizer() {
     //
   }
 
+  /**
+   * Instantiates a new string tokenizer.
+   * 
+   * @param strParsed the str parsed
+   * @param boolReturnToken the bool return token
+   */
   public StringTokenizer(final String strParsed, final boolean boolReturnToken) {
     if (strParsed != null) {
       m_strParsed = strParsed;
@@ -35,6 +53,12 @@ public class StringTokenizer {
     m_boolReturnToken = boolReturnToken;
   }
 
+  /**
+   * Instantiates a new string tokenizer.
+   * 
+   * @param strParsed the str parsed
+   * @param strAToken the str a token
+   */
   public StringTokenizer(final String strParsed, final String strAToken) {
     if (null != strParsed) {
       m_strParsed = strParsed;
@@ -47,15 +71,32 @@ public class StringTokenizer {
     }
   }
 
+  /**
+   * Adds the tokenizer.
+   * 
+   * @param strAToken the str a token
+   * @return the int
+   */
   public int addTokenizer(final String strAToken) {
     m_vTokenizer.addElement(strAToken);
     return m_vTokenizer.size();
   }
 
+  /**
+   * Checks for more tokens.
+   * 
+   * @return true, if successful
+   */
   public boolean hasMoreTokens() {
     return (m_nCurrentPoint < ((null != m_strParsed) ? m_strParsed.length() : 0));
   }
 
+  /**
+   * Next token.
+   * 
+   * @return the string
+   * @throws NoSuchElementException the no such element exception
+   */
   public String nextToken() throws NoSuchElementException {
     if (!hasMoreTokens()) { throw new NoSuchElementException("There are not more token."); }
     String strRtn = m_strParsed.substring(m_nCurrentPoint);

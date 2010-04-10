@@ -1,9 +1,8 @@
 package org.kxml;
 
 /**
- * Attribute class, used by both kDom and the pullparser. The instances of this
- * class are immutable. This restriction allows manipulation aware element
- * implementations without needing to care about hidden changes in attributes.
+ * Attribute class, used by both kDom and the pullparser. The instances of this class are immutable. This restriction allows manipulation aware element implementations without needing to care about
+ * hidden changes in attributes.
  */
 
 public class Attribute {
@@ -13,8 +12,7 @@ public class Attribute {
   String value;
 
   /**
-   * Creates a new Attribute instance with the given name and value. The
-   * namespace is set to "".
+   * Creates a new Attribute instance with the given name and value. The namespace is set to "".
    */
 
   public Attribute(final String name, final String value) {

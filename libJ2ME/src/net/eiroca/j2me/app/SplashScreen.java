@@ -1,10 +1,9 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -12,9 +11,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.app;
 
@@ -26,14 +24,33 @@ import javax.microedition.lcdui.Image;
 import net.eiroca.j2me.util.ScheduledWaekup;
 import net.eiroca.j2me.util.SchedulerNotify;
 
+/**
+ * The Class SplashScreen.
+ */
 public class SplashScreen extends Canvas implements SchedulerNotify {
 
+  /** The next. */
   protected Displayable next;
+
+  /** The dismissed. */
   private volatile boolean dismissed = false;
+
+  /** The time. */
   private final int time;
+
+  /** The timer. */
   private Timer timer;
+
+  /** The splash image. */
   private Image splashImage;
 
+  /**
+   * Instantiates a new splash screen.
+   * 
+   * @param image the image
+   * @param next the next
+   * @param time the time
+   */
   public SplashScreen(final String image, final Displayable next, final int time) {
     this.next = next;
     this.time = time;
@@ -44,14 +61,23 @@ public class SplashScreen extends Canvas implements SchedulerNotify {
     show();
   }
 
+  /**
+   * Show.
+   */
   public void show() {
     Application.show(null, this, false);
   }
 
+  /**
+   * Hide.
+   */
   public void hide() {
     Application.show(null, next, true);
   }
 
+  /**
+   * Dismiss.
+   */
   protected void dismiss() {
     if (!dismissed) {
       dismissed = true;
@@ -63,22 +89,37 @@ public class SplashScreen extends Canvas implements SchedulerNotify {
     }
   }
 
+  /* (non-Javadoc)
+   * @see javax.microedition.lcdui.Canvas#keyPressed(int)
+   */
   protected void keyPressed(final int keyCode) {
     dismiss();
   }
 
+  /* (non-Javadoc)
+   * @see javax.microedition.lcdui.Canvas#pointerPressed(int, int)
+   */
   protected void pointerPressed(final int x, final int y) {
     dismiss();
   }
 
+  /* (non-Javadoc)
+   * @see javax.microedition.lcdui.Canvas#showNotify()
+   */
   protected void showNotify() {
     timer = ScheduledWaekup.setup(this, time);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.util.SchedulerNotify#wakeup()
+   */
   public void wakeup() {
     dismiss();
   }
 
+  /* (non-Javadoc)
+   * @see javax.microedition.lcdui.Canvas#paint(javax.microedition.lcdui.Graphics)
+   */
   public void paint(final Graphics g) {
     final int width = getWidth();
     final int height = getHeight();

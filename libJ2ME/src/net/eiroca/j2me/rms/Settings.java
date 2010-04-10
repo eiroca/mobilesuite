@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- *
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (c) 2004 Ang Kok Chai
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.rms;
 
@@ -31,13 +29,19 @@ import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 import net.eiroca.j2me.app.BaseApp;
 
+/**
+ * The Class Settings.
+ */
 public class Settings {
 
+  /** The Constant RMS_PROPERTIES. */
   private static final String RMS_PROPERTIES = "properties";
+
+  /** The Constant properties. */
   private static final Hashtable properties = new Hashtable();
 
   /**
-   * Load properties
+   * Load properties.
    */
   public static void load() {
     Settings.properties.clear();
@@ -60,8 +64,9 @@ public class Settings {
 
   /**
    * Set property.
-   * @param name
-   * @param value
+   * 
+   * @param name the name
+   * @param value the value
    */
   public static void put(final String name, final String value) {
     if (value != null) {
@@ -73,8 +78,10 @@ public class Settings {
   }
 
   /**
-   * @param name
-   * @return
+   * Gets the.
+   * 
+   * @param name the name
+   * @return the string
    */
   public static String get(final String name) {
     return (String) Settings.properties.get(name);
@@ -82,7 +89,8 @@ public class Settings {
 
   /**
    * Get property count.
-   * @return
+   * 
+   * @return the int
    */
   public static int size() {
     return Settings.properties.size();
@@ -90,7 +98,8 @@ public class Settings {
 
   /**
    * Save properties into RecordStore.
-   * @return
+   * 
+   * @return true, if successful
    */
   public static boolean save() {
     try {

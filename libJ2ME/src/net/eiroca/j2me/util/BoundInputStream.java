@@ -1,22 +1,18 @@
-/**
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the
- *      Free Software Foundation, Inc.,
- *      59 Temple Place, Suite 330,
- *      Boston, MA 02111-1307
- *      USA
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  *
  * Copyright (c) 2002,2003, Stefan Haustein, Oberhausen, Rhld., Germany
  *
@@ -44,27 +40,48 @@ package net.eiroca.j2me.util;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * The Class BoundInputStream.
+ */
 public class BoundInputStream extends InputStream {
 
+  /** The remaining. */
   int remaining;
+
+  /** The is. */
   InputStream is;
 
+  /**
+   * Instantiates a new bound input stream.
+   * 
+   * @param is the is
+   * @param length the length
+   */
   public BoundInputStream(final InputStream is, final int length) {
     this.is = is;
     remaining = length;
   }
 
+  /* (non-Javadoc)
+   * @see java.io.InputStream#available()
+   */
   public int available() throws IOException {
     final int avail = is.available();
     return avail < remaining ? avail : remaining;
   }
 
+  /* (non-Javadoc)
+   * @see java.io.InputStream#read()
+   */
   public int read() throws IOException {
     if (remaining <= 0) { return -1; }
     remaining--;
     return is.read();
   }
 
+  /* (non-Javadoc)
+   * @see java.io.InputStream#read(byte[], int, int)
+   */
   public int read(final byte[] data, final int start, int max) throws IOException {
     if (max > remaining) {
       max = remaining;
@@ -76,6 +93,9 @@ public class BoundInputStream extends InputStream {
     return actual;
   }
 
+  /* (non-Javadoc)
+   * @see java.io.InputStream#close()
+   */
   public void close() {
     try {
       is.close();

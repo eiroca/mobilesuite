@@ -133,8 +133,7 @@ public class WbxmlParser extends AbstractXmlParser {
   }
 
   /**
-   * For handling wap extensions in attributes, overwrite this method, call
-   * super and return a corresponding TextEvent.
+   * For handling wap extensions in attributes, overwrite this method, call super and return a corresponding TextEvent.
    */
 
   public ParseEvent parseWapExtension(final int id) throws IOException {
@@ -290,8 +289,7 @@ public class WbxmlParser extends AbstractXmlParser {
   }
 
   /**
-   * Sets the tag table for a given page. The first string in the array defines
-   * tag 5, the second tag 6 etc. Currently, only page 0 is supported
+   * Sets the tag table for a given page. The first string in the array defines tag 5, the second tag 6 etc. Currently, only page 0 is supported
    */
 
   public void setTagTable(final int page, final String[] tagTable) {
@@ -300,10 +298,8 @@ public class WbxmlParser extends AbstractXmlParser {
   }
 
   /**
-   * Sets the attribute start Table for a given page. The first string in the
-   * array defines attribute 5, the second attribute 6 etc. Currently, only page
-   * 0 is supported. Please use the character '=' (without quote!) as delimiter
-   * between the attribute name and the (start of the) value
+   * Sets the attribute start Table for a given page. The first string in the array defines attribute 5, the second attribute 6 etc. Currently, only page 0 is supported. Please use the character '='
+   * (without quote!) as delimiter between the attribute name and the (start of the) value
    */
 
   public void setAttrStartTable(final int page, final String[] attrStartTable) {
@@ -312,9 +308,7 @@ public class WbxmlParser extends AbstractXmlParser {
   }
 
   /**
-   * Sets the attribute value Table for a given page. The first string in the
-   * array defines attribute value 0x85, the second attribute value 0x86 etc.
-   * Currently, only page 0 is supported.
+   * Sets the attribute value Table for a given page. The first string in the array defines attribute value 0x85, the second attribute value 0x86 etc. Currently, only page 0 is supported.
    */
 
   public void setAttrValueTable(final int page, final String[] attrStartTable) {

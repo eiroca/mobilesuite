@@ -29,8 +29,7 @@ public class PrefixMap {
   }
 
   /**
-   * returns the namespace associated with the given prefix, or null, if none is
-   * assigned
+   * returns the namespace associated with the given prefix, or null, if none is assigned
    */
 
   public String getNamespace(final String prefix) {

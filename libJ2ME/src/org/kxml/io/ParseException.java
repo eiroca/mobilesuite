@@ -2,8 +2,6 @@ package org.kxml.io;
 
 import java.io.IOException;
 
-//   FIXME: would adding a file name make sense ??
-
 /** a possibly chained exception, indicatin a line and column number. */
 
 public class ParseException extends IOException {
@@ -13,9 +11,8 @@ public class ParseException extends IOException {
   protected Exception chained;
 
   /**
-   * Builds a new ParseException with the given message text, chained Exception,
-   * lineNumber, columNumber. Set message text or chained exception to null and
-   * lineNumber and columNumber to -1 if not applicable.
+   * Builds a new ParseException with the given message text, chained Exception, lineNumber, columNumber. Set message text or chained exception to null and lineNumber and columNumber to -1 if not
+   * applicable.
    */
 
   public ParseException(final String msg, final Exception chained, final int lineNumber, final int columnNumber) {
@@ -39,8 +36,7 @@ public class ParseException extends IOException {
    */
 
   /**
-   * prints the own stack trace followed by the stack trace of the original
-   * exception.
+   * prints the own stack trace followed by the stack trace of the original exception.
    */
 
   public void printStackTrace() {

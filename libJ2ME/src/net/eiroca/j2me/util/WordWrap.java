@@ -1,41 +1,19 @@
-/**
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the
- *      Free Software Foundation, Inc.,
- *      59 Temple Place, Suite 330,
- *      Boston, MA 02111-1307
- *      USA
- *
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002 Eugene Morozov (xonixboy@hotmail.com)
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the
- *      Free Software Foundation, Inc.,
- *      59 Temple Place, Suite 330,
- *      Boston, MA 02111-1307
- *      USA
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  *
  * Copyright (c) 2002,2003, Stefan Haustein, Oberhausen, Rhld., Germany
  *
@@ -56,7 +34,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
- *
  */
 package net.eiroca.j2me.util;
 
@@ -66,43 +43,51 @@ import net.eiroca.j2me.app.BaseApp;
 /**
  * A class supporting word wrap for MIDP.
  */
-
 public class WordWrap {
 
+  /** The font. */
   Font font;
+
+  /** The width. */
   int width;
-  String txt;
+
+  /** The text. */
+  String text;
+
+  /** The pos. */
   int pos;
 
   /**
-   * Initializes the WordWrap object with the given Font, the text string to be
-   * wrapped, and the target width.
-   * @param font: The Font to be used to calculate the character widths.
-   * @param txt: The text string to be wrapped.
-   * @param width: The line width.
+   * Initializes the WordWrap object with the given Font, the text string to be wrapped, and the target width.
+   * 
+   * @param font the font
+   * @param text the text
+   * @param width the width
    */
-  public WordWrap(final Font font, final String txt, final int width) {
+  public WordWrap(final Font font, final String text, final int width) {
     this.font = font;
-    this.txt = txt;
+    this.text = text;
     this.width = width;
   }
 
   /**
-   * returns the next line break position. If no text is left, -1 is returned.
+   * Returns the next line break position. If no text is left, -1 is returned.
+   * 
+   * @return the int
    */
   public int next() {
     int i = pos;
-    final int len = txt.length();
+    final int len = text.length();
     if (pos >= len) { return -1; }
     final int start = pos;
     while (true) {
-      while ((i < len) && (txt.charAt(i) > ' ')) {
+      while ((i < len) && (text.charAt(i) > ' ')) {
         i++;
       }
-      final int w = font.stringWidth(txt.substring(start, i));
+      final int w = font.stringWidth(text.substring(start, i));
       if (pos == start) {
         if (w > width) {
-          while (font.stringWidth(txt.substring(start, --i)) > width) {
+          while (font.stringWidth(text.substring(start, --i)) > width) {
             //
           }
           pos = i;
@@ -112,7 +97,7 @@ public class WordWrap {
       if (w <= width) {
         pos = i;
       }
-      if ((w > width) || (i >= len) || (txt.charAt(i) == BaseApp.CR)) {
+      if ((w > width) || (i >= len) || (text.charAt(i) == BaseApp.CR)) {
         break;
       }
       i++;

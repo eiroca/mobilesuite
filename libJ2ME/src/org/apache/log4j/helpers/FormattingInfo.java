@@ -9,8 +9,7 @@
 package org.apache.log4j.helpers;
 
 /**
- * FormattingInfo instances contain the information obtained when parsing
- * formatting modifiers in conversion modifiers.
+ * FormattingInfo instances contain the information obtained when parsing formatting modifiers in conversion modifiers.
  * @author <a href=mailto:jim_cakalic@na.biomerieux.com>Jim Cakalic</a>
  * @author Ceki G&uuml;lc&uuml;
  * @since 0.8.2

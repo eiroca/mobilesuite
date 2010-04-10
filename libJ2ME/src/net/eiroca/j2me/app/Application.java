@@ -1,10 +1,10 @@
-/**
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002 Eugene Morozov (xonixboy@hotmail.com)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -12,30 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Copyright (c) 2002,2003, Stefan Haustein, Oberhausen, Rhld., Germany
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The  above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
- *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.app;
 
@@ -51,52 +29,87 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.List;
 
+/**
+ * The Class Application.
+ */
 public abstract class Application extends BaseApp {
 
   /*
    * UI Manager
    */
 
+  /** The Constant MD_MENUID. */
   public static final int MD_MENUID = 0;
+
+  /** The Constant MD_MENUTX. */
   public static final int MD_MENUTX = 1;
+
+  /** The Constant MD_MENUAC. */
   public static final int MD_MENUAC = 2;
+
+  /** The Constant MD_MENUIC. */
   public static final int MD_MENUIC = 3;
 
+  /** The c back. */
   public static Command cBACK;
+
+  /** The c exit. */
   public static Command cEXIT;
+
+  /** The c ok. */
   public static Command cOK;
 
+  /** The background. */
   public static int background = 0x00000000;
+
+  /** The foreground. */
   public static int foreground = 0x00FFFFFF;
+
+  /** The menu. */
   public static short[][] menu;
+
+  /** The messages. */
   public static String[] messages;
+
+  /** The icons. */
   public static Image[] icons;
+
+  /** The p special. */
   public static int pSpecial;
 
   /**
    * Go and back for all Displayables.
    */
   private static final Stack displayableStack = new Stack();
+
+  /** The Constant commands. */
   private static final Hashtable commands = new Hashtable();
+
+  /** The Constant listItems. */
   private static final Hashtable listItems = new Hashtable();
 
+  /** The Constant AC_NONE. */
   public static final int AC_NONE = 0;
+
+  /** The Constant AC_BACK. */
   public static final int AC_BACK = -101;
+
+  /** The Constant AC_EXIT. */
   public static final int AC_EXIT = -100;
 
+  /** The Constant EV_BEFORECHANGE. */
   public static final int EV_BEFORECHANGE = 1;
+
+  /** The Constant EV_AFTERCHANGE. */
   public static final int EV_AFTERCHANGE = 2;
 
   /**
-   * Go back to previous Displayable with one return code.
-   *
-   * @param alert
-   * @param returnCode,
-   * @return
+   * Go back to previous Displayable with one return code. Back to A Displayable from B Displayable, so the Stack's size must be more or equals to 2.
+   * 
+   * @param alert the alert
+   * @return the displayable
    */
   public static Displayable back(final Alert alert) {
-    // Back to A Displayable from B Displayable, so the Stack's size must be
-    // more or equals to 2.
     if (Application.displayableStack.size() >= 2) {
       final Displayable previous = (Displayable) Application.displayableStack.pop();
       // get the instance of the previous one but remain it in the stack.
@@ -115,11 +128,11 @@ public abstract class Application extends BaseApp {
   }
 
   /**
-   * Go back to specify Displayable. It's same like calling go() to add one new
-   * Displayable, if the next is not existing in the stack.
-   *
-   * @param alert
-   * @param next
+   * Go back to specify Displayable. It's same like calling go() to add one new Displayable, if the next is not existing in the stack.
+   * 
+   * @param alert the alert
+   * @param next the next
+   * @param keepPrevious the keep previous
    */
   public static void back(final Alert alert, final Displayable next, final boolean keepPrevious) {
     if (!Application.displayableStack.empty()) {
@@ -136,14 +149,11 @@ public abstract class Application extends BaseApp {
   }
 
   /**
-   * Add one new Displayable. save is used to set the Displayable to the stack
-   * or not.
-   *
-   * @param alert
-   * @param next, the new Displayable to be the current Dislayable in the
-   *          screen, if next is null, it will
-   * @param save, next will be saved into the Stack (for back() to return to
-   *          previous Displayable) if save is set to true
+   * Add one new Displayable. save is used to set the Displayable to the stack or not.
+   * 
+   * @param alert the alert
+   * @param next the next
+   * @param save the save
    */
   public static void show(final Alert alert, Displayable next, final boolean save) {
     Displayable previous = null;
@@ -170,6 +180,15 @@ public abstract class Application extends BaseApp {
     BaseApp.midlet.changed(Application.EV_AFTERCHANGE, previous, next);
   }
 
+  /**
+   * New command.
+   * 
+   * @param label the label
+   * @param commandType the command type
+   * @param priority the priority
+   * @param action the action
+   * @return the command
+   */
   public static Command newCommand(final int label, final int commandType, final int priority, final int action) {
     final Command cmd = new Command(Application.messages[label], commandType, priority);
     Application.commands.put(cmd, new Integer(action));
@@ -177,38 +196,49 @@ public abstract class Application extends BaseApp {
   }
 
   /**
-   * @param cmd
-   * @param action
+   * Register command.
+   * 
+   * @param cmd the cmd
+   * @param action the action
    */
   public static void registerCommand(final Command cmd, final int action) {
     Application.commands.put(cmd, new Integer(action));
   }
 
   /**
-   * @param list
-   * @param action
+   * Register list.
+   * 
+   * @param list the list
+   * @param action the action
    */
   public static void registerList(final List list, final int action) {
     Application.listItems.put(list, new Integer(action));
   }
 
   /**
-   * @param list
-   * @param index
-   * @param action
+   * Register list item.
+   * 
+   * @param list the list
+   * @param index the index
+   * @param action the action
    */
   public static void registerListItem(final List list, final int index, final int action) {
     Application.listItems.put(list + "#" + index, new Integer(action));
   }
 
   /**
-   * @param action
-   * @param d
-   * @param cmd
-   * @return
+   * Handle action.
+   * 
+   * @param action the action
+   * @param d the d
+   * @param cmd the cmd
+   * @return true, if successful
    */
   abstract public boolean handleAction(int action, Displayable d, Command cmd);
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.app.BaseApp#process(javax.microedition.lcdui.Command, javax.microedition.lcdui.Displayable, javax.microedition.lcdui.Item)
+   */
   public void process(final Command cmd, final Displayable d, final Item i) {
     // if cmd is list selection, we change cmd to actual command
     Object at = null;
@@ -246,9 +276,11 @@ public abstract class Application extends BaseApp {
   }
 
   /**
-   * @param d
-   * @param c1
-   * @param c2
+   * Setup.
+   * 
+   * @param d the d
+   * @param c1 the c1
+   * @param c2 the c2
    */
   public static void setup(final Displayable d, final Command c1, final Command c2) {
     d.setCommandListener(BaseApp.midlet);
@@ -261,9 +293,11 @@ public abstract class Application extends BaseApp {
   }
 
   /**
-   * @param list
-   * @param ps
-   * @param def
+   * Insert menu item.
+   * 
+   * @param list the list
+   * @param ps the ps
+   * @param def the def
    */
   public static void insertMenuItem(final List list, final int ps, final short[] def) {
     Image icon = null;
@@ -274,9 +308,11 @@ public abstract class Application extends BaseApp {
   }
 
   /**
-   * @param id
-   * @param list
-   * @return
+   * Gets the action.
+   * 
+   * @param id the id
+   * @param list the list
+   * @return the action
    */
   public static short getAction(final int id, final List list) {
     final int idx = list.getSelectedIndex();
@@ -293,13 +329,13 @@ public abstract class Application extends BaseApp {
   }
 
   /**
-   * @param owner
-   * @param title
-   * @param menuID
-   * @param menuAction
-   * @param special
-   * @param cmd
-   * @return
+   * Gets the menu.
+   * 
+   * @param title the title
+   * @param menuID the menu id
+   * @param special the special
+   * @param cmd the cmd
+   * @return the menu
    */
   public static List getMenu(final String title, final int menuID, final int special, final Command cmd) {
     final List list = new List(title, Choice.IMPLICIT);
@@ -326,10 +362,11 @@ public abstract class Application extends BaseApp {
   }
 
   /**
-   * @param cl
-   * @param title
-   * @param textRes
-   * @return
+   * Gets the text form.
+   * 
+   * @param title the title
+   * @param textRes the text res
+   * @return the text form
    */
   public static Displayable getTextForm(final int title, final String textRes) {
     final Form form = new Form(Application.messages[title]);
@@ -342,11 +379,12 @@ public abstract class Application extends BaseApp {
   }
 
   /**
-   * @param cl
-   * @param title
-   * @param textRes
-   * @param o
-   * @return
+   * Gets the text form.
+   * 
+   * @param title the title
+   * @param textRes the text res
+   * @param o the o
+   * @return the text form
    */
   public static Displayable getTextForm(final int title, final String textRes, final Object[] o) {
     final Form form = new Form(Application.messages[title]);
@@ -360,6 +398,13 @@ public abstract class Application extends BaseApp {
 
   /**
    * Displays the alert.
+   * 
+   * @param alertTitle the alert title
+   * @param alertMessage the alert message
+   * @param alertImage the alert image
+   * @param alertType the alert type
+   * @param alertNext the alert next
+   * @param timeOut the time out
    */
   public static void showAlert(final int alertTitle, final int alertMessage, final Image alertImage, final AlertType alertType, final Displayable alertNext, final int timeOut) {
     final Alert alert = new Alert(Application.messages[alertTitle], Application.messages[alertMessage], alertImage, alertType);
@@ -367,6 +412,14 @@ public abstract class Application extends BaseApp {
     Application.back(alert, alertNext, true);
   }
 
+  /**
+   * Confirm.
+   * 
+   * @param title the title
+   * @param question the question
+   * @param yes the yes
+   * @param no the no
+   */
   public void confirm(final int title, final int question, final Command yes, final Command no) {
     final Form qform = new Form(Application.messages[title]);
     qform.append(Application.messages[question]);
@@ -377,16 +430,18 @@ public abstract class Application extends BaseApp {
   }
 
   /**
-   * @param msg
-   * @param o
-   * @return
+   * Format.
+   * 
+   * @param msg the msg
+   * @param o the o
+   * @return the string
    */
   public static String format(final int msg, final Object[] o) {
     return BaseApp.format(Application.messages[msg], o);
   }
 
   /**
-   * Application destroy
+   * Application destroy.
    */
   protected void done() {
     Application.displayableStack.removeAllElements();
