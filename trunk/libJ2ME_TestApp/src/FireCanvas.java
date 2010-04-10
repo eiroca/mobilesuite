@@ -1,3 +1,19 @@
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
+ */
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
@@ -6,41 +22,92 @@ import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Graphics;
 
+/**
+ * The Class FireCanvas.
+ */
 public final class FireCanvas extends Canvas implements CommandListener, Runnable {
 
+  /** The midlet. */
   private final FireDemo midlet;
+
+  /** The display. */
   private final Display display;
 
+  /** The paused. */
   private boolean paused;
+
+  /** The paint thread. */
   private Thread paintThread;
+
+  /** The painting. */
   private boolean painting;
+
+  /** The computing. */
   private boolean computing;
+
+  /** The erase. */
   private boolean erase;
 
+  /** The pixels. */
   private int pixels[][];
 
+  /** The random. */
   private long random;
 
+  /** The info form. */
   private final Form infoForm;
+
+  /** The info command. */
   private final Command infoCommand;
+
+  /** The exit command. */
   private final Command exitCommand;
+
+  /** The ok command. */
   private final Command okCommand;
 
+  /** The width. */
   private static int width;
+
+  /** The height. */
   private static int height;
+
+  /** The block size. */
   private static int blockSize;
+
+  /** The x pixel nb. */
   private static int xPixelNb;
+
+  /** The y pixel nb. */
   private static int yPixelNb;
+
+  /** The x screen pos. */
   private static int xScreenPos;
+
+  /** The y screen pos. */
   private static int yScreenPos;
 
+  /** The is color. */
   private static boolean isColor;
 
+  /** The Constant INFO_TEXT. */
   private final static String INFO_TEXT = "[UP/DOWN] changes screen size\n[LEFT/RIGHT] changes resolution\n\nv1.0\nmaxence@javatwork.com";
+
+  /** The Constant DEFAULT_BLOCK_SIZE. */
   private final static int DEFAULT_BLOCK_SIZE = 4;
+
+  /** The Constant DEFAULT_MAX_SCREEN_DIM. */
   private final static int DEFAULT_MAX_SCREEN_DIM = 64;
+
+  /** The Constant MIN_SCREEN_DIM. */
   private final static int MIN_SCREEN_DIM = 16;
 
+  /**
+   * Instantiates a new fire canvas.
+   * 
+   * @param midlet the midlet
+   * @param display the display
+   */
   public FireCanvas(final FireDemo midlet, final Display display) {
     this.midlet = midlet;
     this.display = display;
@@ -50,7 +117,8 @@ public final class FireCanvas extends Canvas implements CommandListener, Runnabl
     FireCanvas.width = FireCanvas.width - FireCanvas.width % 8;
     FireCanvas.height = getHeight();
     FireCanvas.height = FireCanvas.height - FireCanvas.height % 8;
-    while (((FireCanvas.width > FireCanvas.DEFAULT_MAX_SCREEN_DIM) || (FireCanvas.height > FireCanvas.DEFAULT_MAX_SCREEN_DIM)) && ((FireCanvas.width >= FireCanvas.MIN_SCREEN_DIM + 8) && (FireCanvas.height >= FireCanvas.MIN_SCREEN_DIM + 8))) {
+    while (((FireCanvas.width > FireCanvas.DEFAULT_MAX_SCREEN_DIM) || (FireCanvas.height > FireCanvas.DEFAULT_MAX_SCREEN_DIM))
+        && ((FireCanvas.width >= FireCanvas.MIN_SCREEN_DIM + 8) && (FireCanvas.height >= FireCanvas.MIN_SCREEN_DIM + 8))) {
       FireCanvas.width -= 8;
       FireCanvas.height -= 8;
     }
@@ -69,13 +137,16 @@ public final class FireCanvas extends Canvas implements CommandListener, Runnabl
   }
 
   /**
-   * Starts painting thread
+   * Starts painting thread.
    */
   public void start() {
     paintThread = new Thread(this);
     paintThread.start();
   }
 
+  /* (non-Javadoc)
+   * @see javax.microedition.lcdui.Canvas#paint(javax.microedition.lcdui.Graphics)
+   */
   public void paint(final Graphics g) {
     if (paused) { return; }
     painting = true;
@@ -116,6 +187,9 @@ public final class FireCanvas extends Canvas implements CommandListener, Runnabl
     painting = false;
   }
 
+  /**
+   * Compute dimensions.
+   */
   private void computeDimensions() {
     FireCanvas.xPixelNb = FireCanvas.width / FireCanvas.blockSize;
     FireCanvas.yPixelNb = FireCanvas.height / FireCanvas.blockSize;
@@ -125,12 +199,10 @@ public final class FireCanvas extends Canvas implements CommandListener, Runnabl
   }
 
   /**
-   * Computes a new frame
+   * Computes a new frame.
    */
   public void computePixels() {
-    if (paused) {
-      return;
-    }
+    if (paused) { return; }
     computing = true;
     int temp1;
     int temp2;
@@ -158,6 +230,9 @@ public final class FireCanvas extends Canvas implements CommandListener, Runnabl
     computing = false;
   }
 
+  /* (non-Javadoc)
+   * @see javax.microedition.lcdui.CommandListener#commandAction(javax.microedition.lcdui.Command, javax.microedition.lcdui.Displayable)
+   */
   public void commandAction(final Command c, final Displayable s) {
     if (c == infoCommand) {
       // Waits for current painting and computing jobs to finish
@@ -183,6 +258,9 @@ public final class FireCanvas extends Canvas implements CommandListener, Runnabl
     }
   }
 
+  /* (non-Javadoc)
+   * @see javax.microedition.lcdui.Canvas#keyPressed(int)
+   */
   public void keyPressed(final int keyCode) {
     while (painting) {
       try {
@@ -225,6 +303,9 @@ public final class FireCanvas extends Canvas implements CommandListener, Runnabl
     paused = false;
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Runnable#run()
+   */
   public void run() {
     while (true) {
       while (paused) {
