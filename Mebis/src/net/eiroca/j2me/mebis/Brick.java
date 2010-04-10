@@ -1,12 +1,10 @@
-/** GPL >= 2.0
- * Based upon scriptris - a free j2me tetris (R) clone with bluetooth multiplayer support
- *
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2005-2006 Michael "ScriptKiller" Arndt <scriptkiller@gmx.de> http://scriptkiller.de/
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -14,20 +12,22 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.mebis;
 
+/**
+ * The Class Brick.
+ */
 public class Brick {
 
+  /** The colors. */
   public static int colors[] = {
       0x0000FF, 0xFF0000, 0xCCCC00, 0xCC33FF, 0xFF9933, 0x00FF00, 0x00CCCC
   };
 
-  /* types[type][rotation][y][x] */
-
+  /** types[type][rotation][y][x] */
   private final int types[][][][] = {
       {
         {
@@ -236,38 +236,47 @@ public class Brick {
       }
   };
 
-  /* type of that brick */
+  /** type of that brick */
   public int type;
-  /* rotation of that brick */
+
+  /** rotation of that brick */
   public int rotation;
 
-  /* x and y offset of brick */
+  /** x and y offset of brick */
   public int xoffset;
+
+  /** The yoffset. */
   public int yoffset;
 
+  /** The blocks. */
   public Block[] blocks;
 
+  /**
+   * Instantiates a new brick.
+   * 
+   * @param type the type
+   */
   public Brick(final int type) {
     if ((type < 0) || (type > 6)) {
       System.err.println("Invalid Type: " + type);
     }
     this.type = type;
-    rotation = 0; /* start with standard-rotation */
+    // start with standard-rotation
+    rotation = 0;
     xoffset = 0;
     yoffset = 0;
     blocks = new Block[4];
     for (int i = 0; i < 4; i++) {
-      /*
-       * create block with correct color, xpos and ypos are added by updateBlocks() later!
-       */
+      // create block with correct color, xpos and ypos are added by updateBlocks() later!
       blocks[i] = new Block(Brick.colors[type], 0, 0);
     }
     updateBlocks();
   }
 
-  /*
-   * rotate piece, call with left=true to rotate counterclockwise, with left=false to rotate
-   * clockwise
+  /**
+   * Rotate piece, call with left=true to rotate counterclockwise, with left=false to rotate clockwise
+   * 
+   * @param left the left
    */
   public void rotate(final boolean left) {
     /* no of possible rotations */
@@ -289,33 +298,44 @@ public class Brick {
     updateBlocks();
   }
 
-  /* one step down */
+  /**
+   * One step down
+   */
   public void step() {
     yoffset++;
     updateBlocks();
   }
 
-  /* one step left */
+  /**
+   * One step left
+   */
   public void left() {
     xoffset--;
     updateBlocks();
   }
 
-  /* one step right */
+  /**
+   * One step right.
+   */
   public void right() {
     xoffset++;
     updateBlocks();
   }
 
-  /* set position */
+  /**
+   * Sets the position.
+   * 
+   * @param x the x
+   * @param y the y
+   */
   public void setPosition(final int x, final int y) {
     xoffset = x;
     yoffset = y;
     updateBlocks();
   }
 
-  /*
-   * update blocks according to xoffset, yoffset and rotation
+  /**
+   * Update blocks according to xoffset, yoffset and rotation.
    */
   private void updateBlocks() {
     int i = 0; /* block counter */
@@ -335,7 +355,11 @@ public class Brick {
 
   }
 
-  /* no clone() in J2ME, this is our own */
+  /**
+   * Clone.
+   * 
+   * @return the brick
+   */
   public Brick clone() {
     final Brick b = new Brick(type);
     b.xoffset = xoffset;
