@@ -1,12 +1,10 @@
-/** GPL >= 2.0
- * Based upon Bubblet game written by Juan Antonio Agudo.
- *
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) Juan Antonio Agudo
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -14,35 +12,68 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.bubblet;
 
 import java.util.Vector;
 import net.eiroca.j2me.app.BaseApp;
 
+/**
+ * The Class BubbletGame.
+ */
 public class BubbletGame {
 
+  /** The Constant RED. */
   public static final int RED = 0;
+
+  /** The Constant GREEN. */
   public static final int GREEN = 1;
+
+  /** The Constant BLUE. */
   public static final int BLUE = 2;
+
+  /** The Constant PURPLE. */
   public static final int PURPLE = 3;
+
+  /** The Constant YELLOW. */
   public static final int YELLOW = 4;
+
+  /** The Constant TURQUOISE. */
   public static final int TURQUOISE = 5;
+
+  /** The Constant BLACK. */
   public static final int BLACK = 6;
 
+  /** The field width. */
   public int fieldWidth;
+
+  /** The field height. */
   public int fieldHeight;
+
+  /** The field. */
   public int field[][];
 
+  /**
+   * Instantiates a new bubblet game.
+   * 
+   * @param pFieldWidth the field width
+   * @param pFieldHeight the field height
+   */
   public BubbletGame(final int pFieldWidth, final int pFieldHeight) {
     fieldWidth = pFieldWidth;
     fieldHeight = pFieldHeight;
     field = new int[fieldWidth][fieldHeight];
   }
 
+  /**
+   * Process fire.
+   * 
+   * @param cross_x the cross_x
+   * @param cross_y the cross_y
+   * @return the int
+   */
   public int processFire(final int cross_x, final int cross_y) {
     int score = 0;
     final int selectedColor = field[cross_x][cross_y];
@@ -85,6 +116,11 @@ public class BubbletGame {
     return score;
   }
 
+  /**
+   * Move slice left.
+   * 
+   * @param x the x
+   */
   private void moveSliceLeft(final int x) {
     if (x > fieldWidth) { return; }
     final Vector storage = new Vector(10);
@@ -114,6 +150,11 @@ public class BubbletGame {
     }
   }
 
+  /**
+   * Checks if is game finished.
+   * 
+   * @return true, if is game finished
+   */
   public boolean isGameFinished() {
     for (int i = 0; i < fieldWidth; i++) {
       for (int j = 0; j < fieldHeight; j++) {
@@ -123,6 +164,12 @@ public class BubbletGame {
     return true;
   }
 
+  /**
+   * Checks for neighbors.
+   * 
+   * @param pCell the cell
+   * @return true, if successful
+   */
   private boolean hasNeighbors(final CellBlock pCell) {
     // check for cell with same color above the current cell
     final int x = pCell.xval;
@@ -142,8 +189,13 @@ public class BubbletGame {
     return false;
   }
 
-  // recursive method, that gathers information about
-  // contiguous spaces of the same color
+  /**
+   * Gather colored neighbors. Recursive method, that gathers information about contiguous spaces of the same color.
+   * 
+   * @param pCell the cell
+   * @param pColor the color
+   * @param cellSet the cell set
+   */
   private void gatherColoredNeighbors(final CellBlock pCell, final int pColor, final Vector cellSet) {
     final Vector v = new Vector(10);
     final int x = pCell.xval;
@@ -195,6 +247,9 @@ public class BubbletGame {
     }
   }
 
+  /**
+   * Start game.
+   */
   public void startGame() {
     // initialize sizes of basic screen elements (only once)
     for (int i = 0; i < fieldWidth; i++) {

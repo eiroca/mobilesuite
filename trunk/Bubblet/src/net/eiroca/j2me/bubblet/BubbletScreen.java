@@ -1,12 +1,10 @@
-/** GPL >= 2.0
- * Based upon Bubblet game written by Juan Antonio Agudo.
- *
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) Juan Antonio Agudo
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -14,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.bubblet;
 
@@ -27,23 +24,50 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
+/**
+ * The Class BubbletScreen.
+ */
 public class BubbletScreen extends GameScreen {
 
+  /** The Constant MSG_NAME. */
   public static final int MSG_NAME = GameApp.MSG_USERDEF + 0;
 
+  /** The COLORS. */
   private static int[] COLORS = {
       0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FFFF00, 0x00FF00FF, 0x0000FFFF, 0x00000000
   };
 
+  /** The game. */
   private final BubbletGame game;
+
+  /** The cell width. */
   private final int cellWidth;
+
+  /** The cell height. */
   private final int cellHeight;
+
+  /** The cross_x. */
   private int cross_x;
+
+  /** The cross_y. */
   private int cross_y;
+
+  /** The off_x. */
   private final int off_x;
+
+  /** The off_y. */
   private final int off_y;
+
+  /** The f. */
   private final Font f;
 
+  /**
+   * Instantiates a new bubblet screen.
+   * 
+   * @param pMidlet the midlet
+   * @param pFieldWidth the field width
+   * @param pFieldHeight the field height
+   */
   public BubbletScreen(final GameApp pMidlet, final int pFieldWidth, final int pFieldHeight) {
     super(pMidlet, false, true);
     name = Application.messages[BubbletScreen.MSG_NAME];
@@ -58,6 +82,9 @@ public class BubbletScreen extends GameScreen {
     game = new BubbletGame(pFieldWidth, pFieldHeight);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#init()
+   */
   public void init() {
     super.init();
     // Initialize cross hairs coordinates on first paint() call
@@ -67,6 +94,9 @@ public class BubbletScreen extends GameScreen {
     game.startGame();
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#tick()
+   */
   public boolean tick() {
     screen.setColor(Application.background);
     screen.fillRect(0, 0, screenWidth, screenHeight);
@@ -75,6 +105,11 @@ public class BubbletScreen extends GameScreen {
     return true;
   }
 
+  /**
+   * Draw whole board.
+   * 
+   * @param g the g
+   */
   private void drawWholeBoard(final Graphics g) {
     g.setColor(Application.foreground);
     g.drawString("Score: " + score.getScore(), off_x, 0, Graphics.TOP | Graphics.LEFT);
@@ -89,6 +124,13 @@ public class BubbletScreen extends GameScreen {
     g.drawRect(off_x, off_y, x1, y1);
   }
 
+  /**
+   * Draw cross.
+   * 
+   * @param g the g
+   * @param x the x
+   * @param y the y
+   */
   private void drawCross(final Graphics g, final int x, final int y) {
     final int x1 = off_x + x * cellWidth;
     final int y1 = off_y + y * cellHeight;
@@ -105,6 +147,13 @@ public class BubbletScreen extends GameScreen {
     g.drawLine(x2, y1, x1, y2);
   }
 
+  /**
+   * Draw field.
+   * 
+   * @param g the g
+   * @param x the x
+   * @param y the y
+   */
   private void drawField(final Graphics g, final int x, final int y) {
     // Determine cell color
     int next;
@@ -162,6 +211,9 @@ public class BubbletScreen extends GameScreen {
     }
   }
 
+  /* (non-Javadoc)
+   * @see javax.microedition.lcdui.Canvas#keyPressed(int)
+   */
   public void keyPressed(int pKeyCode) {
     pKeyCode = getGameAction(pKeyCode);
     switch (pKeyCode) {

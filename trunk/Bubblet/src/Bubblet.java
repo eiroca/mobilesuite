@@ -1,12 +1,12 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
  * Based upon Bubblet game written by Juan Antonio Agudo.
  *
  * Copyright (C) Juan Antonio Agudo
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -14,9 +14,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
@@ -24,8 +23,14 @@ import net.eiroca.j2me.bubblet.BubbletScreen;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
+/**
+ * The Class Bubblet.
+ */
 public class Bubblet extends GameApp {
 
+  /**
+   * Instantiates a new bubblet.
+   */
   public Bubblet() {
     super();
     BaseApp.resPrefix = "bu";
@@ -47,10 +52,16 @@ public class Bubblet extends GameApp {
     GameApp.hsName = "Bubblet";
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#getGameScreen()
+   */
   public GameScreen getGameScreen() {
     return new BubbletScreen(this, 10, 10);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#processGameAction(int)
+   */
   public void processGameAction(final int action) {
     switch (action) {
       case GA_STARTUP: // Continue
