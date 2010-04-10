@@ -1,10 +1,9 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -12,9 +11,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package test;
 
@@ -37,16 +35,32 @@ import test.inspector.PrivacyPropertyInspector;
 import test.inspector.PropertyInspector;
 import test.inspector.SystemInspector;
 
+/**
+ * The Class Suite.
+ */
 public class Suite implements HTTPAttach {
 
+  /** The Constant MAPPING. */
   public static final String MAPPING = "/mapping.txt";
 
+  /** The finished. */
   private boolean finished = false;
+  
+  /** The tests. */
   private final Vector tests = new Vector();
+  
+  /** The mapping. */
   private Hashtable mapping = null;
+  
+  /** The inspectors. */
   private final AbstractProcessor[] inspectors;
+  
+  /** The benchmarks. */
   private final SuiteAbstract[] benchmarks;
 
+  /**
+   * Instantiates a new suite.
+   */
   public Suite() {
     inspectors = new AbstractProcessor[9];
     benchmarks = new SuiteAbstract[2];
@@ -73,6 +87,9 @@ public class Suite implements HTTPAttach {
     }
   }
 
+  /**
+   * Run.
+   */
   public void run() {
     finished = false;
     for (int i = 0; i < benchmarks.length; i++) {
@@ -87,12 +104,23 @@ public class Suite implements HTTPAttach {
     }
   }
 
+  /**
+   * Adds the result.
+   * 
+   * @param test the test
+   */
   public void addResult(final TestResult test) {
     if (test != null) {
       tests.addElement(test);
     }
   }
 
+  /**
+   * Gets the desc.
+   * 
+   * @param key the key
+   * @return the desc
+   */
   public String getDesc(final String key) {
     if (mapping == null) {
       mapping = BaseApp.readMap(Suite.MAPPING, '=');
@@ -114,10 +142,21 @@ public class Suite implements HTTPAttach {
     return res;
   }
 
+  /**
+   * Gets the tests.
+   * 
+   * @return the tests
+   */
   public Vector getTests() {
     return tests;
   }
 
+  /**
+   * Benchmark.
+   * 
+   * @param list the list
+   * @param category the category
+   */
   public void benchmark(final Form list, final String category) {
     if (!finished) {
       finished = true;
@@ -134,6 +173,12 @@ public class Suite implements HTTPAttach {
     }
   }
 
+  /**
+   * Export.
+   * 
+   * @param list the list
+   * @param category the category
+   */
   public void export(final Form list, final String category) {
     StringBuffer sb;
     for (int i = 0; i < tests.size(); i++) {
@@ -148,6 +193,9 @@ public class Suite implements HTTPAttach {
     }
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.util.HTTPAttach#getData()
+   */
   public byte[] getData() {
     final StringBuffer buf = new StringBuffer(8192);
     for (int i = 0; i < tests.size(); i++) {
@@ -158,6 +206,9 @@ public class Suite implements HTTPAttach {
     return buf.toString().getBytes();
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.util.HTTPAttach#getMimeType()
+   */
   public String getMimeType() {
     return "text/plain";
   }

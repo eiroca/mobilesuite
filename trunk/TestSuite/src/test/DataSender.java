@@ -1,10 +1,9 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -12,9 +11,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package test;
 
@@ -24,19 +22,38 @@ import net.eiroca.j2me.observable.Observer;
 import net.eiroca.j2me.observable.ObserverManager;
 import net.eiroca.j2me.util.HTTPClient;
 
+/**
+ * The Class DataSender.
+ */
 public class DataSender implements Observable, Observer, Runnable {
 
+  /** The suite. */
   Suite suite;
+  
+  /** The status. */
   String status;
+  
+  /** The url. */
   String url;
+  
+  /** The size. */
   int size = 0;
 
+  /** The manager. */
   private final ObserverManager manager = new ObserverManager();
 
+  /**
+   * Instantiates a new data sender.
+   * 
+   * @param suite the suite
+   */
   public DataSender(final Suite suite) {
     this.suite = suite;
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Runnable#run()
+   */
   public void run() {
     final HTTPClient client = new HTTPClient();
     client.userAgent = "TestSuite DataSender";
@@ -77,33 +94,65 @@ public class DataSender implements Observable, Observer, Runnable {
     }
   }
 
+  /**
+   * Submit.
+   * 
+   * @param url the url
+   * @param size the size
+   */
   public void submit(final String url, final int size) {
     this.url = url;
     this.size = size;
     new Thread(this).start();
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.observable.Observable#getObserverManager()
+   */
   public ObserverManager getObserverManager() {
     return manager;
   }
 
+  /**
+   * Adds the observer.
+   * 
+   * @param observer the observer
+   */
   public void addObserver(final Observer observer) {
     manager.addObserver(observer);
   }
 
+  /**
+   * Removes the observer.
+   * 
+   * @param observer the observer
+   */
   public void removeObserver(final Observer observer) {
     manager.removeObserver(observer);
   }
 
+  /**
+   * Gets the status.
+   * 
+   * @return the status
+   */
   public String getStatus() {
     return status;
   }
 
+  /**
+   * Sets the status.
+   * 
+   * @param status the new status
+   */
   public void setStatus(final String status) {
     this.status = status;
     manager.notifyObservers(this);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.observable.Observer#changed(net.eiroca.j2me.observable.Observable)
+   */
   public void changed(final Observable observable) {
     final HTTPClient client = (HTTPClient) observable;
     final int stCod = client.getStatus();

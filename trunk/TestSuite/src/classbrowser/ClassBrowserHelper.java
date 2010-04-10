@@ -1,8 +1,20 @@
-/** MIT LICENSE
- * Based upon Mobile Device Tools written by Andrew Scott
+/** GPL >= 3.0 + MIT
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * 
  * Copyright (C) 2004 Andrew Scott
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +39,9 @@ package classbrowser;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.List;
 
+/**
+ * The Class ClassBrowserHelper.
+ */
 public class ClassBrowserHelper {
 
   /** The maximum number of elements in a package. */
@@ -38,8 +53,11 @@ public class ClassBrowserHelper {
   public static Image imDash;
 
   /**
-   * Reset the classes List so that it displays the new package. The new package
-   * path is read from sPackagePath.
+   * Reset the classes List so that it displays the new package. The new package path is read from sPackagePath.
+   * 
+   * @param classesList the classes list
+   * @param sPackagePath the s package path
+   * @param classes the classes
    */
   public static void generateList(final List classesList, final String sPackagePath, final String[] classes) {
     int iNumElements;
@@ -222,11 +240,14 @@ public class ClassBrowserHelper {
   }
 
   /**
-   * Given a candidate line from the PackageTree, if the specified element is
-   * worth adding, then add it to the class list lisClasses. Expands the
-   * candidate to full class path and tests its presence in this JVM.
-   * @param sCandidate the full line from the PackageTree
+   * Given a candidate line from the PackageTree, if the specified element is worth adding, then add it to the class list lisClasses. Expands the candidate to full class path and tests its presence in
+   * this JVM.
+   * 
+   * @param classesList the classes list
+   * @param rgElements the rg elements
    * @param iDepth the depth we are looking at, 0 being the first element
+   * @param sLast the s last
+   * @return the string
    */
   private static String submitCandidate(final List classesList, final String rgElements[], final int iDepth, String sLast) {
     if ((rgElements != null) && (0 <= iDepth)) {

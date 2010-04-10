@@ -1,8 +1,22 @@
-/** MIT LICENSE
+/** GPL >= 3.0 + MIT
  * Based upon Mobile Device Tools written by Andrew Scott
+ * 
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * 
  * Copyright (C) 2004 Andrew Scott
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,60 +62,126 @@ import test.inspector.PropertyInspector;
 import test.inspector.SystemInspector;
 import classbrowser.ClassBrowserHelper;
 
+/**
+ * The Class TestSuite.
+ */
 public final class TestSuite extends Application implements Observer {
 
+  /** The Constant MSG_APPLICATION. */
   public static final int MSG_APPLICATION = 0;
+  
+  /** The Constant MSG_OK. */
   public static final int MSG_OK = 1;
+  
+  /** The Constant MSG_BACK. */
   public static final int MSG_BACK = 2;
+  
+  /** The Constant MSG_EXIT. */
   public static final int MSG_EXIT = 3;
+  
+  /** The Constant MSG_PREV. */
   public static final int MSG_PREV = 4;
+  
+  /** The Constant MSG_ABOUT. */
   public static final int MSG_ABOUT = 5;
 
+  /** The Constant AC_SHOWINSPECTOR. */
   private static final int AC_SHOWINSPECTOR = 1;
+  
+  /** The Constant AC_SHOWBENCHMARK. */
   private static final int AC_SHOWBENCHMARK = 2;
+  
+  /** The Constant AC_SHOWCLASSBROWSER. */
   private static final int AC_SHOWCLASSBROWSER = 3;
+  
+  /** The Constant AC_SHOWKEYSTATE. */
   private static final int AC_SHOWKEYSTATE = 4;
+  
+  /** The Constant AC_SHOWPOSTDATA. */
   private static final int AC_SHOWPOSTDATA = 5;
+  
+  /** The Constant AC_DOABOUT. */
   private static final int AC_DOABOUT = 6;
+  
+  /** The Constant AC_OK. */
   private static final int AC_OK = 7;
+  
+  /** The Constant AC_PREV. */
   private static final int AC_PREV = 8;
+  
+  /** The Constant AC_DOINSPECTOR. */
   private static final int AC_DOINSPECTOR = 9;
+  
+  /** The Constant AC_DOBENCHMARK. */
   private static final int AC_DOBENCHMARK = 10;
+  
+  /** The Constant AC_OPENCLASS. */
   private static final int AC_OPENCLASS = 11;
 
+  /** The Constant COUNT. */
   static final int COUNT = 15;
 
+  /** The INSPECTO r_ cat. */
   private final String[] INSPECTOR_CAT = new String[] {
       PropertyInspector.CATEGORY, APIsInspector.CATEGORY, CanvasInspector.CATEGORY, SystemInspector.CATEGORY, MultimediaInspector.CATEGORY, LocalDeviceInspector.CATEGORY, Graphic3DInspector.CATEGORY,
       PrivacyPropertyInspector.CATEGORY
   };
+  
+  /** The BENCHMAR k_ cat. */
   private final String[] BENCHMARK_CAT = new String[] {
       PrecisionSuite.CATEGORY, MathSuite.CATEGORY
   };
 
+  /** The c prev. */
   private Command cPREV;
+  
+  /** The menu. */
   private List fMenu;
 
   /** The full path name to the level of class hierarchy being shown. */
   private String cbPackagePath;
+  
+  /** The suite. */
   private Suite suite;
+  
+  /** The classes. */
   private String[] classes;
 
+  /** The url. */
   private String url;
+  
+  /** The menu desc. */
   private String[] menuDesc;
 
+  /**
+   * Instantiates a new test suite.
+   */
   public TestSuite() {
     super();
     BaseApp.resPrefix = "te";
   }
 
+  /** The about. */
   private Displayable fAbout;
+  
+  /** The key state. */
   private Canvas fKeyState;
+  
+  /** The post data. */
   private Form fPostData;
+  
+  /** The class browser. */
   private List fClassBrowser;
+  
+  /** The menu inspector. */
   private List fMenuInspector;
+  
+  /** The menu benchmark. */
   private List fMenuBenchmark;
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.app.Application#handleAction(int, javax.microedition.lcdui.Displayable, javax.microedition.lcdui.Command)
+   */
   public boolean handleAction(final int action, final Displayable d, final Command cmd) {
     boolean processed = true;
     int i;
@@ -219,7 +299,7 @@ public final class TestSuite extends Application implements Observer {
   }
 
   /**
-   * init
+   * init.
    */
   protected void init() {
     super.init();
@@ -257,6 +337,11 @@ public final class TestSuite extends Application implements Observer {
     Application.show(null, fMenu, true);
   }
 
+  /**
+   * Gets the post data form.
+   * 
+   * @return the post data form
+   */
   private Form getPostDataForm() {
     final Form f = new Form("Post Data");
     f.append("Post data to server " + url);
@@ -264,6 +349,9 @@ public final class TestSuite extends Application implements Observer {
     return f;
   }
 
+  /**
+   * Load classes.
+   */
   public void loadClasses() {
     ClassBrowserHelper.generateList(fClassBrowser, cbPackagePath, classes);
     fClassBrowser.setCommandListener(this);
@@ -277,6 +365,9 @@ public final class TestSuite extends Application implements Observer {
     }
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.observable.Observer#changed(net.eiroca.j2me.observable.Observable)
+   */
   public void changed(final Observable observable) {
     final DataSender ds = (DataSender) observable;
     System.out.println(" " + ds.getStatus());

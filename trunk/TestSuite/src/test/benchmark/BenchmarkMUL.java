@@ -1,8 +1,20 @@
-/** MIT LICENSE
- * Based upon Mobile Device Tools written by Andrew Scott
+/** GPL >= 3.0 + MIT
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * 
  * Copyright (C) 2004 Andrew Scott
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +36,35 @@
  */
 package test.benchmark;
 
+/**
+ * The Class BenchmarkMUL.
+ */
 public class BenchmarkMUL extends MathBenchmarkAbstract {
 
+  /** The Constant RES_ID1. */
   public static final String RES_ID1 = "M.a";
+  
+  /** The Constant RES_ID2. */
   public static final String RES_ID2 = "M.l";
+  
+  /** The Constant RES_ID3. */
   public static final String RES_ID3 = "M.i";
+  
+  /** The Constant RES_ID4. */
   public static final String RES_ID4 = "M.s";
 
+  /**
+   * Instantiates a new benchmark mul.
+   * 
+   * @param suite the suite
+   */
   public BenchmarkMUL(final SuiteAbstract suite) {
     super(suite);
   }
 
+  /* (non-Javadoc)
+   * @see test.benchmark.BenchmarkAbstract#execute()
+   */
   public void execute() {
     long before;
     long after;
