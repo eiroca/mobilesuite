@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon Nokia PacMan
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) Marius Rieder
  *
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.pacman;
 
@@ -24,11 +22,21 @@ import javax.microedition.lcdui.game.Sprite;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
 
+/**
+ * The Class PacmanSprite.
+ */
 public class PacmanSprite extends Sprite {
 
+  /** The Constant WIDTH. */
   private static final int WIDTH = 8;
+  
+  /** The Constant HEIGHT. */
   private static final int HEIGHT = 8;
+  
+  /** The canvas. */
   private final PacManScreen canvas;
+  
+  /** The animations. */
   private final int[][] animations = {
       {
         0
@@ -38,16 +46,39 @@ public class PacmanSprite extends Sprite {
           4, 3, 2, 1, 5, 6, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8
       }
   };
+  
+  /** The animation tick. */
   private int animationTick = 0;
+  
+  /** The Constant STAND. */
   private static final int STAND = 0;
+  
+  /** The Constant RUN. */
   private static final int RUN = 1;
+  
+  /** The Constant DIE. */
   private static final int DIE = 2;
+  
+  /** The current direction. */
   private int currentDirection = PacManScreen.LEFT;
+  
+  /** The eaten. */
   private int eaten;
+  
+  /** The dead. */
   public boolean dead;
+  
+  /** The map x. */
   private int mapX = 0;
+  
+  /** The map y. */
   private int mapY = 0;
 
+  /**
+   * Instantiates a new pacman sprite.
+   * 
+   * @param canvas the canvas
+   */
   public PacmanSprite(final PacManScreen canvas) {
     super(BaseApp.createImage(PacMan.RES_PACMAN), PacmanSprite.WIDTH, PacmanSprite.HEIGHT);
     defineCollisionRectangle(2, 2, PacmanSprite.WIDTH - 4, PacmanSprite.WIDTH - 4);
@@ -56,12 +87,20 @@ public class PacmanSprite extends Sprite {
     init();
   }
 
+  /**
+   * Inits the.
+   */
   public void init() {
     eaten = 1;
     dead = false;
     animationTick = 0;
   }
 
+  /**
+   * Tick.
+   * 
+   * @param direction the direction
+   */
   public void tick(final int direction) {
     animationTick++;
     if (dead) {
@@ -165,6 +204,9 @@ public class PacmanSprite extends Sprite {
     }
   }
 
+  /**
+   * Advance running animation.
+   */
   private void advanceRunningAnimation() {
     int[] sequence;
     sequence = animations[PacmanSprite.RUN];
@@ -183,6 +225,9 @@ public class PacmanSprite extends Sprite {
     setFrame(sequence[(animationTick >> 1) % sequence.length]);
   }
 
+  /**
+   * Sets the standing animation.
+   */
   private void setStandingAnimation() {
     setFrame(animations[PacmanSprite.STAND][0]);
     if (currentDirection == PacManScreen.UP) {
@@ -199,6 +244,11 @@ public class PacmanSprite extends Sprite {
     }
   }
 
+  /**
+   * Gets the dead.
+   * 
+   * @return the dead
+   */
   public boolean getDead() {
     return dead;
   }

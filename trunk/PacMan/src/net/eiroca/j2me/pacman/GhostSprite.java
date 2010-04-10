@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon Nokia PacMan
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) Marius Rieder
  *
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.pacman;
 
@@ -23,13 +21,21 @@ import PacMan;
 import javax.microedition.lcdui.game.Sprite;
 import net.eiroca.j2me.app.BaseApp;
 
+/**
+ * The Class GhostSprite.
+ */
 public class GhostSprite extends Sprite {
 
+  /** The Constant WIDTH. */
   private static final int WIDTH = 8;
+  
+  /** The Constant HEIGHT. */
   private static final int HEIGHT = 8;
 
+  /** The canvas. */
   private final PacManScreen canvas;
 
+  /** The animations. */
   private final int[][][] animations = {
       {
           {
@@ -75,25 +81,53 @@ public class GhostSprite extends Sprite {
       }
   }; // eye
 
+  /** The animation tick. */
   private int animationTick;
+  
+  /** The animation. */
   private int animation;
+  
+  /** The current direction. */
   private int currentDirection = PacManScreen.LEFT;
+  
+  /** The old direction. */
   private int oldDirection = PacManScreen.LEFT;
+  
+  /** The tracked. */
   private boolean tracked = false;
+  
+  /** The ghost. */
   private int ghost = 0;
+  
+  /** The pm_x. */
   private int pm_x = -1;
+  
+  /** The pm_y. */
   private int pm_y = -1;
+  
+  /** The map x. */
   private int mapX = 0;
+  
+  /** The map y. */
   private int mapY = 0;
 
+  /** The ways. */
   private final int ways[] = {
       0, 0, 0, 0
   };
 
+  /** The num of way. */
   private int numOfWay = 0;
 
+  /** The eyeonly. */
   public boolean eyeonly = false;
 
+  /**
+   * Instantiates a new ghost sprite.
+   * 
+   * @param canvas the canvas
+   * @param num the num
+   */
   public GhostSprite(final PacManScreen canvas, final int num) {
     super(BaseApp.createImage(PacMan.RES_GHOST), GhostSprite.WIDTH, GhostSprite.HEIGHT);
     defineCollisionRectangle(2, 2, GhostSprite.WIDTH - 4, GhostSprite.WIDTH - 4);
@@ -104,6 +138,9 @@ public class GhostSprite extends Sprite {
     setFrame(animations[num][1][0]);
   }
 
+  /**
+   * Tick.
+   */
   public void tick() {
     // ghosts are 2x as slow in magic-mode
     if (canvas.getMagicMode() && ((animationTick++ % 2) != 0)) { return; }
@@ -218,6 +255,9 @@ public class GhostSprite extends Sprite {
     setStandingAnimation();
   }
 
+  /**
+   * Sets the standing animation.
+   */
   private void setStandingAnimation() {
     animation = ghost;
     if (canvas.getMagicMode()) {
