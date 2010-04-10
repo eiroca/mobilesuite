@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon Nokia PacMan
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) Marius Rieder
  *
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.pacman;
 
@@ -29,31 +27,82 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
+/**
+ * The Class PacManScreen.
+ */
 public final class PacManScreen extends GameScreen {
 
   // shared direction constants
+  /** The Constant NONE. */
   public static final int NONE = -1;
+  
+  /** The Constant UP. */
   public static final int UP = 0;
+  
+  /** The Constant LEFT. */
   public static final int LEFT = 1;
+  
+  /** The Constant DOWN. */
   public static final int DOWN = 2;
+  
+  /** The Constant RIGHT. */
   public static final int RIGHT = 3;
+  
+  /** The field. */
   private final GameField field;
+  
+  /** The layer manager. */
   private final LayerManager layerManager;
+  
+  /** The pacman. */
   private final PacmanSprite pacman;
+  
+  /** The blinky. */
   private final GhostSprite blinky; // The red one
+  
+  /** The pinky. */
   private final GhostSprite pinky; // The pink one
+  
+  /** The inkey. */
   private final GhostSprite inkey; // The green one
+  
+  /** The clyde. */
   private final GhostSprite clyde; // The orange one
+  
+  /** The supermode. */
   private int supermode = 0;
+  
+  /** The font height. */
   private int fontHeight = 0;
+  
+  /** The font. */
   private final Font font;
+  
+  /** The closing. */
   private boolean closing;
+  
+  /** The scr liv pos x. */
   private final int scrLivPosX;
+  
+  /** The scr liv pos y. */
   private final int scrLivPosY;
+  
+  /** The scr liv siz. */
   private final int scrLivSiz;
+  
+  /** The scr liv off. */
   private final int scrLivOff;
+  
+  /** The num tick. */
   private int numTick = 0;
 
+  /**
+   * Instantiates a new pac man screen.
+   * 
+   * @param midlet the midlet
+   * @param suppressKeys the suppress keys
+   * @param fullScreen the full screen
+   */
   public PacManScreen(final GameApp midlet, final boolean suppressKeys, final boolean fullScreen) {
     super(midlet, suppressKeys, fullScreen);
     name = Application.messages[PacMan.MSG_PACMAN_NAME];
@@ -78,6 +127,9 @@ public final class PacManScreen extends GameScreen {
     scrLivOff = fontHeight;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#init()
+   */
   public void init() {
     super.init();
     score.beginGame(3, 0, 0);
@@ -87,6 +139,9 @@ public final class PacManScreen extends GameScreen {
     pacman.init();
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#tick()
+   */
   public boolean tick() {
     numTick++;
     if (numTick < 30) {
@@ -135,6 +190,9 @@ public final class PacManScreen extends GameScreen {
     return true;
   }
 
+  /**
+   * Level_init.
+   */
   public void level_init() {
     score.nextLevel();
     field.init(); // reset field
@@ -150,22 +208,48 @@ public final class PacManScreen extends GameScreen {
     clyde.eyeonly = false;
   }
 
+  /**
+   * Gets the field.
+   * 
+   * @return the field
+   */
   public GameField getField() {
     return field;
   }
 
+  /**
+   * Gets the pacman x.
+   * 
+   * @return the pacman x
+   */
   public int getPacmanX() {
     return pacman.getRefPixelX();
   }
 
+  /**
+   * Gets the pacman y.
+   * 
+   * @return the pacman y
+   */
   public int getPacmanY() {
     return pacman.getRefPixelY();
   }
 
+  /**
+   * Gets the pacman dead.
+   * 
+   * @return the pacman dead
+   */
   public boolean getPacmanDead() {
     return pacman.getDead();
   }
 
+  /**
+   * Overlaps ghost.
+   * 
+   * @param sprite the sprite
+   * @return true, if successful
+   */
   public boolean overlapsGhost(final Sprite sprite) {
     if (sprite.collidesWith(pinky, false) && (pinky.eyeonly == false)) { return true; }
     if (sprite.collidesWith(blinky, false) && (blinky.eyeonly == false)) { return true; }
@@ -174,11 +258,20 @@ public final class PacManScreen extends GameScreen {
     return false;
   }
 
+  /**
+   * Overlaps pacman.
+   * 
+   * @param sprite the sprite
+   * @return true, if successful
+   */
   public boolean overlapsPacman(final Sprite sprite) {
     if (sprite.collidesWith(pacman, false)) { return true; }
     return false;
   }
 
+  /**
+   * Draw.
+   */
   public void draw() {
     // clear screen to black
     screen.setColor(Application.background);
@@ -209,6 +302,9 @@ public final class PacManScreen extends GameScreen {
     }
   }
 
+  /**
+   * Draw_level.
+   */
   public void draw_level() {
     String slevel;
     slevel = Application.messages[PacMan.MSG_PACMAN_LEVEL] + Integer.toString(score.getLevel());
@@ -224,6 +320,14 @@ public final class PacManScreen extends GameScreen {
     screen.drawString(slevel, centerX, centerY, Graphics.BOTTOM | Graphics.HCENTER);
   }
 
+  /**
+   * Origin.
+   * 
+   * @param focus the focus
+   * @param fieldLength the field length
+   * @param screenLength the screen length
+   * @return the int
+   */
   private int origin(final int focus, final int fieldLength, final int screenLength) {
     int origin;
     if (screenLength >= fieldLength) {
@@ -241,6 +345,9 @@ public final class PacManScreen extends GameScreen {
     return origin;
   }
 
+  /**
+   * Sets the magic mode.
+   */
   public void setMagicMode() {
     supermode = 550 - score.getLevel() * 50;
     if (supermode < 100) {
@@ -248,6 +355,11 @@ public final class PacManScreen extends GameScreen {
     }
   }
 
+  /**
+   * Gets the magic mode.
+   * 
+   * @return the magic mode
+   */
   public boolean getMagicMode() {
     if (supermode > 1) { return true; }
     return false;
