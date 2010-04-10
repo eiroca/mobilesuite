@@ -1,12 +1,12 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
  * Based upon scriptris - a free j2me tetris (R) clone with bluetooth multiplayer support
- *
+ * 
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2005-2006 Michael "ScriptKiller" Arndt <scriptkiller@gmx.de> http://scriptkiller.de/
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -14,9 +14,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
@@ -24,14 +23,29 @@ import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 import net.eiroca.j2me.mebis.MebisScreen;
 
+/**
+ * The Class Mebis.
+ */
 public class Mebis extends GameApp {
 
+  /** The Constant MSG_NAME. */
   public static final int MSG_NAME = GameApp.MSG_USERDEF + 0;
+
+  /** The Constant MSG_LOOSE. */
   public static final int MSG_LOOSE = GameApp.MSG_USERDEF + 1;
+
+  /** The Constant MSG_WIN. */
   public static final int MSG_WIN = GameApp.MSG_USERDEF + 2;
+
+  /** The Constant MSG_SCORE. */
   public static final int MSG_SCORE = GameApp.MSG_USERDEF + 3;
+
+  /** The Constant MSG_LINES. */
   public static final int MSG_LINES = GameApp.MSG_USERDEF + 4;
 
+  /**
+   * Instantiates a new mebis.
+   */
   public Mebis() {
     super();
     BaseApp.resPrefix = "me";
@@ -51,10 +65,16 @@ public class Mebis extends GameApp {
     GameApp.hsName = "Mebis";
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#getGameScreen()
+   */
   public GameScreen getGameScreen() {
     return new MebisScreen(this);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameApp#processGameAction(int)
+   */
   public void processGameAction(final int action) {
     switch (action) {
       case GA_STARTUP: // Continue

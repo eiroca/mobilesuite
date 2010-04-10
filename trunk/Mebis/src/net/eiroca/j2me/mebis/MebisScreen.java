@@ -1,12 +1,10 @@
-/** GPL >= 2.0
- * Based upon scriptris - a free j2me tetris (R) clone with bluetooth multiplayer support
- *
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2005-2006 Michael "ScriptKiller" Arndt <scriptkiller@gmx.de> http://scriptkiller.de/
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -14,10 +12,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
+
 package net.eiroca.j2me.mebis;
 
 import Mebis;
@@ -29,49 +27,107 @@ import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
+/**
+ * The Class MebisScreen.
+ */
 public final class MebisScreen extends GameScreen {
 
+  /** The Constant ROTATE_LEFT. */
   public static final int ROTATE_LEFT = 1;
+
+  /** The Constant ROTATE_RIGHT. */
   public static final int ROTATE_RIGHT = 2;
+
+  /** The Constant LEFT. */
   public static final int LEFT = 3;
+
+  /** The Constant RIGHT. */
   public static final int RIGHT = 4;
+
+  /** The Constant STEP. */
   public static final int STEP = 5;
+
+  /** The Constant DROP. */
   public static final int DROP = 6;
+
+  /** The Constant COLS. */
   public static final int COLS = 12;
+
+  /** The Constant ROWS. */
   public static final int ROWS = 18;
 
+  /** The brick. */
   private Brick brick;
+
+  /** The rows. */
   private Row rows[];
+
+  /** The show lost. */
   private boolean showLost = false;
+
+  /** The show won. */
   private boolean showWon = false;
+
+  /** The screen font. */
   private final Font screenFont;
+
+  /** The font height. */
   private int fontHeight;
 
+  /** The last step. */
   long lastStep;
+
+  /** The step_time. */
   int step_time;
 
+  /** The block width. */
   private int blockWidth;
+
+  /** The block height. */
   private int blockHeight;
+
+  /** The game area width. */
   private int gameAreaWidth;
+
+  /** The game area height. */
   private int gameAreaHeight;
+
+  /** The game area off x. */
   private final int gameAreaOffX;
+
+  /** The game area off y. */
   private final int gameAreaOffY;
 
+  /** The score width. */
   private final int scoreWidth;
+
+  /** The score height. */
   private final int scoreHeight;
+
+  /** The score off x. */
   private final int scoreOffX;
+
+  /** The score off y. */
   private int scoreOffY = 0;
 
+  /** The font anchor x. */
   private final int fontAnchorX;
+
+  /** The font anchor y. */
   private final int fontAnchorY;
 
+  /**
+   * Instantiates a new mebis screen.
+   * 
+   * @param midlet the midlet
+   */
   public MebisScreen(final GameApp midlet) {
     super(midlet, false, true);
     name = Application.messages[Mebis.MSG_NAME];
     screenFont = screen.getFont();
     fontHeight = screenFont.getBaselinePosition();
     if (fontHeight <= 2) {
-      /* returns wrong values on 6230i */
+      // returns wrong values on 6230i
       fontHeight = screenFont.getHeight();
     }
     /* game-area */
@@ -97,6 +153,9 @@ public final class MebisScreen extends GameScreen {
     fontAnchorY = gameAreaOffY + blockHeight * MebisScreen.ROWS / 2;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#init()
+   */
   public void init() {
     super.init();
     score.beginGame(1, 0, 0);
@@ -109,6 +168,9 @@ public final class MebisScreen extends GameScreen {
     }
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#tick()
+   */
   public boolean tick() {
     final long now = System.currentTimeMillis();
     if ((now - lastStep) > step_time) {
@@ -119,6 +181,9 @@ public final class MebisScreen extends GameScreen {
     return true;
   }
 
+  /**
+   * Draw.
+   */
   public void draw() {
     /* background */
     screen.setColor(Application.background);
@@ -173,6 +238,9 @@ public final class MebisScreen extends GameScreen {
     screen.drawString(String.valueOf(score.getLevel()), scoreOffX + 10, scoreOffY + 40 + fontHeight, Graphics.TOP | Graphics.LEFT);
   }
 
+  /* (non-Javadoc)
+   * @see javax.microedition.lcdui.Canvas#keyPressed(int)
+   */
   public void keyPressed(final int keyCode) {
     switch (getGameAction(keyCode)) {
       case Canvas.UP:
@@ -218,6 +286,11 @@ public final class MebisScreen extends GameScreen {
     }
   }
 
+  /**
+   * Brick transition.
+   * 
+   * @param type the type
+   */
   public synchronized void brickTransition(final int type) {
     /* make a copy of brick */
     final Brick temp = brick.clone();
@@ -265,13 +338,14 @@ public final class MebisScreen extends GameScreen {
     }
   }
 
+  /**
+   * Drop brick.
+   */
   public void dropBrick() {
     while (!brickCollisionCheck(brick)) {
       brick.step();
     }
-    /*
-     * brick is now solid, get a new one
-     */
+    // brick is now solid, get a new one
     addBrickToRows(brick);
     rowCompleteCheck();
     newBrick();
@@ -281,14 +355,18 @@ public final class MebisScreen extends GameScreen {
     }
   }
 
-  /* create new random brick */
+  /**
+   * Create new random brick.
+   */
   public void newBrick() {
     brick = new Brick(BaseApp.rand(7));
     brick.setPosition((MebisScreen.COLS / 2) - 2, 0);
   }
 
-  /*
-   * add the brick to the rows-Objects so that brick-Object may be destroyed
+  /**
+   * Add the brick to the rows-Objects so that brick-Object may be destroyed.
+   * 
+   * @param b the b
    */
   public void addBrickToRows(final Brick b) {
     int x;
@@ -301,6 +379,12 @@ public final class MebisScreen extends GameScreen {
     }
   }
 
+  /**
+   * Brick collision check.
+   * 
+   * @param b the b
+   * @return true, if successful
+   */
   public boolean brickCollisionCheck(final Brick b) {
     int i;
     int y;
@@ -318,6 +402,9 @@ public final class MebisScreen extends GameScreen {
     return false;
   }
 
+  /**
+   * Row complete check.
+   */
   public void rowCompleteCheck() {
     /* count number of completed rows in one step */
     int count = 0;
@@ -360,17 +447,25 @@ public final class MebisScreen extends GameScreen {
     }
   }
 
-  /* show lost-game screen */
+  /**
+   * Show lost-game screen .
+   */
   public void showLost() {
     showLost = true;
   }
 
-  /* show won-game screen */
+  /**
+   * Show won-game screen.
+   */
   public void showWon() {
     showWon = true;
   }
 
-  /* add 'count' lines at bottom of game */
+  /**
+   * Add 'count' lines at bottom of game.
+   * 
+   * @param count the count
+   */
   public void addRandomRows(final int count) {
     Row r;
     for (int i = 0; i < count; i++) {
@@ -394,6 +489,13 @@ public final class MebisScreen extends GameScreen {
     }
   }
 
+  /**
+   * Draw centered text box.
+   * 
+   * @param fontAnchorX the font anchor x
+   * @param fontAnchorY the font anchor y
+   * @param s the s
+   */
   public void drawCenteredTextBox(final int fontAnchorX, final int fontAnchorY, final String s) {
     /* background */
     screen.setColor(0xFFFFFF);
