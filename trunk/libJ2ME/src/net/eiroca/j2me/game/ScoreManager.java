@@ -1,10 +1,9 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -12,9 +11,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.game;
 
@@ -26,13 +24,32 @@ import java.util.Vector;
 import javax.microedition.rms.RecordStore;
 import net.eiroca.j2me.app.BaseApp;
 
+/**
+ * The Class ScoreManager.
+ */
 public class ScoreManager {
 
+  /** The record name. */
   private final String recordName;
+
+  /** The game name. */
   private final String gameName;
+
+  /** The scores. */
   private final Vector[] scores;
+
+  /** The list length. */
   private final int listLength;
 
+  /**
+   * Instantiates a new score manager.
+   * 
+   * @param recordName the record name
+   * @param gameName the game name
+   * @param dif the dif
+   * @param listLength the list length
+   * @param readIt the read it
+   */
   public ScoreManager(final String recordName, final String gameName, final int dif, final int listLength, final boolean readIt) {
     this.recordName = recordName;
     this.listLength = listLength;
@@ -46,16 +63,36 @@ public class ScoreManager {
     }
   }
 
+  /**
+   * Gets the high score.
+   * 
+   * @param dif the dif
+   * @return the high score
+   */
   public Score getHighScore(final int dif) {
     final int size = scores[dif].size();
     if (size == 0) { return null; }
     return (Score) scores[dif].elementAt(0);
   }
 
+  /**
+   * Checks for high score.
+   * 
+   * @param dif the dif
+   * @param score the score
+   * @return true, if successful
+   */
   public boolean hasHighScore(final int dif, final Score score) {
     return scores[dif].size() > 0;
   }
 
+  /**
+   * Checks if is high score.
+   * 
+   * @param dif the dif
+   * @param score the score
+   * @return true, if is high score
+   */
   public boolean isHighScore(final int dif, final Score score) {
     final int size = scores[dif].size();
     if (size < listLength) { return true; }
@@ -63,10 +100,21 @@ public class ScoreManager {
     return (score.score > last.score);
   }
 
+  /**
+   * Gets the list.
+   * 
+   * @param dif the dif
+   * @return the list
+   */
   public Vector getList(final int dif) {
     return scores[dif];
   }
 
+  /**
+   * Sort.
+   * 
+   * @param dif the dif
+   */
   private void sort(final int dif) {
     boolean flipped;
     Score a;
@@ -86,6 +134,9 @@ public class ScoreManager {
     }
   }
 
+  /**
+   * Save score list.
+   */
   public synchronized void saveScoreList() {
     final RecordStore rs = BaseApp.getRecordStore(recordName, true, false);
     final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -110,6 +161,9 @@ public class ScoreManager {
     BaseApp.close(rs, null, dos);
   }
 
+  /**
+   * Read high score list.
+   */
   private void readHighScoreList() {
     final RecordStore rs = BaseApp.getRecordStore(recordName, false, false);
     final DataInputStream dis = BaseApp.readRecord(rs, 1);
@@ -140,6 +194,12 @@ public class ScoreManager {
     BaseApp.close(rs, dis, null);
   }
 
+  /**
+   * Adds the new score.
+   * 
+   * @param dif the dif
+   * @param score the score
+   */
   public void addNewScore(final int dif, final Score score) {
     if (score == null) { return; }
     final Score s = new Score(score.name, score.level, score.score);

@@ -27,9 +27,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
 /**
- * In order to create an element, please use the createElement method instead of
- * invoking the constructor directly. The right place to add user defined
- * initialization code is the init method.
+ * In order to create an element, please use the createElement method instead of invoking the constructor directly. The right place to add user defined initialization code is the init method.
  */
 
 public class Element extends Node {
@@ -45,8 +43,7 @@ public class Element extends Node {
   }
 
   /**
-   * called when all properties are set, but before children are parsed. Please
-   * do not use setParent for initialization code any longer.
+   * called when all properties are set, but before children are parsed. Please do not use setParent for initialization code any longer.
    */
 
   public void init() {
@@ -63,8 +60,7 @@ public class Element extends Node {
   }
 
   /**
-   * Forwards creation request to parent if any, otherwise calls
-   * super.createElement.
+   * Forwards creation request to parent if any, otherwise calls super.createElement.
    */
 
   public Element createElement(final String namespace, final String name) {
@@ -105,8 +101,7 @@ public class Element extends Node {
   }
 
   /**
-   * Returns the root node, determined by ascending to the all parents un of the
-   * root element.
+   * Returns the root node, determined by ascending to the all parents un of the root element.
    */
 
   public Node getRoot() {
@@ -180,8 +175,7 @@ public class Element extends Node {
    */
 
   /**
-   * Builds the child elements from the given Parser. By overwriting parse, an
-   * element can take complete control over parsing its subtree.
+   * Builds the child elements from the given Parser. By overwriting parse, an element can take complete control over parsing its subtree.
    */
 
   public void parse(final XmlPullParser parser) throws IOException, XmlPullParserException {
@@ -271,9 +265,8 @@ public class Element extends Node {
   }
 
   /**
-   * sets the namespace of the element. Please note: For no namespace, please
-   * use Xml.NO_NAMESPACE, null is not a legal value. Currently, null is
-   * converted to Xml.NO_NAMESPACE, but future versions may throw an exception.
+   * sets the namespace of the element. Please note: For no namespace, please use Xml.NO_NAMESPACE, null is not a legal value. Currently, null is converted to Xml.NO_NAMESPACE, but future versions may
+   * throw an exception.
    */
 
   public void setNamespace(final String namespace) {
@@ -282,9 +275,7 @@ public class Element extends Node {
   }
 
   /**
-   * Sets the Parent of this element. Automatically called from the add method.
-   * Please use with care, you can simply create inconsitencies in the document
-   * tree structure using this method!
+   * Sets the Parent of this element. Automatically called from the add method. Please use with care, you can simply create inconsitencies in the document tree structure using this method!
    */
 
   protected void setParent(final Node parent) {

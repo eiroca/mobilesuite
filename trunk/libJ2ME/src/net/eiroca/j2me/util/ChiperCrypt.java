@@ -1,38 +1,41 @@
-/**
+/** GPL >= 3.0
  * Based upon C source code written by Eric Young, eay@psych.uq.oz.au
+ * 
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the
- *      Free Software Foundation, Inc.,
- *      59 Temple Place, Suite 330,
- *      Boston, MA 02111-1307
- *      USA
- *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.util;
 
 import java.util.Random;
 
+/**
+ * The Class ChiperCrypt.
+ */
 public class ChiperCrypt {
 
+  /**
+   * Instantiates a new chiper crypt.
+   */
   private ChiperCrypt() {
     //
   }
 
+  /** The Constant ITERATIONS. */
   private static final int ITERATIONS = 16;
 
+  /** The Constant con_salt. */
   private static final int con_salt[] = {
       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A,
@@ -40,10 +43,12 @@ public class ChiperCrypt {
       0x25, 0x26, 0x27, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00,
   };
 
+  /** The Constant shifts2. */
   private static final boolean shifts2[] = {
       false, false, true, true, true, true, true, true, false, true, true, true, true, true, true, false
   };
 
+  /** The Constant skb. */
   private static final int skb[][] = {
       {
           /* for C bits (numbered as per FIPS 46) 1 2 3 4 5 6 */
@@ -111,6 +116,7 @@ public class ChiperCrypt {
       },
   };
 
+  /** The Constant SPtrans. */
   private static final int SPtrans[][] = {
       {
           /* nibble 0 */
@@ -178,16 +184,30 @@ public class ChiperCrypt {
       }
   };
 
+  /** The Constant cov_2char. */
   private static final int cov_2char[] = {
       0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, 0x4A, 0x4B, 0x4C, 0x4D, 0x4E, 0x4F, 0x50, 0x51, 0x52, 0x53, 0x54,
       0x55, 0x56, 0x57, 0x58, 0x59, 0x5A, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, 0x7A
   };
 
+  /**
+   * Byte to unsigned.
+   * 
+   * @param b the b
+   * @return the int
+   */
   private static final int byteToUnsigned(final byte b) {
     final int value = b;
     return (value >= 0 ? value : value + 256);
   }
 
+  /**
+   * Four bytes to int.
+   * 
+   * @param b the b
+   * @param offset the offset
+   * @return the int
+   */
   private static int fourBytesToInt(final byte b[], int offset) {
     int value;
     value = ChiperCrypt.byteToUnsigned(b[offset++]);
@@ -197,6 +217,13 @@ public class ChiperCrypt {
     return (value);
   }
 
+  /**
+   * Int to four bytes.
+   * 
+   * @param iValue the i value
+   * @param b the b
+   * @param offset the offset
+   */
   private static final void intToFourBytes(final int iValue, final byte b[], int offset) {
     b[offset++] = (byte) ((iValue) & 0xff);
     b[offset++] = (byte) ((iValue >>> 8) & 0xff);
@@ -204,6 +231,15 @@ public class ChiperCrypt {
     b[offset++] = (byte) ((iValue >>> 24) & 0xff);
   }
 
+  /**
+   * PER m_ op.
+   * 
+   * @param a the a
+   * @param b the b
+   * @param n the n
+   * @param m the m
+   * @param results the results
+   */
   private static final void PERM_OP(int a, int b, final int n, final int m, final int results[]) {
     int t;
     t = ((a >>> n) ^ b) & m;
@@ -213,6 +249,14 @@ public class ChiperCrypt {
     results[1] = b;
   }
 
+  /**
+   * HPER m_ op.
+   * 
+   * @param a the a
+   * @param n the n
+   * @param m the m
+   * @return the int
+   */
   private static final int HPERM_OP(int a, final int n, final int m) {
     int t;
     t = ((a << (16 - n)) ^ a) & m;
@@ -220,6 +264,12 @@ public class ChiperCrypt {
     return (a);
   }
 
+  /**
+   * Des_set_key.
+   * 
+   * @param key the key
+   * @return the int[]
+   */
   private static int[] des_set_key(final byte key[]) {
     final int schedule[] = new int[ChiperCrypt.ITERATIONS * 2];
     int c = ChiperCrypt.fourBytesToInt(key, 0);
@@ -266,6 +316,17 @@ public class ChiperCrypt {
     return (schedule);
   }
 
+  /**
+   * D_ encrypt.
+   * 
+   * @param L the l
+   * @param R the r
+   * @param S the s
+   * @param E0 the e0
+   * @param E1 the e1
+   * @param s the s
+   * @return the int
+   */
   private static final int D_ENCRYPT(int L, final int R, final int S, final int E0, final int E1, final int s[]) {
     int t, u, v;
     v = R ^ (R >>> 16);
@@ -279,6 +340,14 @@ public class ChiperCrypt {
     return (L);
   }
 
+  /**
+   * Body.
+   * 
+   * @param schedule the schedule
+   * @param Eswap0 the eswap0
+   * @param Eswap1 the eswap1
+   * @return the int[]
+   */
   private static final int[] body(final int schedule[], final int Eswap0, final int Eswap1) {
     int left = 0;
     int right = 0;
@@ -320,8 +389,10 @@ public class ChiperCrypt {
   }
 
   /**
-   * generates a string containing a salt number and an encripted password from
-   * the given password
+   * generates a string containing a salt number and an encripted password from the given password.
+   * 
+   * @param original the original
+   * @return the string
    */
   public static final String generate(final String original) {
     final String salt = Integer.toHexString(new Random().nextInt() & 0x0ffff);
@@ -329,14 +400,24 @@ public class ChiperCrypt {
   }
 
   /**
-   * checks if the given (readable) password matches the second parameter
-   * consisting of a salt number and an encrypted password
+   * checks if the given (readable) password matches the second parameter consisting of a salt number and an encrypted password.
+   * 
+   * @param test the test
+   * @param full the full
+   * @return true, if successful
    */
   public static final boolean match(final String test, final String full) {
     if ((full == null) || (full.length() < 3)) { return false; }
     return full.equals(ChiperCrypt.crypt(full.substring(0, 2), test));
   }
 
+  /**
+   * Crypt.
+   * 
+   * @param salt the salt
+   * @param original the original
+   * @return the string
+   */
   public static final String crypt(String salt, final String original) {
     while (salt.length() < 2) {
       salt += "A";

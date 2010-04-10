@@ -5,19 +5,16 @@ import org.apache.log4j.Priority;
 import org.apache.log4j.helpers.LogLog;
 
 /**
- * RootCategory sits at the top of the category hierachy. It is a regular
- * category except that it provides several guarantees.
+ * RootCategory sits at the top of the category hierachy. It is a regular category except that it provides several guarantees.
  * <p>
- * First, it cannot be assigned a <code>null</code> priority. Second, since
- * root category cannot have a parent, the {@link #getChainedPriority} method
- * always returns the value of the priority field without walking the hierarchy.
+ * First, it cannot be assigned a <code>null</code> priority. Second, since root category cannot have a parent, the {@link #getChainedPriority} method always returns the value of the priority field
+ * without walking the hierarchy.
  * @author Ceki G&uuml;lc&uuml;
  */
 final public class RootLogger extends Category {
 
   /**
-   * The root category names itself as "root". However, the root category cannot
-   * be retrieved by name.
+   * The root category names itself as "root". However, the root category cannot be retrieved by name.
    */
   public RootLogger(final Priority priority) {
     super("root");
@@ -32,8 +29,7 @@ final public class RootLogger extends Category {
   }
 
   /**
-   * Setting a null value to the priority of the root category may have
-   * catastrophic results. We prevent this here.
+   * Setting a null value to the priority of the root category may have catastrophic results. We prevent this here.
    * @since 0.8.3
    */
   final public void setPriority(final Priority priority) {

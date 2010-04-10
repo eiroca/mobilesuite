@@ -11,13 +11,10 @@ package org.apache.log4j.helpers;
 /**
  * This class used to output log statements from within the log4j package.
  * <p>
- * Log4j components cannot make log4j logging calls. However, it is sometimes
- * useful for the user to learn about what log4j is doing. You can enable log4j
- * internal logging by defining the <b>log4j.configDebug</b> variable.
+ * Log4j components cannot make log4j logging calls. However, it is sometimes useful for the user to learn about what log4j is doing. You can enable log4j internal logging by defining the
+ * <b>log4j.configDebug</b> variable.
  * <p>
- * All log4j internal debug calls go to <code>System.out</code> where as
- * internal error messages are sent to <code>System.err</code>. All internal
- * messages are prepended with the string "log4j: ".
+ * All log4j internal debug calls go to <code>System.out</code> where as internal error messages are sent to <code>System.err</code>. All internal messages are prepended with the string "log4j: ".
  * @since 0.8.2
  * @author Ceki G&uuml;lc&uuml;
  */
@@ -25,8 +22,7 @@ package org.apache.log4j.helpers;
 public class LogLog {
 
   /**
-   * Defining this value makes log4j print log4j-internal debug statements to
-   * <code>System.out</code>.
+   * Defining this value makes log4j print log4j-internal debug statements to <code>System.out</code>.
    * <p>
    * The value of this string is <b>log4j.debug</b>.
    * <p>
@@ -60,16 +56,14 @@ public class LogLog {
   }
 
   /**
-   * This method is used to output log4j internal debug statements. Output goes
-   * to <code>System.out</code>.
+   * This method is used to output log4j internal debug statements. Output goes to <code>System.out</code>.
    */
   public static void debug(final String msg) {
     LogLog.debug(msg, null);
   }
 
   /**
-   * This method is used to output log4j internal debug statements. Output goes
-   * to <code>System.out</code>.
+   * This method is used to output log4j internal debug statements. Output goes to <code>System.out</code>.
    */
   public static void debug(final String msg, final Throwable t) {
     if (LogLog.debugEnabled && !LogLog.quietMode) {
@@ -81,16 +75,14 @@ public class LogLog {
   }
 
   /**
-   * This method is used to output log4j internal error statements. There is no
-   * way to disable error statements. Output goes to <code>System.err</code>.
+   * This method is used to output log4j internal error statements. There is no way to disable error statements. Output goes to <code>System.err</code>.
    */
   public static void error(final String msg) {
     LogLog.error(msg, null);
   }
 
   /**
-   * This method is used to output log4j internal error statements. There is no
-   * way to disable error statements. Output goes to <code>System.err</code>.
+   * This method is used to output log4j internal error statements. There is no way to disable error statements. Output goes to <code>System.err</code>.
    */
   public static void error(final String msg, final Throwable t) {
     if (LogLog.quietMode) { return; }
@@ -123,17 +115,14 @@ public class LogLog {
   }
 
   /**
-   * This method is used to output log4j internal warning statements. There is
-   * no way to disable warning statements. Output goes to
-   * <code>System.err</code>.
+   * This method is used to output log4j internal warning statements. There is no way to disable warning statements. Output goes to <code>System.err</code>.
    */
   public static void warn(final String msg) {
     LogLog.warn(msg, null);
   }
 
   /**
-   * This method is used to output log4j internal warnings. There is no way to
-   * disable warning statements. Output goes to <code>System.err</code>.
+   * This method is used to output log4j internal warnings. There is no way to disable warning statements. Output goes to <code>System.err</code>.
    */
   public static void warn(final String msg, final Throwable t) {
     if (LogLog.quietMode) { return; }

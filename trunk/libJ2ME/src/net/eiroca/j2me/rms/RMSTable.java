@@ -1,22 +1,18 @@
-/**
+/** GPL >= 3.0
  * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the
- *      Free Software Foundation, Inc.,
- *      59 Temple Place, Suite 330,
- *      Boston, MA 02111-1307
- *      USA
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  *
  * Copyright (c) 2002,2003, Stefan Haustein, Oberhausen, Rhld., Germany
  *
@@ -37,7 +33,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
- *
  */
 package net.eiroca.j2me.rms;
 
@@ -45,22 +40,34 @@ import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 
 /**
- * An Rms based BTree index. Currently, the functionality is similar to a
- * persistent hashtable.
+ * An Rms based BTree index. Currently, the functionality is similar to a persistent hashtable.
  */
 
 public class RMSTable {
 
+  /** The N. */
   public static int N = 32;
 
+  /** The store. */
   public RecordStore store;
+
+  /** The root. */
   public RMSTableNode root;
+
+  /** The cached key. */
   public String cachedKey;
+
+  /** The cached node. */
   public RMSTableNode cachedNode;
+
+  /** The cached index. */
   public int cachedIndex;
 
   /**
-   * Creates a new index with the given Name
+   * Creates a new index with the given Name.
+   * 
+   * @param name the name
+   * @throws RecordStoreException the record store exception
    */
   public RMSTable(final String name) throws RecordStoreException {
     store = RecordStore.openRecordStore(name, true);
@@ -68,10 +75,11 @@ public class RMSTable {
   }
 
   /**
-   * Returns the value for the given key
-   * @param key: The key
+   * Returns the value for the given key.
+   * 
+   * @param key the key
    * @return String: The value associated with the key, or null if none.
-   * @throws RecordStoreException
+   * @throws RecordStoreException the record store exception
    */
   public String get(final String key) throws RecordStoreException {
     RMSTableNode current = root;
@@ -92,10 +100,11 @@ public class RMSTable {
   }
 
   /**
-   * Assigns the given value to the given key persistently
-   * @param key: The key
-   * @param value: The value
-   * @throws RecordStoreException
+   * Assigns the given value to the given key persistently.
+   * 
+   * @param key the key
+   * @param value the value
+   * @throws RecordStoreException the record store exception
    */
   public void put(final String key, final String value) throws RecordStoreException {
     root.put(key, value);
@@ -114,11 +123,10 @@ public class RMSTable {
     root.store();
   }
 
-  /*
-   * Returns the key/value pair following the given key. The given key is not
-   * required to be contained in the index public String[] next (String key) {
-   * throw new RuntimeException ("NYI"); //if (!key.equals (cachedKey)) { //
-   * Node cachedNode = root; //} }
+  /**
+   * Close.
+   * 
+   * @throws RecordStoreException the record store exception
    */
   public void close() throws RecordStoreException {
     store.closeRecordStore();

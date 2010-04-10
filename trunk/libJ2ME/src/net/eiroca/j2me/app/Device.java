@@ -1,10 +1,9 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -12,22 +11,33 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.app;
 
 import java.util.Hashtable;
 
+/**
+ * The Class Device.
+ */
 public class Device {
 
+  /** The self. */
   private static Device self = null;
 
+  /** The Constant LOCALE. */
   public static final String LOCALE = "lo";
+
+  /** The Constant PLATFORM. */
   public static final String PLATFORM = "pl";
+
+  /** The prop. */
   public static Hashtable prop = new Hashtable();
 
+  /**
+   * Instantiates a new device.
+   */
   private Device() {
     String locale = BaseApp.readProperty("microedition.locale", null);
     if (locale != null) {
@@ -46,16 +56,29 @@ public class Device {
     Device.prop.put(Device.PLATFORM, platform);
   }
 
+  /**
+   * Inits the.
+   */
   public static void init() {
     if (Device.self == null) {
       Device.self = new Device();
     }
   }
 
+  /**
+   * Gets the locale.
+   * 
+   * @return the locale
+   */
   public static final String getLocale() {
     return (String) Device.prop.get(Device.LOCALE);
   }
 
+  /**
+   * Gets the platform.
+   * 
+   * @return the platform
+   */
   public static final String getPlatform() {
     return (String) Device.prop.get(Device.PLATFORM);
   }

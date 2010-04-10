@@ -19,17 +19,22 @@ import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.helpers.LogLog;
 
 /**
- * PropertyConfigurator for J2ME to get properties by getAppProperty
+ * PropertyConfigurator for J2ME to get properties by getAppProperty.
+ * 
  * @author Witmate
  */
 public class Configurator {
 
+  /** The Constant CATEGORY_LIST. */
   static final String CATEGORY_LIST = "log4j.categories";// Witmate: List all
 
   // category names
 
   /**
-   * @param midlet
+   * Load.
+   * 
+   * @param props the props
+   * @param midlet the midlet
    * @return FormAppenders.
    */
   static public void load(final Properties props, final MIDlet midlet) {
@@ -55,6 +60,12 @@ public class Configurator {
     LogLog.debug(props.toString());
   }
 
+  /**
+   * Load.
+   * 
+   * @param props the props
+   * @param resPath the res path
+   */
   static public void load(final Properties props, final String resPath) {
     final Pair[] pairs = BaseApp.readPairs(resPath, ':');
     Pair p;

@@ -1,4 +1,19 @@
 /**
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
+ *
  * Copyright (c) 2002,2003, Stefan Haustein, Oberhausen, Rhld., Germany
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,7 +33,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
- *
  */
 package net.eiroca.j2me.xml;
 
@@ -28,72 +42,121 @@ import java.util.Hashtable;
 import net.eiroca.j2me.app.BaseApp;
 
 /**
- * A minimalistic XML pull parser, similar to kXML, but not supporting
- * namespaces or legacy events. If you need support for namespaces, or access to
- * XML comments or processing instructions, please use kXML(2) instead.
+ * A minimalistic XML pull parser, similar to kXML, but not supporting namespaces or legacy events. If you need support for namespaces, or access to XML comments or processing instructions, please use
+ * kXML(2) instead.
  */
 
 public class XmlReader {
 
-  /** Return value of getType before first call to next() */
+  /** Return value of getType before first call to next(). */
   public final static int START_DOCUMENT = 0;
 
-  /** Signal logical end of xml document */
+  /** Signal logical end of xml document. */
   public final static int END_DOCUMENT = 1;
 
-  /** Start tag was just read */
+  /** Start tag was just read. */
   public final static int START_TAG = 2;
 
-  /**
-   * End tag was just read
-   */
+  /** End tag was just read. */
   public final static int END_TAG = 3;
 
-  /** Text was just read */
+  /** Text was just read. */
   public final static int TEXT = 4;
 
+  /** The Constant CDSECT. */
   final static int CDSECT = 5;
+
+  /** The Constant ENTITY_REF. */
   final static int ENTITY_REF = 6;
 
+  /** The Constant UNEXPECTED_EOF. */
   static final private String UNEXPECTED_EOF = "Unexpected EOF";
+
+  /** The Constant LEGACY. */
   static final private int LEGACY = 999;
 
   // general
 
+  /** The relaxed. */
   public boolean relaxed;
+
+  /** The entity map. */
   private final Hashtable entityMap;
+
+  /** The depth. */
   private int depth;
+
+  /** The element stack. */
   private String[] elementStack = new String[4];
 
   // source
+  /** The reader. */
   private final Reader reader;
+
+  /** The src buf. */
   private final char[] srcBuf = new char[Runtime.getRuntime().freeMemory() >= 1048576 ? 8192 : 128];
+
+  /** The src pos. */
   private int srcPos;
+
+  /** The src count. */
   private int srcCount;
+
+  /** The eof. */
   private boolean eof;
+
+  /** The line. */
   private int line;
+
+  /** The column. */
   private int column;
+
+  /** The peek0. */
   private int peek0;
+
+  /** The peek1. */
   private int peek1;
 
   // txtbuffer
+  /** The txt buf. */
   private char[] txtBuf = new char[128];
+
+  /** The txt pos. */
   private int txtPos;
 
   // Event-related
+  /** The type. */
   private int type;
+
+  /** The text. */
   private String text;
+
+  /** The is whitespace. */
   private boolean isWhitespace;
+
+  /** The name. */
   private String name;
 
+  /** The degenerated. */
   private boolean degenerated;
+
+  /** The attribute count. */
   private int attributeCount;
+
+  /** The attributes. */
   private String[] attributes = new String[16];
 
+  /** The TYPES. */
   private final String[] TYPES = {
       "Start Document", "End Document", "Start Tag", "End Tag", "Text"
   };
 
+  /**
+   * Read.
+   * 
+   * @return the int
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private final int read() throws IOException {
     final int r = peek0;
     peek0 = peek1;
@@ -121,10 +184,21 @@ public class XmlReader {
     return r;
   }
 
+  /**
+   * Exception.
+   * 
+   * @param desc the desc
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private final void exception(final String desc) throws IOException {
     throw new IOException(desc + " pos: " + getPositionDescription());
   }
 
+  /**
+   * Push.
+   * 
+   * @param c the c
+   */
   private final void push(final int c) {
     if (c == 0) { return; }
     if (txtPos == txtBuf.length) {
@@ -135,6 +209,12 @@ public class XmlReader {
     txtBuf[txtPos++] = (char) c;
   }
 
+  /**
+   * Read.
+   * 
+   * @param c the c
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private final void read(final char c) throws IOException {
     if (read() != c) {
       if (relaxed) {
@@ -149,18 +229,35 @@ public class XmlReader {
     }
   }
 
+  /**
+   * Skip.
+   * 
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private final void skip() throws IOException {
     while (!eof && (peek0 <= ' ')) {
       read();
     }
   }
 
+  /**
+   * Pop.
+   * 
+   * @param pos the pos
+   * @return the string
+   */
   private final String pop(final int pos) {
     final String result = new String(txtBuf, pos, txtPos - pos);
     txtPos = pos;
     return result;
   }
 
+  /**
+   * Read name.
+   * 
+   * @return the string
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private final String readName() throws IOException {
     final int pos = txtPos;
     int c = peek0;
@@ -175,6 +272,12 @@ public class XmlReader {
     return pop(pos);
   }
 
+  /**
+   * Parses the legacy.
+   * 
+   * @param push the push
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private final void parseLegacy(final boolean push) throws IOException {
     String req = "";
     int term;
@@ -227,7 +330,11 @@ public class XmlReader {
     }
   }
 
-  /** precondition: &lt! consumed */
+  /**
+   * precondition: &lt! consumed.
+   * 
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private final void parseDoctype() throws IOException {
     int nesting = 1;
     while (true) {
@@ -247,6 +354,11 @@ public class XmlReader {
 
   /* precondition: &lt;/ consumed */
 
+  /**
+   * Parses the end tag.
+   * 
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private final void parseEndTag() throws IOException {
     read(); // '<'
     read(); // '/'
@@ -264,6 +376,11 @@ public class XmlReader {
     read('>');
   }
 
+  /**
+   * Peek type.
+   * 
+   * @return the int
+   */
   private final int peekType() {
     switch (peek0) {
       case -1:
@@ -287,6 +404,13 @@ public class XmlReader {
     }
   }
 
+  /**
+   * Ensure capacity.
+   * 
+   * @param arr the arr
+   * @param required the required
+   * @return the string[]
+   */
   private static final String[] ensureCapacity(final String[] arr, final int required) {
     if (arr.length >= required) { return arr; }
     final String[] bigger = new String[required + 16];
@@ -294,7 +418,11 @@ public class XmlReader {
     return bigger;
   }
 
-  /** Sets name and attributes */
+  /**
+   * Sets name and attributes.
+   * 
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private final void parseStartTag() throws IOException {
     read(); // <
     name = readName();
@@ -344,8 +472,10 @@ public class XmlReader {
   }
 
   /**
-   * result: isWhitespace; if the setName parameter is set, the name of the
-   * entity is stored in "name"
+   * result: isWhitespace; if the setName parameter is set, the name of the entity is stored in "name".
+   * 
+   * @return true, if successful
+   * @throws IOException Signals that an I/O exception has occurred.
    */
   public final boolean pushEntity() throws IOException {
     read(); // &
@@ -375,9 +505,13 @@ public class XmlReader {
     return whitespace;
   }
 
-  /**
+/**
    * types: '<': parse to any token (for nextToken ()) '"': parse to quote ' ':
-   * parse to whitespace or '>'
+   * parse to whitespace or '>'.
+   *
+   * @param delimiter the delimiter
+   * @return true, if successful
+   * @throws IOException Signals that an I/O exception has occurred.
    */
   private final boolean pushText(final int delimiter) throws IOException {
     boolean whitespace = true;
@@ -405,6 +539,12 @@ public class XmlReader {
   }
 
   // --------------- public part starts here... ---------------
+  /**
+   * Instantiates a new xml reader.
+   * 
+   * @param reader the reader
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   public XmlReader(final Reader reader) throws IOException {
     this.reader = reader;
     peek0 = reader.read();
@@ -420,14 +560,30 @@ public class XmlReader {
     column = 1;
   }
 
+  /**
+   * Define character entity.
+   * 
+   * @param entity the entity
+   * @param value the value
+   */
   public void defineCharacterEntity(final String entity, final String value) {
     entityMap.put(entity, value);
   }
 
+  /**
+   * Gets the depth.
+   * 
+   * @return the depth
+   */
   public int getDepth() {
     return depth;
   }
 
+  /**
+   * Gets the position description.
+   * 
+   * @return the position description
+   */
   public String getPositionDescription() {
     final StringBuffer buf = new StringBuffer(type < TYPES.length ? TYPES[type] : "Other");
     buf.append(" @" + line + ":" + column + ": ");
@@ -448,18 +604,38 @@ public class XmlReader {
     return buf.toString();
   }
 
+  /**
+   * Gets the line number.
+   * 
+   * @return the line number
+   */
   public int getLineNumber() {
     return line;
   }
 
+  /**
+   * Gets the column number.
+   * 
+   * @return the column number
+   */
   public int getColumnNumber() {
     return column;
   }
 
+  /**
+   * Checks if is whitespace.
+   * 
+   * @return true, if is whitespace
+   */
   public boolean isWhitespace() {
     return isWhitespace;
   }
 
+  /**
+   * Gets the text.
+   * 
+   * @return the text
+   */
   public String getText() {
     if (text == null) {
       text = pop(0);
@@ -467,28 +643,61 @@ public class XmlReader {
     return text;
   }
 
+  /**
+   * Gets the name.
+   * 
+   * @return the name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Checks if is empty element tag.
+   * 
+   * @return true, if is empty element tag
+   */
   public boolean isEmptyElementTag() {
     return degenerated;
   }
 
+  /**
+   * Gets the attribute count.
+   * 
+   * @return the attribute count
+   */
   public int getAttributeCount() {
     return attributeCount;
   }
 
+  /**
+   * Gets the attribute name.
+   * 
+   * @param index the index
+   * @return the attribute name
+   */
   public String getAttributeName(final int index) {
     if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[index << 1];
   }
 
+  /**
+   * Gets the attribute value.
+   * 
+   * @param index the index
+   * @return the attribute value
+   */
   public String getAttributeValue(final int index) {
     if (index >= attributeCount) { throw new IndexOutOfBoundsException(); }
     return attributes[(index << 1) + 1];
   }
 
+  /**
+   * Gets the attribute value.
+   * 
+   * @param name the name
+   * @return the attribute value
+   */
   public String getAttributeValue(final String name) {
     for (int i = (attributeCount << 1) - 2; i >= 0; i -= 2) {
       if (attributes[i].equals(name)) { return attributes[i + 1]; }
@@ -496,10 +705,21 @@ public class XmlReader {
     return null;
   }
 
+  /**
+   * Gets the type.
+   * 
+   * @return the type
+   */
   public int getType() {
     return type;
   }
 
+  /**
+   * Next.
+   * 
+   * @return the int
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   public int next() throws IOException {
     if (degenerated) {
       type = XmlReader.END_TAG;
@@ -548,22 +768,23 @@ public class XmlReader {
   // utility methods to mak XML parsing easier ...
 
   /**
-   * test if the current event is of the given type and if the name do match.
-   * null will match any namespace and any name. If the current event is TEXT
-   * with isWhitespace()= true, and the required type is not TEXT, next () is
-   * called prior to the test. If the test is not passed, an exception is
-   * thrown. The exception text indicates the parser position, the expected
-   * event and the current event (not meeting the requirement.
+   * test if the current event is of the given type and if the name do match. null will match any namespace and any name. If the current event is TEXT with isWhitespace()= true, and the required type
+   * is not TEXT, next () is called prior to the test. If the test is not passed, an exception is thrown. The exception text indicates the parser position, the expected event and the current event
+   * (not meeting the requirement.
    * <p>
    * essentially it does this
-   *
+   * 
    * <pre>
-   *                    if (getType() == TEXT &amp;&amp; type != TEXT &amp;&amp; isWhitespace ())
-   *                      next ();
-   *                    if (type != getType
-   *                    || (name != null &amp;&amp; !name.equals (getName ())
-   *                       throw new XmlPullParserException ( &quot;....&quot;);
+   * if (getType() == TEXT &amp;&amp; type != TEXT &amp;&amp; isWhitespace ())
+   * next ();
+   * if (type != getType
+   * || (name != null &amp;&amp; !name.equals (getName ())
+   * throw new XmlPullParserException ( &quot;....&quot;);
    * </pre>
+   * 
+   * @param type the type
+   * @param name the name
+   * @throws IOException Signals that an I/O exception has occurred.
    */
   public void require(final int type, final String name) throws IOException {
     if ((this.type == XmlReader.TEXT) && (type != XmlReader.TEXT) && isWhitespace()) {
@@ -575,19 +796,20 @@ public class XmlReader {
   }
 
   /**
-   * If the current event is text, the value of getText is returned and next()
-   * is called. Otherwise, an empty String ("") is returned. Useful for reading
-   * element content without needing to performing an additional check if the
-   * element is empty.
+   * If the current event is text, the value of getText is returned and next() is called. Otherwise, an empty String ("") is returned. Useful for reading element content without needing to performing
+   * an additional check if the element is empty.
    * <p>
    * essentially it does this
-   *
+   * 
    * <pre>
-   *                     if (getType != TEXT) return &quot;&quot;
-   *                      String result = getText ();
-   *                      next ();
-   *                      return result;
+   * if (getType != TEXT) return &quot;&quot;
+   * String result = getText ();
+   * next ();
+   * return result;
    * </pre>
+   * 
+   * @return the string
+   * @throws IOException Signals that an I/O exception has occurred.
    */
 
   public String readText() throws IOException {

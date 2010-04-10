@@ -1,3 +1,19 @@
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
+ */
 package net.eiroca.j2me.util;
 
 import java.io.ByteArrayOutputStream;
@@ -13,40 +29,85 @@ import net.eiroca.j2me.observable.Observable;
 import net.eiroca.j2me.observable.Observer;
 import net.eiroca.j2me.observable.ObserverManager;
 
+/**
+ * The Class HTTPClient.
+ */
 public class HTTPClient implements Observable, Runnable {
 
+  /** The Constant BOUNDARY. */
   private static final String BOUNDARY = "eiroca123XYZ123";
+
+  /** The Constant BOUNDARY_PRE. */
   private static final String BOUNDARY_PRE = "--";
+
+  /** The Constant CONTENT_TYPE. */
   private static final String CONTENT_TYPE = "Content-type";
 
+  /** The Constant SEP. */
   private static final String SEP = "" + BaseApp.NL;
 
+  /** The Constant MODE_GET. */
   public static final int MODE_GET = 0;
+
+  /** The Constant MODE_POST. */
   public static final int MODE_POST = 1;
+
+  /** The Constant MODE_MULTIPART. */
   public static final int MODE_MULTIPART = 2;
 
+  /** The user agent. */
   public String userAgent = "eIrOcAMIDlet";
+
+  /** The accept language. */
   public String acceptLanguage = null;
+
+  /** The use keep alive. */
   public boolean useKeepAlive = false;
+
+  /** The mode. */
   public int mode = HTTPClient.MODE_GET;
 
+  /** The result. */
   public String result = null;
+
+  /** The status. */
   public int status = -1;
 
+  /** The url. */
   private String url;
+
+  /** The host. */
   private String host;
+
+  /** The params. */
   private final Vector params = new Vector();
+
+  /** The attach. */
   private final Vector attach = new Vector();
+
+  /** The manager. */
   private final ObserverManager manager = new ObserverManager();
 
+  /**
+   * Instantiates a new hTTP client.
+   */
   public HTTPClient() {
   }
 
+  /**
+   * Clear.
+   */
   public void clear() {
     params.removeAllElements();
     attach.removeAllElements();
   }
 
+  /**
+   * Adds the parameter.
+   * 
+   * @param parameter the parameter
+   * @param value the value
+   */
   public void addParameter(final String parameter, final String value) {
     final Pair p = new Pair();
     p.name = parameter;
@@ -54,10 +115,20 @@ public class HTTPClient implements Observable, Runnable {
     params.addElement(p);
   }
 
+  /**
+   * Adds the attach.
+   * 
+   * @param data the data
+   */
   public void addAttach(final HTTPAttach data) {
     attach.addElement(data);
   }
 
+  /**
+   * Gets the post data.
+   * 
+   * @return the post data
+   */
   public String getPostData() {
     final StringBuffer postData = new StringBuffer(100);
     if (params.size() > 0) {
@@ -77,6 +148,12 @@ public class HTTPClient implements Observable, Runnable {
     return postData.toString();
   }
 
+  /**
+   * Gets the connection.
+   * 
+   * @return the connection
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private HttpConnection getConnection() throws IOException {
     HttpConnection connection = null;
     String uri;
@@ -127,6 +204,12 @@ public class HTTPClient implements Observable, Runnable {
     return connection;
   }
 
+  /**
+   * Send post.
+   * 
+   * @param connection the connection
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private void sendPost(final HttpConnection connection) throws IOException {
     final String postData = getPostData();
     final OutputStream dos = connection.openOutputStream();
@@ -134,6 +217,12 @@ public class HTTPClient implements Observable, Runnable {
     dos.close();
   }
 
+  /**
+   * Send multipart.
+   * 
+   * @param connection the connection
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   public void sendMultipart(final HttpConnection connection) throws IOException {
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     StringBuffer buf;
@@ -173,6 +262,12 @@ public class HTTPClient implements Observable, Runnable {
     dos.close();
   }
 
+  /**
+   * Send get.
+   * 
+   * @param connection the connection
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   public void sendGet(final HttpConnection connection) throws IOException {
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     for (int i = 0; i < attach.size(); i++) {
@@ -191,6 +286,13 @@ public class HTTPClient implements Observable, Runnable {
     dos.close();
   }
 
+  /**
+   * Read result.
+   * 
+   * @param connection the connection
+   * @return the string
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   private String readResult(final HttpConnection connection) throws IOException {
     InputStream dis;
     final StringBuffer buf = new StringBuffer(1024);
@@ -203,6 +305,9 @@ public class HTTPClient implements Observable, Runnable {
     return buf.toString();
   }
 
+  /**
+   * Execute.
+   */
   public void execute() {
     result = null;
     setStatus(0);
@@ -230,6 +335,13 @@ public class HTTPClient implements Observable, Runnable {
     }
   }
 
+  /**
+   * Submit.
+   * 
+   * @param url the url
+   * @param addHost the add host
+   * @param async the async
+   */
   public void submit(final String url, final boolean addHost, final boolean async) {
     this.url = url;
     if (addHost) {
@@ -244,31 +356,62 @@ public class HTTPClient implements Observable, Runnable {
     }
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Runnable#run()
+   */
   public void run() {
     execute();
   }
 
+  /**
+   * Gets the status.
+   * 
+   * @return the status
+   */
   public int getStatus() {
     return status;
   }
 
+  /**
+   * Sets the status.
+   * 
+   * @param status the new status
+   */
   public void setStatus(final int status) {
     this.status = status;
     manager.notifyObservers(this);
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.observable.Observable#getObserverManager()
+   */
   public ObserverManager getObserverManager() {
     return manager;
   }
 
+  /**
+   * Adds the observer.
+   * 
+   * @param observer the observer
+   */
   public void addObserver(final Observer observer) {
     manager.addObserver(observer);
   }
 
+  /**
+   * Removes the observer.
+   * 
+   * @param observer the observer
+   */
   public void removeObserver(final Observer observer) {
     manager.removeObserver(observer);
   }
 
+  /**
+   * Gets the result.
+   * 
+   * @return the result
+   */
   public String getResult() {
     return result;
   }

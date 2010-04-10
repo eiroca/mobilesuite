@@ -12,8 +12,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * Formats a {@link Date} in the format "HH:mm:ss,SSS" for example,
- * "15:49:37,459".
+ * Formats a {@link Date} in the format "HH:mm:ss,SSS" for example, "15:49:37,459".
  * @author Ceki G&uuml;lc&uuml;
  * @author Andrew Vajoczki
  * @since 0.7.5
@@ -24,23 +23,17 @@ public class AbsoluteTimeDateFormat { // extends Calendar
   protected Calendar calendar;
 
   /**
-   * String constant used to specify {@link
-   * org.apache.log4j.helpers.AbsoluteTimeDateFormat} in layouts. Current value
-   * is <b>ABSOLUTE</b>.
+   * String constant used to specify {@link org.apache.log4j.helpers.AbsoluteTimeDateFormat} in layouts. Current value is <b>ABSOLUTE</b>.
    */
   public final static String ABS_TIME_DATE_FORMAT = "ABSOLUTE";
 
   /**
-   * String constant used to specify {@link
-   * org.apache.log4j.helpers.DateTimeDateFormat} in layouts. Current value is
-   * <b>DATE</b>.
+   * String constant used to specify {@link org.apache.log4j.helpers.DateTimeDateFormat} in layouts. Current value is <b>DATE</b>.
    */
   public final static String DATE_AND_TIME_DATE_FORMAT = "DATE";
 
   /**
-   * String constant used to specify {@link
-   * org.apache.log4j.helpers.ISO8601DateFormat} in layouts. Current value is
-   * <b>ISO8601</b>.
+   * String constant used to specify {@link org.apache.log4j.helpers.ISO8601DateFormat} in layouts. Current value is <b>ISO8601</b>.
    */
   public final static String ISO8601_DATE_FORMAT = "ISO8601";
 
@@ -56,8 +49,7 @@ public class AbsoluteTimeDateFormat { // extends Calendar
   private static char[] previousTimeWithoutMillis = new char[9]; // "HH:mm:ss."
 
   /**
-   * Appends to <code>sbuf</code> the time in the format "HH:mm:ss,SSS" for
-   * example, "15:49:37,459"
+   * Appends to <code>sbuf</code> the time in the format "HH:mm:ss,SSS" for example, "15:49:37,459"
    * @param date the date to format
    * @param sbuf the string buffer to write to
    * @param fieldPosition remains untouched

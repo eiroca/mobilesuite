@@ -22,9 +22,8 @@
 package org.kxml;
 
 /**
- * A class containing several static xml methods, mainly for escaping special
- * characters like angle brakets and quotes. This class contains also some
- * (partially shared) constants for the parser and kDOM.
+ * A class containing several static xml methods, mainly for escaping special characters like angle brakets and quotes. This class contains also some (partially shared) constants for the parser and
+ * kDOM.
  */
 
 public class Xml {
@@ -48,8 +47,7 @@ public class Xml {
   public static final int ELEMENT = 4;
 
   /**
-   * Integer constant returned by ParseEvent.getType if the end of the document
-   * has been reached
+   * Integer constant returned by ParseEvent.getType if the end of the document has been reached
    */
 
   public static final int END_DOCUMENT = 8;

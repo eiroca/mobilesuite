@@ -1,12 +1,9 @@
 package org.apache.log4j;
 
 /**
- * Defines the minimum set of priorities recognized by the system, that is
- * {@link #FATAL}, {@link #ERROR}, {@link #WARN}, {@link #INFO} and
- * {@link #DEBUG}.
+ * Defines the minimum set of priorities recognized by the system, that is {@link #FATAL}, {@link #ERROR}, {@link #WARN}, {@link #INFO} and {@link #DEBUG}.
  * <p>
- * The <code>Priority</code> class may be subclassed to define a larger
- * priority set.
+ * The <code>Priority</code> class may be subclassed to define a larger priority set.
  * @author Ceki G&uuml;lc&uuml;
  */
 public class Priority {
@@ -28,14 +25,12 @@ public class Priority {
   final static public Priority OFF = new Priority(Priority.OFF_INT, "OFF");
 
   /**
-   * The <code>FATAL</code> priority designates very severe error events that
-   * will presumably lead the application to abort.
+   * The <code>FATAL</code> priority designates very severe error events that will presumably lead the application to abort.
    */
   final static public Priority FATAL = new Priority(Priority.FATAL_INT, "FATAL");
 
   /**
-   * The <code>ERROR</code> priority designates error events that might still
-   * allow the application to continue running.
+   * The <code>ERROR</code> priority designates error events that might still allow the application to continue running.
    */
   final static public Priority ERROR = new Priority(Priority.ERROR_INT, "ERROR");
 
@@ -45,14 +40,12 @@ public class Priority {
   final static public Priority WARN = new Priority(Priority.WARN_INT, "WARN");
 
   /**
-   * The <code>INFO</code> priority designates informational messages that
-   * highlight the progress of the application at coarse-grained level.
+   * The <code>INFO</code> priority designates informational messages that highlight the progress of the application at coarse-grained level.
    */
   final static public Priority INFO = new Priority(Priority.INFO_INT, "INFO");
 
   /**
-   * The <code>DEBUG</code> priority designates fine-grained informational
-   * events that are most useful to debug an application.
+   * The <code>DEBUG</code> priority designates fine-grained informational events that are most useful to debug an application.
    */
   final static public Priority DEBUG = new Priority(Priority.DEBUG_INT, "DEBUG");
 
@@ -84,35 +77,30 @@ public class Priority {
   }
 
   /**
-   * Returns <code>true</code> if this priority has a higher or equal priority
-   * than the priority passed as argument, <code>false</code> otherwise.
+   * Returns <code>true</code> if this priority has a higher or equal priority than the priority passed as argument, <code>false</code> otherwise.
    * <p>
-   * You should think twice before overriding the default implementation of
-   * <code>isGreaterOrEqual</code> method.
+   * You should think twice before overriding the default implementation of <code>isGreaterOrEqual</code> method.
    */
   public boolean isGreaterOrEqual(final Priority r) {
     return level >= r.level;
   }
 
   /**
-   * Convert the string passed as argument to a priority. If the conversion
-   * fails, then this method returns {@link #DEBUG}.
+   * Convert the string passed as argument to a priority. If the conversion fails, then this method returns {@link #DEBUG}.
    */
   public static Priority toPriority(final String sArg) {
     return Priority.toPriority(sArg, Priority.DEBUG);
   }
 
   /**
-   * Convert an integer passed as argument to a priority. If the conversion
-   * fails, then this method returns {@link #DEBUG}.
+   * Convert an integer passed as argument to a priority. If the conversion fails, then this method returns {@link #DEBUG}.
    */
   public static Priority toPriority(final int val) {
     return Priority.toPriority(val, Priority.DEBUG);
   }
 
   /**
-   * Convert an integer passed as argument to a priority. If the conversion
-   * fails, then this method returns the specified default.
+   * Convert an integer passed as argument to a priority. If the conversion fails, then this method returns the specified default.
    */
   public static Priority toPriority(final int val, final Priority defaultPriority) {
     switch (val) {
@@ -136,8 +124,7 @@ public class Priority {
   }
 
   /**
-   * Convert the string passed as argument to a priority. If the conversion
-   * fails, then this method returns the value of <code>defaultPriority</code>.
+   * Convert the string passed as argument to a priority. If the conversion fails, then this method returns the value of <code>defaultPriority</code>.
    */
   public static Priority toPriority(final String sArg, final Priority defaultPriority) {
     if (sArg == null) { return defaultPriority; }

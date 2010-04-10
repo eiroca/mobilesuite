@@ -1,10 +1,9 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -12,9 +11,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.debug;
 
@@ -25,24 +23,41 @@ import javax.microedition.lcdui.StringItem;
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 
+/**
+ * The Class Debug.
+ */
 public class Debug {
 
+  /** The Constant MAX_MESSAGES. */
   private final static int MAX_MESSAGES = 50;
 
-  private final Vector messages = new Vector();
+  /** The Constant PRIORITY_TRACE. */
+  public final static int PRIORITY_TRACE = 100;
 
-  BaseApp app;
+  /** The Constant PRIORITY_MESSAGE. */
+  public final static int PRIORITY_MESSAGE = 200;
 
-  public Debug(final BaseApp app) {
-    this.app = app;
-  }
+  /** The Constant PRIORITY_EXCEPTION. */
+  public final static int PRIORITY_EXCEPTION = 300;
 
-  public void showMessageScreen(final Command back) {
+  /** The Constant PRIORITY_CRTITICAL. */
+  public final static int PRIORITY_CRTITICAL = 500;
+
+  /** The messages. */
+  private final static Vector messages = new Vector();
+
+  /**
+   * Show message screen.
+   * 
+   * @param app the app
+   * @param back the back
+   */
+  public static void showMessageScreen(final BaseApp app, final Command back) {
     final Form f = new Form("Debug messages");
     DebugMessage msg;
     StringItem si;
-    for (int i = messages.size() - 1; i >= 0; i--) {
-      msg = (DebugMessage) messages.elementAt(i);
+    for (int i = Debug.messages.size() - 1; i >= 0; i--) {
+      msg = (DebugMessage) Debug.messages.elementAt(i);
       si = new StringItem((msg.err == null) ? null : msg.err.toString(), msg.message);
       f.append(si);
     }
@@ -51,37 +66,72 @@ public class Debug {
     Application.show(null, f, true);
   }
 
-  public void addMessage(final String message) {
-    addMessage(new DebugMessage(0, message, null));
+  /**
+   * Adds low priority message.
+   * 
+   * @param message the message
+   */
+  public static void addTrace(final String message) {
+    Debug.addMessage(new DebugMessage(Debug.PRIORITY_TRACE, message, null));
   }
 
-  public void addException(final Throwable e) {
-    addMessage(new DebugMessage(1, null, e));
+  /**
+   * Adds the message.
+   * 
+   * @param message the message
+   */
+  public static void addMessage(final String message) {
+    Debug.addMessage(new DebugMessage(Debug.PRIORITY_MESSAGE, message, null));
   }
 
-  public void addException(final String message, final Throwable e) {
-    addMessage(new DebugMessage(2, message, e));
+  /**
+   * Adds the exception.
+   * 
+   * @param e the e
+   */
+  public static void addException(final Throwable e) {
+    Debug.addMessage(new DebugMessage(Debug.PRIORITY_TRACE, null, e));
   }
 
-  public void addMessage(final DebugMessage msg) {
-    checkSize(msg.priority);
-    messages.addElement(msg);
+  /**
+   * Adds the exception.
+   * 
+   * @param message the message
+   * @param e the e
+   */
+  public static void addCritical(final String message, final Throwable e) {
+    Debug.addMessage(new DebugMessage(Debug.PRIORITY_CRTITICAL, message, e));
   }
 
-  public void checkSize(final int priority) {
-    if (messages.size() > Debug.MAX_MESSAGES) {
+  /**
+   * Adds the message.
+   * 
+   * @param msg the msg
+   */
+  public static synchronized void addMessage(final DebugMessage msg) {
+    Debug.checkSize(msg.priority);
+    Debug.messages.addElement(msg);
+  }
+
+  /**
+   * Check size.
+   * 
+   * @param priority the priority
+   */
+  public static void checkSize(final int priority) {
+    if (Debug.messages.size() > Debug.MAX_MESSAGES) {
       DebugMessage msg;
       boolean spaceDone = false;
-      for (int i = 0; i < messages.size(); i++) {
-        msg = (DebugMessage) messages.elementAt(i);
+      for (int i = 0; i < Debug.messages.size(); i++) {
+        msg = (DebugMessage) Debug.messages.elementAt(i);
         if (msg.priority < priority) {
-          messages.removeElementAt(i);
+          Debug.messages.removeElementAt(i);
           spaceDone = true;
           break;
         }
       }
       if (!spaceDone) {
-        messages.removeElementAt(0);
+        Debug.messages.removeElementAt(0);
       }
     }
   }

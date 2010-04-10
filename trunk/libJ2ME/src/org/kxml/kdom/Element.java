@@ -31,9 +31,7 @@ import org.kxml.parser.AbstractXmlParser;
 import org.kxml.parser.StartTag;
 
 /**
- * In order to create an element, please use the createElement method instead of
- * invoking the constructor directly. The right place to add user defined
- * initialization code is the init method.
+ * In order to create an element, please use the createElement method instead of invoking the constructor directly. The right place to add user defined initialization code is the init method.
  */
 
 public class Element extends Node {
@@ -68,10 +66,8 @@ public class Element extends Node {
   }
 
   /**
-   * Forwards creation request to parent if any, otherwise calls
-   * super.createElement. Please note: For no namespace, please use
-   * Xml.NO_NAMESPACE, null is not a legal value. Currently, null is converted
-   * to Xml.NO_NAMESPACE, but future versions may throw an exception.
+   * Forwards creation request to parent if any, otherwise calls super.createElement. Please note: For no namespace, please use Xml.NO_NAMESPACE, null is not a legal value. Currently, null is
+   * converted to Xml.NO_NAMESPACE, but future versions may throw an exception.
    */
 
   public Element createElement(final String namespace, final String name) {
@@ -92,8 +88,7 @@ public class Element extends Node {
   }
 
   /**
-   * returns the attribute with the given namespace and name. Please use null as
-   * placeholder for any namespace or Xml.NO_NAMESPACE for no namespace.
+   * returns the attribute with the given namespace and name. Please use null as placeholder for any namespace or Xml.NO_NAMESPACE for no namespace.
    */
 
   public Attribute getAttribute(final String namespace, final String name) {
@@ -114,8 +109,7 @@ public class Element extends Node {
   }
 
   /**
-   * Returns a Vector containing all Attributes. The Vector is not copied.
-   * Modification is not allowed.
+   * Returns a Vector containing all Attributes. The Vector is not copied. Modification is not allowed.
    */
 
   public Vector getAttributes() {
@@ -123,9 +117,7 @@ public class Element extends Node {
   }
 
   /**
-   * Returns the document this element is a member of. The document is
-   * determined by ascending to the parent of the root element. If the element
-   * is not contained in a document, null is returned.
+   * Returns the document this element is a member of. The document is determined by ascending to the parent of the root element. If the element is not contained in a document, null is returned.
    */
 
   public Document getDocument() {
@@ -168,9 +160,8 @@ public class Element extends Node {
   }
 
   /**
-   * Returns the value of the given attribute. If the attribute does not exist,
-   * an exception is thrown. If a null value shall be returned for not existing
-   * attributes, please use getValueDefault (name, null) instead.
+   * Returns the value of the given attribute. If the attribute does not exist, an exception is thrown. If a null value shall be returned for not existing attributes, please use getValueDefault (name,
+   * null) instead.
    */
 
   public String getValue(final String name) {
@@ -179,8 +170,7 @@ public class Element extends Node {
   }
 
   /**
-   * Returns the value of the given attribute, or the given default value if the
-   * desired attribute does not exist.
+   * Returns the value of the given attribute, or the given default value if the desired attribute does not exist.
    */
 
   public String getValueDefault(final String name, final String dflt) {
@@ -189,8 +179,7 @@ public class Element extends Node {
   }
 
   /**
-   * Builds the child elements from the given Parser. By overwriting parse, an
-   * element can take complete control over parsing its subtree.
+   * Builds the child elements from the given Parser. By overwriting parse, an element can take complete control over parsing its subtree.
    */
 
   public void parse(final AbstractXmlParser parser) throws IOException {
@@ -218,8 +207,7 @@ public class Element extends Node {
   }
 
   /**
-   * Replaces all attributes by the given Vector. Caution: The Vector is not
-   * copied.
+   * Replaces all attributes by the given Vector. Caution: The Vector is not copied.
    */
 
   public void setAttributes(final Vector attributes) {
@@ -246,8 +234,7 @@ public class Element extends Node {
   }
 
   /**
-   * sets the value of the given attribute to the given string. Convenience
-   * method for setAttribute (new Attribute (name, value));
+   * sets the value of the given attribute to the given string. Convenience method for setAttribute (new Attribute (name, value));
    */
 
   public void setValue(final String name, final String value) {
@@ -261,9 +248,8 @@ public class Element extends Node {
   }
 
   /**
-   * sets the namespace of the element. Please note: For no namespace, please
-   * use Xml.NO_NAMESPACE, null is not a legal value. Currently, null is
-   * converted to Xml.NO_NAMESPACE, but future versions may throw an exception.
+   * sets the namespace of the element. Please note: For no namespace, please use Xml.NO_NAMESPACE, null is not a legal value. Currently, null is converted to Xml.NO_NAMESPACE, but future versions may
+   * throw an exception.
    */
 
   public void setNamespace(final String namespace) {
@@ -271,10 +257,8 @@ public class Element extends Node {
   }
 
   /**
-   * Sets the Parent of this element. Automatically called from the add method.
-   * The right place for replacements of the deprectated init method. Please use
-   * with care, you can simply create inconsitencies in the document tree
-   * structure using this method!
+   * Sets the Parent of this element. Automatically called from the add method. The right place for replacements of the deprectated init method. Please use with care, you can simply create
+   * inconsitencies in the document tree structure using this method!
    */
 
   protected void setParent(final Node parent) {

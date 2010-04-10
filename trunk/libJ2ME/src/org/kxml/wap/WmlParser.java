@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * A parser for WML built on top of the WbxmlParser by setting the corresponding
- * TagTable, AttrStartTable and AttrValueTable defined in the class Wml
+ * A parser for WML built on top of the WbxmlParser by setting the corresponding TagTable, AttrStartTable and AttrValueTable defined in the class Wml
  */
 
 public class WmlParser extends WbxmlParser {

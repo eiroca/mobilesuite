@@ -15,12 +15,9 @@ import java.util.TimeZone;
 // Contributors: Arndt Schoenewald <arndt@ibm23093i821.mc.schoenewald.de>
 
 /**
- * Formats a {@link Date} in the format "YYYY-mm-dd HH:mm:ss,SSS" for example
- * "1999-11-27 15:49:37,459".
+ * Formats a {@link Date} in the format "YYYY-mm-dd HH:mm:ss,SSS" for example "1999-11-27 15:49:37,459".
  * <p>
- * Refer to the <a href=http://www.cl.cam.ac.uk/~mgk25/iso-time.html>summary of
- * the International Standard Date and Time Notation</a> for more information
- * on this format.
+ * Refer to the <a href=http://www.cl.cam.ac.uk/~mgk25/iso-time.html>summary of the International Standard Date and Time Notation</a> for more information on this format.
  * @author Ceki G&uuml;lc&uuml;
  * @author Andrew Vajoczki
  * @since 0.7.5
@@ -40,8 +37,7 @@ public class ISO8601DateFormat extends AbsoluteTimeDateFormat {
   static private char[] lastTimeString = new char[20];
 
   /**
-   * Appends a date in the format "YYYY-mm-dd HH:mm:ss,SSS" to <code>sbuf</code>.
-   * For example: "1999-11-27 15:49:37,459".
+   * Appends a date in the format "YYYY-mm-dd HH:mm:ss,SSS" to <code>sbuf</code>. For example: "1999-11-27 15:49:37,459".
    * @param sbuf the <code>StringBuffer</code> to write to
    */
   public StringBuffer format(final Date date, final StringBuffer sbuf) { // FieldPosition

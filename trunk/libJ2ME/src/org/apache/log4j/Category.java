@@ -26,11 +26,9 @@ import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.RootLogger;
 
 /**
- * This is the central class in the log4j package. One of the distintive
- * features of log4j are hierarchical categories and their evaluation.
+ * This is the central class in the log4j package. One of the distintive features of log4j are hierarchical categories and their evaluation.
  * <p>
- * See the <a href="../../../../manual.html">user manual </a> for an
- * introduction on this class.
+ * See the <a href="../../../../manual.html">user manual </a> for an introduction on this class.
  * @author Ceki G&uuml;lc&uuml;
  * @author Anders Kristensen, Witmate
  */
@@ -47,15 +45,12 @@ public class Category {
   protected String name;
 
   /**
-   * The assigned priority of this category. The <code>priority</code>
-   * variable need not be assined a value in which case it is inherited form the
-   * hierarchy.
+   * The assigned priority of this category. The <code>priority</code> variable need not be assined a value in which case it is inherited form the hierarchy.
    */
   volatile protected Priority priority;
 
   /**
-   * The parent of this category. All categories have at least one ancestor
-   * which is the root category.
+   * The parent of this category. All categories have at least one ancestor which is the root category.
    */
   volatile protected Category parent;
 
@@ -66,21 +61,16 @@ public class Category {
   protected Vector appenderList;
 
   /**
-   * Additivity is set to true by default, that is children inherit the
-   * appenders of their ancestors by default. If this variable is set to
-   * <code>false</code> then the appenders found in the ancestors of this
-   * category are not used. However, the children of this category will inherit
-   * its appenders, unless the children have their additivity flag set to
-   * <code>false</code> too. See the user manual for more details.
+   * Additivity is set to true by default, that is children inherit the appenders of their ancestors by default. If this variable is set to <code>false</code> then the appenders found in the ancestors
+   * of this category are not used. However, the children of this category will inherit its appenders, unless the children have their additivity flag set to <code>false</code> too. See the user manual
+   * for more details.
    */
   protected boolean additive = true;
 
   /**
-   * This constructor created a new <code>Category</code> instance and sets
-   * its name.
+   * This constructor created a new <code>Category</code> instance and sets its name.
    * <p>
-   * It is intended to be used by sub-classes only. You should not create
-   * categories directly.
+   * It is intended to be used by sub-classes only. You should not create categories directly.
    * @param name The name of the category.
    */
   protected Category(final String name) {
@@ -88,11 +78,9 @@ public class Category {
   }
 
   /**
-   * Add <code>newAppender</code> to the list of appenders of this Category
-   * instance.
+   * Add <code>newAppender</code> to the list of appenders of this Category instance.
    * <p>
-   * If <code>newAppender</code> is already in the list of appenders, then it
-   * won't be added again.
+   * If <code>newAppender</code> is already in the list of appenders, then it won't be added again.
    */
   synchronized public void addAppender(final Appender newAppender) {
     // Null values for newAppender parameter are strictly forbidden.
@@ -121,12 +109,9 @@ public class Category {
   }
 
   /**
-   * Call the appenders in the hierrachy starting at <code>this</code>. If no
-   * appenders could be found, emit a warning.
+   * Call the appenders in the hierrachy starting at <code>this</code>. If no appenders could be found, emit a warning.
    * <p>
-   * This method calls all the appenders inherited from the hierarchy
-   * circumventing any evaluation of whether to log or not to log the particular
-   * log request.
+   * This method calls all the appenders inherited from the hierarchy circumventing any evaluation of whether to log or not to log the particular log request.
    * @param LoggingEvent the event to log.
    */
   public void callAppenders(final LoggingEvent event) {
@@ -155,15 +140,11 @@ public class Category {
   /**
    * Log a message object with the {@link Priority#DEBUG DEBUG}priority.
    * <p>
-   * This method first checks if this category is <code>DEBUG</code> enabled
-   * by comparing the priority of this category with the {@linkPriority#DEBUG
-   * DEBUG} priority. If this category is <code>DEBUG</code> enabled, then it
-   * invokes all the registered appenders in this category and also higher in
-   * the hierarchy depending on the value of the additivity flag.
+   * This method first checks if this category is <code>DEBUG</code> enabled by comparing the priority of this category with the {@linkPriority#DEBUG DEBUG} priority. If this category is
+   * <code>DEBUG</code> enabled, then it invokes all the registered appenders in this category and also higher in the hierarchy depending on the value of the additivity flag.
    * <p>
-   * <b>WARNING </b> Note that passing a {@link Throwable}to this method will
-   * print the name of the <code>Throwable</code> but no stack trace. To print
-   * a stack trace use the {@link #debug(Object,Throwable)} form instead.
+   * <b>WARNING </b> Note that passing a {@link Throwable}to this method will print the name of the <code>Throwable</code> but no stack trace. To print a stack trace use the
+   * {@link #debug(Object,Throwable)} form instead.
    * @param message the message object to log.
    */
   public void debug(final Object message) {
@@ -174,8 +155,7 @@ public class Category {
   }
 
   /**
-   * Log a message object with the <code>DEBUG</code> priority including the
-   * stack trace of the {@link Throwable}<code>t</code> passed as parameter.
+   * Log a message object with the <code>DEBUG</code> priority including the stack trace of the {@link Throwable}<code>t</code> passed as parameter.
    * <p>
    * See {@link #debug(Object)}form for more detailed information.
    * @param message the message object to log.
@@ -191,15 +171,11 @@ public class Category {
   /**
    * Log a message object with the {@link Priority#ERROR ERROR}priority.
    * <p>
-   * This method first checks if this category is <code>ERROR</code> enabled
-   * by comparing the priority of this category with {@linkPriority#ERROR ERROR}
-   * priority. If this category is <code>DEBUG</code> enabled, then it invokes
-   * all the registered appenders in this category and also higher in the
-   * hierarchy depending on the value of the additivity flag.
+   * This method first checks if this category is <code>ERROR</code> enabled by comparing the priority of this category with {@linkPriority#ERROR ERROR} priority. If this category is
+   * <code>DEBUG</code> enabled, then it invokes all the registered appenders in this category and also higher in the hierarchy depending on the value of the additivity flag.
    * <p>
-   * <b>WARNING </b> Note that passing a {@link Throwable}to this method will
-   * print the name of the <code>Throwable</code> but no stack trace. To print
-   * a stack trace use the {@link #error(Object,Throwable)} form instead.
+   * <b>WARNING </b> Note that passing a {@link Throwable}to this method will print the name of the <code>Throwable</code> but no stack trace. To print a stack trace use the
+   * {@link #error(Object,Throwable)} form instead.
    * @param message the message object to log
    */
   public void error(final Object message) {
@@ -210,8 +186,7 @@ public class Category {
   }
 
   /**
-   * Log a message object with the <code>ERROR</code> priority including the
-   * stack trace of the {@link Throwable}<code>t</code> passed as parameter.
+   * Log a message object with the <code>ERROR</code> priority including the stack trace of the {@link Throwable}<code>t</code> passed as parameter.
    * <p>
    * See {@link #error(Object)}form for more detailed information.
    * @param message the message object to log.
@@ -228,15 +203,11 @@ public class Category {
   /**
    * Log a message object with the {@link Priority#FATAL FATAL}priority.
    * <p>
-   * This method first checks if this category is <code>FATAL</code> enabled
-   * by comparing the priority of this category with {@linkPriority#FATAL FATAL}
-   * priority. If this category is <code>DEBUG</code> enabled, then it invokes
-   * all the registered appenders in this category and also higher in the
-   * hierarchy depending on the value of the additivity flag.
+   * This method first checks if this category is <code>FATAL</code> enabled by comparing the priority of this category with {@linkPriority#FATAL FATAL} priority. If this category is
+   * <code>DEBUG</code> enabled, then it invokes all the registered appenders in this category and also higher in the hierarchy depending on the value of the additivity flag.
    * <p>
-   * <b>WARNING </b> Note that passing a {@link Throwable}to this method will
-   * print the name of the Throwable but no stack trace. To print a stack trace
-   * use the {@link #fatal(Object, Throwable)}form instead.
+   * <b>WARNING </b> Note that passing a {@link Throwable}to this method will print the name of the Throwable but no stack trace. To print a stack trace use the {@link #fatal(Object, Throwable)}form
+   * instead.
    * @param message the message object to log
    */
   public void fatal(final Object message) {
@@ -247,8 +218,7 @@ public class Category {
   }
 
   /**
-   * Log a message object with the <code>FATAL</code> priority including the
-   * stack trace of the {@link Throwable}<code>t</code> passed as parameter.
+   * Log a message object with the <code>FATAL</code> priority including the stack trace of the {@link Throwable}<code>t</code> passed as parameter.
    * <p>
    * See {@link #fatal(Object)}for more detailed information.
    * @param message the message object to log.
@@ -262,8 +232,7 @@ public class Category {
   }
 
   /**
-   * This method creates a new logging event and logs the event without further
-   * checks.
+   * This method creates a new logging event and logs the event without further checks.
    */
   protected void forcedLog(final Priority priority, final Object message, final Throwable t) {
     callAppenders(new LoggingEvent(this, priority, message, t));
@@ -277,12 +246,9 @@ public class Category {
   }
 
   /**
-   * Starting from this category, search the category hierarchy for a non-null
-   * priority and return it. Otherwise, return the priority of the root
-   * category.
+   * Starting from this category, search the category hierarchy for a non-null priority and return it. Otherwise, return the priority of the root category.
    * <p>
-   * The Category class is designed so that this method executes as quickly as
-   * possible.
+   * The Category class is designed so that this method executes as quickly as possible.
    */
   public Priority getChainedPriority() {
     for (Category c = this; c != null; c = c.parent) {
@@ -292,8 +258,7 @@ public class Category {
   }
 
   /**
-   * Return the the {@link Hierarchy}where this <code>Category</code>
-   * instance is attached.
+   * Return the the {@link Hierarchy}where this <code>Category</code> instance is attached.
    * @since 1.1
    */
   public Hierarchy getHierarchy() {
@@ -301,11 +266,8 @@ public class Category {
   }
 
   /**
-   * Retrieve a category with named as the <code>name</code> parameter. If the
-   * named category already exists, then the existing instance will be reutrned.
-   * Otherwise, a new instance is created. By default, categories do not have a
-   * set priority but inherit it from the hierarchy. This is one of the central
-   * features of log4j.
+   * Retrieve a category with named as the <code>name</code> parameter. If the named category already exists, then the existing instance will be reutrned. Otherwise, a new instance is created. By
+   * default, categories do not have a set priority but inherit it from the hierarchy. This is one of the central features of log4j.
    * @param name The name of the category to retrieve.
    */
   public static Category getInstance(final String name) {
@@ -314,9 +276,7 @@ public class Category {
 
   /**
    * Shorthand for <code>getInstance(clazz.getName())</code>.
-   * @param clazz The name of <code>clazz</code> will be used as the name of
-   *            the category to retrieve. See {@link#getInstance(String)} for
-   *            more detailed information.
+   * @param clazz The name of <code>clazz</code> will be used as the name of the category to retrieve. See {@link#getInstance(String)} for more detailed information.
    * @since 1.0
    */
   public static Category getInstance(final Class clazz) {
@@ -341,11 +301,9 @@ public class Category {
   /**
    * Return the root of the default category hierrachy.
    * <p>
-   * The root category is always instantiated and available. It's name is
-   * "root".
+   * The root category is always instantiated and available. It's name is "root".
    * <p>
-   * Nevertheless, calling {@link #getInstanceCategory.getInstance("root")} does
-   * not retrieve the root category but a category just under root named "root".
+   * Nevertheless, calling {@link #getInstanceCategory.getInstance("root")} does not retrieve the root category but a category just under root named "root".
    */
   final public static Category getRoot() {
     return Category.defaultHierarchy.getRoot();
@@ -354,15 +312,11 @@ public class Category {
   /**
    * Log a message object with the {@link Priority#INFO INFO}priority.
    * <p>
-   * This method first checks if this category is <code>INFO</code> enabled by
-   * comparing the priority of this category with {@linkPriority#INFO INFO}
-   * priority. If this category is <code>DEBUG</code> enabled, then it invokes
-   * all the registered appenders in this category and also higher in the
-   * hierarchy depending on the value of the additivity flag.
+   * This method first checks if this category is <code>INFO</code> enabled by comparing the priority of this category with {@linkPriority#INFO INFO} priority. If this category is <code>DEBUG</code>
+   * enabled, then it invokes all the registered appenders in this category and also higher in the hierarchy depending on the value of the additivity flag.
    * <p>
-   * <b>WARNING </b> Note that passing a {@link Throwable}to this method will
-   * print the name of the Throwable but no stack trace. To print a stack trace
-   * use the {@link #info(Object, Throwable)}form instead.
+   * <b>WARNING </b> Note that passing a {@link Throwable}to this method will print the name of the Throwable but no stack trace. To print a stack trace use the {@link #info(Object, Throwable)}form
+   * instead.
    * @param message the message object to log
    */
   public void info(final Object message) {
@@ -373,8 +327,7 @@ public class Category {
   }
 
   /**
-   * Log a message object with the <code>INFO</code> priority including the
-   * stack trace of the {@link Throwable}<code>t</code> passed as parameter.
+   * Log a message object with the <code>INFO</code> priority including the stack trace of the {@link Throwable}<code>t</code> passed as parameter.
    * <p>
    * See {@link #info(Object)}for more detailed information.
    * @param message the message object to log.
@@ -388,40 +341,32 @@ public class Category {
   }
 
   /**
-   * Check whether this category is enabled for the <code>DEBUG</code>
-   * priority.
+   * Check whether this category is enabled for the <code>DEBUG</code> priority.
    * <p>
-   * This function is intended to lessen the computational cost of disabled log
-   * debug statements.
+   * This function is intended to lessen the computational cost of disabled log debug statements.
    * <p>
    * For some <code>cat</code> Category object, when you write,
-   *
+   * 
    * <pre>
    * cat.debug(&quot;This is entry number: &quot; + i);
    * </pre>
-   *
+   * 
    * <p>
-   * You incur the cost constructing the message, concatenatiion in this case,
-   * regardless of whether the message is logged or not.
+   * You incur the cost constructing the message, concatenatiion in this case, regardless of whether the message is logged or not.
    * <p>
    * If you are worried about speed, then you should write
-   *
+   * 
    * <pre>
    * if (cat.isDebugEnabled()) {
    *   cat.debug(&quot;This is entry number: &quot; + i);
    * }
    * </pre>
-   *
+   * 
    * <p>
-   * This way you will not incur the cost of parameter construction if debugging
-   * is disabled for <code>cat</code>. On the other hand, if the
-   * <code>cat</code> is debug enabled, you will incur the cost of evaluating
-   * whether the category is debug enabled twice. Once in
-   * <code>isDebugEnabled</code> and once in the <code>debug</code>. This
-   * is an insignificant overhead since evaluating a category takes about 1%% of
-   * the time it takes to actually log.
-   * @return boolean -<code>true</code> if this category is debug enabled,
-   *         <code>false</code> otherwise.
+   * This way you will not incur the cost of parameter construction if debugging is disabled for <code>cat</code>. On the other hand, if the <code>cat</code> is debug enabled, you will incur the cost
+   * of evaluating whether the category is debug enabled twice. Once in <code>isDebugEnabled</code> and once in the <code>debug</code>. This is an insignificant overhead since evaluating a category
+   * takes about 1%% of the time it takes to actually log.
+   * @return boolean -<code>true</code> if this category is debug enabled, <code>false</code> otherwise.
    */
   public boolean isDebugEnabled() {
     if (hierarchy.enableInt > Priority.DEBUG_INT) { return false; }
@@ -429,8 +374,7 @@ public class Category {
   }
 
   /**
-   * Check whether this category is enabled for a given priority passed as
-   * parameter. See also {@link #isDebugEnabled}.
+   * Check whether this category is enabled for a given priority passed as parameter. See also {@link #isDebugEnabled}.
    * @return boolean True if this category is enabled for <code>priority</code>.
    */
   public boolean isEnabledFor(final Priority priority) {
@@ -439,10 +383,8 @@ public class Category {
   }
 
   /**
-   * Check whether this category is enabled for the info priority. See also
-   * {@link #isDebugEnabled}.
-   * @return boolean -<code>true</code> if this category is enabled for
-   *         priority info, <code>false</code> otherwise.
+   * Check whether this category is enabled for the info priority. See also {@link #isDebugEnabled}.
+   * @return boolean -<code>true</code> if this category is enabled for priority info, <code>false</code> otherwise.
    */
   public boolean isInfoEnabled() {
     if (hierarchy.enableInt > Priority.INFO_INT) { return false; }
@@ -476,8 +418,7 @@ public class Category {
   }
 
   /**
-   * Remove the appender with the name passed as parameter form the list of
-   * appenders.
+   * Remove the appender with the name passed as parameter form the list of appenders.
    * @since 0.8.2
    */
   synchronized public void removeAppender(final String name) {
@@ -500,8 +441,7 @@ public class Category {
   }
 
   /**
-   * Only the Hiearchy class can set the hiearchy of a category. Default package
-   * access is MANDATORY here.
+   * Only the Hiearchy class can set the hiearchy of a category. Default package access is MANDATORY here.
    */
   final void setHierarchy(final Hierarchy hierarchy) {
     this.hierarchy = hierarchy;
@@ -519,15 +459,11 @@ public class Category {
   /**
    * Log a message object with the {@link Priority#WARN WARN}priority.
    * <p>
-   * This method first checks if this category is <code>WARN</code> enabled by
-   * comparing the priority of this category with {@linkPriority#WARN WARN}
-   * priority. If this category is <code>DEBUG</code> enabled, then it invokes
-   * all the registered appenders in this category and also higher in the
-   * hierarchy depending on the value of the additivity flag.
+   * This method first checks if this category is <code>WARN</code> enabled by comparing the priority of this category with {@linkPriority#WARN WARN} priority. If this category is <code>DEBUG</code>
+   * enabled, then it invokes all the registered appenders in this category and also higher in the hierarchy depending on the value of the additivity flag.
    * <p>
-   * <b>WARNING </b> Note that passing a {@link Throwable}to this method will
-   * print the name of the Throwable but no stack trace. To print a stack trace
-   * use the {@link #warn(Object, Throwable)}form instead.
+   * <b>WARNING </b> Note that passing a {@link Throwable}to this method will print the name of the Throwable but no stack trace. To print a stack trace use the {@link #warn(Object, Throwable)}form
+   * instead.
    * <p>
    * @param message the message object to log.
    */
@@ -540,8 +476,7 @@ public class Category {
   }
 
   /**
-   * Log a message with the <code>WARN</code> priority including the stack
-   * trace of the {@link Throwable}<code>t</code> passed as parameter.
+   * Log a message with the <code>WARN</code> priority including the stack trace of the {@link Throwable}<code>t</code> passed as parameter.
    * <p>
    * See {@link #warn(Object)}for more detailed information.
    * @param message the message object to log.

@@ -1,43 +1,19 @@
-/**
- /**
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
- *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the
- *      Free Software Foundation, Inc.,
- *      59 Temple Place, Suite 330,
- *      Boston, MA 02111-1307
- *      USA
- *
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002 Eugene Morozov (xonixboy@hotmail.com)
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the
- *      Free Software Foundation, Inc.,
- *      59 Temple Place, Suite 330,
- *      Boston, MA 02111-1307
- *      USA
- *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.util;
 
@@ -49,29 +25,35 @@ import net.eiroca.j2me.app.BaseApp;
 public class CipherDES {
 
   // Note: declared private to reduce the JAR size after the obfuscation.
+  /** The key reduce perm. */
   private final int keyReducePerm[] = {
       60, 52, 44, 36, 59, 51, 43, 35, 27, 19, 11, 3, 58, 50, 42, 34, 26, 18, 10, 2, 57, 49, 41, 33, 25, 17, 9, 1, 28, 20, 12, 4, 61, 53, 45, 37, 29, 21, 13, 5, 62, 54, 46, 38, 30, 22, 14, 6, 63, 55,
       47, 39, 31, 23, 15, 7
   };
 
+  /** The key compress perm. */
   private final int keyCompressPerm[] = {
       24, 27, 20, 6, 14, 10, 3, 22, 0, 17, 7, 12, 8, 23, 11, 5, 16, 26, 1, 9, 19, 25, 4, 15, 54, 43, 36, 29, 49, 40, 48, 30, 52, 44, 37, 33, 46, 35, 50, 41, 28, 53, 51, 55, 32, 45, 39, 42
   };
 
+  /** The key rot. */
   private final int keyRot[] = {
       1, 2, 4, 6, 8, 10, 12, 14, 15, 17, 19, 21, 23, 25, 27, 28
   };
 
+  /** The init perm. */
   private final int initPerm[] = {
       57, 49, 41, 33, 25, 17, 9, 1, 59, 51, 43, 35, 27, 19, 11, 3, 61, 53, 45, 37, 29, 21, 13, 5, 63, 55, 47, 39, 31, 23, 15, 7, 56, 48, 40, 32, 24, 16, 8, 0, 58, 50, 42, 34, 26, 18, 10, 2, 60, 52,
       44, 36, 28, 20, 12, 4, 62, 54, 46, 38, 30, 22, 14, 6
   };
 
+  /** The fin perm. */
   private final int finPerm[] = {
       39, 7, 47, 15, 55, 23, 63, 31, 38, 6, 46, 14, 54, 22, 62, 30, 37, 5, 45, 13, 53, 21, 61, 29, 36, 4, 44, 12, 52, 20, 60, 28, 35, 3, 43, 11, 51, 19, 59, 27, 34, 2, 42, 10, 50, 18, 58, 26, 33, 1,
       41, 9, 49, 17, 57, 25, 32, 0, 40, 8, 48, 16, 56, 24
   };
 
+  /** The s box p. */
   private final int sBoxP[][] = {
       {
           0x00808200, 0x00000000, 0x00008000, 0x00808202, 0x00808002, 0x00008202, 0x00000002, 0x00008000, 0x00000200, 0x00808200, 0x00808202, 0x00000200, 0x00800202, 0x00808002, 0x00800000,
@@ -131,6 +113,7 @@ public class CipherDES {
       }
   };
 
+  /** The keys. */
   protected long[] keys;
 
   /**
@@ -177,6 +160,9 @@ public class CipherDES {
 
   /**
    * Encrypts the 8 byte using the currect cypher key.
+   * 
+   * @param plain the plain
+   * @return the long
    */
   private final long encrypt(final long plain) {
     // Initial permutation
@@ -196,6 +182,9 @@ public class CipherDES {
 
   /**
    * Decrypts the 8 bytes using the current key.
+   * 
+   * @param cipher the cipher
+   * @return the long
    */
   private final long decrypt(final long cipher) {
     // Initial permutation
@@ -215,6 +204,9 @@ public class CipherDES {
 
   /**
    * Sets the parity.
+   * 
+   * @param key the key
+   * @return the long
    */
   private final long paritySet(final long key) {
     final long pKey = (key >> 1) ^ (key >> 2) ^ (key >> 3) ^ (key >> 4) ^ (key >> 5) ^ (key >> 6) ^ (key >> 7);
@@ -223,6 +215,9 @@ public class CipherDES {
 
   /**
    * Checks for the key parity.
+   * 
+   * @param key the key
+   * @return true, if is parity
    */
   public final boolean isParity(final long key) {
     return (key == paritySet(key));
@@ -230,6 +225,9 @@ public class CipherDES {
 
   /**
    * Creates the key array.
+   * 
+   * @param key the key
+   * @return the long[]
    */
   private final long[] makeKeys(final long key) {
     final long reduced = perm(key, keyReducePerm);
@@ -244,6 +242,9 @@ public class CipherDES {
 
   /**
    * Performs the initial permutation.
+   * 
+   * @param x the x
+   * @return the long
    */
   private final long initialPerm(final long x) {
     return perm(x, initPerm);
@@ -251,6 +252,10 @@ public class CipherDES {
 
   /**
    * Expansion pBox and sBox functions.
+   * 
+   * @param x the x
+   * @param k the k
+   * @return the int
    */
   private final int desFunc(final int x, final long k) {
     int p = x >>> 27;
@@ -277,6 +282,9 @@ public class CipherDES {
 
   /**
    * Performs the final permutation.
+   * 
+   * @param x the x
+   * @return the long
    */
   private final long finalPerm(final long x) {
     return perm(x, finPerm);
@@ -284,6 +292,10 @@ public class CipherDES {
 
   /**
    * Performs the permutation.
+   * 
+   * @param k the k
+   * @param p the p
+   * @return the long
    */
   private final long perm(final long k, final int p[]) {
     long s = 0;
@@ -298,11 +310,23 @@ public class CipherDES {
 
   /**
    * Performs the rotation.
+   * 
+   * @param l the l
+   * @param r the r
+   * @param s the s
+   * @return the long
    */
   private final long rotate(final int l, final int r, final int s) {
     return ((long) (((l << s) & 0xfffffff) | (l >>> (28 - s))) << 28) | ((r << s) & 0xfffffff) | (r >> (28 - s));
   }
 
+  /**
+   * Encode.
+   * 
+   * @param plainText the plain text
+   * @param key the key
+   * @return the byte[]
+   */
   public byte[] encode(final byte[] plainText, final byte[] key) {
     // Create the result and complement the plainText array with 0x00s
     final int plainTextLength = plainText.length;
@@ -324,6 +348,13 @@ public class CipherDES {
     return cipherText;
   }
 
+  /**
+   * Decode.
+   * 
+   * @param cipherText the cipher text
+   * @param key the key
+   * @return the byte[]
+   */
   public byte[] decode(final byte[] cipherText, final byte[] key) {
     // Create the result and complement the plainText array with 0x00s
     final int cipherTextLength = cipherText.length;

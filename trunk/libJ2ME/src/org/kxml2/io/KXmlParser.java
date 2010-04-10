@@ -30,8 +30,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 /**
- * A simple, pull based XML parser. This class replaces the kXML 1 XmlParser
- * class and the corresponding event classes.
+ * A simple, pull based XML parser. This class replaces the kXML 1 XmlParser class and the corresponding event classes.
  */
 
 public class KXmlParser implements XmlPullParser {
@@ -88,8 +87,7 @@ public class KXmlParser implements XmlPullParser {
   private String error;
 
   /**
-   * A separate peek buffer seems simpler than managing wrap around in the first
-   * level read buffer
+   * A separate peek buffer seems simpler than managing wrap around in the first level read buffer
    */
 
   private final int[] peek = new int[2];
@@ -234,8 +232,7 @@ public class KXmlParser implements XmlPullParser {
   }
 
   /**
-   * common base for next and nextToken. Clears the state, except from txtPos
-   * and whitespace. Does not set the type variable
+   * common base for next and nextToken. Clears the state, except from txtPos and whitespace. Does not set the type variable
    */
 
   private final void nextImpl() throws IOException, XmlPullParserException {
@@ -711,8 +708,7 @@ public class KXmlParser implements XmlPullParser {
   }
 
   /**
-   * result: isWhitespace; if the setName parameter is set, the name of the
-   * entity is stored in "name"
+   * result: isWhitespace; if the setName parameter is set, the name of the entity is stored in "name"
    */
 
   private final void pushEntity() throws IOException, XmlPullParserException {
@@ -768,7 +764,7 @@ public class KXmlParser implements XmlPullParser {
     }
   }
 
-  /**
+/**
    * types: '<': parse to any token (for nextToken ()) '"': parse to quote ' ':
    * parse to whitespace or '>'
    */
@@ -1401,8 +1397,7 @@ public class KXmlParser implements XmlPullParser {
 
   /**
    * Skip sub tree that is currently porser positioned on. <br>
-   * NOTE: parser must be on START_TAG and when funtion returns parser will be
-   * positioned on corresponding END_TAG.
+   * NOTE: parser must be on START_TAG and when funtion returns parser will be positioned on corresponding END_TAG.
    */
 
   // Implementation copied from Alek's mail...

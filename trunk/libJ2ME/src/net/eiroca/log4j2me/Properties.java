@@ -17,20 +17,41 @@ import java.util.Hashtable;
  */
 public class Properties {
 
+  /** The data. */
   private final Hashtable data = new Hashtable();
 
+  /**
+   * Instantiates a new properties.
+   */
   public Properties() {
     //
   }
 
+  /**
+   * Gets the property.
+   * 
+   * @param key the key
+   * @return the property
+   */
   public String getProperty(final Object key) {
     return (String) data.get(key);
   }
 
+  /**
+   * Put.
+   * 
+   * @param key the key
+   * @param val the val
+   */
   public void put(final Object key, final Object val) {
     data.put(key, val);
   }
 
+  /**
+   * Property names.
+   * 
+   * @return the enumeration
+   */
   public Enumeration propertyNames() {
     return data.keys();
   }

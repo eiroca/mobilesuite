@@ -33,8 +33,7 @@ import org.kxml.parser.AbstractXmlParser;
 import org.kxml.parser.ParseEvent;
 
 /**
- * A common base class for Document and Element, also used for storing XML
- * fragments.
+ * A common base class for Document and Element, also used for storing XML fragments.
  */
 
 public class Node implements XmlIO {
@@ -73,12 +72,9 @@ public class Node implements XmlIO {
   }
 
   /**
-   * Builds a default element with the given properties. Elements should always
-   * be created using this method instead of the constructor in order to enable
-   * construction of specialized subclasses by deriving custom Document classes.
-   * Please note: For no namespace, please use Xml.NO_NAMESPACE, null is not a
-   * legal value. Currently, null is converted to Xml.NO_NAMESPACE, but future
-   * versions may throw an exception.
+   * Builds a default element with the given properties. Elements should always be created using this method instead of the constructor in order to enable construction of specialized subclasses by
+   * deriving custom Document classes. Please note: For no namespace, please use Xml.NO_NAMESPACE, null is not a legal value. Currently, null is converted to Xml.NO_NAMESPACE, but future versions may
+   * throw an exception.
    */
 
   public Element createElement(final String namespace, final String name) {
@@ -90,8 +86,7 @@ public class Node implements XmlIO {
   }
 
   /**
-   * Returns the child object at the given index. For child elements, an Element
-   * object is returned. For all other child types, a String is returned.
+   * Returns the child object at the given index. For child elements, an Element object is returned. For all other child types, a String is returned.
    */
 
   public Object getChild(final int index) {
@@ -105,8 +100,7 @@ public class Node implements XmlIO {
   }
 
   /**
-   * returns the element at the given index. If the node at the given index is a
-   * text node, null is returned
+   * returns the element at the given index. If the node at the given index is a text node, null is returned
    */
 
   public Element getElement(final int index) {
@@ -121,9 +115,7 @@ public class Node implements XmlIO {
   }
 
   /**
-   * Returns the element with the given namespace and name. If the element is
-   * not found, or more than one matching elements are found, an exception is
-   * thrown.
+   * Returns the element with the given namespace and name. If the element is not found, or more than one matching elements are found, an exception is thrown.
    */
 
   public Element getElement(final String namespace, final String name) {
@@ -143,8 +135,7 @@ public class Node implements XmlIO {
   }
 
   /**
-   * Returns the namespace of the current element. For Node and Document,
-   * Xml.NO_NAMESPACE is returned.
+   * Returns the namespace of the current element. For Node and Document, Xml.NO_NAMESPACE is returned.
    */
 
   public String getNamespace() {
@@ -152,8 +143,7 @@ public class Node implements XmlIO {
   }
 
   /**
-   * returns the text content if the element has text-only content. Throws an
-   * exception for mixed content
+   * returns the text content if the element has text-only content. Throws an exception for mixed content
    */
 
   public String getText() {
@@ -172,8 +162,7 @@ public class Node implements XmlIO {
   }
 
   /**
-   * Returns the text node with the given index or null if the node with the
-   * given index is not a text node.
+   * Returns the text node with the given index or null if the node with the given index is not a text node.
    */
 
   public String getText(final int index) {
@@ -181,8 +170,7 @@ public class Node implements XmlIO {
   }
 
   /**
-   * Returns the type of the child at the given index. Possible types are
-   * ELEMENT, TEXT, COMMENT, and PROCESSING_INSTRUCTION
+   * Returns the type of the child at the given index. Possible types are ELEMENT, TEXT, COMMENT, and PROCESSING_INSTRUCTION
    */
 
   public int getType(final int index) {
@@ -198,10 +186,8 @@ public class Node implements XmlIO {
   }
 
   /**
-   * Performs search for an element with the given namespace and name, starting
-   * at the given start index. A null namespace matches any namespace, please
-   * use Xml.NO_NAMESPACE for no namespace). returns -1 if no matching element
-   * was found.
+   * Performs search for an element with the given namespace and name, starting at the given start index. A null namespace matches any namespace, please use Xml.NO_NAMESPACE for no namespace). returns
+   * -1 if no matching element was found.
    */
 
   public int indexOf(final String namespace, final String name, final int startIndex) {
@@ -218,8 +204,7 @@ public class Node implements XmlIO {
   }
 
   /**
-   * Recursively builds the child elements from the given parser until an end
-   * tag or end document is found. The end tag is not consumed.
+   * Recursively builds the child elements from the given parser until an end tag or end document is found. The end tag is not consumed.
    */
 
   public void parse(final AbstractXmlParser parser) throws IOException {
@@ -276,8 +261,7 @@ public class Node implements XmlIO {
   }
 
   /**
-   * returns a valid XML representation of this Element including attributes and
-   * children.
+   * returns a valid XML representation of this Element including attributes and children.
    */
 
   public String toString() {
@@ -294,9 +278,7 @@ public class Node implements XmlIO {
   }
 
   /**
-   * Writes this node to the given XmlWriter. For node and document, this method
-   * is identical to writeChildren, except that the stream is flushed
-   * automatically.
+   * Writes this node to the given XmlWriter. For node and document, this method is identical to writeChildren, except that the stream is flushed automatically.
    */
 
   public void write(final AbstractXmlWriter writer) throws IOException {

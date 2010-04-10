@@ -12,8 +12,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * Formats a {@link Date} in the format "dd MMM YYYY HH:mm:ss,SSS" for example,
- * "06 Nov 1994 15:49:37,459".
+ * Formats a {@link Date} in the format "dd MMM YYYY HH:mm:ss,SSS" for example, "06 Nov 1994 15:49:37,459".
  * @author Ceki G&uuml;lc&uuml;
  * @since 0.7.5
  */
@@ -34,8 +33,7 @@ public class DateTimeDateFormat extends AbsoluteTimeDateFormat {
   }
 
   /**
-   * Appends to <code>sbuf</code> the date in the format "dd MMM YYYY
-   * HH:mm:ss,SSS" for example, "06 Nov 1994 08:49:37,459".
+   * Appends to <code>sbuf</code> the date in the format "dd MMM YYYY HH:mm:ss,SSS" for example, "06 Nov 1994 08:49:37,459".
    * @param sbuf the string buffer to write to
    */
   public StringBuffer format(final Date date, final StringBuffer sbuf, final Object fieldPosition) {

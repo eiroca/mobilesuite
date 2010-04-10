@@ -36,8 +36,7 @@ public class OptionConverter {
   }
 
   /**
-   * Instantiate an object given a class name. Check that the
-   * <code>className</code> is a subclass of <code>superClass</code>.
+   * Instantiate an object given a class name. Check that the <code>className</code> is a subclass of <code>superClass</code>.
    */
   public static Object instantiateByClassName(final String className, final Class superClass, final Object defaultValue) {
     LogLog.debug("instantiateByClassName Here:" + className + "," + superClass.toString());

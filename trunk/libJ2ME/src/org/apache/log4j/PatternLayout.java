@@ -260,16 +260,14 @@ import org.apache.log4j.spi.LoggingEvent;
 public class PatternLayout extends Layout {
 
   /**
-   * A string constant used in naming the option for setting the layout pattern.
-   * Current value of this string constant is <b>ConversionPattern</b>.
+   * A string constant used in naming the option for setting the layout pattern. Current value of this string constant is <b>ConversionPattern</b>.
    * <p>
    * Note that the search for all option keys is case sensitive.
    */
   final static public String CONVERSION_PATTERN_OPTION = "ConversionPattern";
 
   /**
-   * Default pattern string for log output. Currently set to the string
-   * <b>"%m%n"</b> which just prints the application supplied message.
+   * Default pattern string for log output. Currently set to the string <b>"%m%n"</b> which just prints the application supplied message.
    */
   public final static String DEFAULT_CONVERSION_PATTERN = "%m%n";
 
@@ -284,8 +282,7 @@ public class PatternLayout extends Layout {
   private PatternConverter head;
 
   /**
-   * Constructs a PatternLayout using the DEFAULT_LAYOUT_PATTERN. The default
-   * pattern just produces the application supplied message.
+   * Constructs a PatternLayout using the DEFAULT_LAYOUT_PATTERN. The default pattern just produces the application supplied message.
    */
   public PatternLayout() {
     this(PatternLayout.DEFAULT_CONVERSION_PATTERN);
@@ -300,9 +297,7 @@ public class PatternLayout extends Layout {
   }
 
   /**
-   * Set the <b>ConversionPattern</b> option. This is the string which controls
-   * formatting and consists of a mix of literal content and conversion
-   * specifiers.
+   * Set the <b>ConversionPattern</b> option. This is the string which controls formatting and consists of a mix of literal content and conversion specifiers.
    */
   public void setConversionPattern(final String conversionPattern) {
     pattern = conversionPattern;
@@ -317,17 +312,14 @@ public class PatternLayout extends Layout {
   }
 
   /**
-   * Does not do anything as options become effective immediately. See
-   * {@link #setOption} method.
+   * Does not do anything as options become effective immediately. See {@link #setOption} method.
    */
   public void activateOptions() {
     // nothing to do.
   }
 
   /**
-   * Returns the the array of option strings that {@link PatternLayout}
-   * recognizes. The only recognized option string is the value of
-   * {@link #CONVERSION_PATTERN_OPTION}.
+   * Returns the the array of option strings that {@link PatternLayout} recognizes. The only recognized option string is the value of {@link #CONVERSION_PATTERN_OPTION}.
    */
   public String[] getOptionStrings() {
     return new String[] {
@@ -336,8 +328,7 @@ public class PatternLayout extends Layout {
   }
 
   /**
-   * The PatternLayout does not handle the throwable contained within
-   * {@link LoggingEvent LoggingEvents}. Thus, it returns <code>true</code>.
+   * The PatternLayout does not handle the throwable contained within {@link LoggingEvent LoggingEvents}. Thus, it returns <code>true</code>.
    * @since 0.8.4
    */
   public boolean ignoresThrowable() {
@@ -345,9 +336,7 @@ public class PatternLayout extends Layout {
   }
 
   /**
-   * Returns PatternParser used to parse the conversion string. Subclasses may
-   * override this to return a subclass of PatternParser which recognize custom
-   * conversion characters.
+   * Returns PatternParser used to parse the conversion string. Subclasses may override this to return a subclass of PatternParser which recognize custom conversion characters.
    * @since 0.9.0
    */
   // protected PatternParser createPatternParser(String pattern) {
