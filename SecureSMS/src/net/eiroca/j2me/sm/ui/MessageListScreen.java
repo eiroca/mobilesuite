@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon SecureMessenger
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002 Eugene Morozov
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.sm.ui;
 
@@ -36,13 +34,25 @@ import net.eiroca.j2me.sm.util.StoreException;
  */
 public class MessageListScreen extends List {
 
+  /** The message dates. */
   protected long[] messageDates;
+  
+  /** The del. */
   private final Command del;
+  
+  /** The reply. */
   private final Command reply;
+  
+  /** The invalid. */
   private final Command invalid;
 
   /**
-   * Creates new MessageStoreScreen
+   * Creates new MessageStoreScreen.
+   * 
+   * @param title the title
+   * @param del the del
+   * @param reply the reply
+   * @param invalid the invalid
    */
   public MessageListScreen(final int title, final Command del, final Command reply, final Command invalid) {
     super(Application.messages[title], Choice.IMPLICIT);
@@ -55,6 +65,8 @@ public class MessageListScreen extends List {
 
   /**
    * Returns the Id of the currently selected message.
+   * 
+   * @return the selected message date
    */
   public long getSelectedMessageDate() {
     final int selectedIndex = getSelectedIndex();
@@ -68,7 +80,11 @@ public class MessageListScreen extends List {
   }
 
   /**
-   * Updates the content of the screen
+   * Updates the content of the screen.
+   * 
+   * @param app the app
+   * @param messageStore the message store
+   * @throws StoreException the store exception
    */
   public void updateMessageList(final SecureSMS app, final SecureMessageStore messageStore) throws StoreException {
     // Get the id of the message currently selected

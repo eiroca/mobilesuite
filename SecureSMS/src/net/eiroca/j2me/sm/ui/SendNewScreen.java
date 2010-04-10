@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon SecureMessenger
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002 Eugene Morozov
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.sm.ui;
 
@@ -35,11 +33,16 @@ import net.eiroca.j2me.sm.util.StoreException;
  */
 public class SendNewScreen extends Form {
 
+  /** The Constant MAX_TEXT_LENGTH. */
   public static final int MAX_TEXT_LENGTH = 5000;
 
+  /** The text. */
   private final TextField text;
+  
+  /** The addresses. */
   private final ChoiceGroup addresses;
 
+  /** The address ids. */
   private long[] addressIds;
 
   /**
@@ -57,6 +60,11 @@ public class SendNewScreen extends Form {
 
   /**
    * Updates the screen.
+   * 
+   * @param message the message
+   * @param addressStore the address store
+   * @return true, if successful
+   * @throws StoreException the store exception
    */
   public final boolean updateMessage(final SecureMessage message, final AddressStore addressStore) throws StoreException {
     boolean result = false;
@@ -92,6 +100,8 @@ public class SendNewScreen extends Form {
 
   /**
    * Returns the new message text.
+   * 
+   * @return the message text
    */
   public final String getMessageText() {
     return text.getString();
@@ -99,6 +109,8 @@ public class SendNewScreen extends Form {
 
   /**
    * Returns the id of the address to send the message to.
+   * 
+   * @return the selected address id
    */
   public final long getSelectedAddressId() {
     final int selectedIndex = addresses.getSelectedIndex();

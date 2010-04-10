@@ -1,11 +1,12 @@
-/** GPL >= 2.0
+/** GPL >= 3.0
  * Based upon SecureMessenger
+ * 
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002 Eugene Morozov
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +14,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
@@ -44,147 +44,388 @@ import net.eiroca.j2me.sm.util.StoreException;
 import net.eiroca.j2me.sm.util.StoreObserver;
 import net.eiroca.j2me.util.CipherDES;
 
+/**
+ * The Class SecureSMS.
+ */
 public class SecureSMS extends Application implements StoreObserver {
 
+  /** The Constant MSG_SECUREMESSENGER. */
   public static final int MSG_SECUREMESSENGER = 0;
+  
+  /** The Constant MSG_OK. */
   public static final int MSG_OK = 1;
+  
+  /** The Constant MSG_SAVE. */
   public static final int MSG_SAVE = 2;
+  
+  /** The Constant MSG_SEND. */
   public static final int MSG_SEND = 3;
+  
+  /** The Constant MSG_REPLY. */
   public static final int MSG_REPLY = 4;
+  
+  /** The Constant MSG_DELETE. */
   public static final int MSG_DELETE = 5;
+  
+  /** The Constant MSG_ADD. */
   public static final int MSG_ADD = 6;
+  
+  /** The Constant MSG_CANCEL. */
   public static final int MSG_CANCEL = 7;
+  
+  /** The Constant MSG_EXIT. */
   public static final int MSG_EXIT = 8;
+  
+  /** The Constant MSG_INBOX. */
   public static final int MSG_INBOX = 9;
+  
+  /** The Constant MSG_SENDNEW. */
   public static final int MSG_SENDNEW = 10;
+  
+  /** The Constant MSG_SENTITEMS. */
   public static final int MSG_SENTITEMS = 11;
+  
+  /** The Constant MSG_ADDRESSBOOK. */
   public static final int MSG_ADDRESSBOOK = 12;
+  
+  /** The Constant MSG_MESSAGE. */
   public static final int MSG_MESSAGE = 13;
+  
+  /** The Constant MSG_ADDRESS. */
   public static final int MSG_ADDRESS = 14;
+  
+  /** The Constant MSG_NEWADDRESS. */
   public static final int MSG_NEWADDRESS = 15;
+  
+  /** The Constant MSG_NEWMESSAGE. */
   public static final int MSG_NEWMESSAGE = 16;
+  
+  /** The Constant MSG_TEXT. */
   public static final int MSG_TEXT = 17;
+  
+  /** The Constant MSG_TO. */
   public static final int MSG_TO = 18;
+  
+  /** The Constant MSG_FROM. */
   public static final int MSG_FROM = 19;
+  
+  /** The Constant MSG_NUMBER. */
   public static final int MSG_NUMBER = 20;
+  
+  /** The Constant MSG_NAME. */
   public static final int MSG_NAME = 21;
+  
+  /** The Constant MSG_KEY. */
   public static final int MSG_KEY = 22;
+  
+  /** The Constant MSG_MESSAGESENT. */
   public static final int MSG_MESSAGESENT = 23;
+  
+  /** The Constant MSG_MESSAGEHASNOTBEENSENT. */
   public static final int MSG_MESSAGEHASNOTBEENSENT = 24;
+  
+  /** The Constant MSG_MESSAGEDELETED. */
   public static final int MSG_MESSAGEDELETED = 25;
+  
+  /** The Constant MSG_MESSAGEHASNOTBEENDELETED. */
   public static final int MSG_MESSAGEHASNOTBEENDELETED = 26;
+  
+  /** The Constant MSG_MESSAGERECEIVED. */
   public static final int MSG_MESSAGERECEIVED = 27;
+  
+  /** The Constant MSG_ADDRESSSAVED. */
   public static final int MSG_ADDRESSSAVED = 28;
+  
+  /** The Constant MSG_ADDRESSHASNOTBEENSAVED. */
   public static final int MSG_ADDRESSHASNOTBEENSAVED = 29;
+  
+  /** The Constant MSG_ADDRESSDELETED. */
   public static final int MSG_ADDRESSDELETED = 30;
+  
+  /** The Constant MSG_ADDRESSHASNOTBEENDELETED. */
   public static final int MSG_ADDRESSHASNOTBEENDELETED = 31;
+  
+  /** The Constant MSG_ERROR. */
   public static final int MSG_ERROR = 32;
+  
+  /** The Constant MSG_INFO. */
   public static final int MSG_INFO = 33;
+  
+  /** The Constant MSG_MESSAGESTOREERROR. */
   public static final int MSG_MESSAGESTOREERROR = 34;
+  
+  /** The Constant MSG_ADDRESSSTOREERROR. */
   public static final int MSG_ADDRESSSTOREERROR = 35;
+  
+  /** The Constant MSG_CANNOTSTART. */
   public static final int MSG_CANNOTSTART = 36;
+  
+  /** The Constant MSG_BACK. */
   public static final int MSG_BACK = 37;
+  
+  /** The Constant MSG_MENUABOUT. */
   public static final int MSG_MENUABOUT = 38;
+  
+  /** The Constant MSG_CHANGEPIN. */
   public static final int MSG_CHANGEPIN = 39;
+  
+  /** The Constant MSG_INSERTPINTEXT. */
   public static final int MSG_INSERTPINTEXT = 40;
+  
+  /** The Constant MSG_PIN. */
   public static final int MSG_PIN = 41;
+  
+  /** The Constant MSG_WRONGPIN. */
   public static final int MSG_WRONGPIN = 42;
+  
+  /** The Constant MSG_INSERTPIN. */
   public static final int MSG_INSERTPIN = 43;
+  
+  /** The Constant MSG_INVALINDPIN. */
   public static final int MSG_INVALINDPIN = 44;
+  
+  /** The Constant MSG_CLEANUP. */
   public static final int MSG_CLEANUP = 45;
+  
+  /** The Constant MSG_CLEANUP1. */
   public static final int MSG_CLEANUP1 = 46;
+  
+  /** The Constant MSG_CLEANUP2. */
   public static final int MSG_CLEANUP2 = 47;
+  
+  /** The Constant MSG_CLEANUP3. */
   public static final int MSG_CLEANUP3 = 48;
+  
+  /** The Constant MSG_CONFIRM. */
   public static final int MSG_CONFIRM = 49;
+  
+  /** The Constant MSG_ARESURE. */
   public static final int MSG_ARESURE = 50;
+  
+  /** The Constant MSG_YES. */
   public static final int MSG_YES = 51;
+  
+  /** The Constant MSG_NO. */
   public static final int MSG_NO = 52;
+  
+  /** The Constant MSG_NUMPREFIX. */
   public static final int MSG_NUMPREFIX = 53;
+  
+  /** The Constant MSG_INVALID. */
   public static final int MSG_INVALID = 54;
+  
+  /** The Constant MSG_MESSAGEIVALID. */
   public static final int MSG_MESSAGEIVALID = 55;
+  
+  /** The Constant MSG_ADDRESSBOOKEMPTY. */
   public static final int MSG_ADDRESSBOOKEMPTY = 56;
 
+  /** The Constant ME_MAINMENU. */
   public static final int ME_MAINMENU = 0;
+  
+  /** The Constant ME_CLEANUP. */
   public static final int ME_CLEANUP = 1;
 
+  /** The Constant AC_SHOWABOUT. */
   public static final int AC_SHOWABOUT = 1;
+  
+  /** The Constant AC_SHOWINBOX. */
   public static final int AC_SHOWINBOX = 2;
+  
+  /** The Constant AC_SHOWSENDNEW. */
   public static final int AC_SHOWSENDNEW = 3;
+  
+  /** The Constant AC_SHOWSENTITEMS. */
   public static final int AC_SHOWSENTITEMS = 4;
+  
+  /** The Constant AC_SHOWADDRESSBOOK. */
   public static final int AC_SHOWADDRESSBOOK = 5;
+  
+  /** The Constant AC_SENDNEW. */
   public static final int AC_SENDNEW = 6;
+  
+  /** The Constant AC_ADDRESSBOOKEDT. */
   public static final int AC_ADDRESSBOOKEDT = 7;
+  
+  /** The Constant AC_ADDRESSBOOKADD. */
   public static final int AC_ADDRESSBOOKADD = 8;
+  
+  /** The Constant AC_ADDRESSBOOKDEL. */
   public static final int AC_ADDRESSBOOKDEL = 9;
+  
+  /** The Constant AC_ADDRESSBOOKSAV. */
   public static final int AC_ADDRESSBOOKSAV = 10;
+  
+  /** The Constant AC_INBOXVIEW. */
   public static final int AC_INBOXVIEW = 11;
+  
+  /** The Constant AC_INBOXDELETE. */
   public static final int AC_INBOXDELETE = 12;
+  
+  /** The Constant AC_INBOXREPLY. */
   public static final int AC_INBOXREPLY = 13;
+  
+  /** The Constant AC_SENTVIEW. */
   public static final int AC_SENTVIEW = 14;
+  
+  /** The Constant AC_SENTDELETE. */
   public static final int AC_SENTDELETE = 15;
+  
+  /** The Constant AC_SHOWPINCHANGE. */
   public static final int AC_SHOWPINCHANGE = 16;
+  
+  /** The Constant AC_PINSAVE. */
   public static final int AC_PINSAVE = 17;
+  
+  /** The Constant AC_PINDELETE. */
   public static final int AC_PINDELETE = 18;
+  
+  /** The Constant AC_PINOK. */
   public static final int AC_PINOK = 19;
+  
+  /** The Constant AC_CLEANUP. */
   public static final int AC_CLEANUP = 20;
+  
+  /** The Constant AC_CLEANUP1. */
   public static final int AC_CLEANUP1 = 21;
+  
+  /** The Constant AC_CLEANUP2. */
   public static final int AC_CLEANUP2 = 22;
+  
+  /** The Constant AC_CLEANUP3. */
   public static final int AC_CLEANUP3 = 23;
+  
+  /** The Constant AC_YES. */
   public static final int AC_YES = 24;
+  
+  /** The Constant AC_NO. */
   public static final int AC_NO = 25;
+  
+  /** The Constant AC_INVALID. */
   public static final int AC_INVALID = 26;
 
   // System-independent store names - this will stay constant across the
   // releases to archive the backward compatibility
+  /** The Constant ADDRESS_BOOK_STORE_NAME. */
   private static final String ADDRESS_BOOK_STORE_NAME = "ab";
+  
+  /** The Constant INBOX_STORE_NAME. */
   private static final String INBOX_STORE_NAME = "ib";
+  
+  /** The Constant OUTBOX_STORE_NAME. */
   private static final String OUTBOX_STORE_NAME = "ob";
+  
+  /** The Constant UNKNOWN_STORE_NAME. */
   private static final String UNKNOWN_STORE_NAME = "uk";
 
+  /** The c adrdel. */
   public static Command cADRDEL;
+  
+  /** The c adrsav. */
   public static Command cADRSAV;
+  
+  /** The c inboxdel. */
   public static Command cINBOXDEL;
+  
+  /** The c inboxreply. */
   public static Command cINBOXREPLY;
+  
+  /** The c sentdel. */
   public static Command cSENTDEL;
+  
+  /** The c sendnew. */
   public static Command cSENDNEW;
+  
+  /** The c adradd. */
   public static Command cADRADD;
+  
+  /** The c pinsav. */
   public static Command cPINSAV;
+  
+  /** The c pindel. */
   public static Command cPINDEL;
+  
+  /** The c pinok. */
   public static Command cPINOK;
+  
+  /** The c yes. */
   public static Command cYES;
+  
+  /** The c no. */
   public static Command cNO;
+  
+  /** The c invalid. */
   public static Command cINVALID;
 
   // Messenger objects - stores and handlers
+  /** The inbox. */
   private SecureMessageStore inbox;
+  
+  /** The sent items. */
   private SecureMessageStore sentItems;
+  
+  /** The address book. */
   private AddressStore addressBook;
+  
+  /** The unknown. */
   private UnknownStore unknown;
+  
+  /** The handler. */
   public MessageHandler handler;
 
   // Temporary message and address objects
+  /** The message. */
   private SecureMessage message;
+  
+  /** The address. */
   private Address address;
 
   // Messenger screens
+  /** The sc menu. */
   private List scMenu;
+  
+  /** The sc menu clean up. */
   private List scMenuCleanUp;
+  
+  /** The sc send new. */
   private SendNewScreen scSendNew;
+  
+  /** The sc address. */
   private AddressScreen scAddress;
+  
+  /** The sc address book. */
   private AddressBookScreen scAddressBook;
+  
+  /** The sc message. */
   private MessageScreen scMessage;
+  
+  /** The sc inbox. */
   private MessageListScreen scInbox;
+  
+  /** The sc sent items. */
   private MessageListScreen scSentItems;
+  
+  /** The sc pin change. */
   private PINChangeScreen scPINChange;
+  
+  /** The sc insert pin. */
   private InsertPINScreen scInsertPIN;
 
+  /** The ST s_ pin. */
   private static String STS_PIN = "PIN";
 
+  /** The Constant RES_MESSAGES. */
   private static final String RES_MESSAGES = "messages.txt";
+  
+  /** The Constant RES_ABOUT. */
   private static final String RES_ABOUT = "about.txt";
 
+  /** The menu clean up. */
   short[][] menuCleanUp;
 
+  /**
+   * Instantiates a new secure sms.
+   */
   public SecureSMS() {
     super();
     BaseApp.resPrefix = "se";
@@ -272,6 +513,9 @@ public class SecureSMS extends Application implements StoreObserver {
     }
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.app.Application#done()
+   */
   protected void done() {
     try {
       handler.done();
@@ -281,9 +525,13 @@ public class SecureSMS extends Application implements StoreObserver {
     super.done();
   }
 
+  /** The next action. */
   private int nextAction = SecureSMS.AC_NO;
 
   // Implementation of the command listener interface
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.app.Application#handleAction(int, javax.microedition.lcdui.Displayable, javax.microedition.lcdui.Command)
+   */
   public boolean handleAction(int action, final Displayable d, final Command cmd) {
     boolean confirmed = false;
     if (action == SecureSMS.AC_YES) {
@@ -505,6 +753,9 @@ public class SecureSMS extends Application implements StoreObserver {
 
   // -----------------------------------------------------------------------
   // Implementation of the StoreObserver interface
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.sm.util.StoreObserver#actionDone(int, java.lang.Object, net.eiroca.j2me.sm.util.Store)
+   */
   public void actionDone(final int action, final Object obj, final Store store) {
     if (action == StoreObserver.ADD) {
       try {

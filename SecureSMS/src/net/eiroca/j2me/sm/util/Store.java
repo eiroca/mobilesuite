@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon SecureMessenger
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002 Eugene Morozov
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.sm.util;
 
@@ -34,10 +32,18 @@ import net.eiroca.j2me.app.BaseApp;
  */
 public class Store {
 
+  /** The Constant MESSAGE_ENCODING. */
   private static final String MESSAGE_ENCODING = "UTF-8";
 
+  /** The natural order. */
   public static RecordComparator naturalOrder = new StoreComparatorByID();
 
+  /**
+   * Decode data.
+   * 
+   * @param data the data
+   * @return the string
+   */
   public static String decodeData(final byte[] data) {
     String msg;
     try {
@@ -49,6 +55,12 @@ public class Store {
     return msg;
   }
 
+  /**
+   * Encode data.
+   * 
+   * @param msg the msg
+   * @return the byte[]
+   */
   public static byte[] encodeData(final String msg) {
     byte[] data;
     try {
@@ -60,14 +72,31 @@ public class Store {
     return data;
   }
 
+  /**
+   * Gets the iD.
+   * 
+   * @param serializedMessage the serialized message
+   * @return the iD
+   */
   public static final long getID(final byte[] serializedMessage) {
     return BaseApp.encodeBytesToLong(serializedMessage, 0);
   }
 
+  /** The observers. */
   private final Vector observers = new Vector();
+  
+  /** The name. */
   protected final String name;
+  
+  /** The record store. */
   protected RecordStore recordStore;
 
+  /**
+   * Instantiates a new store.
+   * 
+   * @param storeName the store name
+   * @throws StoreException the store exception
+   */
   public Store(final String storeName) throws StoreException {
     name = storeName;
     try {
@@ -82,16 +111,28 @@ public class Store {
 
   }
 
+  /**
+   * Register observer.
+   * 
+   * @param observer the observer
+   */
   public void registerObserver(final StoreObserver observer) {
     observers.addElement(observer);
   }
 
+  /**
+   * Unregister observer.
+   * 
+   * @param observer the observer
+   */
   public void unregisterObserver(final StoreObserver observer) {
     observers.removeElement(observer);
   }
 
   /**
    * Notifies all observers of the store about action on the object.
+   * 
+   * @param action the action
    * @param obj The added object.
    */
   protected void notifyAction(final int action, final Object obj) {
@@ -102,6 +143,13 @@ public class Store {
     }
   }
 
+  /**
+   * List ids.
+   * 
+   * @param c the c
+   * @return the long[]
+   * @throws StoreException the store exception
+   */
   public long[] listIds(final RecordComparator c) throws StoreException {
     // Request the enumeration
     RecordEnumeration enm = null;
@@ -131,6 +179,13 @@ public class Store {
     }
   }
 
+  /**
+   * Find first.
+   * 
+   * @param f the f
+   * @return the byte[]
+   * @throws StoreException the store exception
+   */
   public byte[] findFirst(final RecordFilter f) throws StoreException {
     RecordEnumeration enm = null;
     byte[] result = null;
@@ -153,6 +208,13 @@ public class Store {
   }
 
   // Javadoc inherited from the interface
+  /**
+   * Removes the first.
+   * 
+   * @param f the f
+   * @return true, if successful
+   * @throws StoreException the store exception
+   */
   public boolean removeFirst(final RecordFilter f) throws StoreException {
     RecordEnumeration enm = null;
     boolean res = false;
@@ -177,6 +239,13 @@ public class Store {
     return res;
   }
 
+  /**
+   * Replace first.
+   * 
+   * @param f the f
+   * @param data the data
+   * @throws StoreException the store exception
+   */
   public void replaceFirst(final RecordFilter f, final byte[] data) throws StoreException {
     RecordEnumeration enm = null;
     try {
@@ -202,6 +271,9 @@ public class Store {
     }
   }
 
+  /**
+   * Cleanup.
+   */
   public void cleanup() {
     try {
       if (recordStore != null) {

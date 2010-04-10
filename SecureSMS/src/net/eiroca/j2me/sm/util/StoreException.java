@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon SecureMessenger
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002 Eugene Morozov
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.sm.util;
 
@@ -24,18 +22,31 @@ package net.eiroca.j2me.sm.util;
  */
 public class StoreException extends Exception {
 
+  /** The Constant ERR_STOREOPEN. */
   public static final int ERR_STOREOPEN = 1;
+  
+  /** The Constant ERR_STORESAVE. */
   public static final int ERR_STORESAVE = 2;
+  
+  /** The Constant ERR_STOREDELETE. */
   public static final int ERR_STOREDELETE = 3;
+  
+  /** The Constant ERR_STOREREAD. */
   public static final int ERR_STOREREAD = 4;
+  
+  /** The Constant ERR_STOREFIND. */
   public static final int ERR_STOREFIND = 5;
+  
+  /** The Constant ERR_STORELISTIDS. */
   public static final int ERR_STORELISTIDS = 6;
 
+  /** The Constant serialVersionUID. */
   private static final long serialVersionUID = -5364585897287450564L;
 
   /**
    * Constructs an <code>SecureMessengerException</code> with the specified detail message.
-   * @param msg the detail message.
+   * 
+   * @param errCode the err code
    */
   public StoreException(final int errCode) {
     super("Error #" + errCode);
