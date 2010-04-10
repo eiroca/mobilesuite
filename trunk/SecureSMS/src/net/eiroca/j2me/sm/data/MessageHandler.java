@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon SecureMessenger
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) 2002 Eugene Morozov
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.sm.data;
 
@@ -36,23 +34,39 @@ import net.eiroca.j2me.util.CipherDES;
  */
 public class MessageHandler implements MessageListener, StoreObserver {
 
+  /** The connection. */
   MessageConnection connection;
 
+  /** The Constant port. */
   private static final int port = 9087;
 
+  /** The chiper. */
   public CipherDES chiper;
+  
+  /** The inbox store. */
   public SecureMessageStore inboxStore;
+  
+  /** The outbox store. */
   public SecureMessageStore outboxStore;
+  
+  /** The address book store. */
   public AddressStore addressBookStore;
+  
+  /** The unknown store. */
   public UnknownStore unknownStore;
 
   /**
-   * The constructor made the package-visible for security reasons
+   * The constructor made the package-visible for security reasons.
    */
   public MessageHandler() {
     //
   }
 
+  /**
+   * Inits the.
+   * 
+   * @throws StoreException the store exception
+   */
   public void init() throws StoreException {
     final String connectionString = "sms://:" + MessageHandler.port;
     try {
@@ -64,6 +78,11 @@ public class MessageHandler implements MessageListener, StoreObserver {
     }
   }
 
+  /**
+   * Done.
+   * 
+   * @throws StoreException the store exception
+   */
   public void done() throws StoreException {
     try {
       connection.setMessageListener(null);
@@ -74,6 +93,12 @@ public class MessageHandler implements MessageListener, StoreObserver {
     }
   }
 
+  /**
+   * Send.
+   * 
+   * @param msg the msg
+   * @throws StoreException the store exception
+   */
   public synchronized void send(final SecureMessage msg) throws StoreException {
     MessageSender sender;
     // Use the key supplied to transcode the message and send it
@@ -111,6 +136,14 @@ public class MessageHandler implements MessageListener, StoreObserver {
     }
   }
 
+  /**
+   * Adds the message.
+   * 
+   * @param aDate the a date
+   * @param address the address
+   * @param data the data
+   * @throws StoreException the store exception
+   */
   public synchronized void addMessage(final Long aDate, final Address address, byte[] data) throws StoreException {
     final byte[] key = address.getKeyData();
     data = chiper.decode(data, key);
@@ -121,6 +154,9 @@ public class MessageHandler implements MessageListener, StoreObserver {
     inboxStore.store(message);
   }
 
+  /**
+   * Receive.
+   */
   public synchronized void receive() {
     try {
       // Store the message in the message store
@@ -151,6 +187,12 @@ public class MessageHandler implements MessageListener, StoreObserver {
     }
   }
 
+  /**
+   * Address name.
+   * 
+   * @param message the message
+   * @return the string
+   */
   public String addressName(final SecureMessage message) {
     String number = message.number;
     Address address = null;
@@ -165,6 +207,9 @@ public class MessageHandler implements MessageListener, StoreObserver {
     return number;
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.sm.util.StoreObserver#actionDone(int, java.lang.Object, net.eiroca.j2me.sm.util.Store)
+   */
   public void actionDone(final int action, final Object obj, final Store store) {
     if (action == StoreObserver.ADD) {
       final Address address = (Address) obj;
@@ -177,7 +222,8 @@ public class MessageHandler implements MessageListener, StoreObserver {
   }
 
   /**
-   * Hook for incoming message notification
+   * Hook for incoming message notification.
+   * 
    * @param messageConnection MessageConnection on which the message was received.
    */
   public void notifyIncomingMessage(final MessageConnection messageConnection) {
