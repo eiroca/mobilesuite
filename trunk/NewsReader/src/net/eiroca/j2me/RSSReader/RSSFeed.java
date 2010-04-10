@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson <gosta(at)brothas.net>
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2004 Gösta Jonasson
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.RSSReader;
 
@@ -39,30 +37,66 @@ import net.eiroca.j2me.app.RMSInfo;
 public class RSSFeed implements Comparator {
 
   // In minutes between updates
+  /** The STANDAR d_ update. */
   public final int STANDARD_UPDATE = 60;
+
+  /** The Constant WEB_ITEM. */
   public static final String WEB_ITEM = "W";
 
   // RMS ID
+  /** The feed id. */
   public int feedID = -1;
   // DATA
+  /** The title. */
   public String title = "";
+
+  /** The description. */
   public String description = "";
+
+  /** The URL. */
   public String URL = "";
+
+  /** The last build date. */
   public String lastBuildDate = "";
+
+  /** The last update time. */
   public long lastUpdateTime = 0;
+
+  /** The last feed len. */
   public long lastFeedLen = 0;
+
+  /** The mins between updates. */
   public int minsBetweenUpdates = STANDARD_UPDATE;
+
+  /** The server last modified. */
   public String serverLastModified = "";
+
+  /** The server e tag. */
   public String serverETag = "";
+
+  /** The type. */
   public String type = RSSFeed.WEB_ITEM;
+
+  /** The nn. */
   public int nn = 0;
+
+  /** The nr. */
   public int nr = 0;
+
+  /** The col bck g. */
   public int colBckG;
+
+  /** The col bord. */
   public int colBord;
+
+  /** The col titl. */
   public int colTitl;
+
+  /** The col text. */
   public int colText;
 
   /* All items for this feed */
+  /** The items. */
   private final Vector items;
 
   /**
@@ -77,13 +111,11 @@ public class RSSFeed implements Comparator {
   }
 
   /**
-   * Returns this feed as a <code>byte[]</code> so this feed could be
-   * recreated using it. No items are returned!
-   * @param bout the ByteArrayOutputStream that should be used. Gets reset at
-   *            first
-   * @param dout the DataOutputStream that should be used. Gets flushed after
-   *            all data is written to it.
-   * @return this feed as a <code>byte[]</code>
+   * Returns this feed as a <code>byte[]</code> so this feed could be recreated using it. No items are returned!
+   * 
+   * @param bout the ByteArrayOutputStream that should be used. Gets reset at first
+   * @param dout the DataOutputStream that should be used. Gets flushed after all data is written to it.
+   * @return this feed as a
    */
   private byte[] getBytes(final ByteArrayOutputStream bout, final DataOutputStream dout) {
     try {
@@ -113,11 +145,10 @@ public class RSSFeed implements Comparator {
   }
 
   /**
-   * Recreates a RSSFeed from the given data as a <code>byte[]</code>. This
-   * includes no items!
-   * @param data the feed as a <code>byte[]</code>
-   * @param datalen the number of bytes in data we should parse
+   * Recreates a RSSFeed from the given data as a <code>byte[]</code>. This includes no items!
+   * 
    * @param id the RMS id for this feed
+   * @param data the feed as a <code>byte[]</code>
    * @return the parsed feed
    */
   private static RSSFeed parseFeed(final int id, final byte[] data) {
@@ -173,10 +204,10 @@ public class RSSFeed implements Comparator {
   }
 
   /**
-   * Returns the item with the given internal id
+   * Returns the item with the given internal id.
+   * 
    * @param itemid the id of the item
-   * @return the item with the given id. <code>NULL</code> if an error occurs
-   *         or if no item exists with that title.
+   * @return the item with the given id. if an error occurs or if no item exists with that title.
    */
   public RSSItem getItem(final int itemid) {
     try {
@@ -187,6 +218,9 @@ public class RSSFeed implements Comparator {
     }
   }
 
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.app.Comparator#compare(java.lang.Object, java.lang.Object)
+   */
   public int compare(final Object o1, final Object o2) {
     final RSSItem i1 = (RSSItem) o1;
     final RSSItem i2 = (RSSItem) o2;
@@ -201,13 +235,17 @@ public class RSSFeed implements Comparator {
     }
   }
 
+  /**
+   * Sort items.
+   */
   public void sortItems() {
     BaseApp.sort(items, this);
   }
 
   /**
-   * Looks up all the feeds in the RMS, creates and returns a Hashtable which
-   * maps Feed title -> Feed RMS id.
+   * Looks up all the feeds in the RMS, creates and returns a Hashtable which maps Feed title -> Feed RMS id.
+   * 
+   * @param c the c
    * @return a Hashtable which maps Feed title -> Feed RMS id
    */
   public static Vector getIndex(final Comparator c) {
@@ -245,6 +283,11 @@ public class RSSFeed implements Comparator {
     }
   }
 
+  /**
+   * Read.
+   * 
+   * @param item the item
+   */
   public void read(final RSSItem item) {
     if (!item.isRead) {
       item.isRead = true;
@@ -254,6 +297,11 @@ public class RSSFeed implements Comparator {
     }
   }
 
+  /**
+   * Gets the i ds.
+   * 
+   * @return the i ds
+   */
   public static int[] getIDs() {
     try {
       final RecordStore feedrs = RSSFeed.rs_open();
@@ -304,7 +352,9 @@ public class RSSFeed implements Comparator {
 
   /**
    * Saves the given feed and its items.
+   * 
    * @param feed the feed that should be saved
+   * @param full the full
    * @return the RMS id of the item if it was inserted in the RMS, otherwise -1.
    */
   public static int save(final RSSFeed feed, final boolean full) {
@@ -359,9 +409,9 @@ public class RSSFeed implements Comparator {
 
   /**
    * Deletes the given feed BUT NOT its items.
-   * @param feed the feed that should be deleted
-   * @return <code>TRUE</code> if the feed was deleted, <code>FALSE</code>
-   *         otherwise
+   * 
+   * @param feedID the feed id
+   * @return otherwise
    */
   public static boolean deleteFeed(final int feedID) {
     if (feedID < 0) { return false; }
@@ -378,9 +428,8 @@ public class RSSFeed implements Comparator {
   }
 
   /**
-   * Deletes the given RecordStore and returns the number of records deleted. If
-   * the RecordStore not existed, 0 is returned.
-   * @param rstore The name of the RecordStore that should be deleted.
+   * Deletes the given RecordStore and returns the number of records deleted. If the RecordStore not existed, 0 is returned.
+   * 
    * @return number of records deleted
    */
   public static int deleteAll() {
@@ -397,15 +446,28 @@ public class RSSFeed implements Comparator {
     }
   }
 
+  /**
+   * Gets the info.
+   * 
+   * @return the info
+   */
   public static RMSInfo getInfo() {
     final RMSInfo info = new RMSInfo();
     BaseApp.getRecordStoreInfo(RSSFeed.RS_RSSFEEDS, info);
     return info;
   }
 
+  /** The Constant RS_RSSFEEDS. */
   private static final String RS_RSSFEEDS = "RSSFeeds";
+
+  /** The rs. */
   private static RecordStore rs = null;
 
+  /**
+   * Rs_open.
+   * 
+   * @return the record store
+   */
   public static synchronized RecordStore rs_open() {
     if (RSSFeed.rs == null) {
       try {
@@ -417,6 +479,11 @@ public class RSSFeed implements Comparator {
     return RSSFeed.rs;
   }
 
+  /**
+   * Rs_close.
+   * 
+   * @param force the force
+   */
   public static synchronized void rs_close(final boolean force) {
     if (force) {
       if (RSSFeed.rs != null) {
@@ -430,6 +497,9 @@ public class RSSFeed implements Comparator {
     }
   }
 
+  /**
+   * Rs_delete.
+   */
   public static synchronized void rs_delete() {
     RSSFeed.rs_close(true);
     try {

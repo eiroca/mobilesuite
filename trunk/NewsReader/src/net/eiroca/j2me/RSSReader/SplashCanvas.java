@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson <gosta(at)brothas.net>
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2004 Gösta Jonasson
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.RSSReader;
 
@@ -27,29 +25,61 @@ import javax.microedition.lcdui.Graphics;
  * Simple splash screen that scrolls text from the top and bottom to the center
  * and stops.
  */
+/**
+ * The Class SplashCanvas.
+ */
 public class SplashCanvas extends Canvas implements Runnable {
 
+  /** The SPLAS h_ tex t1. */
   private final String SPLASH_TEXT1 = "News";
+
+  /** The SPLAS h_ tex t2. */
   private final String SPLASH_TEXT2 = "Reader";
+
+  /** The SPLAS h_ space. */
   private final String SPLASH_SPACE = " ";
+
+  /** The UPDAT e_ time. */
   private final int UPDATE_TIME = 50;
+
+  /** The STEPS. */
   private final int STEPS = 16;
 
+  /** The y. */
   private int y = 0;
+
+  /** The i. */
   private int i = 0;
+
+  /** The w. */
   private final int w;
+
+  /** The h. */
   private final int h;
+
+  /** The fonth. */
   private final int fonth;
+
+  /** The text1x. */
   private final int text1x;
+
+  /** The text2x. */
   private final int text2x;
+
+  /** The stopy. */
   private final int stopy;
+
+  /** The yinc. */
   private final int yinc;
+
+  /** The font. */
   private final Font font;
+
+  /** The isdone. */
   private boolean isdone;
 
   /**
-   * Constructor for the class. Makes some initial calculations for the
-   * animation.
+   * Constructor for the class. Makes some initial calculations for the animation.
    */
   public SplashCanvas() {
     isdone = false;

@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson <gosta(at)brothas.net>
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2004 Gösta Jonasson
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.RSSReader;
 
@@ -23,16 +21,33 @@ import java.util.Vector;
 import javax.microedition.lcdui.Font;
 import net.eiroca.j2me.app.BaseApp;
 
+/**
+ * The Class RenderedWord.
+ */
 public class RenderedWord {
 
+  /** The height font. */
   public static int heightFont;
+
+  /** The font. */
   public static Font[] font;
+
+  /** The font width. */
   public static int[] fontWidth;
 
+  /** The offset. */
   public int offset;
+
+  /** The row. */
   public int row;
+
+  /** The style. */
   public int style;
+
+  /** The color. */
   public int color;
+
+  /** The word. */
   public String word;
 
   static {
@@ -47,6 +62,15 @@ public class RenderedWord {
     RenderedWord.heightFont = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_MEDIUM).getHeight() + 3;
   }
 
+  /**
+   * Instantiates a new rendered word.
+   * 
+   * @param offset the offset
+   * @param row the row
+   * @param style the style
+   * @param color the color
+   * @param word the word
+   */
   public RenderedWord(final int offset, final int row, final int style, final int color, final String word) {
     this.offset = offset;
     this.style = style;
@@ -55,6 +79,16 @@ public class RenderedWord {
     this.row = row;
   }
 
+  /**
+   * Creates the word list.
+   * 
+   * @param text the text
+   * @param width the width
+   * @param height the height
+   * @param colTxt the col txt
+   * @param colTit the col tit
+   * @return the vector
+   */
   public static final Vector createWordList(final String text, final int width, final int height, final int colTxt, final int colTit) {
     final Vector wordList = new Vector();
     RenderedWord oldWord;

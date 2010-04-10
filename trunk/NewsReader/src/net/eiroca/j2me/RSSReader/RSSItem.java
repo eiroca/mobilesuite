@@ -1,11 +1,10 @@
-/** GPL >= 2.0
- * Based upon RSS Reader MIDlet
- * Copyright (C) 2004 Gösta Jonasson <gosta(at)brothas.net>
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+/** GPL >= 3.0
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2004 Gösta Jonasson
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
@@ -13,9 +12,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 package net.eiroca.j2me.RSSReader;
 
@@ -34,20 +32,38 @@ import net.eiroca.j2me.app.RMSInfo;
  */
 public class RSSItem {
 
+  /** The Constant ITEM_BYTE_ARRAY_LEN. */
   private static final int ITEM_BYTE_ARRAY_LEN = 1024;
+
+  /** The Constant ITEM_BYTE_ARRAY_INC. */
   private static final int ITEM_BYTE_ARRAY_INC = 256;
 
   /* The feed id in the RMS that this item belongs to */
+  /** The feed id. */
   public int feedID = -1;
   /* This items id in the RMS */
+  /** The item id. */
   public int itemID = -1;
   /* Parsed time in milliseconds since January 1, 1970 UTC */
+  /** The parse time. */
   public long parseTime;
+
+  /** The title. */
   public String title = "";
+
+  /** The description. */
   public String description = "";
+
+  /** The pub date. */
   public String pubDate = "";
+
+  /** The link. */
   public String link = "";
+
+  /** The image. */
   public String image = "";
+
+  /** The is read. */
   public boolean isRead = false;
 
   /**
@@ -58,13 +74,11 @@ public class RSSItem {
   }
 
   /**
-   * Returns this item as a <code>byte[]</code> so this item could be
-   * recreated by using it.
-   * @param bout the ByteArrayOutputStream that should be used. Gets reset at
-   *            first
-   * @param dout the DataOutputStream that should be used. Gets flushed after
-   *            all data is written to it.
-   * @return this item as a <code>byte[]</code>
+   * Returns this item as a <code>byte[]</code> so this item could be recreated by using it.
+   * 
+   * @param bout the ByteArrayOutputStream that should be used. Gets reset at first
+   * @param dout the DataOutputStream that should be used. Gets flushed after all data is written to it.
+   * @return this item as a
    */
   private byte[] getBytes(final ByteArrayOutputStream bout, final DataOutputStream dout) {
     try {
@@ -121,7 +135,8 @@ public class RSSItem {
 
   /**
    * Saves the given feed and its items.
-   * @param feed the feed that should be saved
+   * 
+   * @param item the item
    * @return the RMS id of the item if it was inserted in the RMS, otherwise -1.
    */
   public static int save(final RSSItem item) {
@@ -165,6 +180,11 @@ public class RSSItem {
     }
   }
 
+  /**
+   * Load items.
+   * 
+   * @param feed the feed
+   */
   public static void loadItems(final RSSFeed feed) {
     // Get ALL the items associated with this feed
     byte[] record = new byte[RSSItem.ITEM_BYTE_ARRAY_LEN];
@@ -192,6 +212,12 @@ public class RSSItem {
     }
   }
 
+  /**
+   * Delete all.
+   * 
+   * @param feedID the feed id
+   * @return the int
+   */
   public static int deleteAll(final int feedID) {
     int siz = 0;
     try {
@@ -206,8 +232,7 @@ public class RSSItem {
 
   /**
    * Deletes ALL items.
-   * @return A string describing how much was deleted. For example: "Deleted 10
-   *         items"
+   * @return A string describing how much was deleted. For example: "Deleted 10 items"
    */
   public static int deleteAll() {
     int siz = 0;
@@ -225,8 +250,7 @@ public class RSSItem {
   /**
    * Deletes ALL items matching the given ItemFilter.
    * @param ff The filter the items should be matched with.
-   * @return A string describing how much was deleted. For example: "Deleted 10
-   *         items" If an error occurs, "Deleted 0 items" will be returned.
+   * @return A string describing how much was deleted. For example: "Deleted 10 items" If an error occurs, "Deleted 0 items" will be returned.
    */
   public static int deleteItems(final ItemFilter ff) {
     int siz = 0;
@@ -241,6 +265,13 @@ public class RSSItem {
     return siz;
   }
 
+  /**
+   * Delete items.
+   * 
+   * @param feedID the feed id
+   * @param ff the ff
+   * @return the int
+   */
   public static int deleteItems(final int feedID, final ItemFilter ff) {
     int items = 0;
     try {
@@ -260,16 +291,33 @@ public class RSSItem {
     return items;
   }
 
+  /**
+   * Gets the info.
+   * 
+   * @param feedID the feed id
+   * @return the info
+   */
   public static RMSInfo getInfo(final int feedID) {
     final RMSInfo info = new RMSInfo();
     BaseApp.getRecordStoreInfo(RSSItem.RS_RSSITEMS_ + feedID, info);
     return info;
   }
 
+  /** The Constant RS_RSSITEMS_. */
   private static final String RS_RSSITEMS_ = "RSSItems";
+
+  /** The rs. */
   private static RecordStore rs = null;
+
+  /** The rs_id. */
   private static int rs_id = -1;
 
+  /**
+   * Rs_open.
+   * 
+   * @param id the id
+   * @return the record store
+   */
   public static synchronized RecordStore rs_open(final int id) {
     if (id != RSSItem.rs_id) {
       RSSItem.rs_close(true);
@@ -285,6 +333,11 @@ public class RSSItem {
     return RSSItem.rs;
   }
 
+  /**
+   * Rs_close.
+   * 
+   * @param force the force
+   */
   public static synchronized void rs_close(final boolean force) {
     if (force) {
       if (RSSItem.rs != null) {
@@ -299,6 +352,11 @@ public class RSSItem {
     }
   }
 
+  /**
+   * Rs_delete.
+   * 
+   * @param id the id
+   */
   public static synchronized void rs_delete(final int id) {
     RSSItem.rs_close(true);
     try {
