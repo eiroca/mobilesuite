@@ -1,8 +1,20 @@
-/** MIT LICENSE
- * Based upon Mobile Device Tools written by Andrew Scott
+/** GPL >= 3.0 + MIT
+ * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/
+ * 
  * Copyright (C) 2004 Andrew Scott
- * Copyright (C) 2006-2008 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +36,26 @@
  */
 package test.benchmark;
 
+/**
+ * The Class Precision.
+ */
 public class Precision extends BenchmarkAbstract {
 
+  /** The Constant RES_ID1. */
   public static final String RES_ID1 = "S";
 
+  /**
+   * Instantiates a new precision.
+   * 
+   * @param suite the suite
+   */
   public Precision(final SuiteAbstract suite) {
     super(suite);
   }
 
+  /* (non-Javadoc)
+   * @see test.benchmark.BenchmarkAbstract#execute()
+   */
   public void execute() {
     // Retrieve the minimum resolution timers can measure
     long iResolution = 0;
