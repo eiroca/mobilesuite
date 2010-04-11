@@ -39,6 +39,7 @@ package net.eiroca.j2me.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import net.eiroca.j2me.debug.Debug;
 
 /**
  * The Class BoundInputStream.
@@ -48,7 +49,7 @@ public class BoundInputStream extends InputStream {
   /** The remaining. */
   int remaining;
 
-  /** The is. */
+  /** The input stream */
   InputStream is;
 
   /**
@@ -100,8 +101,8 @@ public class BoundInputStream extends InputStream {
     try {
       is.close();
     }
-    catch (final IOException ignored) {
-      //
+    catch (final IOException e) {
+      Debug.ignore(e);
     }
   }
 
