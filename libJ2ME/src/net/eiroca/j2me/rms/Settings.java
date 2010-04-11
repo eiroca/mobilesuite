@@ -28,6 +28,7 @@ import javax.microedition.rms.RecordEnumeration;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.debug.Debug;
 
 /**
  * The Class Settings.
@@ -39,6 +40,9 @@ public class Settings {
 
   /** The Constant properties. */
   private static final Hashtable properties = new Hashtable();
+
+  /** The values changed. */
+  private static boolean valuesChanged = false;
 
   /**
    * Load properties.
@@ -58,8 +62,9 @@ public class Settings {
       }
     }
     catch (final Exception e) {
-      //
+      Debug.ignore(e);
     }
+    Settings.valuesChanged = false;
   }
 
   /**
@@ -75,16 +80,45 @@ public class Settings {
     else {
       Settings.properties.remove(name);
     }
+    Settings.valuesChanged = true;
   }
 
   /**
-   * Gets the.
+   * Put int.
+   * 
+   * @param name the name
+   * @param value the value
+   */
+  public static void putInt(final String name, final int value) {
+    Settings.properties.put(name, new Integer(value));
+    Settings.valuesChanged = true;
+  }
+
+  /**
+   * Gets the setting value
    * 
    * @param name the name
    * @return the string
    */
   public static String get(final String name) {
     return (String) Settings.properties.get(name);
+  }
+
+  /**
+   * Get integer property.
+   * 
+   * @param name the name
+   * @param defaultValue the default value
+   * @return the int
+   */
+  public int getInt(final String name, final int defaultValue) {
+    try {
+      return ((Integer) Settings.properties.get(name)).intValue();
+    }
+    catch (final Exception e) {
+      Debug.ignore(e);
+    }
+    return defaultValue;
   }
 
   /**
@@ -102,36 +136,49 @@ public class Settings {
    * @return true, if successful
    */
   public static boolean save() {
-    try {
-      final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-      final DataOutputStream dataOut = new DataOutputStream(byteOut);
-      dataOut.writeInt(Settings.properties.size());
-      final Enumeration keys = Settings.properties.keys();
-      while (keys.hasMoreElements()) {
-        final String key = keys.nextElement().toString();
-        dataOut.writeUTF(key);
-        dataOut.writeUTF(Settings.properties.get(key).toString());
-      }
-      final byte[] data = byteOut.toByteArray();
-      byteOut.close();
-      dataOut.close();
+    return Settings.save(false);
+  }
+
+  /**
+   * Save the settings only is they are changed or the forced setting is true.
+   * 
+   * @param forced if true the settings are save also if not changed.
+   * @return true, if successful
+   */
+  public static boolean save(final boolean forced) {
+    if (forced || Settings.valuesChanged) {
       try {
-        final RecordStore rs = BaseApp.getRecordStore(Settings.RMS_PROPERTIES, true, true);
-        final RecordEnumeration e = rs.enumerateRecords(null, null, false);
-        if (e.hasNextElement()) {
-          rs.setRecord(e.nextRecordId(), data, 0, data.length);
+        final ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        final DataOutputStream dataOut = new DataOutputStream(byteOut);
+        dataOut.writeInt(Settings.properties.size());
+        final Enumeration keys = Settings.properties.keys();
+        while (keys.hasMoreElements()) {
+          final String key = keys.nextElement().toString();
+          dataOut.writeUTF(key);
+          dataOut.writeUTF(Settings.properties.get(key).toString());
         }
-        else {
-          rs.addRecord(data, 0, data.length);
+        final byte[] data = byteOut.toByteArray();
+        byteOut.close();
+        dataOut.close();
+        try {
+          final RecordStore rs = BaseApp.getRecordStore(Settings.RMS_PROPERTIES, true, true);
+          final RecordEnumeration e = rs.enumerateRecords(null, null, false);
+          if (e.hasNextElement()) {
+            rs.setRecord(e.nextRecordId(), data, 0, data.length);
+          }
+          else {
+            rs.addRecord(data, 0, data.length);
+          }
+          Settings.valuesChanged = false;
+          return true;
         }
-        return true;
+        catch (final RecordStoreException e) {
+          Debug.ignore(e);
+        }
       }
-      catch (final RecordStoreException e) {
-        //
+      catch (final IOException e) {
+        Debug.ignore(e);
       }
-    }
-    catch (final IOException e) {
-      //
     }
     return false;
   }
