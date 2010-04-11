@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Vector;
 import javax.microedition.rms.RecordStore;
 import net.eiroca.j2me.app.BaseApp;
+import net.eiroca.j2me.debug.Debug;
 
 /**
  * The Class ScoreManager.
@@ -155,7 +156,7 @@ public class ScoreManager {
       }
     }
     catch (final IOException e) {
-      //
+      Debug.ignore(e);
     }
     BaseApp.writeData(rs, baos);
     BaseApp.close(rs, null, dos);
