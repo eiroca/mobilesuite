@@ -19,6 +19,7 @@ package net.eiroca.j2me.game;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GameScreen.
  */
@@ -28,13 +29,13 @@ abstract public class GameScreen extends GameCanvas {
   protected final GameApp midlet;
 
   /** The screen. */
-  protected final Graphics screen;
+  protected Graphics screen;
 
   /** The screen width. */
-  protected final int screenWidth;
+  protected int screenWidth;
 
   /** The screen height. */
-  protected final int screenHeight;
+  protected int screenHeight;
 
   /** The full screen mode. */
   protected final boolean fullScreenMode;
@@ -64,9 +65,18 @@ abstract public class GameScreen extends GameCanvas {
     fullScreenMode = fullScreen;
     setFullScreenMode(fullScreenMode);
     score = new Score();
-    screen = getGraphics();
-    screenWidth = screen.getClipWidth();
-    screenHeight = screen.getClipHeight();
+  }
+
+  /**
+   * Inits the graphics.
+   * 
+   * @return the graphics
+   */
+  public Graphics initGraphics() {
+    Graphics cscreen = getGraphics();
+    screenWidth = cscreen.getClipWidth();
+    screenHeight = cscreen.getClipHeight();
+    return cscreen;
   }
 
   /**
@@ -80,9 +90,13 @@ abstract public class GameScreen extends GameCanvas {
    * Show.
    */
   public void show() {
+    screen = initGraphics();
     setFullScreenMode(fullScreenMode);
-    animationThread = new GameThread(this);
-    animationThread.start();
+    synchronized (this) {
+      animationThread = new GameThread(this);
+      animationThread.freeze(200);
+      animationThread.start();
+    }
   }
 
   /**
@@ -96,10 +110,12 @@ abstract public class GameScreen extends GameCanvas {
    * Hide.
    */
   public void hide() {
-    if (animationThread != null) {
-      animationThread.stopped = true;
-      animationThread = null;
-      setFullScreenMode(false);
+    synchronized (this) {
+      if (animationThread != null) {
+        animationThread.stopped = true;
+        animationThread = null;
+        setFullScreenMode(false);
+      }
     }
   }
 
