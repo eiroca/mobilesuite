@@ -32,6 +32,7 @@ import net.eiroca.j2me.reversi.ReversiGame;
 import net.eiroca.j2me.reversi.ReversiMove;
 import net.eiroca.j2me.reversi.ReversiTable;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ReversiScreen.
  */
@@ -107,7 +108,7 @@ public final class ReversiScreen extends GameScreen {
   private int sizey;
 
   /** The vert width. */
-  private final int vertWidth;
+  private int vertWidth;
 
   /** The width. */
   private int width;
@@ -155,25 +156,25 @@ public final class ReversiScreen extends GameScreen {
   public static boolean twoplayer;
 
   /** The font height. */
-  private final int fontHeight;
+  private int fontHeight;
 
   /** The off_y. */
-  private final int off_y;
+  private int off_y;
 
   /** The off_x. */
-  private final int off_x;
+  private int off_x;
 
   /** The piece width. */
-  private final int pieceWidth;
+  private int pieceWidth;
 
   /** The piece height. */
-  private final int pieceHeight;
+  private int pieceHeight;
 
   /** The piece_offx. */
-  private final int piece_offx;
+  private int piece_offx;
 
   /** The piece_offy. */
-  private final int piece_offy;
+  private int piece_offy;
 
   /**
    * Instantiates a new reversi screen.
@@ -184,6 +185,14 @@ public final class ReversiScreen extends GameScreen {
     super(midlet, false, true);
     ReversiScreen.rgame = new ReversiGame(ReversiScreen.heurMatrix, 10, 18, true);
     name = Application.messages[Reversi.MSG_NAME];
+    updateSkillInfo();
+  }
+
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#initGraphics()
+   */
+  public void initGraphics() {
+    super.initGraphics();
     width = screenWidth * 8 / 10;
     vertWidth = screenWidth - width;
     height = screenHeight;
@@ -206,7 +215,6 @@ public final class ReversiScreen extends GameScreen {
     sely = 0;
     off_y = (screenHeight - height) / 2;
     off_x = 2;
-    updateSkillInfo();
   }
 
   /* (non-Javadoc)
