@@ -28,19 +28,19 @@ public class GameField extends TiledLayer {
 
   /** The Constant WIDTH_IN_TILES. */
   private static final int WIDTH_IN_TILES = 21;
-  
+
   /** The Constant HEIGHT_IN_TILES. */
   private static final int HEIGHT_IN_TILES = 17;
-  
+
   /** The Constant TILE_WIDTH. */
   private static final int TILE_WIDTH = 10;
-  
+
   /** The Constant TILE_HEIGHT. */
   private static final int TILE_HEIGHT = 10;
-  
+
   /** The Constant TL_PILL_MAGIC1. */
   private static final int TL_PILL_MAGIC1 = 14;
-  
+
   /** The Constant TL_PILL_MAGIC2. */
   private static final int TL_PILL_MAGIC2 = 15;
 

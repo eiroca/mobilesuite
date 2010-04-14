@@ -27,6 +27,7 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class PacManScreen.
  */
@@ -35,64 +36,64 @@ public final class PacManScreen extends GameScreen {
   // shared direction constants
   /** The Constant NONE. */
   public static final int NONE = -1;
-  
+
   /** The Constant UP. */
   public static final int UP = 0;
-  
+
   /** The Constant LEFT. */
   public static final int LEFT = 1;
-  
+
   /** The Constant DOWN. */
   public static final int DOWN = 2;
-  
+
   /** The Constant RIGHT. */
   public static final int RIGHT = 3;
-  
+
   /** The field. */
   private final GameField field;
-  
+
   /** The layer manager. */
   private final LayerManager layerManager;
-  
+
   /** The pacman. */
   private final PacmanSprite pacman;
-  
+
   /** The blinky. */
   private final GhostSprite blinky; // The red one
-  
+
   /** The pinky. */
   private final GhostSprite pinky; // The pink one
-  
+
   /** The inkey. */
   private final GhostSprite inkey; // The green one
-  
+
   /** The clyde. */
   private final GhostSprite clyde; // The orange one
-  
+
   /** The supermode. */
   private int supermode = 0;
-  
+
   /** The font height. */
   private int fontHeight = 0;
-  
+
   /** The font. */
-  private final Font font;
-  
+  private Font font;
+
   /** The closing. */
   private boolean closing;
-  
+
   /** The scr liv pos x. */
-  private final int scrLivPosX;
-  
+  private int scrLivPosX;
+
   /** The scr liv pos y. */
-  private final int scrLivPosY;
-  
+  private int scrLivPosY;
+
   /** The scr liv siz. */
-  private final int scrLivSiz;
-  
+  private int scrLivSiz;
+
   /** The scr liv off. */
-  private final int scrLivOff;
-  
+  private int scrLivOff;
+
   /** The num tick. */
   private int numTick = 0;
 
@@ -119,6 +120,13 @@ public final class PacManScreen extends GameScreen {
     layerManager.append(pinky);
     layerManager.append(inkey);
     layerManager.append(field);
+  }
+
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#initGraphics()
+   */
+  public void initGraphics() {
+    super.initGraphics();
     font = Font.getDefaultFont();
     fontHeight = font.getHeight();
     scrLivPosX = font.stringWidth(Application.messages[PacMan.MSG_PACMAN_LIVES]);
@@ -277,8 +285,8 @@ public final class PacManScreen extends GameScreen {
     screen.setColor(Application.background);
     screen.fillRect(0, 0, screenWidth, screenHeight);
     // draw background and sprites
-    int dx = origin(pacman.getX() + pacman.getWidth() / 2, field.getWidth(), screenWidth);
-    int dy = origin(pacman.getY() + pacman.getHeight() / 2, field.getHeight(), screenHeight - fontHeight);
+    final int dx = origin(pacman.getX() + pacman.getWidth() / 2, field.getWidth(), screenWidth);
+    final int dy = origin(pacman.getY() + pacman.getHeight() / 2, field.getHeight(), screenHeight - fontHeight);
     screen.setClip(dx, dy, field.getWidth(), field.getHeight());
     screen.translate(dx, dy);
     layerManager.paint(screen, 0, 0);
