@@ -16,19 +16,25 @@
  */
 package net.eiroca.j2me.game;
 
+import net.eiroca.j2me.debug.Debug;
+
+// TODO: Auto-generated Javadoc
 /**
  * The Class GameThread.
  */
 public class GameThread extends Thread {
 
   /** The Constant MILLIS_PER_TICK. */
-  private static final int MILLIS_PER_TICK = 25;
+  private static final int MILLIS_PER_TICK = 1000 / 25;
 
   /** The screen. */
   public GameScreen screen;
 
   /** The stopped. */
   public boolean stopped = false;
+
+  /** The frozen. */
+  public int frozen = 0;
 
   /**
    * Instantiates a new game thread.
@@ -45,11 +51,15 @@ public class GameThread extends Thread {
   public void run() {
     try {
       while (!stopped) {
-        final long drawStartTime = System.currentTimeMillis();
-        if (screen.isShown()) {
-          if (screen.tick()) {
-            screen.flushGraphics();
+        if (frozen > 0) {
+          synchronized (this) {
+            wait(frozen);
+            frozen = 0;
           }
+        }
+        final long drawStartTime = System.currentTimeMillis();
+        if ((screen.isShown()) && (screen.tick())) {
+          screen.flushGraphics();
         }
         final long timeTaken = System.currentTimeMillis() - drawStartTime;
         if (timeTaken < GameThread.MILLIS_PER_TICK) {
@@ -63,9 +73,20 @@ public class GameThread extends Thread {
       }
     }
     catch (final InterruptedException e) {
-      // Nothing to do
+      Debug.ignore(e);
     }
     screen = null;
+  }
+
+  /**
+   * Freeze the redraw for x milliseconds.
+   * 
+   * @param msec the msec
+   */
+  public void freeze(int msec) {
+    synchronized (this) {
+      frozen += msec;
+    }
   }
 
 }
