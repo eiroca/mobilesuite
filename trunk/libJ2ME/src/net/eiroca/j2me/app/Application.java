@@ -28,7 +28,10 @@ import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.List;
+import javax.microedition.midlet.MIDletStateChangeException;
+import net.eiroca.j2me.debug.Debug;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Application.
  */
@@ -261,18 +264,38 @@ public abstract class Application extends BaseApp {
       if (!processed) {
         switch (action) {
           case AC_BACK: {
-            Application.back(null);
+            doBack();
             processed = true;
             break;
           }
           case AC_EXIT: {
-            BaseApp.midlet.notifyDestroyed();
+            doExit();
             processed = true;
             break;
           }
         }
       }
     }
+  }
+
+  /**
+   * Do exit.
+   */
+  public void doExit() {
+    try {
+      BaseApp.midlet.destroyApp(true);
+    }
+    catch (MIDletStateChangeException e) {
+      Debug.ignore(e);
+    }
+    BaseApp.midlet.notifyDestroyed();
+  }
+
+  /**
+   * Do back.
+   */
+  public void doBack() {
+    Application.back(null);
   }
 
   /**
