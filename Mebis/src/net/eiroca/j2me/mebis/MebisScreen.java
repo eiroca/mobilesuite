@@ -27,6 +27,7 @@ import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class MebisScreen.
  */
@@ -69,7 +70,7 @@ public final class MebisScreen extends GameScreen {
   private boolean showWon = false;
 
   /** The screen font. */
-  private final Font screenFont;
+  private Font screenFont;
 
   /** The font height. */
   private int fontHeight;
@@ -93,28 +94,28 @@ public final class MebisScreen extends GameScreen {
   private int gameAreaHeight;
 
   /** The game area off x. */
-  private final int gameAreaOffX;
+  private int gameAreaOffX;
 
   /** The game area off y. */
-  private final int gameAreaOffY;
+  private int gameAreaOffY;
 
   /** The score width. */
-  private final int scoreWidth;
+  private int scoreWidth;
 
   /** The score height. */
-  private final int scoreHeight;
+  private int scoreHeight;
 
   /** The score off x. */
-  private final int scoreOffX;
+  private int scoreOffX;
 
   /** The score off y. */
   private int scoreOffY = 0;
 
   /** The font anchor x. */
-  private final int fontAnchorX;
+  private int fontAnchorX;
 
   /** The font anchor y. */
-  private final int fontAnchorY;
+  private int fontAnchorY;
 
   /**
    * Instantiates a new mebis screen.
@@ -124,6 +125,13 @@ public final class MebisScreen extends GameScreen {
   public MebisScreen(final GameApp midlet) {
     super(midlet, false, true);
     name = Application.messages[Mebis.MSG_NAME];
+  }
+
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#initGraphics()
+   */
+  public void initGraphics() {
+    super.initGraphics();
     screenFont = screen.getFont();
     fontHeight = screenFont.getBaselinePosition();
     if (fontHeight <= 2) {
