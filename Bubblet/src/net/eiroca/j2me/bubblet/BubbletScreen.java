@@ -24,6 +24,7 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class BubbletScreen.
  */
@@ -41,10 +42,10 @@ public class BubbletScreen extends GameScreen {
   private final BubbletGame game;
 
   /** The cell width. */
-  private final int cellWidth;
+  private int cellWidth;
 
   /** The cell height. */
-  private final int cellHeight;
+  private int cellHeight;
 
   /** The cross_x. */
   private int cross_x;
@@ -53,33 +54,48 @@ public class BubbletScreen extends GameScreen {
   private int cross_y;
 
   /** The off_x. */
-  private final int off_x;
+  private int off_x;
 
   /** The off_y. */
-  private final int off_y;
+  private int off_y;
 
   /** The f. */
-  private final Font f;
+  private Font f;
+
+  /** The field width. */
+  private final int fieldWidth;
+
+  /** The field height. */
+  private final int fieldHeight;
 
   /**
    * Instantiates a new bubblet screen.
    * 
    * @param pMidlet the midlet
-   * @param pFieldWidth the field width
-   * @param pFieldHeight the field height
+   * @param fieldWidth the field width
+   * @param fieldHeight the field height
    */
-  public BubbletScreen(final GameApp pMidlet, final int pFieldWidth, final int pFieldHeight) {
+  public BubbletScreen(final GameApp pMidlet, final int fieldWidth, final int fieldHeight) {
     super(pMidlet, false, true);
     name = Application.messages[BubbletScreen.MSG_NAME];
+    game = new BubbletGame(fieldWidth, fieldHeight);
+    this.fieldHeight = fieldHeight;
+    this.fieldWidth = fieldWidth;
+  }
+
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#initGraphics()
+   */
+  public void initGraphics() {
+    super.initGraphics();
     f = Font.getDefaultFont();
     final int resX = 1;
     final int resY = 1 + f.getHeight();
     // Set the Display of our application
-    cellWidth = (screenWidth - resX) / pFieldWidth;
-    cellHeight = (screenHeight - resY) / pFieldHeight;
-    off_x = (screenWidth - cellWidth * pFieldWidth) / 2;
+    cellWidth = (screenWidth - resX) / fieldWidth;
+    cellHeight = (screenHeight - resY) / fieldHeight;
+    off_x = (screenWidth - cellWidth * fieldWidth) / 2;
     off_y = resY;
-    game = new BubbletGame(pFieldWidth, pFieldHeight);
   }
 
   /* (non-Javadoc)
