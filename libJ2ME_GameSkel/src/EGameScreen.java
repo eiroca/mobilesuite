@@ -19,6 +19,7 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class EGameScreen.
  */
@@ -34,6 +35,13 @@ public final class EGameScreen extends GameScreen {
   public EGameScreen(final GameApp midlet, final boolean suppressKeys, final boolean fullScreen) {
     super(midlet, suppressKeys, fullScreen);
     name = "EGame";
+  }
+
+  /* (non-Javadoc)
+   * @see net.eiroca.j2me.game.GameScreen#initGraphics()
+   */
+  public void initGraphics() {
+    super.initGraphics();
   }
 
   /* (non-Javadoc)
