@@ -29,13 +29,13 @@ public class PacmanSprite extends Sprite {
 
   /** The Constant WIDTH. */
   private static final int WIDTH = 8;
-  
+
   /** The Constant HEIGHT. */
   private static final int HEIGHT = 8;
-  
+
   /** The canvas. */
   private final PacManScreen canvas;
-  
+
   /** The animations. */
   private final int[][] animations = {
       {
@@ -46,31 +46,31 @@ public class PacmanSprite extends Sprite {
           4, 3, 2, 1, 5, 6, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8
       }
   };
-  
+
   /** The animation tick. */
   private int animationTick = 0;
-  
+
   /** The Constant STAND. */
   private static final int STAND = 0;
-  
+
   /** The Constant RUN. */
   private static final int RUN = 1;
-  
+
   /** The Constant DIE. */
   private static final int DIE = 2;
-  
+
   /** The current direction. */
   private int currentDirection = PacManScreen.LEFT;
-  
+
   /** The eaten. */
   private int eaten;
-  
+
   /** The dead. */
   public boolean dead;
-  
+
   /** The map x. */
   private int mapX = 0;
-  
+
   /** The map y. */
   private int mapY = 0;
 

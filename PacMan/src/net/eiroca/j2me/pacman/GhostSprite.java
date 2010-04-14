@@ -28,7 +28,7 @@ public class GhostSprite extends Sprite {
 
   /** The Constant WIDTH. */
   private static final int WIDTH = 8;
-  
+
   /** The Constant HEIGHT. */
   private static final int HEIGHT = 8;
 
@@ -83,31 +83,31 @@ public class GhostSprite extends Sprite {
 
   /** The animation tick. */
   private int animationTick;
-  
+
   /** The animation. */
   private int animation;
-  
+
   /** The current direction. */
   private int currentDirection = PacManScreen.LEFT;
-  
+
   /** The old direction. */
   private int oldDirection = PacManScreen.LEFT;
-  
+
   /** The tracked. */
   private boolean tracked = false;
-  
+
   /** The ghost. */
   private int ghost = 0;
-  
+
   /** The pm_x. */
   private int pm_x = -1;
-  
+
   /** The pm_y. */
   private int pm_y = -1;
-  
+
   /** The map x. */
   private int mapX = 0;
-  
+
   /** The map y. */
   private int mapY = 0;
 

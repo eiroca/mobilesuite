@@ -31,22 +31,22 @@ public class PacMan extends GameApp {
 
   /** The Constant MSG_PACMAN_LIVES. */
   public static final int MSG_PACMAN_LIVES = GameApp.MSG_USERDEF + 0;
-  
+
   /** The Constant MSG_PACMAN_NAME. */
   public static final int MSG_PACMAN_NAME = GameApp.MSG_USERDEF + 1;
-  
+
   /** The Constant MSG_PACMAN_LEVEL. */
   public static final int MSG_PACMAN_LEVEL = GameApp.MSG_USERDEF + 2;
 
   /** The Constant RES_FIELD. */
   public static final String RES_FIELD = "field.png";
-  
+
   /** The Constant RES_MAP. */
   public static final String RES_MAP = "level.map";
-  
+
   /** The Constant RES_GHOST. */
   public static final String RES_GHOST = "ghost.png";
-  
+
   /** The Constant RES_PACMAN. */
   public static final String RES_PACMAN = "pacman.png";
 
