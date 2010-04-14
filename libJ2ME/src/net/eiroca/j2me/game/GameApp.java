@@ -28,6 +28,7 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.SplashScreen;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class GameApp.
  */
@@ -299,10 +300,10 @@ public abstract class GameApp extends Application {
       }
     }
     if (c == Application.cEXIT) {
-      BaseApp.midlet.notifyDestroyed();
+      doExit();
     }
     else if (c == Application.cBACK) {
-      Application.back(null);
+      doBack();
     }
     else {
       processGameAction(gameAction);

@@ -72,11 +72,10 @@ abstract public class GameScreen extends GameCanvas {
    * 
    * @return the graphics
    */
-  public Graphics initGraphics() {
-    Graphics cscreen = getGraphics();
-    screenWidth = cscreen.getClipWidth();
-    screenHeight = cscreen.getClipHeight();
-    return cscreen;
+  public void initGraphics() {
+    screen = getGraphics();
+    screenWidth = screen.getClipWidth();
+    screenHeight = screen.getClipHeight();
   }
 
   /**
@@ -84,17 +83,17 @@ abstract public class GameScreen extends GameCanvas {
    */
   public void init() {
     active = true;
+    initGraphics();
   }
 
   /**
    * Show.
    */
   public void show() {
-    screen = initGraphics();
     setFullScreenMode(fullScreenMode);
     synchronized (this) {
       animationThread = new GameThread(this);
-      animationThread.freeze(200);
+      // animationThread.freeze(200);
       animationThread.start();
     }
   }
