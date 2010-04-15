@@ -110,7 +110,7 @@ public final class MineSweeperScreen extends GameScreen {
    * @param midlet the midlet
    */
   public MineSweeperScreen(final GameApp midlet) {
-    super(midlet, false, true);
+    super(midlet, false, true, 20);
     name = Application.messages[MineSweeper.MSG_NAME];
     pBomb = BaseApp.createPlayer(MineSweeper.RES_BOMB, "audio/x-wav");
     pTicTac = BaseApp.createPlayer(MineSweeper.RES_CLOCK, "audio/x-wav");
