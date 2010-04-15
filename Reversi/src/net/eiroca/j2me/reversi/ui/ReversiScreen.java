@@ -32,7 +32,6 @@ import net.eiroca.j2me.reversi.ReversiGame;
 import net.eiroca.j2me.reversi.ReversiMove;
 import net.eiroca.j2me.reversi.ReversiTable;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ReversiScreen.
  */
@@ -182,7 +181,7 @@ public final class ReversiScreen extends GameScreen {
    * @param midlet the midlet
    */
   public ReversiScreen(final GameApp midlet) {
-    super(midlet, false, true);
+    super(midlet, false, true, 20);
     ReversiScreen.rgame = new ReversiGame(ReversiScreen.heurMatrix, 10, 18, true);
     name = Application.messages[Reversi.MSG_NAME];
     updateSkillInfo();
