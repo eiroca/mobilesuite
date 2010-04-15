@@ -27,7 +27,6 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class PacManScreen.
  */
@@ -105,7 +104,7 @@ public final class PacManScreen extends GameScreen {
    * @param fullScreen the full screen
    */
   public PacManScreen(final GameApp midlet, final boolean suppressKeys, final boolean fullScreen) {
-    super(midlet, suppressKeys, fullScreen);
+    super(midlet, suppressKeys, fullScreen, 30);
     name = Application.messages[PacMan.MSG_PACMAN_NAME];
     layerManager = new LayerManager();
     pacman = new PacmanSprite(this);
