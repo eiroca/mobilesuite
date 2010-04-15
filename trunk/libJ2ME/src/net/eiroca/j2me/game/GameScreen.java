@@ -19,7 +19,6 @@ package net.eiroca.j2me.game;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class GameScreen.
  */
@@ -52,6 +51,8 @@ abstract public class GameScreen extends GameCanvas {
   /** The score. */
   public Score score;
 
+  public int frameRate = 25;
+
   /**
    * Instantiates a new game screen.
    * 
@@ -59,8 +60,9 @@ abstract public class GameScreen extends GameCanvas {
    * @param suppressKeys the suppress keys
    * @param fullScreen the full screen
    */
-  public GameScreen(final GameApp aMidlet, final boolean suppressKeys, final boolean fullScreen) {
+  public GameScreen(final GameApp aMidlet, final boolean suppressKeys, final boolean fullScreen, int frameRate) {
     super(suppressKeys);
+    this.frameRate = frameRate;
     midlet = aMidlet;
     fullScreenMode = fullScreen;
     setFullScreenMode(fullScreenMode);
@@ -92,7 +94,7 @@ abstract public class GameScreen extends GameCanvas {
   public void show() {
     setFullScreenMode(fullScreenMode);
     synchronized (this) {
-      animationThread = new GameThread(this);
+      animationThread = new GameThread(this, frameRate);
       // animationThread.freeze(200);
       animationThread.start();
     }

@@ -28,7 +28,6 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.app.SplashScreen;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class GameApp.
  */

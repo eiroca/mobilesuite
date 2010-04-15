@@ -23,7 +23,6 @@ import javax.microedition.lcdui.StringItem;
 import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.app.BaseApp;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Debug.
  */
