@@ -24,7 +24,6 @@ import net.eiroca.j2me.app.Application;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class BubbletScreen.
  */
@@ -76,7 +75,7 @@ public class BubbletScreen extends GameScreen {
    * @param fieldHeight the field height
    */
   public BubbletScreen(final GameApp pMidlet, final int fieldWidth, final int fieldHeight) {
-    super(pMidlet, false, true);
+    super(pMidlet, false, true, 15);
     name = Application.messages[BubbletScreen.MSG_NAME];
     game = new BubbletGame(fieldWidth, fieldHeight);
     this.fieldHeight = fieldHeight;
