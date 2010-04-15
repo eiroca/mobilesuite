@@ -18,14 +18,13 @@ package net.eiroca.j2me.game;
 
 import net.eiroca.j2me.debug.Debug;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class GameThread.
  */
 public class GameThread extends Thread {
 
   /** The Constant MILLIS_PER_TICK. */
-  private static final int MILLIS_PER_TICK = 1000 / 25;
+  private int millsPerTick = 1000 / 25;
 
   /** The screen. */
   public GameScreen screen;
@@ -41,8 +40,9 @@ public class GameThread extends Thread {
    * 
    * @param canvas the canvas
    */
-  public GameThread(final GameScreen canvas) {
+  public GameThread(final GameScreen canvas, int frameRate) {
     screen = canvas;
+    setFrameRete(frameRate);
   }
 
   /* (non-Javadoc)
@@ -62,9 +62,9 @@ public class GameThread extends Thread {
           screen.flushGraphics();
         }
         final long timeTaken = System.currentTimeMillis() - drawStartTime;
-        if (timeTaken < GameThread.MILLIS_PER_TICK) {
+        if (timeTaken < millsPerTick) {
           synchronized (this) {
-            wait(GameThread.MILLIS_PER_TICK - timeTaken);
+            wait(millsPerTick - timeTaken);
           }
         }
         else {
@@ -76,6 +76,13 @@ public class GameThread extends Thread {
       Debug.ignore(e);
     }
     screen = null;
+  }
+
+  public void setFrameRete(int frameRate) {
+    millsPerTick = 1000 / frameRate;
+    if (millsPerTick < 5) {
+      millsPerTick = 5;
+    }
   }
 
   /**

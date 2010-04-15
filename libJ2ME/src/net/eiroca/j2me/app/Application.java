@@ -31,7 +31,6 @@ import javax.microedition.lcdui.List;
 import javax.microedition.midlet.MIDletStateChangeException;
 import net.eiroca.j2me.debug.Debug;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Application.
  */
