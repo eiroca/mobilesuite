@@ -27,7 +27,6 @@ import net.eiroca.j2me.app.BaseApp;
 import net.eiroca.j2me.game.GameApp;
 import net.eiroca.j2me.game.GameScreen;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MebisScreen.
  */
@@ -123,7 +122,7 @@ public final class MebisScreen extends GameScreen {
    * @param midlet the midlet
    */
   public MebisScreen(final GameApp midlet) {
-    super(midlet, false, true);
+    super(midlet, false, true, 20);
     name = Application.messages[Mebis.MSG_NAME];
   }
 
