@@ -72,6 +72,8 @@ import javax.microedition.rms.RecordStoreException;
 
 /**
  * The Class BaseApp.
+ * Perform application tasks, standard commands.  Store messages, menus, and
+ * icons.
  */
 public abstract class BaseApp extends MIDlet implements CommandListener, ItemCommandListener {
 
