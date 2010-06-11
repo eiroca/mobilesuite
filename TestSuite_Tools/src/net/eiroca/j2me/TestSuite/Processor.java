@@ -17,14 +17,14 @@
 package net.eiroca.j2me.TestSuite;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.LineInputStream;
 
 /**
  * The Class Processor.
@@ -79,7 +79,7 @@ abstract public class Processor {
    */
   public void readInput(final InputStream fin) throws IOException {
     map.clear();
-    final LineInputStream in = new LineInputStream(fin);
+    final BufferedReader in = new BufferedReader(new InputStreamReader(fin));
     String line;
     String cod;
     String val;
@@ -89,13 +89,11 @@ abstract public class Processor {
         if (line.startsWith("#")) {
           continue;
         }
-        final StringTokenizer st = new StringTokenizer(line, "=");
-        if (st.hasMoreTokens()) {
-          cod = st.nextToken().trim();
-          if (st.hasMoreTokens()) {
-            val = st.nextToken().trim();
-          }
-          else {
+        int ps = line.indexOf('=');
+        if (ps > 0) {
+          cod = line.substring(0, ps).trim();
+          val = line.substring(ps + 1).trim();
+          if (val.length() == 0) {
             val = null;
           }
         }

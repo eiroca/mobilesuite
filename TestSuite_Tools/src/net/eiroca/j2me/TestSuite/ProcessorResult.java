@@ -23,6 +23,7 @@ import java.io.PrintWriter;
 import java.util.TreeMap;
 import java.util.Vector;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class ProcessorResult.
  */
@@ -33,6 +34,9 @@ public class ProcessorResult extends Processor {
   
   /** The NOWIK i2. */
   private static String NOWIKI2 = "</nowiki>";
+  
+  /** The LIN e_ sep. */
+  private static String LINE_SEP = "; ";
 
   /* (non-Javadoc)
    * @see net.eiroca.j2me.TestSuite.Processor#missingMapping(net.eiroca.j2me.TestSuite.Category)
@@ -54,6 +58,7 @@ public class ProcessorResult extends Processor {
       Vector<Object> props;
       if (!map.containsKey(name)) {
         props = new Vector<Object>();
+        map.put(name, props);
       }
       else {
         props = (Vector<Object>) map.get(name);
@@ -86,11 +91,13 @@ public class ProcessorResult extends Processor {
     }
     else if (vl instanceof Vector) {
       buf.append(NOWIKI1);
+      boolean first = true;
       final Vector<Object> v = (Vector<Object>) vl;
       for (final Object vv : v) {
-        if (buf.length() > 0) {
-          buf.append(';');
+        if (!first) {
+          buf.append(LINE_SEP);
         }
+        first = false;
         buf.append(vv);
       }
       buf.append(NOWIKI2);
