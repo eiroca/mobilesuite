@@ -33,6 +33,7 @@ import net.eiroca.j2me.debug.Debug;
 
 /**
  * The Class Application.
+ * Support an application.  Have menus, actions, confirm.
  */
 public abstract class Application extends BaseApp {
 
