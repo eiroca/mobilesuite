@@ -36,7 +36,7 @@ public class ProcessorResult extends Processor {
   private static String NOWIKI2 = "</nowiki>";
   
   /** The LIN e_ sep. */
-  private static String LINE_SEP = "; ";
+  private static String LINE_SEP = " ";
 
   /* (non-Javadoc)
    * @see net.eiroca.j2me.TestSuite.Processor#missingMapping(net.eiroca.j2me.TestSuite.Category)
