@@ -2,7 +2,7 @@
  * Based upon Bubblet game written by Juan Antonio Agudo.
  *
  * Copyright (C) Juan Antonio Agudo
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2006-2015 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

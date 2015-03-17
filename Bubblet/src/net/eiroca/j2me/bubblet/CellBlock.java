@@ -1,5 +1,5 @@
 /** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2006-2015 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) Juan Antonio Agudo
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ public class CellBlock {
 
   /**
    * Instantiates a new cell block.
-   * 
+   *
    * @param x the x
    * @param y the y
    */
@@ -44,7 +44,7 @@ public class CellBlock {
 
   /**
    * Instantiates a new cell block.
-   * 
+   *
    * @param x the x
    * @param y the y
    * @param color the color
