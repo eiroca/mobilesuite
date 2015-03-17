@@ -1,5 +1,5 @@
 /** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2006-2015 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) Juan Antonio Agudo
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,26 +25,8 @@ import net.eiroca.j2me.app.BaseApp;
  */
 public class BubbletGame {
 
-  /** The Constant RED. */
-  public static final int RED = 0;
-
-  /** The Constant GREEN. */
-  public static final int GREEN = 1;
-
-  /** The Constant BLUE. */
-  public static final int BLUE = 2;
-
-  /** The Constant PURPLE. */
-  public static final int PURPLE = 3;
-
-  /** The Constant YELLOW. */
-  public static final int YELLOW = 4;
-
-  /** The Constant TURQUOISE. */
-  public static final int TURQUOISE = 5;
-
-  /** The Constant BLACK. */
-  public static final int BLACK = 6;
+  /** Constant for empty cells */
+  public static final int EMPTY = 0;
 
   /** The field width. */
   public int fieldWidth;
@@ -52,52 +34,57 @@ public class BubbletGame {
   /** The field height. */
   public int fieldHeight;
 
+  /** Number of allowed colors */
+  public int numCol;
+
   /** The field. */
   public int field[][];
 
   /**
    * Instantiates a new bubblet game.
-   * 
+   *
    * @param pFieldWidth the field width
    * @param pFieldHeight the field height
+   * @param pNumCol number of allowed colors
    */
-  public BubbletGame(final int pFieldWidth, final int pFieldHeight) {
+  public BubbletGame(final int pFieldWidth, final int pFieldHeight, final int pNumCol) {
     fieldWidth = pFieldWidth;
     fieldHeight = pFieldHeight;
+    numCol = pNumCol;
     field = new int[fieldWidth][fieldHeight];
   }
 
   /**
    * Process fire.
-   * 
-   * @param cross_x the cross_x
-   * @param cross_y the cross_y
+   *
+   * @param pos_x the cross_x
+   * @param pos_y the cross_y
    * @return the int
    */
-  public int processFire(final int cross_x, final int cross_y) {
+  public int processFire(final int pos_x, final int pos_y) {
     int score = 0;
-    final int selectedColor = field[cross_x][cross_y];
+    final int selectedColor = field[pos_x][pos_y];
     // Is it white? then do nothing at all
     final Vector cellSet = new Vector(20);
-    if (selectedColor != BubbletGame.BLACK) {
+    if (selectedColor != BubbletGame.EMPTY) {
       // Find neighboring cells with same color in x and y direction
-      gatherColoredNeighbors(new CellBlock(cross_x, cross_y), selectedColor, cellSet);
+      gatherColoredNeighbors(new CellBlock(pos_x, pos_y), selectedColor, cellSet);
       score = score + (cellSet.size() * cellSet.size());
       CellBlock cell;
       // mark all erased cells
       for (int i = 0; i < cellSet.size(); i++) {
         cell = (CellBlock) cellSet.elementAt(i);
-        field[cell.xval][cell.yval] = BubbletGame.BLACK;
+        field[cell.xval][cell.yval] = BubbletGame.EMPTY;
       }
       boolean moved = true;
       while (moved) {
         moved = false;
         for (int x = 0; x < fieldWidth; x++) {
           for (int y = fieldHeight - 1; y > 0; y--) {
-            if (field[x][y] == BubbletGame.BLACK) {
-              if (field[x][y - 1] != BubbletGame.BLACK) {
+            if (field[x][y] == BubbletGame.EMPTY) {
+              if (field[x][y - 1] != BubbletGame.EMPTY) {
                 field[x][y] = field[x][y - 1];
-                field[x][y - 1] = BubbletGame.BLACK;
+                field[x][y - 1] = BubbletGame.EMPTY;
                 moved = true;
               }
             }
@@ -106,8 +93,8 @@ public class BubbletGame {
       }
       cellSet.removeAllElements();
       // move empty slices to the left corner
-      for (int i = 0; i < fieldWidth - 1; i++) {
-        if (field[i][fieldHeight - 1] == BubbletGame.BLACK) {
+      for (int i = 0; i < (fieldWidth - 1); i++) {
+        if (field[i][fieldHeight - 1] == BubbletGame.EMPTY) {
           moveSliceLeft(i);
           break;
         }
@@ -118,7 +105,7 @@ public class BubbletGame {
 
   /**
    * Move slice left.
-   * 
+   *
    * @param x the x
    */
   private void moveSliceLeft(final int x) {
@@ -129,9 +116,9 @@ public class BubbletGame {
       slice = new Vector(10);
       for (int j = 0; j < fieldHeight; j++) {
         final int tmp = field[i][j];
-        if (tmp != BubbletGame.BLACK) {
+        if (tmp != BubbletGame.EMPTY) {
           slice.addElement(new CellBlock(i, j, tmp));
-          field[i][j] = BubbletGame.BLACK;
+          field[i][j] = BubbletGame.EMPTY;
         }
         else {
           continue;
@@ -152,13 +139,13 @@ public class BubbletGame {
 
   /**
    * Checks if is game finished.
-   * 
+   *
    * @return true, if is game finished
    */
   public boolean isGameFinished() {
     for (int i = 0; i < fieldWidth; i++) {
       for (int j = 0; j < fieldHeight; j++) {
-        if ((field[i][j] != BubbletGame.BLACK) && hasNeighbors(new CellBlock(i, j, field[i][j]))) { return false; }
+        if ((field[i][j] != BubbletGame.EMPTY) && hasNeighbors(new CellBlock(i, j, field[i][j]))) { return false; }
       }
     }
     return true;
@@ -166,7 +153,7 @@ public class BubbletGame {
 
   /**
    * Checks for neighbors.
-   * 
+   *
    * @param pCell the cell
    * @return true, if successful
    */
@@ -191,7 +178,7 @@ public class BubbletGame {
 
   /**
    * Gather colored neighbors. Recursive method, that gathers information about contiguous spaces of the same color.
-   * 
+   *
    * @param pCell the cell
    * @param pColor the color
    * @param cellSet the cell set
@@ -254,7 +241,7 @@ public class BubbletGame {
     // initialize sizes of basic screen elements (only once)
     for (int i = 0; i < fieldWidth; i++) {
       for (int j = 0; j < fieldHeight; j++) {
-        field[i][j] = BaseApp.rand(6);
+        field[i][j] = BaseApp.rand(numCol) + 1;
       }
     }
   }

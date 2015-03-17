@@ -1,5 +1,5 @@
 /** GPL >= 3.0
- * Copyright (C) 2006-2010 eIrOcA (eNrIcO Croce & sImOnA Burzio)
+ * Copyright (C) 2006-2015 eIrOcA (eNrIcO Croce & sImOnA Burzio)
  * Copyright (C) Juan Antonio Agudo
  *
  * This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ public class BubbletScreen extends GameScreen {
 
   /** The COLORS. */
   private static int[] COLORS = {
-      0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FFFF00, 0x00FF00FF, 0x0000FFFF, 0x00000000
+    0x00000000, 0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FFFF00, 0x00FF00FF, 0x0000FFFF
   };
 
   /** The game. */
@@ -69,7 +69,7 @@ public class BubbletScreen extends GameScreen {
 
   /**
    * Instantiates a new bubblet screen.
-   * 
+   *
    * @param pMidlet the midlet
    * @param fieldWidth the field width
    * @param fieldHeight the field height
@@ -77,7 +77,7 @@ public class BubbletScreen extends GameScreen {
   public BubbletScreen(final GameApp pMidlet, final int fieldWidth, final int fieldHeight) {
     super(pMidlet, false, true, 15);
     name = Application.messages[BubbletScreen.MSG_NAME];
-    game = new BubbletGame(fieldWidth, fieldHeight);
+    game = new BubbletGame(fieldWidth, fieldHeight, BubbletScreen.COLORS.length - 1);
     this.fieldHeight = fieldHeight;
     this.fieldWidth = fieldWidth;
   }
@@ -93,7 +93,7 @@ public class BubbletScreen extends GameScreen {
     // Set the Display of our application
     cellWidth = (screenWidth - resX) / fieldWidth;
     cellHeight = (screenHeight - resY) / fieldHeight;
-    off_x = (screenWidth - cellWidth * fieldWidth) / 2;
+    off_x = (screenWidth - (cellWidth * fieldWidth)) / 2;
     off_y = resY;
   }
 
@@ -122,7 +122,7 @@ public class BubbletScreen extends GameScreen {
 
   /**
    * Draw whole board.
-   * 
+   *
    * @param g the g
    */
   private void drawWholeBoard(final Graphics g) {
@@ -141,18 +141,18 @@ public class BubbletScreen extends GameScreen {
 
   /**
    * Draw cross.
-   * 
+   *
    * @param g the g
    * @param x the x
    * @param y the y
    */
   private void drawCross(final Graphics g, final int x, final int y) {
-    final int x1 = off_x + x * cellWidth;
-    final int y1 = off_y + y * cellHeight;
-    final int x2 = off_x + x * cellWidth + cellWidth;
-    final int y2 = off_y + y * cellHeight + cellHeight;
+    final int x1 = off_x + (x * cellWidth);
+    final int y1 = off_y + (y * cellHeight);
+    final int x2 = off_x + (x * cellWidth) + cellWidth;
+    final int y2 = off_y + (y * cellHeight) + cellHeight;
     final int me = game.field[x][y];
-    if (me == BubbletGame.BLACK) {
+    if (me == BubbletGame.EMPTY) {
       g.setColor(Application.foreground);
     }
     else {
@@ -164,7 +164,7 @@ public class BubbletScreen extends GameScreen {
 
   /**
    * Draw field.
-   * 
+   *
    * @param g the g
    * @param x the x
    * @param y the y
@@ -177,8 +177,8 @@ public class BubbletScreen extends GameScreen {
       g.setColor(BubbletScreen.COLORS[me]);
     }
     // Draw cell
-    final int x1 = off_x + x * cellWidth;
-    final int y1 = off_y + y * cellHeight;
+    final int x1 = off_x + (x * cellWidth);
+    final int y1 = off_y + (y * cellHeight);
     g.fillRect(x1, y1, cellWidth, cellHeight);
     g.setColor(Application.background);
     // g.drawRect(x1, y1, cellWidth, cellHeight);
@@ -186,7 +186,7 @@ public class BubbletScreen extends GameScreen {
       next = game.field[x - 1][y];
     }
     else {
-      next = me + 1;
+      next = BubbletGame.EMPTY;
     }
     if (next != me) {
       g.drawLine(x1, y1, x1, y1 + cellHeight);
@@ -195,7 +195,7 @@ public class BubbletScreen extends GameScreen {
       next = game.field[x + 1][y];
     }
     else {
-      next = me + 1;
+      next = BubbletGame.EMPTY;
     }
     if (next != me) {
       g.drawLine(x1 + cellWidth, y1, x1 + cellWidth, y1 + cellHeight);
@@ -204,7 +204,7 @@ public class BubbletScreen extends GameScreen {
       next = game.field[x][y - 1];
     }
     else {
-      next = me + 1;
+      next = BubbletGame.EMPTY;
     }
     if (next != me) {
       g.drawLine(x1, y1, x1 + cellWidth, y1);
@@ -213,7 +213,7 @@ public class BubbletScreen extends GameScreen {
       next = game.field[x][y + 1];
     }
     else {
-      next = me + 1;
+      next = BubbletGame.EMPTY;
     }
     if (next != me) {
       g.drawLine(x1, y1 + cellHeight, x1 + cellWidth, y1 + cellHeight);
