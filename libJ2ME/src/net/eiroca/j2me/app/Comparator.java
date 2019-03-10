@@ -22,7 +22,7 @@ package net.eiroca.j2me.app;
 public interface Comparator {
 
   /**
-   * Compare.
+   * Compare two objects
    * 
    * @param o1 the o1
    * @param o2 the o2

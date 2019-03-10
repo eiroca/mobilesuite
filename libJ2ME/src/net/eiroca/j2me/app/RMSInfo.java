@@ -17,17 +17,17 @@
 package net.eiroca.j2me.app;
 
 /**
- * The Class RMSInfo.
+ * Class to store RMS information
  */
 public class RMSInfo {
 
-  /** The num rec. */
+  /** Number of records */
   public int numRec = 0;
 
-  /** The used. */
+  /** Number of used records */
   public int used = 0;
 
-  /** The avail. */
+  /** Number of available records */
   public int avail = 0;
 
 }

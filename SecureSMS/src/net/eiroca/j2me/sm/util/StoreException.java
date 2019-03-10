@@ -24,24 +24,21 @@ public class StoreException extends Exception {
 
   /** The Constant ERR_STOREOPEN. */
   public static final int ERR_STOREOPEN = 1;
-  
+
   /** The Constant ERR_STORESAVE. */
   public static final int ERR_STORESAVE = 2;
-  
+
   /** The Constant ERR_STOREDELETE. */
   public static final int ERR_STOREDELETE = 3;
-  
+
   /** The Constant ERR_STOREREAD. */
   public static final int ERR_STOREREAD = 4;
-  
+
   /** The Constant ERR_STOREFIND. */
   public static final int ERR_STOREFIND = 5;
-  
+
   /** The Constant ERR_STORELISTIDS. */
   public static final int ERR_STORELISTIDS = 6;
-
-  /** The Constant serialVersionUID. */
-  private static final long serialVersionUID = -5364585897287450564L;
 
   /**
    * Constructs an <code>SecureMessengerException</code> with the specified detail message.

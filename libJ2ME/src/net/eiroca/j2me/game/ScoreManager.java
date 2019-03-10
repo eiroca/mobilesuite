@@ -47,16 +47,16 @@ public class ScoreManager {
    * 
    * @param recordName the record name
    * @param gameName the game name
-   * @param dif the dif
+   * @param difficulty the difficulty
    * @param listLength the list length
    * @param readIt the read it
    */
-  public ScoreManager(final String recordName, final String gameName, final int dif, final int listLength, final boolean readIt) {
+  public ScoreManager(final String recordName, final String gameName, final int difficulty, final int listLength, final boolean readIt) {
     this.recordName = recordName;
     this.listLength = listLength;
     this.gameName = gameName;
-    scores = new Vector[dif];
-    for (int i = 0; i < dif; i++) {
+    scores = new Vector[difficulty];
+    for (int i = 0; i < difficulty; i++) {
       scores[i] = new Vector(listLength);
     }
     if (readIt) {
@@ -67,67 +67,67 @@ public class ScoreManager {
   /**
    * Gets the high score.
    * 
-   * @param dif the dif
+   * @param difficulty the difficulty
    * @return the high score
    */
-  public Score getHighScore(final int dif) {
-    final int size = scores[dif].size();
+  public Score getHighScore(final int difficulty) {
+    final int size = scores[difficulty].size();
     if (size == 0) { return null; }
-    return (Score) scores[dif].elementAt(0);
+    return (Score) scores[difficulty].elementAt(0);
   }
 
   /**
    * Checks for high score.
    * 
-   * @param dif the dif
+   * @param difficulty the difficulty
    * @param score the score
    * @return true, if successful
    */
-  public boolean hasHighScore(final int dif, final Score score) {
-    return scores[dif].size() > 0;
+  public boolean hasHighScore(final int difficulty, final Score score) {
+    return scores[difficulty].size() > 0;
   }
 
   /**
    * Checks if is high score.
    * 
-   * @param dif the dif
+   * @param difficulty the difficulty
    * @param score the score
    * @return true, if is high score
    */
-  public boolean isHighScore(final int dif, final Score score) {
-    final int size = scores[dif].size();
+  public boolean isHighScore(final int difficulty, final Score score) {
+    final int size = scores[difficulty].size();
     if (size < listLength) { return true; }
-    final Score last = (Score) scores[dif].elementAt(size - 1);
+    final Score last = (Score) scores[difficulty].elementAt(size - 1);
     return (score.score > last.score);
   }
 
   /**
    * Gets the list.
    * 
-   * @param dif the dif
+   * @param difficulty the difficulty
    * @return the list
    */
-  public Vector getList(final int dif) {
-    return scores[dif];
+  public Vector getList(final int difficulty) {
+    return scores[difficulty];
   }
 
   /**
    * Sort.
    * 
-   * @param dif the dif
+   * @param difficulty the difficulty
    */
-  private void sort(final int dif) {
+  private void sort(final int difficulty) {
     boolean flipped;
     Score a;
     Score b;
-    for (int i = scores[dif].size(); --i >= 0;) {
+    for (int i = scores[difficulty].size(); --i >= 0;) {
       flipped = false;
       for (int j = 0; j < i; j++) {
-        a = (Score) scores[dif].elementAt(j);
-        b = (Score) scores[dif].elementAt(j + 1);
+        a = (Score) scores[difficulty].elementAt(j);
+        b = (Score) scores[difficulty].elementAt(j + 1);
         if (a.score < b.score) {
-          scores[dif].setElementAt(b, j);
-          scores[dif].setElementAt(a, j + 1);
+          scores[difficulty].setElementAt(b, j);
+          scores[difficulty].setElementAt(a, j + 1);
           flipped = true;
         }
       }
@@ -198,16 +198,16 @@ public class ScoreManager {
   /**
    * Adds the new score.
    * 
-   * @param dif the dif
+   * @param difficulty the difficulty
    * @param score the score
    */
-  public void addNewScore(final int dif, final Score score) {
+  public void addNewScore(final int difficulty, final Score score) {
     if (score == null) { return; }
     final Score s = new Score(score.name, score.level, score.score);
-    scores[dif].addElement(s);
-    sort(dif);
-    if (scores[dif].size() > listLength) {
-      scores[dif].removeElementAt(scores[dif].size() - 1);
+    scores[difficulty].addElement(s);
+    sort(difficulty);
+    if (scores[difficulty].size() > listLength) {
+      scores[difficulty].removeElementAt(scores[difficulty].size() - 1);
     }
     saveScoreList();
     return;

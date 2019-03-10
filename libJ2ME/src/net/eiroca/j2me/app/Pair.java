@@ -17,14 +17,14 @@
 package net.eiroca.j2me.app;
 
 /**
- * The Class Pair.
+ * Name Value pair class
  */
 public final class Pair {
 
-  /** The name. */
+  /** The name */
   public String name;
 
-  /** The value. */
+  /** The value */
   public Object value;
 
 }
